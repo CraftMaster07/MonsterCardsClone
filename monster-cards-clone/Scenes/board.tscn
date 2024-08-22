@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://cfyktcr6rqnlf"]
+
+[ext_resource type="Texture2D" uid="uid://cjn63si50nhet" path="res://icon.svg" id="1_4xpsg"]
+
+[node name="Board" type="Node2D"]
+
+[node name="Card Slots" type="Node2D" parent="."]
+
+[node name="TextureButton" type="TextureButton" parent="Card Slots"]
+offset_left = 419.0
+offset_top = 216.0
+offset_right = 547.0
+offset_bottom = 344.0
+texture_normal = ExtResource("1_4xpsg")
