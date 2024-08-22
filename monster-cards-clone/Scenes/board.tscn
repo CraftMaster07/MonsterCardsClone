@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://cfyktcr6rqnlf"]
 
-[ext_resource type="Script" path="res://Scripts/board.gd" id="1_xiot5"]
-[ext_resource type="PackedScene" uid="uid://d2efqpfk6vwcm" path="res://Scenes/card.tscn" id="2_l5487"]
+[ext_resource type="Script" path="res://scripts/board.gd" id="1_xiot5"]
+[ext_resource type="PackedScene" uid="uid://d2efqpfk6vwcm" path="res://scenes/card.tscn" id="2_l5487"]
 
 [node name="Board" type="Node2D"]
 script = ExtResource("1_xiot5")
