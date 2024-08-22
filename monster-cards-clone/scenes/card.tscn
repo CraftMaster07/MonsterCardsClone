@@ -1,11 +1,11 @@
 [gd_scene load_steps=3 format=3 uid="uid://d2efqpfk6vwcm"]
 
-[ext_resource type="Script" path="res://scripts/card.gd" id="1_oiyxu"]
-[ext_resource type="Texture2D" uid="uid://cjn63si50nhet" path="res://icon.svg" id="1_vbfw3"]
+[ext_resource type="Script" path="res://Scripts/card.gd" id="1_esr4d"]
+[ext_resource type="Texture2D" uid="uid://81xbwibbksle" path="res://Assets/carddefault.png" id="1_qm8ug"]
 
 [node name="Card" type="TextureButton"]
-script = ExtResource("1_oiyxu")
+scale = Vector2(2, 2)
+texture_normal = ExtResource("1_qm8ug")
+script = ExtResource("1_esr4d")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(1.17188, 2.3125)
-texture = ExtResource("1_vbfw3")
+[connection signal="button_up" from="." to="." method="_on_button_up"]

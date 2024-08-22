@@ -1,14 +1,29 @@
-[gd_scene load_steps=2 format=3 uid="uid://cfyktcr6rqnlf"]
+[gd_scene load_steps=3 format=3 uid="uid://cfyktcr6rqnlf"]
 
-[ext_resource type="Texture2D" uid="uid://cjn63si50nhet" path="res://icon.svg" id="1_4xpsg"]
+[ext_resource type="Script" path="res://Scripts/board.gd" id="1_xiot5"]
+[ext_resource type="PackedScene" uid="uid://d2efqpfk6vwcm" path="res://Scenes/card.tscn" id="2_l5487"]
 
 [node name="Board" type="Node2D"]
+script = ExtResource("1_xiot5")
 
 [node name="Card Slots" type="Node2D" parent="."]
 
 [node name="TextureButton" type="TextureButton" parent="Card Slots"]
-offset_left = 419.0
-offset_top = 216.0
-offset_right = 547.0
-offset_bottom = 344.0
-texture_normal = ExtResource("1_4xpsg")
+offset_left = 7.0
+offset_top = 7.0
+offset_right = 135.0
+offset_bottom = 135.0
+
+[node name="Hand" type="Node2D" parent="."]
+
+[node name="Card" parent="Hand" instance=ExtResource("2_l5487")]
+offset_left = 598.0
+offset_top = 337.0
+offset_right = 598.0
+offset_bottom = 337.0
+
+[node name="Card2" parent="Hand" instance=ExtResource("2_l5487")]
+offset_left = 348.0
+offset_top = 340.0
+offset_right = 348.0
+offset_bottom = 340.0
