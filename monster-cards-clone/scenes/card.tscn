@@ -30,4 +30,40 @@ text = "2"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="attackTexture" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 35.75
+offset_top = 69.0
+offset_right = 55.75
+offset_bottom = 90.0
+
+[node name="Label" type="Label" parent="attackTexture"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "2"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="healthTexture" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 9.75
+offset_top = 69.25
+offset_right = 29.75
+offset_bottom = 90.25
+
+[node name="Label" type="Label" parent="healthTexture"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "2"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [connection signal="button_up" from="." to="." method="_on_button_up"]
