@@ -14,19 +14,20 @@ offset_top = 7.0
 offset_right = 135.0
 offset_bottom = 135.0
 
-[node name="Hand" type="Node2D" parent="."]
+[node name="Hand" type="HBoxContainer" parent="."]
+offset_left = 413.0
+offset_top = 477.0
+offset_right = 613.0
+offset_bottom = 573.0
 
 [node name="Card" parent="Hand" instance=ExtResource("2_l5487")]
-offset_left = 598.0
-offset_top = 337.0
-offset_right = 598.0
-offset_bottom = 337.0
+layout_mode = 2
 cost = -2
 damage = 3
 health = 4
 
 [node name="Card2" parent="Hand" instance=ExtResource("2_l5487")]
-offset_left = 348.0
-offset_top = 340.0
-offset_right = 348.0
-offset_bottom = 340.0
+layout_mode = 2
+
+[node name="Card3" parent="Hand" instance=ExtResource("2_l5487")]
+layout_mode = 2

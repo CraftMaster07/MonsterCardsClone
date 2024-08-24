@@ -1,11 +1,33 @@
-[gd_scene load_steps=3 format=3 uid="uid://d2efqpfk6vwcm"]
+[gd_scene load_steps=4 format=3 uid="uid://d2efqpfk6vwcm"]
 
+[ext_resource type="Theme" uid="uid://f2a4ylwdbwtx" path="res://main_theme.tres" id="1_6hjbs"]
 [ext_resource type="Script" path="res://scripts/card.gd" id="1_esr4d"]
 [ext_resource type="Texture2D" uid="uid://81xbwibbksle" path="res://assets/carddefault.png" id="1_qm8ug"]
 
 [node name="Card" type="TextureButton"]
-scale = Vector2(2, 2)
+offset_right = 64.0
+offset_bottom = 96.0
+scale = Vector2(4, 4)
+theme = ExtResource("1_6hjbs")
 texture_normal = ExtResource("1_qm8ug")
 script = ExtResource("1_esr4d")
+
+[node name="costTexture" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 37.0
+offset_top = 7.0
+offset_right = 57.0
+offset_bottom = 28.0
+
+[node name="Label" type="Label" parent="costTexture"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "2"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [connection signal="button_up" from="." to="." method="_on_button_up"]
