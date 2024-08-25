@@ -1,25 +1,37 @@
-[gd_scene load_steps=4 format=3 uid="uid://d2efqpfk6vwcm"]
+[gd_scene load_steps=5 format=3 uid="uid://d2efqpfk6vwcm"]
 
 [ext_resource type="Theme" uid="uid://f2a4ylwdbwtx" path="res://main_theme.tres" id="1_6hjbs"]
 [ext_resource type="Script" path="res://scripts/card.gd" id="1_esr4d"]
-[ext_resource type="Texture2D" uid="uid://81xbwibbksle" path="res://assets/carddefault.png" id="1_qm8ug"]
+[ext_resource type="Texture2D" uid="uid://qyuv68ofn6up" path="res://assets/sprites/health.png" id="3_fiyo2"]
+[ext_resource type="Texture2D" uid="uid://c0vq6x57vqkn1" path="res://assets/sprites/strength.png" id="4_t4fsv"]
 
 [node name="Card" type="TextureButton"]
-offset_right = 64.0
-offset_bottom = 96.0
-scale = Vector2(4, 4)
+custom_minimum_size = Vector2(65, 91)
+mouse_default_cursor_shape = 2
 theme = ExtResource("1_6hjbs")
-texture_normal = ExtResource("1_qm8ug")
 script = ExtResource("1_esr4d")
 
-[node name="costTexture" type="TextureRect" parent="."]
-layout_mode = 0
-offset_left = 37.0
-offset_top = 7.0
-offset_right = 57.0
-offset_bottom = 28.0
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.304772, 0.515449, 0.777444, 1)
 
-[node name="Label" type="Label" parent="costTexture"]
+[node name="costTexture" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -20.0
+offset_bottom = 20.0
+grow_horizontal = 0
+texture = ExtResource("3_fiyo2")
+
+[node name="costDisplay" type="Label" parent="costTexture"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -31,31 +43,43 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="attackTexture" type="TextureRect" parent="."]
-layout_mode = 0
-offset_left = 35.75
-offset_top = 69.0
-offset_right = 55.75
-offset_bottom = 90.0
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.9
+anchor_top = 0.9
+anchor_right = 0.9
+anchor_bottom = 0.9
+offset_left = -20.0
+offset_top = -21.0
+grow_horizontal = 0
+grow_vertical = 0
+texture = ExtResource("4_t4fsv")
 
-[node name="Label" type="Label" parent="attackTexture"]
+[node name="attackDisplay" type="Label" parent="attackTexture"]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "2"
+text = "1"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="healthTexture" type="TextureRect" parent="."]
-layout_mode = 0
-offset_left = 9.75
-offset_top = 69.25
-offset_right = 29.75
-offset_bottom = 90.25
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.9
+anchor_right = 0.1
+anchor_bottom = 0.9
+grow_vertical = 0
+texture = ExtResource("3_fiyo2")
 
-[node name="Label" type="Label" parent="healthTexture"]
+[node name="healthDisplay" type="Label" parent="healthTexture"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

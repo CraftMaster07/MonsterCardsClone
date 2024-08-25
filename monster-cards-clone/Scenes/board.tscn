@@ -1,33 +1,14 @@
 [gd_scene load_steps=3 format=3 uid="uid://cfyktcr6rqnlf"]
 
 [ext_resource type="Script" path="res://scripts/board.gd" id="1_xiot5"]
-[ext_resource type="PackedScene" uid="uid://d2efqpfk6vwcm" path="res://scenes/card.tscn" id="2_l5487"]
+[ext_resource type="Script" path="res://scripts/hand.gd" id="2_8qlpv"]
 
-[node name="Board" type="Node2D"]
+[node name="Battle" type="Node2D"]
 script = ExtResource("1_xiot5")
+metadata/_edit_lock_ = true
 
-[node name="Card Slots" type="Node2D" parent="."]
+[node name="handLayer" type="CanvasLayer" parent="."]
 
-[node name="TextureButton" type="TextureButton" parent="Card Slots"]
-offset_left = 7.0
-offset_top = 7.0
-offset_right = 135.0
-offset_bottom = 135.0
-
-[node name="Hand" type="HBoxContainer" parent="."]
-offset_left = 413.0
-offset_top = 477.0
-offset_right = 613.0
-offset_bottom = 573.0
-
-[node name="Card" parent="Hand" instance=ExtResource("2_l5487")]
-layout_mode = 2
-cost = -2
-damage = 3
-health = 4
-
-[node name="Card2" parent="Hand" instance=ExtResource("2_l5487")]
-layout_mode = 2
-
-[node name="Card3" parent="Hand" instance=ExtResource("2_l5487")]
-layout_mode = 2
+[node name="hand" type="Node2D" parent="handLayer"]
+position = Vector2(559, 584)
+script = ExtResource("2_8qlpv")
