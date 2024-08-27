@@ -1,7 +1,7 @@
 extends Node2D
 
 var selected_card : Card
-@onready var hand := $Hand
+@onready var hand := $HandLayer/Hand
 
 @onready var select_stream : AudioStream = load("res://assets/audio/sounds/select.mp3")
 @onready var deselect_stream : AudioStream = load("res://assets/audio/sounds/deselect.mp3")
@@ -11,7 +11,8 @@ func _ready() -> void:
 		card.connect("card_selected", select_card)
 
 func _process(delta: float) -> void:
-	print(selected_card)
+	#print(selected_card)
+	pass
 
 func select_card(card):
 	if selected_card == card:
