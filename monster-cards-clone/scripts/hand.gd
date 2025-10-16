@@ -31,7 +31,7 @@ func order_cards() -> void:
 		else:
 			hand_ratio = 0.5
 		
-		card.position.x += spread_curve.sample(hand_ratio) * HAND_WIDTH
+		card.position.x += spread_curve.sample(hand_ratio) * HAND_WIDTH - HAND_WIDTH/2
 		card.position += height_curve.sample(hand_ratio) * Vector2.UP * HAND_HEIGHT
 		print(rotation_curve.sample(hand_ratio) * 0.3)
 		card.rotation = rotation_curve.sample(hand_ratio) * 0.3

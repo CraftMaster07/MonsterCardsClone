@@ -31,4 +31,3 @@ func take_damage(amount : int) -> void:
 	current_health -= amount
 	if current_health <= 0:
 		queue_free()
-

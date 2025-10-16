@@ -2,12 +2,11 @@
 
 [ext_resource type="Script" uid="uid://ctku11dgwh5at" path="res://scripts/board.gd" id="1_xiot5"]
 [ext_resource type="Script" uid="uid://cvdji822ocox7" path="res://scripts/hand.gd" id="2_8qlpv"]
-[ext_resource type="PackedScene" uid="uid://d2efqpfk6vwcm" path="res://scenes/card.tscn" id="3_13nbw"]
+[ext_resource type="PackedScene" uid="uid://d2efqpfk6vwcm" path="res://Scenes/card.tscn" id="3_13nbw"]
 [ext_resource type="Texture2D" uid="uid://cjn63si50nhet" path="res://icon.svg" id="4_cp8jt"]
 
-[sub_resource type="Curve" id="Curve_hthys"]
-_limits = [-1.0, 1.0, 0.0, 1.0]
-_data = [Vector2(0, -1), 0.0, 2.0, 0, 1, Vector2(1, 1), 2.0, 0.0, 1, 0]
+[sub_resource type="Curve" id="Curve_fv4ni"]
+_data = [Vector2(0, 0), 0.0, 1.0, 0, 1, Vector2(1, 1), 1.0, 0.0, 1, 0]
 point_count = 2
 
 [sub_resource type="Curve" id="Curve_dld2m"]
@@ -31,9 +30,10 @@ metadata/_edit_lock_ = true
 [node name="Hand" type="Node2D" parent="HandLayer"]
 position = Vector2(560, 593)
 script = ExtResource("2_8qlpv")
-spread_curve = SubResource("Curve_hthys")
+spread_curve = SubResource("Curve_fv4ni")
 height_curve = SubResource("Curve_dld2m")
 rotation_curve = SubResource("Curve_awg6w")
+HAND_WIDTH = 300.0
 
 [node name="Card" parent="HandLayer/Hand" instance=ExtResource("3_13nbw")]
 
