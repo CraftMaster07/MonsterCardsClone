@@ -1,23 +1,22 @@
 [gd_scene load_steps=8 format=3 uid="uid://cfyktcr6rqnlf"]
 
-[ext_resource type="Script" path="res://scenes/board.gd" id="1_xiot5"]
-[ext_resource type="Script" path="res://scenes/hand.gd" id="2_8qlpv"]
+[ext_resource type="Script" uid="uid://ctku11dgwh5at" path="res://scripts/board.gd" id="1_xiot5"]
+[ext_resource type="Script" uid="uid://cvdji822ocox7" path="res://scripts/hand.gd" id="2_8qlpv"]
 [ext_resource type="PackedScene" uid="uid://d2efqpfk6vwcm" path="res://scenes/card.tscn" id="3_13nbw"]
 [ext_resource type="Texture2D" uid="uid://cjn63si50nhet" path="res://icon.svg" id="4_cp8jt"]
 
 [sub_resource type="Curve" id="Curve_hthys"]
-min_value = -1.0
+_limits = [-1.0, 1.0, 0.0, 1.0]
 _data = [Vector2(0, -1), 0.0, 2.0, 0, 1, Vector2(1, 1), 2.0, 0.0, 1, 0]
 point_count = 2
 
 [sub_resource type="Curve" id="Curve_dld2m"]
-min_value = -1.0
-max_value = 0.0
+_limits = [-1.0, 0.0, 0.0, 1.0]
 _data = [Vector2(0, -1), 0.0, 0.0, 0, 0, Vector2(0.496212, 0), 0.0, 0.0, 0, 0, Vector2(1, -1), 0.0, 0.0, 0, 0]
 point_count = 3
 
 [sub_resource type="Curve" id="Curve_awg6w"]
-min_value = -1.0
+_limits = [-1.0, 1.0, 0.0, 1.0]
 _data = [Vector2(0, -1), 0.0, 0.0, 0, 0, Vector2(0.5, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 3
 
