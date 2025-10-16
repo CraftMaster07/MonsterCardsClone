@@ -2,8 +2,8 @@
 
 [ext_resource type="Theme" uid="uid://f2a4ylwdbwtx" path="res://main_theme.tres" id="1_6hjbs"]
 [ext_resource type="Script" uid="uid://bedrbpyrc1bvp" path="res://scripts/card.gd" id="1_esr4d"]
-[ext_resource type="Texture2D" uid="uid://qyuv68ofn6up" path="res://assets/sprites/health.png" id="3_fiyo2"]
-[ext_resource type="Texture2D" uid="uid://c0vq6x57vqkn1" path="res://assets/sprites/strength.png" id="4_t4fsv"]
+[ext_resource type="Texture2D" uid="uid://qyuv68ofn6up" path="res://Assets/sprites/health.png" id="3_fiyo2"]
+[ext_resource type="Texture2D" uid="uid://c0vq6x57vqkn1" path="res://Assets/sprites/strength.png" id="4_t4fsv"]
 
 [node name="Card" type="TextureButton"]
 custom_minimum_size = Vector2(65, 91)

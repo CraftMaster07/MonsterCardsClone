@@ -8,6 +8,7 @@ var hand_ratio: float
 @export var rotation_curve: Curve
 @export var HAND_WIDTH: float = 30.0
 @export var HAND_HEIGHT: float = 20.0
+@export var MAX_ROTATION: float = 0.3
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -30,8 +31,7 @@ func order_cards() -> void:
 			hand_ratio = float(card.get_index()) / float(get_child_count()-1)
 		else:
 			hand_ratio = 0.5
-		
 		card.position.x += spread_curve.sample(hand_ratio) * HAND_WIDTH - HAND_WIDTH/2
-		card.position += height_curve.sample(hand_ratio) * Vector2.UP * HAND_HEIGHT
-		print(rotation_curve.sample(hand_ratio) * 0.3)
-		card.rotation = rotation_curve.sample(hand_ratio) * 0.3
+		card.position.y -= height_curve.sample(hand_ratio) * HAND_HEIGHT
+		print(height_curve.sample(hand_ratio))
+		card.rotation = rotation_curve.sample(hand_ratio) * MAX_ROTATION

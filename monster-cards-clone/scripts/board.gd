@@ -10,7 +10,7 @@ func _ready() -> void:
 	for card in hand.get_children():
 		card.connect("card_selected", select_card)
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	#print(selected_card)
 	pass
 
