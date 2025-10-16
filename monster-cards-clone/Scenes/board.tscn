@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://ctku11dgwh5at" path="res://scripts/board.gd" id="1_xiot5"]
 [ext_resource type="Script" uid="uid://cvdji822ocox7" path="res://scripts/hand.gd" id="2_8qlpv"]
-[ext_resource type="PackedScene" uid="uid://d2efqpfk6vwcm" path="res://Scenes/card.tscn" id="3_13nbw"]
 [ext_resource type="Texture2D" uid="uid://cjn63si50nhet" path="res://icon.svg" id="4_cp8jt"]
+[ext_resource type="PackedScene" uid="uid://syfm2kspvm70" path="res://scenes/player.tscn" id="5_dxjtj"]
 
 [sub_resource type="Curve" id="Curve_fv4ni"]
 _data = [Vector2(0, 0), 0.0, 1.0, 0, 1, Vector2(1, 1), 1.0, 0.0, 1, 0]
@@ -35,8 +35,18 @@ rotation_curve = SubResource("Curve_awg6w")
 HAND_WIDTH = 300.0
 HAND_HEIGHT = 0.0
 
-[node name="Card" parent="HandLayer/Hand" instance=ExtResource("3_13nbw")]
-
 [node name="Icon" type="Sprite2D" parent="."]
 position = Vector2(420, 229)
 texture = ExtResource("4_cp8jt")
+
+[node name="PlayerHandler" parent="." instance=ExtResource("5_dxjtj")]
+
+[node name="DamageButton" type="CheckButton" parent="."]
+offset_left = -393.0
+offset_top = 178.0
+offset_right = -347.0
+offset_bottom = 211.0
+
+[connection signal="toggled" from="DamageButton" to="PlayerHandler" method="_on_check_button_toggled"]
+
+[editable path="PlayerHandler"]

@@ -2,6 +2,7 @@ extends Node2D
 
 var selected_card : Card
 @onready var hand := $HandLayer/Hand
+@onready var player_handler := $PlayerHandler
 
 @onready var select_stream : AudioStream = load("res://assets/audio/sounds/select.mp3")
 @onready var deselect_stream : AudioStream = load("res://assets/audio/sounds/deselect.mp3")
@@ -9,6 +10,7 @@ var selected_card : Card
 func _ready() -> void:
 	for card in hand.get_children():
 		card.connect("card_selected", select_card)
+	player_handler.__init__()
 
 func _process(_delta: float) -> void:
 	#print(selected_card)

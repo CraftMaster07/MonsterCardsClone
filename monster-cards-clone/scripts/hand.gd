@@ -12,7 +12,7 @@ var hand_ratio: float
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	add_cards(5)
+	add_cards(6)
 	order_cards()
 
 
