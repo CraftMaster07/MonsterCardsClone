@@ -8,7 +8,7 @@ extends Control
 var tween: Tween
 
 func update_base_position():
-	base_position = position
+	base_position = card_button.position
 
 func _on_mouse_entered() -> void:
 	if tween:

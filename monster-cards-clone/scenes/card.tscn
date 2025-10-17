@@ -21,8 +21,8 @@ offset_bottom = 45.5
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_e6po8")
-animation_length = 2.0
-animation_trans = 9
+animation_length = 0.15
+animation_trans = 2
 
 [node name="CardButton" type="TextureButton" parent="."]
 custom_minimum_size = Vector2(65, 91)
