@@ -2,8 +2,8 @@
 
 [ext_resource type="Theme" uid="uid://f2a4ylwdbwtx" path="res://main_theme.tres" id="1_6hjbs"]
 [ext_resource type="Script" uid="uid://bedrbpyrc1bvp" path="res://scripts/card.gd" id="1_esr4d"]
-[ext_resource type="Texture2D" uid="uid://qyuv68ofn6up" path="res://Assets/sprites/health.png" id="3_fiyo2"]
-[ext_resource type="Texture2D" uid="uid://c0vq6x57vqkn1" path="res://Assets/sprites/strength.png" id="4_t4fsv"]
+[ext_resource type="Texture2D" uid="uid://qyuv68ofn6up" path="res://assets/sprites/health.png" id="3_fiyo2"]
+[ext_resource type="Texture2D" uid="uid://c0vq6x57vqkn1" path="res://assets/sprites/strength.png" id="4_t4fsv"]
 
 [node name="Card" type="TextureButton"]
 custom_minimum_size = Vector2(65, 91)
@@ -27,8 +27,11 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 1.0
+offset_right = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 color = Color(0.304772, 0.515449, 0.777444, 1)
 
 [node name="costTexture" type="TextureRect" parent="."]
@@ -101,4 +104,4 @@ text = "2"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[connection signal="button_up" from="." to="." method="_on_button_up"]
+[connection signal="pressed" from="." to="." method="_on_pressed"]

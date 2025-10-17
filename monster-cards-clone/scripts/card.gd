@@ -22,12 +22,13 @@ var current_health : int
 
 signal card_selected(card)
 
-func _on_button_up() -> void:
-	print("hi")
-	card_selected.emit(self)
-
 
 func take_damage(amount : int) -> void:
 	current_health -= amount
 	if current_health <= 0:
 		queue_free()
+
+
+func _on_pressed() -> void:
+	print("hi hello")
+	card_selected.emit(self)
