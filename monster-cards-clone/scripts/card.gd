@@ -1,33 +1,23 @@
-extends TextureButton
-class_name Card
+extends Control
 
-@export var display_name : String
-@export var description : String
-@export var image : Texture2D
+@export var hover_height: float = 20
+@export var animation_length: float = 0.2
+@export var animation_trans : Tween.TransitionType
+@onready var card_button := $CardButton
+@onready var base_position : Vector2 = card_button.position
+var tween: Tween
 
-@export var cost : int = 1:
-	set(value):
-		cost = clamp(value, 0, 999)
-@export var damage : int = 1:
-	set(value):
-		damage = clamp(value, 0, 999)
-@export var health : int = 1:
-	set(value):
-		health = clamp(value, 0, 999)
+func update_base_position():
+	base_position = position
 
-var current_cost : int
-var current_damage : int
-var current_health : int
+func _on_mouse_entered() -> void:
+	if tween:
+		tween.kill()
+	tween = create_tween()
+	tween.tween_property(card_button, "position", base_position - Vector2(0, hover_height), animation_length).set_trans(animation_trans)
 
-
-signal card_selected(card)
-
-func _on_button_up() -> void:
-	print("hi")
-	card_selected.emit(self)
-
-
-func take_damage(amount : int) -> void:
-	current_health -= amount
-	if current_health <= 0:
-		queue_free()
+func _on_mouse_exited() -> void:
+	if tween:
+		tween.kill()
+	tween = create_tween()
+	tween.tween_property(card_button, "position", base_position, animation_length).set_trans(animation_trans)

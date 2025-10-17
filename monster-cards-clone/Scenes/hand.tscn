@@ -20,6 +20,12 @@ size_flags_vertical = 4
 
 [node name="Card" parent="HBoxContainer" instance=ExtResource("2_u7o8q")]
 layout_mode = 2
+hover_height = null
 
 [node name="Card2" parent="HBoxContainer" instance=ExtResource("2_u7o8q")]
 layout_mode = 2
+hover_height = null
+
+[node name="Card3" parent="HBoxContainer" instance=ExtResource("2_u7o8q")]
+layout_mode = 2
+hover_height = null
