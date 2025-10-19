@@ -9,9 +9,9 @@ extends Control
 var touched : bool = false
 enum DragState {RESTING, DRAGGING, FINISHING_DRAGGING}
 var drag_state : DragState = DragState.RESTING
-var dragback_time : float = 0.5
-var dragback_trans : Tween.TransitionType = Tween.TRANS_ELASTIC
-var dragback_ease : Tween.EaseType = Tween.EASE_OUT
+@export var dragback_time : float = 0.5
+@export var dragback_trans : Tween.TransitionType = Tween.TRANS_ELASTIC
+@export var dragback_ease : Tween.EaseType = Tween.EASE_OUT
 var tween: Tween
 
 func _process(_delta: float) -> void:
