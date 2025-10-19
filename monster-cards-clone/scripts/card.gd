@@ -5,9 +5,13 @@ extends Control
 @export var animation_trans : Tween.TransitionType
 @onready var card_button := $CardButton
 @onready var base_position : Vector2 = card_button.position
-var touched: bool = false
+
+var touched : bool = false
 enum DragState {RESTING, DRAGGING, FINISHING_DRAGGING}
-var drag_state: DragState = DragState.RESTING
+var drag_state : DragState = DragState.RESTING
+var dragback_time : float = 0.5
+var dragback_trans : Tween.TransitionType = Tween.TRANS_ELASTIC
+var dragback_ease : Tween.EaseType = Tween.EASE_OUT
 var tween: Tween
 
 func _process(_delta: float) -> void:
@@ -20,7 +24,7 @@ func _input(event: InputEvent) -> void:
 		if tween:
 			tween.kill()
 		tween = create_tween()
-		tween.tween_property(card_button, "position", base_position, 0.3).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
+		tween.tween_property(card_button, "position", base_position, dragback_time).set_trans(dragback_trans).set_ease(dragback_ease)
 		await tween.finished
 		drag_state = DragState.RESTING
 		if card_button.is_hovered():
