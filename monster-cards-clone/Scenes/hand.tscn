@@ -1,5 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://b6obljxfl8pah"]
+[gd_scene load_steps=3 format=3 uid="uid://b6obljxfl8pah"]
 
+[ext_resource type="Script" uid="uid://bma3dob710djm" path="res://Scenes/hand.gd" id="1_u7o8q"]
 [ext_resource type="PackedScene" uid="uid://d2efqpfk6vwcm" path="res://Scenes/card.tscn" id="2_u7o8q"]
 
 [node name="Hand" type="MarginContainer"]
@@ -12,20 +13,19 @@ grow_horizontal = 2
 grow_vertical = 0
 size_flags_horizontal = 4
 size_flags_vertical = 4
+script = ExtResource("1_u7o8q")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+theme_override_constants/separation = 4
 
 [node name="Card" parent="HBoxContainer" instance=ExtResource("2_u7o8q")]
 layout_mode = 2
-hover_height = null
 
 [node name="Card2" parent="HBoxContainer" instance=ExtResource("2_u7o8q")]
 layout_mode = 2
-hover_height = null
 
 [node name="Card3" parent="HBoxContainer" instance=ExtResource("2_u7o8q")]
 layout_mode = 2
-hover_height = null
