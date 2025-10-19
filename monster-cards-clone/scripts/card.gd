@@ -15,18 +15,19 @@ var dragback_ease : Tween.EaseType = Tween.EASE_OUT
 var tween: Tween
 
 func _process(_delta: float) -> void:
+	
 	if drag_state == DragState.DRAGGING:
 		card_button.global_position = get_global_mouse_position() - card_button.size/2
 
 func _input(event: InputEvent) -> void:
+	
 	if event.is_action_released("click") and drag_state == DragState.DRAGGING:
 		drag_state = DragState.FINISHING_DRAGGING
-		if tween:
-			tween.kill()
-		tween = create_tween()
-		tween.tween_property(card_button, "position", base_position, dragback_time).set_trans(dragback_trans).set_ease(dragback_ease)
+		
+		animate_to_position(base_position, dragback_trans, dragback_time, dragback_ease)
 		await tween.finished
 		drag_state = DragState.RESTING
+		
 		if card_button.is_hovered():
 			_on_mouse_entered()
 
@@ -36,24 +37,31 @@ func update_base_position():
 
 func _on_mouse_entered() -> void:
 	"""Animating the card when mouse is hovered over it"""
+	
 	if drag_state != DragState.RESTING:
 		return
+	
 	if not touched:
 		update_base_position()
 		touched = true
-	if tween:
-		tween.kill()
-	tween = create_tween()
-	tween.tween_property(card_button, "position", base_position - Vector2(0, hover_height), animation_length).set_trans(animation_trans)
+	
+	animate_to_position(base_position - Vector2(0, hover_height), animation_trans, animation_length)
 
 func _on_mouse_exited() -> void:
 	"""Animating the card when mouse leaves it"""
+	
 	if drag_state != DragState.RESTING:
 		return
+	
+	animate_to_position(base_position, animation_trans, animation_length)
+
+
+func animate_to_position(pos, trans_type, length, ease_type = Tween.EASE_IN_OUT):
 	if tween:
 		tween.kill()
+	
 	tween = create_tween()
-	tween.tween_property(card_button, "position", base_position, animation_length).set_trans(animation_trans)
+	tween.tween_property(card_button, "position", pos, length).set_trans(trans_type).set_ease(ease_type)
 
 
 func _on_card_button_button_down() -> void:
