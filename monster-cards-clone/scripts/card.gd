@@ -15,12 +15,10 @@ var drag_state : DragState = DragState.RESTING
 var tween: Tween
 
 func _process(_delta: float) -> void:
-	
 	if drag_state == DragState.DRAGGING:
 		card_button.global_position = get_global_mouse_position() - card_button.size/2
 
 func _input(event: InputEvent) -> void:
-	
 	if event.is_action_released("click") and drag_state == DragState.DRAGGING:
 		drag_state = DragState.FINISHING_DRAGGING
 		
@@ -37,7 +35,6 @@ func update_base_position():
 
 func _on_mouse_entered() -> void:
 	"""Animating the card when mouse is hovered over it"""
-	
 	if drag_state != DragState.RESTING:
 		return
 	
@@ -49,7 +46,6 @@ func _on_mouse_entered() -> void:
 
 func _on_mouse_exited() -> void:
 	"""Animating the card when mouse leaves it"""
-	
 	if drag_state != DragState.RESTING:
 		return
 	
