@@ -1,7 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://d2efqpfk6vwcm"]
+[gd_scene load_steps=4 format=3 uid="uid://d2efqpfk6vwcm"]
 
 [ext_resource type="Script" uid="uid://052i7e5dlcs" path="res://scripts/card_hand.gd" id="1_vvs6b"]
 [ext_resource type="PackedScene" uid="uid://riqyg25s6tq2" path="res://Scenes/card_front.tscn" id="2_ss82o"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vvs6b"]
+size = Vector2(65, 91)
 
 [node name="CardHand" type="Control"]
 custom_minimum_size = Vector2(65, 91)
@@ -17,17 +20,24 @@ offset_right = 32.5
 offset_bottom = 45.5
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 script = ExtResource("1_vvs6b")
-hover_height = null
 animation_length = 0.15
 animation_trans = 2
-dragback_time = null
-dragback_trans = null
-dragback_ease = null
 
 [node name="CardFront" parent="." instance=ExtResource("2_ss82o")]
 layout_mode = 1
 
+[node name="Area2D" type="Area2D" parent="CardFront"]
+position = Vector2(32.5, 45.5)
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CardFront/Area2D"]
+shape = SubResource("RectangleShape2D_vvs6b")
+
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
 [connection signal="button_down" from="CardFront" to="." method="_on_card_front_button_down"]
+[connection signal="area_entered" from="CardFront/Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="area_exited" from="CardFront/Area2D" to="." method="_on_area_2d_area_exited"]

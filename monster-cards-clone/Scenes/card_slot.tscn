@@ -1,6 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://ct317gmjddic1"]
+[gd_scene load_steps=3 format=3 uid="uid://ct317gmjddic1"]
 
 [ext_resource type="Script" uid="uid://b5r3jibev8gde" path="res://scripts/card_slot.gd" id="1_2yd5i"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2yd5i"]
+size = Vector2(65, 91)
 
 [node name="CardSlot" type="Control"]
 custom_minimum_size = Vector2(65, 91)
@@ -20,6 +23,13 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 script = ExtResource("1_2yd5i")
 
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2(32.5, 45.5)
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_2yd5i")
+
 [node name="TextureButton" type="TextureButton" parent="."]
 custom_minimum_size = Vector2(65, 91)
 layout_mode = 1
@@ -33,12 +43,20 @@ mouse_filter = 1
 [node name="ColorRect" type="ColorRect" parent="TextureButton"]
 custom_minimum_size = Vector2(65, 91)
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.5
+offset_top = -45.5
+offset_right = 32.5
+offset_bottom = 45.5
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 color = Color(1, 1, 1, 0.1764706)
 
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="gui_input" from="TextureButton/ColorRect" to="." method="_on_color_rect_gui_input"]

@@ -6,17 +6,30 @@
 [ext_resource type="PackedScene" uid="uid://dtpst7jgrdpqq" path="res://Scenes/card_slot_container.tscn" id="5_dun80"]
 [ext_resource type="PackedScene" uid="uid://syfm2kspvm70" path="res://Scenes/player.tscn" id="5_dxjtj"]
 
-[node name="Battle" type="Node2D"]
+[node name="Board" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_xiot5")
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="CardSlotContainer" parent="." instance=ExtResource("5_dun80")]
+layout_mode = 1
+anchors_preset = 15
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
 
-[node name="HandLayer" type="CanvasLayer" parent="."]
-
-[node name="Hand" parent="HandLayer" instance=ExtResource("2_shhme")]
+[node name="Hand" parent="." instance=ExtResource("2_shhme")]
+layout_mode = 1
+offset_top = -131.0
+theme_override_constants/margin_bottom = 40
 
 [node name="Icon" type="Sprite2D" parent="."]
-position = Vector2(420, 229)
+position = Vector2(-26, 161)
 texture = ExtResource("4_cp8jt")
 
 [node name="PlayerHandler" parent="." instance=ExtResource("5_dxjtj")]
@@ -28,12 +41,11 @@ offset_right = 482.0
 offset_bottom = -27.0
 
 [node name="DamageButton" type="CheckButton" parent="."]
+layout_mode = 0
 offset_left = -393.0
 offset_top = 178.0
 offset_right = -347.0
 offset_bottom = 211.0
-
-[node name="CardSlotContainer" parent="." instance=ExtResource("5_dun80")]
 
 [connection signal="toggled" from="DamageButton" to="PlayerHandler" method="_on_check_button_toggled"]
 
