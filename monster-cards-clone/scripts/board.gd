@@ -1,8 +1,8 @@
 extends Node2D
 
 var selected_card : Card
-@onready var hand := $HandLayer/Hand
-@onready var player_handler := $PlayerHandler
+@onready var your_player := $YourPlayerHandler
+@onready var hand := your_player.get_node("HandLayer/Hand")
 
 @onready var select_stream : AudioStream = load("res://assets/audio/sounds/select.mp3")
 @onready var deselect_stream : AudioStream = load("res://assets/audio/sounds/deselect.mp3")
@@ -10,11 +10,7 @@ var selected_card : Card
 func _ready() -> void:
 	for card in hand.get_children():
 		card.connect("card_selected", select_card)
-	player_handler.__init__()
-
-func _process(_delta: float) -> void:
-	#print(selected_card)
-	pass
+	your_player.__init__()
 
 func select_card(card):
 	if selected_card == card:
@@ -23,7 +19,7 @@ func select_card(card):
 	else:
 		selected_card = card
 		play_sound_at_card(card, select_stream)
-		
+
 
 func play_sound_at_card(card: Card, sound: AudioStream) -> void:
 	var sound_player = AudioStreamPlayer2D.new()

@@ -5,3 +5,7 @@
 
 [node name="EnemyPlayerHandler" instance=ExtResource("1_26tvg")]
 script = ExtResource("2_bnq1i")
+
+[node name="HealthLabel" parent="." index="0"]
+offset_left = -78.0
+offset_right = 0.0

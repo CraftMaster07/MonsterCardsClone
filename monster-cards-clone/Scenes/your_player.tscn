@@ -1,7 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://dgtx0qw3qwnw3"]
+[gd_scene load_steps=4 format=3 uid="uid://dgtx0qw3qwnw3"]
 
 [ext_resource type="PackedScene" uid="uid://syfm2kspvm70" path="res://scenes/player.tscn" id="1_xttrx"]
 [ext_resource type="Script" uid="uid://dgvx2cxa106nd" path="res://scripts/your_player.gd" id="2_077fb"]
+[ext_resource type="PackedScene" uid="uid://b6obljxfl8pah" path="res://scenes/hand.tscn" id="3_ait2p"]
 
 [node name="YourPlayerHandler" instance=ExtResource("1_xttrx")]
 script = ExtResource("2_077fb")
+
+[node name="HandLayer" type="CanvasLayer" parent="." index="1"]
+
+[node name="Hand" parent="HandLayer" index="0" instance=ExtResource("3_ait2p")]
+script = null
