@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://cfyktcr6rqnlf"]
+[gd_scene load_steps=6 format=3 uid="uid://cfyktcr6rqnlf"]
 
 [ext_resource type="Script" uid="uid://ctku11dgwh5at" path="res://scripts/board.gd" id="1_xiot5"]
 [ext_resource type="PackedScene" uid="uid://b6obljxfl8pah" path="res://Scenes/hand.tscn" id="2_shhme"]
 [ext_resource type="Texture2D" uid="uid://ctqv487eubdiu" path="res://icon.svg" id="4_cp8jt"]
+[ext_resource type="PackedScene" uid="uid://dtpst7jgrdpqq" path="res://Scenes/card_slot_container.tscn" id="5_dun80"]
 [ext_resource type="PackedScene" uid="uid://syfm2kspvm70" path="res://Scenes/player.tscn" id="5_dxjtj"]
 
 [node name="Battle" type="Node2D"]
@@ -20,11 +21,19 @@ texture = ExtResource("4_cp8jt")
 
 [node name="PlayerHandler" parent="." instance=ExtResource("5_dxjtj")]
 
+[node name="HealthLabel" parent="PlayerHandler" index="0"]
+offset_left = 404.0
+offset_top = -50.0
+offset_right = 482.0
+offset_bottom = -27.0
+
 [node name="DamageButton" type="CheckButton" parent="."]
 offset_left = -393.0
 offset_top = 178.0
 offset_right = -347.0
 offset_bottom = 211.0
+
+[node name="CardSlotContainer" parent="." instance=ExtResource("5_dun80")]
 
 [connection signal="toggled" from="DamageButton" to="PlayerHandler" method="_on_check_button_toggled"]
 

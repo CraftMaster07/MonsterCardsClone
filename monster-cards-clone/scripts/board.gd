@@ -33,4 +33,4 @@ func play_sound_at_card(card: Card, sound: AudioStream) -> void:
 	sound_player.stream = sound
 	sound_player.play()
 	sound_player.connect("finished", sound_player.queue_free)
-		
+	
