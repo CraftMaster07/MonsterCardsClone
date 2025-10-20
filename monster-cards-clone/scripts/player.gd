@@ -1,4 +1,5 @@
 extends Node
+class_name Player
 
 var STARTING_HEALTH = 20
 @export var health : int = STARTING_HEALTH
