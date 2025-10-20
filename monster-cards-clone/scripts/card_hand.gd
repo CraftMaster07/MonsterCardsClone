@@ -7,6 +7,8 @@ extends Control
 @onready var base_position : Vector2 = card_front.position
 @onready var area2d := $CardFront/Area2D
 
+signal card_placed(card)
+
 var touched : bool = false
 enum DragState {RESTING, DRAGGING, FINISHING_DRAGGING}
 var drag_state : DragState = DragState.RESTING
@@ -39,6 +41,8 @@ func goto_nearest_overlapping_area():
 	overlapping_slot_areas.sort_custom(area_distance_compare)
 	var target_position := overlapping_slot_areas[0].global_position - size/2
 	animate_to_position(target_position, animation_trans, animation_length, Tween.EASE_IN_OUT, true)
+	tween.tween_callback(card_placed.emit.bind(self))
+	overlapping_slot_areas[0].place_into_area()
 
 func area_distance_compare(area1 : Area2D, area2 : Area2D):
 	if area1.global_position.distance_to(area2d.global_position) < area2.global_position.distance_to(area2d.global_position):
@@ -81,7 +85,8 @@ func _on_card_front_button_down() -> void:
 	drag_state = DragState.DRAGGING
 
 func _on_area_2d_area_entered(area: Area2D) -> void:
-	overlapping_slot_areas.append(area)
+	if not area.taken:
+		overlapping_slot_areas.append(area)
 
 func _on_area_2d_area_exited(area: Area2D) -> void:
 	if area in overlapping_slot_areas:

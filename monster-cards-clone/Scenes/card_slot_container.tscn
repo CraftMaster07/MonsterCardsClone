@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://dtpst7jgrdpqq"]
+[gd_scene load_steps=3 format=3 uid="uid://dtpst7jgrdpqq"]
 
 [ext_resource type="PackedScene" uid="uid://ct317gmjddic1" path="res://Scenes/card_slot.tscn" id="1_ileum"]
+[ext_resource type="Script" uid="uid://brdia574yytmk" path="res://scripts/card_slot_container.gd" id="1_o0xr6"]
 
 [node name="CardSlotContainer" type="MarginContainer"]
 anchors_preset = 8
@@ -12,6 +13,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+script = ExtResource("1_o0xr6")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 2

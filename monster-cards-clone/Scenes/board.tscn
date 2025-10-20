@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://cfyktcr6rqnlf"]
+[gd_scene load_steps=7 format=3 uid="uid://cfyktcr6rqnlf"]
 
 [ext_resource type="Script" uid="uid://ctku11dgwh5at" path="res://scripts/board.gd" id="1_xiot5"]
+[ext_resource type="PackedScene" uid="uid://cru4gfksm3rbh" path="res://Scenes/card_board.tscn" id="2_bh37u"]
 [ext_resource type="PackedScene" uid="uid://b6obljxfl8pah" path="res://Scenes/hand.tscn" id="2_shhme"]
 [ext_resource type="Texture2D" uid="uid://ctqv487eubdiu" path="res://icon.svg" id="4_cp8jt"]
 [ext_resource type="PackedScene" uid="uid://dtpst7jgrdpqq" path="res://Scenes/card_slot_container.tscn" id="5_dun80"]
@@ -14,6 +15,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_xiot5")
+card_board_scene = ExtResource("2_bh37u")
 
 [node name="CardSlotContainer" parent="." instance=ExtResource("5_dun80")]
 layout_mode = 1

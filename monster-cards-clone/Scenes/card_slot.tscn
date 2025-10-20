@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://ct317gmjddic1"]
+[gd_scene load_steps=4 format=3 uid="uid://ct317gmjddic1"]
 
 [ext_resource type="Script" uid="uid://b5r3jibev8gde" path="res://scripts/card_slot.gd" id="1_2yd5i"]
+[ext_resource type="Script" uid="uid://bm1n8bs1aa01n" path="res://scripts/slot_area.gd" id="2_dd0t8"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2yd5i"]
 size = Vector2(65, 91)
@@ -23,11 +24,12 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 script = ExtResource("1_2yd5i")
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="SlotArea" type="Area2D" parent="."]
 position = Vector2(32.5, 45.5)
 collision_layer = 2
+script = ExtResource("2_dd0t8")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SlotArea"]
 shape = SubResource("RectangleShape2D_2yd5i")
 
 [node name="TextureButton" type="TextureButton" parent="."]
@@ -58,5 +60,4 @@ mouse_filter = 1
 color = Color(1, 1, 1, 0.1764706)
 
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
-[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
 [connection signal="gui_input" from="TextureButton/ColorRect" to="." method="_on_color_rect_gui_input"]
