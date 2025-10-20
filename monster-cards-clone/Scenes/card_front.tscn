@@ -1,8 +1,20 @@
-[gd_scene load_steps=4 format=3 uid="uid://riqyg25s6tq2"]
+[gd_scene load_steps=7 format=3 uid="uid://d2efqpfk6vwcm"]
 
-[ext_resource type="Theme" uid="uid://f2a4ylwdbwtx" path="res://main_theme.tres" id="1_pdgic"]
-[ext_resource type="Texture2D" uid="uid://c4ln11h7llq7a" path="res://Assets/sprites/health.png" id="2_f0acn"]
-[ext_resource type="Texture2D" uid="uid://3nx24rqs0j8m" path="res://Assets/sprites/strength.png" id="3_xwycy"]
+[ext_resource type="Theme" uid="uid://f2a4ylwdbwtx" path="res://Assets/Styles/main_theme.tres" id="1_6hjbs"]
+[ext_resource type="Texture2D" uid="uid://dheasb4jh1bio" path="res://Assets/Sprites/icon_sheet.png" id="3_e6po8"]
+[ext_resource type="LabelSettings" uid="uid://u4vhe2mrgnol" path="res://Assets/Styles/card_text_theme.tres" id="5_bnspj"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eumee"]
+atlas = ExtResource("3_e6po8")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e6po8"]
+atlas = ExtResource("3_e6po8")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bnspj"]
+atlas = ExtResource("3_e6po8")
+region = Rect2(16, 0, 16, 16)
 
 [node name="CardFront" type="TextureButton"]
 custom_minimum_size = Vector2(65, 91)
@@ -22,7 +34,7 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 mouse_filter = 1
 mouse_default_cursor_shape = 2
-theme = ExtResource("1_pdgic")
+theme = ExtResource("1_6hjbs")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1
@@ -32,7 +44,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-color = Color(0.304772, 0.515449, 0.777444, 1)
+color = Color(0.058658905, 0.1516783, 0.30782342, 1)
 
 [node name="costTexture" type="TextureRect" parent="."]
 custom_minimum_size = Vector2(20, 20)
@@ -40,10 +52,12 @@ layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -20.0
-offset_bottom = 20.0
+offset_left = -42.0
+offset_top = -5.0
+offset_right = -22.0
+offset_bottom = 15.0
 grow_horizontal = 0
-texture = ExtResource("2_f0acn")
+texture = SubResource("AtlasTexture_eumee")
 
 [node name="costDisplay" type="Label" parent="costTexture"]
 layout_mode = 1
@@ -53,6 +67,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "2"
+label_settings = ExtResource("5_bnspj")
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -64,21 +79,24 @@ anchor_left = 0.9
 anchor_top = 0.9
 anchor_right = 0.9
 anchor_bottom = 0.9
-offset_left = -20.0
-offset_top = -21.0
+offset_left = -54.5
+offset_top = -15.900002
+offset_right = -34.5
+offset_bottom = 5.0999985
 grow_horizontal = 0
 grow_vertical = 0
-texture = ExtResource("3_xwycy")
+texture = SubResource("AtlasTexture_e6po8")
 
 [node name="attackDisplay" type="Label" parent="attackTexture"]
-unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_bottom = -1.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "1"
+label_settings = ExtResource("5_bnspj")
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -90,10 +108,12 @@ anchor_left = 0.1
 anchor_top = 0.9
 anchor_right = 0.1
 anchor_bottom = 0.9
-offset_top = -20.0
-offset_right = 20.0
+offset_left = 38.5
+offset_top = -15.900002
+offset_right = 58.5
+offset_bottom = 4.0999985
 grow_vertical = 0
-texture = ExtResource("2_f0acn")
+texture = SubResource("AtlasTexture_bnspj")
 
 [node name="healthDisplay" type="Label" parent="healthTexture"]
 layout_mode = 1
@@ -103,5 +123,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "2"
+label_settings = ExtResource("5_bnspj")
 horizontal_alignment = 1
 vertical_alignment = 1
