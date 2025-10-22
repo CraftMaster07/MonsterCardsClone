@@ -45,7 +45,7 @@ func _input(event: InputEvent) -> void:
 
 func rest():
 	drag_state = DragState.RESTING
-		
+	
 	if card_front.is_hovered():
 		_on_mouse_entered()
 
@@ -76,7 +76,7 @@ func find_nearest_overlapping_area():
 	
 	return min_area
 
-func goto_slot(slot : CardSlot):
+func goto_slot(slot: CardSlot):
 	"""
 	Moves cardfront to the desired slot, and disables further dragging/selecting
 	(Should be deleted and replaced with a CardBoard afterwords by the board)
@@ -130,7 +130,7 @@ func _on_card_front_button_down() -> void:
 		card_deselected.emit()
 	elif drag_state == DragState.RESTING:
 		drag_state = DragState.DRAGGING
-		$SelectTimer.start()
+		select_timer.start()
 
 func _on_area_2d_area_entered(area: Area2D) -> void:
 	if area is not SlotArea:
