@@ -28,6 +28,10 @@ collision_mask = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CardFront/Area2D"]
 shape = SubResource("RectangleShape2D_vvs6b")
 
+[node name="SelectTimer" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
+
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
 [connection signal="button_down" from="CardFront" to="." method="_on_card_front_button_down"]
