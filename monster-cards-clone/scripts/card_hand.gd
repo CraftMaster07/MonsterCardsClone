@@ -11,7 +11,7 @@ extends Control
 signal card_placed(card, slot)
 
 var touched : bool = false
-enum DragState {RESTING, DRAGGING, FINISHING_DRAGGING}
+enum DragState {RESTING, DRAGGING, UNDRAGABLE}
 var drag_state : DragState = DragState.RESTING
 @export var dragback_time : float = 0.5
 @export var dragback_trans : Tween.TransitionType = Tween.TRANS_ELASTIC
@@ -25,7 +25,7 @@ func _process(_delta: float) -> void:
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_released("click") and drag_state == DragState.DRAGGING:
-		drag_state = DragState.FINISHING_DRAGGING
+		drag_state = DragState.UNDRAGABLE
 		
 		if not overlapping_slot_areas.is_empty():
 			var nearest_area = find_nearest_overlapping_area()
@@ -40,6 +40,7 @@ func _input(event: InputEvent) -> void:
 			_on_mouse_entered()
 
 func find_nearest_overlapping_area():
+	"""Finds the closest area in overlapping_slot_areas to our own area2d and returns it"""
 	if overlapping_slot_areas.is_empty():
 		return null
 	var min_area = overlapping_slot_areas[0]
@@ -52,6 +53,11 @@ func find_nearest_overlapping_area():
 	return min_area
 
 func goto_slot(slot : CardSlot):
+	"""
+	Moves cardfront to the desired slot, and disables further dragging/selecting
+	(Should be deleted and replaced with a CardBoard afterwords by the board)
+	"""
+	drag_state = DragState.UNDRAGABLE
 	var target_position := slot.global_position
 	animate_to_position(target_position, animation_trans, animation_length, Tween.EASE_IN_OUT, true)
 
@@ -78,6 +84,13 @@ func _on_mouse_exited() -> void:
 	animate_to_position(base_position, animation_trans, animation_length)
 
 func animate_to_position(pos, trans_type, length, ease_type = Tween.EASE_IN_OUT, global = false):
+	"""
+	Animate the cardfront to the desired position
+	pos - desired position
+	length - animation length
+	trans_type, ease_type - animation settings
+	global - if this is true, animation will use global position instead of relative
+	"""
 	if tween:
 		tween.kill()
 	
