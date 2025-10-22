@@ -1,6 +1,5 @@
+class_name SlotArea
 extends Area2D
 
+@export var slot : CardSlot
 var taken := false
-
-func place_into_area():
-	taken = true

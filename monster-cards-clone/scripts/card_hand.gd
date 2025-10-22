@@ -1,3 +1,4 @@
+class_name CardHand
 extends Control
 
 @export var hover_height: float = 20
@@ -7,7 +8,7 @@ extends Control
 @onready var base_position : Vector2 = card_front.position
 @onready var area2d := $CardFront/Area2D
 
-signal card_placed(card)
+signal card_placed(card, slot)
 
 var touched : bool = false
 enum DragState {RESTING, DRAGGING, FINISHING_DRAGGING}
@@ -15,7 +16,7 @@ var drag_state : DragState = DragState.RESTING
 @export var dragback_time : float = 0.5
 @export var dragback_trans : Tween.TransitionType = Tween.TRANS_ELASTIC
 @export var dragback_ease : Tween.EaseType = Tween.EASE_OUT
-var overlapping_slot_areas : Array[Area2D]
+var overlapping_slot_areas : Array[SlotArea]
 var tween: Tween
 
 func _process(_delta: float) -> void:
@@ -27,7 +28,8 @@ func _input(event: InputEvent) -> void:
 		drag_state = DragState.FINISHING_DRAGGING
 		
 		if not overlapping_slot_areas.is_empty():
-			goto_nearest_overlapping_area()
+			var nearest_area = find_nearest_overlapping_area()
+			card_placed.emit(self, nearest_area.slot)
 			return
 		
 		animate_to_position(base_position, dragback_trans, dragback_time, dragback_ease)
@@ -37,17 +39,21 @@ func _input(event: InputEvent) -> void:
 		if card_front.is_hovered():
 			_on_mouse_entered()
 
-func goto_nearest_overlapping_area():
-	overlapping_slot_areas.sort_custom(area_distance_compare)
-	var target_position := overlapping_slot_areas[0].global_position - size/2
-	animate_to_position(target_position, animation_trans, animation_length, Tween.EASE_IN_OUT, true)
-	tween.tween_callback(card_placed.emit.bind(self))
-	overlapping_slot_areas[0].place_into_area()
+func find_nearest_overlapping_area():
+	if overlapping_slot_areas.is_empty():
+		return null
+	var min_area = overlapping_slot_areas[0]
+	var min_distance = min_area.global_position.distance_to(area2d.global_position)
+	for area in overlapping_slot_areas.slice(1):
+		var distance = area.global_position.distance_to(area2d.global_position)
+		if distance < min_distance:
+			min_distance = distance
+			min_area = area
+	return min_area
 
-func area_distance_compare(area1 : Area2D, area2 : Area2D):
-	if area1.global_position.distance_to(area2d.global_position) < area2.global_position.distance_to(area2d.global_position):
-		return true
-	return false
+func goto_slot(slot : CardSlot):
+	var target_position := slot.global_position
+	animate_to_position(target_position, animation_trans, animation_length, Tween.EASE_IN_OUT, true)
 
 func update_base_position():
 	"""Updates the base_position variable to the current card_front position"""
@@ -85,6 +91,9 @@ func _on_card_front_button_down() -> void:
 	drag_state = DragState.DRAGGING
 
 func _on_area_2d_area_entered(area: Area2D) -> void:
+	if area is not SlotArea:
+		print_rich("why the [b][color=red]fuck[/color][/b] is this happening")
+		return
 	if not area.taken:
 		overlapping_slot_areas.append(area)
 

@@ -24,10 +24,11 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 script = ExtResource("1_2yd5i")
 
-[node name="SlotArea" type="Area2D" parent="."]
+[node name="SlotArea" type="Area2D" parent="." node_paths=PackedStringArray("slot")]
 position = Vector2(32.5, 45.5)
 collision_layer = 2
 script = ExtResource("2_dd0t8")
+slot = NodePath("..")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SlotArea"]
 shape = SubResource("RectangleShape2D_2yd5i")

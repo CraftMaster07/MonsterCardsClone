@@ -1,5 +1,8 @@
+class_name CardSlot
 extends Control
 
+@onready var slot_area = $SlotArea
 
-func _on_mouse_entered() -> void:
-	print_rich("The mouse just [color=red][shake]entered[/shake][/color] me uwu")
+
+func take():
+	slot_area.taken = true
