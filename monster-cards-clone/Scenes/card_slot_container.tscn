@@ -1,0 +1,31 @@
+[gd_scene load_steps=3 format=3 uid="uid://dtpst7jgrdpqq"]
+
+[ext_resource type="PackedScene" uid="uid://ct317gmjddic1" path="res://Scenes/card_slot.tscn" id="1_ileum"]
+[ext_resource type="Script" uid="uid://brdia574yytmk" path="res://scripts/card_slot_container.gd" id="1_o0xr6"]
+
+[node name="CardSlotContainer" type="MarginContainer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("1_o0xr6")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 15
+
+[node name="CardSlot" parent="HBoxContainer" instance=ExtResource("1_ileum")]
+layout_mode = 2
+
+[node name="CardSlot2" parent="HBoxContainer" instance=ExtResource("1_ileum")]
+layout_mode = 2
+
+[node name="CardSlot3" parent="HBoxContainer" instance=ExtResource("1_ileum")]
+layout_mode = 2
