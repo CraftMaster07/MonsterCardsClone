@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://cfyktcr6rqnlf"]
+[gd_scene load_steps=8 format=3 uid="uid://cfyktcr6rqnlf"]
 
 [ext_resource type="Script" uid="uid://ctku11dgwh5at" path="res://scripts/board.gd" id="1_xiot5"]
 [ext_resource type="PackedScene" uid="uid://cru4gfksm3rbh" path="res://scenes/card_board.tscn" id="2_dun80"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://cjn63si50nhet" path="res://icon.svg" id="4_cp8jt"]
 [ext_resource type="PackedScene" uid="uid://dtpst7jgrdpqq" path="res://scenes/card_slot_container.tscn" id="5_dun80"]
 [ext_resource type="PackedScene" uid="uid://syfm2kspvm70" path="res://scenes/player.tscn" id="5_dxjtj"]
+[ext_resource type="Script" uid="uid://cdhyg6ijnqfcm" path="res://scripts/multiplayer.gd" id="7_c3r7o"]
 
 [node name="Board" type="Control"]
 layout_mode = 3
@@ -30,10 +31,6 @@ layout_mode = 1
 offset_top = -131.0
 theme_override_constants/margin_bottom = 40
 
-[node name="Icon" type="Sprite2D" parent="."]
-position = Vector2(929, 188)
-texture = ExtResource("4_cp8jt")
-
 [node name="PlayerHandler" parent="." instance=ExtResource("5_dxjtj")]
 
 [node name="HealthLabel" parent="PlayerHandler" index="0"]
@@ -42,13 +39,37 @@ offset_top = 164.0
 offset_right = 500.0
 offset_bottom = 187.0
 
-[node name="DamageButton" type="CheckButton" parent="."]
+[node name="HostButton" type="Button" parent="."]
 layout_mode = 0
+offset_left = 7.0
+offset_top = 8.0
+offset_right = 51.0
+offset_bottom = 39.0
+text = "Host"
+
+[node name="JoinButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 46.0
+offset_right = 46.0
+offset_bottom = 77.0
+text = "Join"
+
+[node name="Stuff" type="Node" parent="."]
+
+[node name="Icon" type="Sprite2D" parent="Stuff"]
+position = Vector2(929, 188)
+texture = ExtResource("4_cp8jt")
+
+[node name="DamageButton" type="CheckButton" parent="Stuff"]
 offset_left = 137.0
 offset_top = 255.0
 offset_right = 183.0
 offset_bottom = 288.0
 
-[connection signal="toggled" from="DamageButton" to="PlayerHandler" method="_on_check_button_toggled"]
+[node name="Multiplayer" type="Node" parent="."]
+script = ExtResource("7_c3r7o")
+
+[connection signal="toggled" from="Stuff/DamageButton" to="PlayerHandler" method="_on_check_button_toggled"]
 
 [editable path="PlayerHandler"]
