@@ -36,14 +36,14 @@ func _input(event: InputEvent) -> void:
 		drag_state = DragState.UNDRAGABLE
 		
 		if not overlapping_slot_areas.is_empty():
-			var nearest_area = find_nearest_overlapping_area()
+			var nearest_area = _find_nearest_overlapping_area()
 			card_placed.emit(self, nearest_area.slot)
 			return
 		
-		animate_to_position(base_position, dragback_trans, dragback_time, dragback_ease)
-		tween.tween_callback(rest)
+		_animate_to_position(base_position, dragback_trans, dragback_time, dragback_ease)
+		tween.tween_callback(_rest)
 
-func rest():
+func _rest():
 	drag_state = DragState.RESTING
 	
 	if card_front.is_hovered():
@@ -56,11 +56,11 @@ func select():
 	card_selected.emit(self)
 
 func deselect():
-	animate_to_position(base_position, animation_trans, animation_length)
-	tween.tween_callback(rest)
+	_animate_to_position(base_position, animation_trans, animation_length)
+	tween.tween_callback(_rest)
 	selected = false
 
-func find_nearest_overlapping_area():
+func _find_nearest_overlapping_area():
 	"""Finds the closest area in overlapping_slot_areas to our own area2d and returns it"""
 	if overlapping_slot_areas.is_empty():
 		return null
@@ -83,9 +83,9 @@ func goto_slot(slot: CardSlot):
 	"""
 	drag_state = DragState.UNDRAGABLE
 	var target_position := slot.global_position
-	animate_to_position(target_position, animation_trans, animation_length, Tween.EASE_IN_OUT, true)
+	_animate_to_position(target_position, animation_trans, animation_length, Tween.EASE_IN_OUT, true)
 
-func update_base_position():
+func _update_base_position():
 	"""Updates the base_position variable to the current card_front position"""
 	base_position = card_front.position
 
@@ -95,19 +95,19 @@ func _on_mouse_entered() -> void:
 		return
 	
 	if not touched:
-		update_base_position()
+		_update_base_position()
 		touched = true
 	
-	animate_to_position(base_position - Vector2(0, hover_height), animation_trans, animation_length)
+	_animate_to_position(base_position - Vector2(0, hover_height), animation_trans, animation_length)
 
 func _on_mouse_exited() -> void:
 	"""Animating the card when mouse leaves it"""
 	if drag_state != DragState.RESTING:
 		return
 	
-	animate_to_position(base_position, animation_trans, animation_length)
+	_animate_to_position(base_position, animation_trans, animation_length)
 
-func animate_to_position(pos, trans_type, length, ease_type = Tween.EASE_IN_OUT, global = false):
+func _animate_to_position(pos, trans_type, length, ease_type = Tween.EASE_IN_OUT, global = false):
 	"""
 	Animate the cardfront to the desired position
 	pos - desired position

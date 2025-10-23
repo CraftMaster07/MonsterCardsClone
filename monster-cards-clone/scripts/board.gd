@@ -8,7 +8,7 @@ var selected_card: CardHand = null
 
 func _ready() -> void:
 	for card in hand.get_cards():
-		card.card_placed.connect(place_card_into_slot)
+		card.card_placed.connect(_place_card_into_slot)
 		card.card_selected.connect(select_card)
 		card.card_deselected.connect(deselect_card)
 	
@@ -18,16 +18,16 @@ func _ready() -> void:
 
 func slot_clicked(slot: CardSlot):
 	if selected_card != null:
-		place_card_into_slot(selected_card, slot)
+		_place_card_into_slot(selected_card, slot)
 
-func place_card_into_slot(card: CardHand, slot: CardSlot):
+func _place_card_into_slot(card: CardHand, slot: CardSlot):
 	"""Marks the slot as taken, and starts the animation to move the card into the slot"""
 	print("card placed")
 	slot.take()
 	card.goto_slot(slot)
-	card.tween.tween_callback(replace_cardhand_with_cardboard.bind(card))
+	card.tween.tween_callback(_replace_cardhand_with_cardboard.bind(card))
 
-func replace_cardhand_with_cardboard(card: CardHand):
+func _replace_cardhand_with_cardboard(card: CardHand):
 	"""
 	Replaces the CardHand with a CardBoard object
 	This should be done after the card is moved into a slot
