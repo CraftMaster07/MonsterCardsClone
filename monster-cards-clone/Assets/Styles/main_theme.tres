@@ -1,6 +1,6 @@
 [gd_resource type="Theme" load_steps=2 format=3 uid="uid://f2a4ylwdbwtx"]
 
-[ext_resource type="FontFile" uid="uid://nwofmriumbuv" path="res://Assets/Fonts/VCR_OSD_MONO_1.001.ttf" id="1_iqut4"]
+[ext_resource type="FontFile" uid="uid://nwofmriumbuv" path="res://Assets/fonts/VCR_OSD_MONO_1.001.ttf" id="1_iqut4"]
 
 [resource]
 default_base_scale = 1.5

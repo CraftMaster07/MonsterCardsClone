@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://c1qkabu180wpv"]
 
-[ext_resource type="PackedScene" uid="uid://syfm2kspvm70" path="res://scenes/player.tscn" id="1_26tvg"]
+[ext_resource type="PackedScene" uid="uid://syfm2kspvm70" path="res://Scenes/player.tscn" id="1_26tvg"]
 [ext_resource type="Script" uid="uid://u4wc1jxgs8su" path="res://scripts/enemy_player.gd" id="2_bnq1i"]
 
 [node name="EnemyPlayerHandler" instance=ExtResource("1_26tvg")]
