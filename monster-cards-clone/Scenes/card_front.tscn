@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://b1rfo4m4p3w8h"]
 
 [ext_resource type="Theme" uid="uid://f2a4ylwdbwtx" path="res://Assets/Styles/main_theme.tres" id="1_sgpad"]
-[ext_resource type="Texture2D" uid="uid://dheasb4jh1bio" path="res://Assets/sprites/icon_sheet.png" id="2_3ak4q"]
+[ext_resource type="Texture2D" uid="uid://f38y60f1hbws" path="res://Assets/Sprites/icon_sheet.png" id="2_3ak4q"]
 [ext_resource type="LabelSettings" uid="uid://u4vhe2mrgnol" path="res://Assets/Styles/card_text_theme.tres" id="3_o3uea"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_eumee"]
