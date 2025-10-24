@@ -5,8 +5,8 @@
 [ext_resource type="PackedScene" uid="uid://b6obljxfl8pah" path="res://Scenes/hand.tscn" id="2_shhme"]
 [ext_resource type="Texture2D" uid="uid://cjn63si50nhet" path="res://icon.svg" id="4_cp8jt"]
 [ext_resource type="PackedScene" uid="uid://dtpst7jgrdpqq" path="res://Scenes/card_slot_container.tscn" id="5_dun80"]
-[ext_resource type="PackedScene" uid="uid://syfm2kspvm70" path="res://Scenes/player.tscn" id="5_dxjtj"]
 [ext_resource type="Script" uid="uid://cdhyg6ijnqfcm" path="res://Scripts/multiplayer.gd" id="7_c3r7o"]
+[ext_resource type="PackedScene" uid="uid://dgtx0qw3qwnw3" path="res://Scenes/your_player.tscn" id="8_d8vyx"]
 
 [node name="Board" type="Control"]
 layout_mode = 3
@@ -30,14 +30,6 @@ anchor_bottom = 1.0
 layout_mode = 1
 offset_top = -131.0
 theme_override_constants/margin_bottom = 40
-
-[node name="PlayerHandler" parent="." instance=ExtResource("5_dxjtj")]
-
-[node name="HealthLabel" parent="PlayerHandler" index="0"]
-offset_left = 422.0
-offset_top = 164.0
-offset_right = 500.0
-offset_bottom = 187.0
 
 [node name="HostButton" type="Button" parent="."]
 layout_mode = 0
@@ -67,9 +59,13 @@ offset_top = 255.0
 offset_right = 183.0
 offset_bottom = 288.0
 
-[node name="Multiplayer" type="Node" parent="."]
+[node name="Multiplayer" type="Control" parent="."]
+anchors_preset = 0
+offset_left = 297.0
+offset_top = 290.0
+offset_right = 297.0
+offset_bottom = 290.0
 script = ExtResource("7_c3r7o")
+player_field_scene = ExtResource("8_d8vyx")
 
-[connection signal="toggled" from="Stuff/DamageButton" to="PlayerHandler" method="_on_check_button_toggled"]
-
-[editable path="PlayerHandler"]
+[connection signal="pressed" from="HostButton" to="Multiplayer" method="_on_host_button_pressed"]
