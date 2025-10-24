@@ -14,7 +14,7 @@ signal card_selected(card)
 signal card_deselected()
 
 var touched: bool = false
-enum DragState {RESTING, DRAGGING, UNDRAGABLE}
+enum DragState {RESTING, DRAGGING, UNDRAGGABLE}
 var drag_state: DragState = DragState.RESTING
 var selected: bool = false
 @export var dragback_time : float = 0.5
@@ -33,7 +33,7 @@ func _input(event: InputEvent) -> void:
 			select()
 			return
 		
-		drag_state = DragState.UNDRAGABLE
+		drag_state = DragState.UNDRAGGABLE
 		
 		if not overlapping_slot_areas.is_empty():
 			var nearest_area = _find_nearest_overlapping_area()
@@ -50,7 +50,7 @@ func _rest():
 		_on_mouse_entered()
 
 func select():
-	drag_state = DragState.UNDRAGABLE
+	drag_state = DragState.UNDRAGGABLE
 	card_front.position = base_position - Vector2(0, hover_height)
 	selected = true
 	card_selected.emit(self)
@@ -81,7 +81,7 @@ func goto_slot(slot: CardSlot):
 	Moves cardfront to the desired slot, and disables further dragging/selecting
 	(Should be deleted and replaced with a CardBoard afterwords by the board)
 	"""
-	drag_state = DragState.UNDRAGABLE
+	drag_state = DragState.UNDRAGGABLE
 	var target_position := slot.global_position
 	_animate_to_position(target_position, animation_trans, animation_length, Tween.EASE_IN_OUT, true)
 
@@ -130,6 +130,7 @@ func _on_card_front_button_down() -> void:
 		card_deselected.emit()
 	elif drag_state == DragState.RESTING:
 		drag_state = DragState.DRAGGING
+		card_selected.emit(null)
 		select_timer.start()
 
 func _on_area_2d_area_entered(area: Area2D) -> void:
