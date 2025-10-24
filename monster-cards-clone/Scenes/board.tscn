@@ -1,12 +1,12 @@
 [gd_scene load_steps=8 format=3 uid="uid://cfyktcr6rqnlf"]
 
-[ext_resource type="Script" uid="uid://ctku11dgwh5at" path="res://scripts/board.gd" id="1_xiot5"]
+[ext_resource type="Script" uid="uid://ctku11dgwh5at" path="res://Scripts/board.gd" id="1_xiot5"]
 [ext_resource type="PackedScene" uid="uid://cru4gfksm3rbh" path="res://Scenes/card_board.tscn" id="2_dun80"]
 [ext_resource type="PackedScene" uid="uid://b6obljxfl8pah" path="res://Scenes/hand.tscn" id="2_shhme"]
-[ext_resource type="Texture2D" uid="uid://ctqv487eubdiu" path="res://icon.svg" id="4_cp8jt"]
+[ext_resource type="Texture2D" uid="uid://cjn63si50nhet" path="res://icon.svg" id="4_cp8jt"]
 [ext_resource type="PackedScene" uid="uid://dtpst7jgrdpqq" path="res://Scenes/card_slot_container.tscn" id="5_dun80"]
 [ext_resource type="PackedScene" uid="uid://syfm2kspvm70" path="res://Scenes/player.tscn" id="5_dxjtj"]
-[ext_resource type="Script" uid="uid://cdhyg6ijnqfcm" path="res://scripts/multiplayer.gd" id="7_c3r7o"]
+[ext_resource type="Script" uid="uid://cdhyg6ijnqfcm" path="res://Scripts/multiplayer.gd" id="7_c3r7o"]
 
 [node name="Board" type="Control"]
 layout_mode = 3
@@ -70,6 +70,7 @@ offset_bottom = 288.0
 [node name="Multiplayer" type="Node" parent="."]
 script = ExtResource("7_c3r7o")
 
+[connection signal="pressed" from="HostButton" to="Multiplayer" method="_on_host_button_pressed"]
 [connection signal="toggled" from="Stuff/DamageButton" to="PlayerHandler" method="_on_check_button_toggled"]
 
 [editable path="PlayerHandler"]
