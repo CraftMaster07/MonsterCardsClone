@@ -60,6 +60,4 @@ grow_vertical = 2
 mouse_filter = 1
 color = Color(1, 1, 1, 0.1764706)
 
-[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="pressed" from="TextureButton" to="." method="_on_texture_button_pressed"]
-[connection signal="gui_input" from="TextureButton/ColorRect" to="." method="_on_color_rect_gui_input"]
