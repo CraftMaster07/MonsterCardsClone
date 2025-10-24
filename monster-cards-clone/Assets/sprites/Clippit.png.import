@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://d3fp68gkjunfl"
-path="res://.godot/imported/Clippit.png-502ed4b739e06b5c36efca764316b1df.ctex"
+path="res://.godot/imported/Clippit.png-da869120a6b88380bc38dc207354316b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/Clippit.png"
-dest_files=["res://.godot/imported/Clippit.png-502ed4b739e06b5c36efca764316b1df.ctex"]
+source_file="res://Assets/sprites/Clippit.png"
+dest_files=["res://.godot/imported/Clippit.png-da869120a6b88380bc38dc207354316b.ctex"]
 
 [params]
 
