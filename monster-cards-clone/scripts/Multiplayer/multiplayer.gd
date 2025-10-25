@@ -5,15 +5,16 @@ extends Node
 
 
 var peer = ENetMultiplayerPeer.new()
-const SERVER_IP = "127.0.0.1"
+const SERVER_IP = "147.235.201.54"
 const PORT = 59009
 
 @export var your_field_scene: PackedScene
 @export var enemy_field_scene: PackedScene
-
+@onready var server = get_node("Server")
 
 func _on_host_button_pressed() -> void:
 	disable_buttons()
+	server.start_server()
 
 	peer.create_server(PORT)
 	multiplayer.multiplayer_peer = peer
