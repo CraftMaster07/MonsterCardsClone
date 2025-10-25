@@ -5,9 +5,11 @@ extends Node
 
 
 var peer = ENetMultiplayerPeer.new()
-var PORT = 59009
+const SERVER_IP = "127.0.0.1"
+const PORT = 59009
 
-@export var player_field_scene: PackedScene
+@export var your_field_scene: PackedScene
+@export var enemy_field_scene: PackedScene
 
 
 func _on_host_button_pressed() -> void:
@@ -16,8 +18,31 @@ func _on_host_button_pressed() -> void:
 	peer.create_server(PORT)
 	multiplayer.multiplayer_peer = peer
 
-	var your_player_scene = player_field_scene.instantiate()
+	multiplayer.peer_connected.connect(_on_peer_connected)
+	multiplayer.peer_disconnected.connect(_on_player_disconnected)
+
+	var your_player_scene = your_field_scene.instantiate()
 	add_child(your_player_scene)
+
+
+func _on_join_button_pressed() -> void:
+	disable_buttons()
+
+	peer.create_client(SERVER_IP, PORT)
+	multiplayer.multiplayer_peer = peer
+
+	var enemy_scene = enemy_field_scene.instantiate()
+	add_child(enemy_scene)
+
+
+func _on_peer_connected(id):
+	print("peer connected: ", id)
+	var enemy_scene = enemy_field_scene.instantiate()
+	add_child(enemy_scene)
+
+
+func _on_player_disconnected(id):
+	print("peer disconnected: ", id)
 
 
 func disable_buttons():
@@ -25,4 +50,3 @@ func disable_buttons():
 	host_button.visible = false
 	join_button.disabled = true
 	join_button.visible = false
-	

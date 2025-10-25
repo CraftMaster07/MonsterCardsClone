@@ -7,5 +7,7 @@
 script = ExtResource("2_bnq1i")
 
 [node name="HealthLabel" parent="." index="0"]
-offset_left = -78.0
-offset_right = 0.0
+offset_left = 3.0
+offset_top = 40.0
+offset_right = 81.0
+offset_bottom = 63.0
