@@ -41,7 +41,9 @@ func select_card(card: CardHand):
 	if selected_card != null:
 		selected_card.deselect()
 	selected_card = card
+	print("card selected")
 
 func deselect_card():
-	selected_card.deselect()
-	selected_card = null
+	if selected_card != null:
+		selected_card.deselect()
+		selected_card = null
