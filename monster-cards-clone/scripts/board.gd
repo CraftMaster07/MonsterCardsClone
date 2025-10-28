@@ -20,12 +20,14 @@ func slot_clicked(slot: CardSlot):
 	if selected_card != null:
 		_place_card_into_slot(selected_card, slot)
 
+
 func _place_card_into_slot(card: CardHand, slot: CardSlot):
 	"""Marks the slot as taken, and starts the animation to move the card into the slot"""
 	print("card placed")
 	slot.take()
 	card.goto_slot(slot)
 	card.tween.tween_callback(_replace_cardhand_with_cardboard.bind(card))
+
 
 func _replace_cardhand_with_cardboard(card: CardHand):
 	"""
@@ -37,11 +39,13 @@ func _replace_cardhand_with_cardboard(card: CardHand):
 	new_card_board.global_position = card.card_front.global_position
 	card.queue_free()
 
+
 func select_card(card: CardHand):
 	if selected_card != null:
 		selected_card.deselect()
 	selected_card = card
 	print("card selected")
+
 
 func deselect_card():
 	if selected_card != null:
