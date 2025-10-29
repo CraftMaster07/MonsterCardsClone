@@ -27,10 +27,14 @@ func _process(_delta: float) -> void:
 	if drag_state == DragState.DRAGGING:
 		card_front.global_position = get_global_mouse_position() - card_front.size/2
 
+
 func _input(event: InputEvent) -> void:
 	if event.is_action_released("click") and drag_state == DragState.DRAGGING:
 		if not select_timer.is_stopped():
-			select()
+			if selected:
+				deselect()
+			else:
+				select()
 			return
 		
 		drag_state = DragState.UNDRAGGABLE
@@ -43,22 +47,29 @@ func _input(event: InputEvent) -> void:
 		_animate_to_position(base_position, dragback_trans, dragback_time, dragback_ease)
 		tween.tween_callback(_rest)
 
+
 func _rest():
 	drag_state = DragState.RESTING
 	
 	if card_front.is_hovered():
 		_on_mouse_entered()
 
+
 func select():
-	drag_state = DragState.UNDRAGGABLE
+	drag_state = DragState.RESTING
 	card_front.position = base_position - Vector2(0, hover_height)
 	selected = true
 	card_selected.emit(self)
 
+
 func deselect():
+	if not selected:
+		return
 	_animate_to_position(base_position, animation_trans, animation_length)
 	tween.tween_callback(_rest)
 	selected = false
+	card_deselected.emit()
+
 
 func _find_nearest_overlapping_area():
 	"""Finds the closest area in overlapping_slot_areas to our own area2d and returns it"""
@@ -76,6 +87,7 @@ func _find_nearest_overlapping_area():
 	
 	return min_area
 
+
 func goto_slot(slot: CardSlot):
 	"""
 	Moves cardfront to the desired slot, and disables further dragging/selecting
@@ -85,9 +97,11 @@ func goto_slot(slot: CardSlot):
 	var target_position := slot.global_position
 	_animate_to_position(target_position, animation_trans, animation_length, Tween.EASE_IN_OUT, true)
 
+
 func _update_base_position():
 	"""Updates the base_position variable to the current card_front position"""
 	base_position = card_front.position
+
 
 func _on_mouse_entered() -> void:
 	"""Animating the card when mouse is hovered over it"""
@@ -100,12 +114,14 @@ func _on_mouse_entered() -> void:
 	
 	_animate_to_position(base_position - Vector2(0, hover_height), animation_trans, animation_length)
 
+
 func _on_mouse_exited() -> void:
 	"""Animating the card when mouse leaves it"""
 	if drag_state != DragState.RESTING:
 		return
 	
 	_animate_to_position(base_position, animation_trans, animation_length)
+
 
 func _animate_to_position(pos, trans_type, length, ease_type = Tween.EASE_IN_OUT, global = false):
 	"""
@@ -125,21 +141,23 @@ func _animate_to_position(pos, trans_type, length, ease_type = Tween.EASE_IN_OUT
 	else:
 		tween.tween_property(card_front, "position", pos, length).set_trans(trans_type).set_ease(ease_type)
 
+
 func _on_card_front_button_down() -> void:
-	if selected:
-		card_deselected.emit()
-	elif drag_state == DragState.RESTING:
+	if drag_state == DragState.RESTING:
 		drag_state = DragState.DRAGGING
-		card_selected.emit(null)
+		selected = false
+		card_deselected.emit()
 		select_timer.start()
+
 
 func _on_area_2d_area_entered(area: Area2D) -> void:
 	if area is not SlotArea:
 		print_rich("why the [b][color=red]fuck[/color][/b] is this happening")
 		return
-	
+		
 	if not area.taken:
 		overlapping_slot_areas.append(area)
+
 
 func _on_area_2d_area_exited(area: Area2D) -> void:
 	if area in overlapping_slot_areas:
