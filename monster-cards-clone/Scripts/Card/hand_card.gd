@@ -141,6 +141,18 @@ func _animate_to_position(pos, trans_type, length, ease_type = Tween.EASE_IN_OUT
 	else:
 		tween.tween_property(card_front, "position", pos, length).set_trans(trans_type).set_ease(ease_type)
 
+func scale_card(target_scale: Vector2, trans_type = animation_trans, length = animation_length, ease_type = Tween.EASE_OUT):
+	"""
+	Animate the card_front to the desired scale
+	target_scale - desired scale (e.g., Vector2(1.2, 1.2) for 20% larger)
+	length - animation length
+	trans_type, ease_type - animation settings
+	"""
+	if tween:
+		tween.kill()
+	
+	tween = create_tween()
+	tween.tween_property(card_front, "scale", target_scale, length).set_trans(trans_type).set_ease(ease_type)
 
 func _on_card_front_button_down() -> void:
 	if drag_state == DragState.RESTING:

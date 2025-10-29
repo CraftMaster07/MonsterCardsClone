@@ -1,7 +1,8 @@
 [gd_scene load_steps=3 format=3 uid="uid://dtpst7jgrdpqq"]
 
-[ext_resource type="PackedScene" uid="uid://ct317gmjddic1" path="res://Scenes/card_slot.tscn" id="1_ileum"]
-[ext_resource type="Script" uid="uid://brdia574yytmk" path="res://Scripts/card_slot_container.gd" id="1_o0xr6"]
+[ext_resource type="PackedScene" uid="uid://ct317gmjddic1" path="res://Scenes/Board/card_slot.tscn" id="1_ileum"]
+[ext_resource type="Script" uid="uid://brdia574yytmk" path="res://Scripts/Board/card_slot_container.gd" id="1_o0xr6"]
+
 
 [node name="CardSlotContainer" type="MarginContainer"]
 anchors_preset = 8
