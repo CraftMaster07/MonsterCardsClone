@@ -51,3 +51,4 @@ func deselect_card():
 	if selected_card != null:
 		selected_card.deselect()
 		selected_card = null
+		print("card deselected")

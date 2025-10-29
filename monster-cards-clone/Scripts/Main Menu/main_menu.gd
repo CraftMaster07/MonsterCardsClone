@@ -20,7 +20,7 @@ func _on_deck_button_pressed() -> void:
 
 func _on_play_button_pressed() -> void:
 	print("play button pressed")
-	get_tree().change_scene_to_file("res://Scenes/board.tscn")
+	get_tree().change_scene_to_file("res://Scenes/Board/board.tscn")
 
 
 func _on_settings_button_pressed() -> void:

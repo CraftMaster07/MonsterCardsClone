@@ -8,6 +8,8 @@ extends Control
 @onready var base_position: Vector2 = card_front.position
 @onready var area2d := $CardFront/Area2D
 @onready var select_timer := $SelectTimer
+@onready var sfx_select: AudioStreamPlayer = $sfx_select
+@onready var sfx_deselect: AudioStreamPlayer = $sfx_deselect
 
 signal card_placed(card, slot)
 signal card_selected(card)
@@ -60,6 +62,7 @@ func select():
 	card_front.position = base_position - Vector2(0, hover_height)
 	selected = true
 	card_selected.emit(self)
+	sfx_select.play()
 
 
 func deselect():
@@ -69,6 +72,7 @@ func deselect():
 	tween.tween_callback(_rest)
 	selected = false
 	card_deselected.emit()
+	sfx_deselect.play()
 
 
 func _find_nearest_overlapping_area():
@@ -158,7 +162,6 @@ func _on_card_front_button_down() -> void:
 	if drag_state == DragState.RESTING:
 		drag_state = DragState.DRAGGING
 		selected = false
-		card_deselected.emit()
 		select_timer.start()
 
 
