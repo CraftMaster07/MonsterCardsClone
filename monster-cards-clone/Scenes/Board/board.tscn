@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://cfyktcr6rqnlf"]
+[gd_scene load_steps=14 format=3 uid="uid://cfyktcr6rqnlf"]
 
 [ext_resource type="Script" uid="uid://ctku11dgwh5at" path="res://Scripts/Board/board.gd" id="1_xiot5"]
 [ext_resource type="PackedScene" uid="uid://cru4gfksm3rbh" path="res://Scenes/Card/board_card.tscn" id="2_dun80"]
@@ -11,6 +11,8 @@
 [ext_resource type="PackedScene" uid="uid://e6snevg8wab5" path="res://Scenes/Multiplayer/client.tscn" id="9_vjsom"]
 [ext_resource type="PackedScene" uid="uid://df0cdsnis371" path="res://Scenes/Multiplayer/Server.tscn" id="10_upw65"]
 [ext_resource type="AudioStream" uid="uid://cgatasovfxoyl" path="res://Assets/Audio/Sounds/place_card.mp3" id="11_gti8d"]
+[ext_resource type="AudioStream" uid="uid://02oc0voj62j3" path="res://Assets/Audio/Sounds/select_card.mp3" id="12_brcfe"]
+[ext_resource type="AudioStream" uid="uid://ch7jr0gor48sm" path="res://Assets/Audio/Sounds/deselect_card.mp3" id="13_csi2d"]
 
 [node name="Board" type="Control"]
 layout_mode = 3
@@ -77,6 +79,12 @@ server_scene = ExtResource("10_upw65")
 
 [node name="sfx_place" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("11_gti8d")
+
+[node name="sfx_select" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("12_brcfe")
+
+[node name="sfx_deselect" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("13_csi2d")
 
 [connection signal="pressed" from="HostButton" to="Multiplayer" method="_on_host_button_pressed"]
 [connection signal="pressed" from="JoinButton" to="Multiplayer" method="_on_join_button_pressed"]

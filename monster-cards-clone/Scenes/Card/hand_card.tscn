@@ -1,9 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://d2efqpfk6vwcm"]
+[gd_scene load_steps=4 format=3 uid="uid://d2efqpfk6vwcm"]
 
 [ext_resource type="Script" uid="uid://052i7e5dlcs" path="res://Scripts/Card/hand_card.gd" id="1_vvs6b"]
 [ext_resource type="PackedScene" uid="uid://b1rfo4m4p3w8h" path="res://Scenes/Card/card_front.tscn" id="2_ss82o"]
-[ext_resource type="AudioStream" uid="uid://02oc0voj62j3" path="res://Assets/Audio/Sounds/select_card.mp3" id="3_s0gyr"]
-[ext_resource type="AudioStream" uid="uid://ch7jr0gor48sm" path="res://Assets/Audio/Sounds/deselect_card.mp3" id="4_reqqn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vvs6b"]
 size = Vector2(65, 91)
@@ -33,12 +31,6 @@ shape = SubResource("RectangleShape2D_vvs6b")
 [node name="SelectTimer" type="Timer" parent="."]
 wait_time = 0.2
 one_shot = true
-
-[node name="sfx_select" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("3_s0gyr")
-
-[node name="sfx_deselect" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("4_reqqn")
 
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

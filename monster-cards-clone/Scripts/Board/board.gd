@@ -4,6 +4,8 @@ extends Control
 @onready var card_slot_container := $CardSlotContainer
 @export var card_board_scene: PackedScene
 @onready var sfx_place: AudioStreamPlayer = $sfx_place
+@onready var sfx_select: AudioStreamPlayer = $sfx_select
+@onready var sfx_deselect: AudioStreamPlayer = $sfx_deselect
 
 var selected_card: HandCard = null
 
@@ -43,13 +45,17 @@ func _replace_handcard_with_boardcard(card: HandCard):
 
 
 func select_card(card: HandCard):
-	if selected_card != null:
-		selected_card.deselect()
+	if selected_card != null and selected_card != card:
+		var old_card = selected_card
+		selected_card = null
+		old_card.deselect()
 	selected_card = card
+	sfx_select.play()
 	print("card selected")
 
 
 func deselect_card():
 	if selected_card != null:
+		sfx_deselect.play()
 		selected_card = null
 		print("card deselected")
