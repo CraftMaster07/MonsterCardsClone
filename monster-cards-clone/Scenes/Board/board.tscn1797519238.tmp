@@ -10,7 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://c1qkabu180wpv" path="res://Scenes/Players/enemy_player.tscn" id="8_vw4oq"]
 [ext_resource type="PackedScene" uid="uid://e6snevg8wab5" path="res://Scenes/Multiplayer/client.tscn" id="9_vjsom"]
 [ext_resource type="PackedScene" uid="uid://df0cdsnis371" path="res://Scenes/Multiplayer/Server.tscn" id="10_upw65"]
-[ext_resource type="AudioStream" uid="uid://cgatasovfxoyl" path="res://Assets/Audio/Sounds/place_card.mp3" id="11_gti8d"]
+[ext_resource type="AudioStream" uid="uid://02oc0voj62j3" path="res://Assets/Audio/Sounds/select_card.mp3" id="11_gti8d"]
 
 [node name="Board" type="Control"]
 layout_mode = 3

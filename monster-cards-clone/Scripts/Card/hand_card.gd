@@ -1,4 +1,4 @@
-class_name CardHand
+class_name HandCard
 extends Control
 
 @export var hover_height: float = 20
@@ -95,7 +95,7 @@ func _find_nearest_overlapping_area():
 func goto_slot(slot: CardSlot):
 	"""
 	Moves cardfront to the desired slot, and disables further dragging/selecting
-	(Should be deleted and replaced with a CardBoard afterwords by the board)
+	(Should be deleted and replaced with a BoardCard afterwords by the board)
 	"""
 	drag_state = DragState.UNDRAGGABLE
 	var target_position := slot.global_position
@@ -161,7 +161,6 @@ func scale_card(target_scale: Vector2, trans_type = animation_trans, length = an
 func _on_card_front_button_down() -> void:
 	if drag_state == DragState.RESTING:
 		drag_state = DragState.DRAGGING
-		selected = false
 		select_timer.start()
 
 
@@ -169,7 +168,7 @@ func _on_area_2d_area_entered(area: Area2D) -> void:
 	if area is not SlotArea:
 		print_rich("why the [b][color=red]fuck[/color][/b] is this happening")
 		return
-		
+	
 	if not area.taken:
 		overlapping_slot_areas.append(area)
 

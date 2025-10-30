@@ -3,8 +3,9 @@ extends Control
 @onready var hand := $Hand
 @onready var card_slot_container := $CardSlotContainer
 @export var card_board_scene: PackedScene
+@onready var sfx_place: AudioStreamPlayer = $sfx_place
 
-var selected_card: CardHand = null
+var selected_card: HandCard = null
 
 func _ready() -> void:
 	for card in hand.get_cards():
@@ -21,17 +22,18 @@ func slot_clicked(slot: CardSlot):
 		_place_card_into_slot(selected_card, slot)
 
 
-func _place_card_into_slot(card: CardHand, slot: CardSlot):
+func _place_card_into_slot(card: HandCard, slot: CardSlot):
 	"""Marks the slot as taken, and starts the animation to move the card into the slot"""
-	print("card placed")
 	slot.take()
 	card.goto_slot(slot)
-	card.tween.tween_callback(_replace_cardhand_with_cardboard.bind(card))
+	card.tween.tween_callback(_replace_handcard_with_boardcard.bind(card))
+	sfx_place.play()
+	print("card placed")
 
 
-func _replace_cardhand_with_cardboard(card: CardHand):
+func _replace_handcard_with_boardcard(card: HandCard):
 	"""
-	Replaces the CardHand with a CardBoard object
+	Replaces the HandCard with a BoardCard object
 	This should be done after the card is moved into a slot
 	"""
 	var new_card_board := card_board_scene.instantiate()
@@ -40,7 +42,7 @@ func _replace_cardhand_with_cardboard(card: CardHand):
 	card.queue_free()
 
 
-func select_card(card: CardHand):
+func select_card(card: HandCard):
 	if selected_card != null:
 		selected_card.deselect()
 	selected_card = card
@@ -49,6 +51,5 @@ func select_card(card: CardHand):
 
 func deselect_card():
 	if selected_card != null:
-		selected_card.deselect()
 		selected_card = null
 		print("card deselected")
