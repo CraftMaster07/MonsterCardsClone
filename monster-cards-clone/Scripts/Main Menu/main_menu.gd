@@ -34,3 +34,10 @@ func _on_join_button_pressed() -> void:
 	if HostMenu.visible:
 		HostMenu.visible = false
 	JoinMenu.visible = true
+
+func _on_host_start_button_pressed() -> void:
+	get_tree().change_scene_to_file("res://Scenes/Board/board.tscn")
+
+
+func _on_join_start_button_pressed() -> void:
+	get_tree().change_scene_to_file("res://Scenes/Board/board.tscn")

@@ -52,7 +52,7 @@ layout_mode = 2
 [node name="HostMenu" type="VBoxContainer" parent="PlayMenuContainer/HBoxContainer"]
 layout_mode = 2
 
-[node name="StartButton" type="Button" parent="PlayMenuContainer/HBoxContainer/HostMenu"]
+[node name="HostStartButton" type="Button" parent="PlayMenuContainer/HBoxContainer/HostMenu"]
 layout_mode = 2
 text = "Start"
 
@@ -65,7 +65,7 @@ custom_minimum_size = Vector2(200, 40)
 layout_mode = 2
 placeholder_text = "Insert IP"
 
-[node name="Button" type="Button" parent="PlayMenuContainer/HBoxContainer/JoinMenu"]
+[node name="JoinStartButton" type="Button" parent="PlayMenuContainer/HBoxContainer/JoinMenu"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -132,6 +132,8 @@ text = "monster cards clone"
 
 [connection signal="pressed" from="PlayMenuContainer/HBoxContainer/VBoxContainer/HostButton" to="." method="_on_host_button_pressed"]
 [connection signal="pressed" from="PlayMenuContainer/HBoxContainer/VBoxContainer/JoinButton" to="." method="_on_join_button_pressed"]
+[connection signal="pressed" from="PlayMenuContainer/HBoxContainer/HostMenu/HostStartButton" to="." method="_on_host_start_button_pressed"]
+[connection signal="pressed" from="PlayMenuContainer/HBoxContainer/JoinMenu/JoinStartButton" to="." method="_on_join_start_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/IdkButton" to="." method="_on_idk_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/DeckButton" to="." method="_on_deck_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/PlayButton" to="." method="_on_play_button_pressed"]
