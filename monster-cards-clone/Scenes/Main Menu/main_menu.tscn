@@ -3,7 +3,7 @@
 [ext_resource type="FontFile" uid="uid://b13kiadbfhetg" path="res://Assets/Fonts/VCR_OSD_MONO_1.001.ttf" id="1_28flt"]
 [ext_resource type="Script" uid="uid://bxc7py0b1ykhx" path="res://Scripts/Main Menu/main_menu.gd" id="1_48xlc"]
 
-[node name="MainMenu" type="Control" node_paths=PackedStringArray("PlayMenuContainer")]
+[node name="MainMenu" type="Control" node_paths=PackedStringArray("PlayMenuContainer", "HostMenu", "JoinMenu")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -14,8 +14,11 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_48xlc")
 PlayMenuContainer = NodePath("PlayMenuContainer")
+HostMenu = NodePath("PlayMenuContainer/HBoxContainer/HostMenu")
+JoinMenu = NodePath("PlayMenuContainer/HBoxContainer/JoinMenu")
 
 [node name="PlayMenuContainer" type="MarginContainer" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -23,19 +26,49 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PlayMenuContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="PlayMenuContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PlayMenuContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_constants/separation = 25
 
-[node name="HostButton" type="Button" parent="PlayMenuContainer/VBoxContainer"]
+[node name="HostButton" type="Button" parent="PlayMenuContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
-text = "host"
+text = "Host"
 
-[node name="JoinButton" type="Button" parent="PlayMenuContainer/VBoxContainer"]
+[node name="JoinButton" type="Button" parent="PlayMenuContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
-text = "join"
+text = "Join"
+
+[node name="VSeparator" type="VSeparator" parent="PlayMenuContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="HostMenu" type="VBoxContainer" parent="PlayMenuContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="StartButton" type="Button" parent="PlayMenuContainer/HBoxContainer/HostMenu"]
+layout_mode = 2
+text = "Start"
+
+[node name="JoinMenu" type="VBoxContainer" parent="PlayMenuContainer/HBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="TextEdit" type="TextEdit" parent="PlayMenuContainer/HBoxContainer/JoinMenu"]
+custom_minimum_size = Vector2(200, 40)
+layout_mode = 2
+placeholder_text = "Insert IP"
+
+[node name="Button" type="Button" parent="PlayMenuContainer/HBoxContainer/JoinMenu"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Start"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 1
@@ -96,6 +129,8 @@ theme_override_fonts/font = ExtResource("1_28flt")
 theme_override_font_sizes/font_size = 51
 text = "monster cards clone"
 
+[connection signal="pressed" from="PlayMenuContainer/HBoxContainer/VBoxContainer/HostButton" to="." method="_on_host_button_pressed"]
+[connection signal="pressed" from="PlayMenuContainer/HBoxContainer/VBoxContainer/JoinButton" to="." method="_on_join_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/IdkButton" to="." method="_on_idk_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/DeckButton" to="." method="_on_deck_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/PlayButton" to="." method="_on_play_button_pressed"]
