@@ -6,9 +6,14 @@ connecting signals, and instantiating the necessary game scenes (fields)
 based on the player's role (host or joiner).
 """
 
-@onready var host_button = get_parent().get_node("HostButton")
-@onready var join_button = get_parent().get_node("JoinButton")
+signal start_game()
 
+# Scene to instantiate for the local player's game area (e.g., your board).
+@export var your_field_scene: PackedScene
+# Scene to instantiate for the remote player's game area (e.g., the enemy board).
+@export var enemy_field_scene: PackedScene
+@export var client_scene: PackedScene
+@export var server_scene: PackedScene
 
 var peer = ENetMultiplayerPeer.new()
 # The hardcoded IP address of the server/host.
@@ -16,13 +21,8 @@ const SERVER_IP = "147.235.201.54"
 # The network port used for communication.
 const PORT = 59009
 
-# Scene to instantiate for the local player's game area (e.g., your board).
-@export var your_field_scene: PackedScene
-# Scene to instantiate for the remote player's game area (e.g., the enemy board).
-@export var enemy_field_scene: PackedScene
-
-@export var client_scene: PackedScene
-@export var server_scene: PackedScene
+@onready var host_button = get_parent().get_node("HostButton")
+@onready var join_button = get_parent().get_node("JoinButton")
 
 
 func _on_host_button_pressed() -> void:
@@ -86,3 +86,7 @@ func disable_buttons():
 	host_button.visible = false
 	join_button.disabled = true
 	join_button.visible = false
+
+
+func start_game():
+	start_game.emit()

@@ -1,3 +1,4 @@
+class_name Board
 extends Control
 
 @onready var hand := $Hand
