@@ -22,7 +22,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_xiot5")
-card_board_scene = ExtResource("2_dun80")
+board_card_scene = ExtResource("2_dun80")
 
 [node name="CardSlotContainer" parent="." instance=ExtResource("5_dun80")]
 layout_mode = 1
