@@ -8,6 +8,7 @@ extends Control
 @onready var base_position: Vector2 = card_front.position
 @onready var area2d := $CardFront/Area2D
 @onready var select_timer := $SelectTimer
+@onready var sfx_hover: AudioStreamPlayer = $sfx_hover
 
 signal card_placed(card, slot)
 signal card_selected(card)
@@ -113,6 +114,7 @@ func _on_mouse_entered() -> void:
 		touched = true
 	
 	_animate_to_position(base_position - Vector2(0, hover_height), animation_trans, animation_length)
+	sfx_hover.play()
 
 
 func _on_mouse_exited() -> void:

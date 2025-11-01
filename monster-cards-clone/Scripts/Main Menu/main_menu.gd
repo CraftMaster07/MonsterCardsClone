@@ -4,7 +4,6 @@ extends Control
 @export var HostMenu: Control
 @export var JoinMenu: Control
 
-
 func _on_idk_button_pressed() -> void:
 	print("why would you press this?")
 
