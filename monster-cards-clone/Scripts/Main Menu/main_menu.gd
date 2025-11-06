@@ -1,6 +1,7 @@
 extends Control
 
 @export var PlayMenuContainer: Control
+@export var SettingsMenuContainer: Control
 @export var HostMenu: Control
 @export var JoinMenu: Control
 
@@ -9,20 +10,19 @@ func _on_idk_button_pressed() -> void:
 
 
 func _on_deck_button_pressed() -> void:
-	print("deck button pressed")
+	pass
 
 
 func _on_play_button_pressed() -> void:
-	print("play button pressed")
 	PlayMenuContainer.visible = !PlayMenuContainer.visible
 
 
 func _on_settings_button_pressed() -> void:
 	print("settings button pressed")
+	SettingsMenuContainer.visible = !SettingsMenuContainer.visible
 
 
 func _on_quit_button_pressed() -> void:
-	print_rich("quit button pressed")
 	get_tree().quit()
 
 
