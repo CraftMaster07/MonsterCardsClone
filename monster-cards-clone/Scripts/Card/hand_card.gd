@@ -18,6 +18,7 @@ var touched: bool = false
 enum DragState {RESTING, DRAGGING, UNDRAGGABLE}
 var drag_state: DragState = DragState.RESTING
 var selected: bool = false
+var mouse_in_card: bool = false
 @export var dragback_time : float = 0.5
 @export var dragback_trans : Tween.TransitionType = Tween.TRANS_ELASTIC
 @export var dragback_ease : Tween.EaseType = Tween.EASE_OUT
@@ -69,6 +70,7 @@ func deselect():
 	_animate_to_position(base_position, animation_trans, animation_length)
 	tween.tween_callback(_rest)
 	selected = false
+	mouse_in_card = card_front.is_hovered()
 	card_deselected.emit()
 
 
@@ -109,6 +111,9 @@ func _on_mouse_entered() -> void:
 	if drag_state != DragState.RESTING:
 		return
 	
+	if mouse_in_card: # Prevents activation immediately after deselecting by click
+		return
+	
 	if not touched:
 		_update_base_position()
 		touched = true
@@ -122,6 +127,7 @@ func _on_mouse_exited() -> void:
 	if drag_state != DragState.RESTING:
 		return
 	
+	mouse_in_card = false
 	_animate_to_position(base_position, animation_trans, animation_length)
 
 
