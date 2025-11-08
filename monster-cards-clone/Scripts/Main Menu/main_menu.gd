@@ -5,6 +5,26 @@ extends Control
 @export var HostMenu: Control
 @export var JoinMenu: Control
 
+var menu_containers: Array[Control] = []
+
+func _ready() -> void:
+	menu_containers = [PlayMenuContainer, SettingsMenuContainer]
+
+
+func _close_all_menus() -> void:
+	for menu in menu_containers:
+		menu.visible = false
+
+
+func _toggle_menu(menu: Control) -> void:
+	if menu.visible:
+		menu.visible = false
+	else:
+		# Close all other menus, then open this one
+		_close_all_menus()
+		menu.visible = true
+
+
 func _on_idk_button_pressed() -> void:
 	print("why would you press this?")
 
@@ -14,12 +34,11 @@ func _on_deck_button_pressed() -> void:
 
 
 func _on_play_button_pressed() -> void:
-	PlayMenuContainer.visible = !PlayMenuContainer.visible
+	_toggle_menu(PlayMenuContainer)
 
 
 func _on_settings_button_pressed() -> void:
-	print("settings button pressed")
-	SettingsMenuContainer.visible = !SettingsMenuContainer.visible
+	_toggle_menu(SettingsMenuContainer)
 
 
 func _on_quit_button_pressed() -> void:

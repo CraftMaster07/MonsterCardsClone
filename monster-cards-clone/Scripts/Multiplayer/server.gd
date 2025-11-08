@@ -12,11 +12,11 @@ func _upnp_setup(server_port):
 	var upnp = UPNP.new()
 	print("UPNP discover")
 	var err = upnp.discover()
-	print("UPNP error: ", err)
+	printerr("UPNP error: ", err)
 	
 
 	if err != OK:
-		print("UPNP error: ", err)
+		printerr("UPNP error: ", err)
 		push_error(str(err))
 		upnp_completed.emit(err)
 		return
