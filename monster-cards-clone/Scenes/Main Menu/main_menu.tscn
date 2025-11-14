@@ -52,10 +52,11 @@ layout_mode = 2
 [node name="HostJoinContainer" type="VBoxContainer" parent="PlayMenuContainer/HBoxContainer"]
 layout_mode = 2
 
-[node name="TextEdit" type="TextEdit" parent="PlayMenuContainer/HBoxContainer/HostJoinContainer"]
+[node name="TextEdit" type="LineEdit" parent="PlayMenuContainer/HBoxContainer/HostJoinContainer"]
 custom_minimum_size = Vector2(200, 40)
 layout_mode = 2
 placeholder_text = "Name"
+max_length = 20
 
 [node name="HostMenu" type="VBoxContainer" parent="PlayMenuContainer/HBoxContainer/HostJoinContainer"]
 layout_mode = 2
@@ -70,10 +71,11 @@ text = "Start"
 visible = false
 layout_mode = 2
 
-[node name="TextEdit" type="TextEdit" parent="PlayMenuContainer/HBoxContainer/HostJoinContainer/JoinMenu"]
+[node name="TextEdit" type="LineEdit" parent="PlayMenuContainer/HBoxContainer/HostJoinContainer/JoinMenu"]
 custom_minimum_size = Vector2(200, 40)
 layout_mode = 2
 placeholder_text = "Insert IP"
+max_length = 20
 
 [node name="JoinStartButton" type="Button" parent="PlayMenuContainer/HBoxContainer/HostJoinContainer/JoinMenu"]
 layout_mode = 2
