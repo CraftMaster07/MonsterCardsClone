@@ -6,21 +6,18 @@ signal upnp_completed(error)
 const SERVER_PORT = 59009
 var thread = null
 
-func _upnp_setup(server_port):
+
+func _upnp_setup(server_port: int) -> void:
 	# UPNP queries take some time.
-	print("UPNP start")
 	var upnp = UPNP.new()
 	print("UPNP discover")
 	var err = upnp.discover()
-	print("UPNP error: ", err)
 	
-
 	if err != OK:
 		print("UPNP error: ", err)
 		push_error(str(err))
 		upnp_completed.emit(err)
 		return
-
 
 	if err == UPNP.UPNP_RESULT_SUCCESS:
 		print("UPNP gateway found")
@@ -33,9 +30,24 @@ func _upnp_setup(server_port):
 			upnp.add_port_mapping(server_port, server_port, ProjectSettings.get_setting("application/config/name"), "TCP")
 			upnp_completed.emit(OK)
 
-func start_server():
+
+func host_game(port: int) -> void:
+	"""
+	Hosts a game as a server.
+	"""
+	start_server(port)
+
+	multiplayer.peer_connected.connect(_on_peer_connected)
+	multiplayer.peer_disconnected.connect(_on_player_disconnected)
+
+
+func start_server(port: int):
 	thread = Thread.new()
 	thread.start(_upnp_setup.bind(SERVER_PORT))
+
+	peer.create_server(port)
+	multiplayer.multiplayer_peer = peer
+
 
 func _exit_tree():
 	# Wait for thread finish here to handle game exit while the thread is running.

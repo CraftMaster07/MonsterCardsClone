@@ -24,15 +24,7 @@ func host_game() -> void:
 	"""
 	var server = server_scene.instantiate()
 	add_child(server)
-
-	server.start_server()
-
-	peer.create_server(PORT)
-	multiplayer.multiplayer_peer = peer
-
-	multiplayer.peer_connected.connect(_on_peer_connected)
-	multiplayer.peer_disconnected.connect(_on_player_disconnected)
-
+	server.host_game(PORT)
 
 
 func join_game() -> void:
@@ -41,26 +33,7 @@ func join_game() -> void:
 	"""
 	var client = client_scene.instantiate()
 	add_child(client)
-
-	peer.create_client(SERVER_IP, PORT)
-	multiplayer.multiplayer_peer = peer
-
-
-func _on_peer_connected(id):
-	"""
-	Initializes enemy scene on client connect.
-	@param id: The unique network ID of the connected peer.
-	"""
-	print("peer connected: ", id)
-	# var enemy_scene = enemy_field_scene.instantiate()
-	# add_child(enemy_scene)
-
-
-func _on_player_disconnected(id):
-	"""
-	@param id: The unique network ID of the disconnected peer.
-	"""
-	print("peer disconnected: ", id)
+	client.join_game(SERVER_IP, PORT)
 
 
 func signal_start_game():
