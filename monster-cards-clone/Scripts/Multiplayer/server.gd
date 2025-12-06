@@ -1,6 +1,6 @@
 extends Client
 
-signal upnp_completed(error)
+signal upnp_completed(error: UPNP.UPNPResult)
 
 # Replace this with your own server port number between 1024 and 65535.
 const SERVER_PORT = 59009
@@ -12,11 +12,11 @@ func _upnp_setup(server_port: int) -> void:
 	var upnp = UPNP.new()
 	print("UPNP discover")
 	var err = upnp.discover()
-	
-	if err != OK:
+
+	if err != UPNP.UPNP_RESULT_SUCCESS:
 		print("UPNP error: ", err)
 		push_error(str(err))
-		upnp_completed.emit(err)
+		upnp_completed.emit.call_deferred(err)
 		return
 
 	if err == UPNP.UPNP_RESULT_SUCCESS:
@@ -28,7 +28,7 @@ func _upnp_setup(server_port: int) -> void:
 			print("UPNP success")
 			upnp.add_port_mapping(server_port, server_port, ProjectSettings.get_setting("application/config/name"), "UDP")
 			upnp.add_port_mapping(server_port, server_port, ProjectSettings.get_setting("application/config/name"), "TCP")
-			upnp_completed.emit(OK)
+			upnp_completed.emit.call_deferred(err)
 
 
 func host_game(port: int) -> void:
