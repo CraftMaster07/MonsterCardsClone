@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://b3ownaau48wom"]
+[gd_scene load_steps=8 format=3 uid="uid://b3ownaau48wom"]
 
 [ext_resource type="Script" uid="uid://cxqogbpmguhrt" path="res://gaem.gd" id="1_11bf4"]
 [ext_resource type="PackedScene" uid="uid://b51s74cxqcxp6" path="res://Scenes/Main Menu/main_menu.tscn" id="2_4uhnj"]
+[ext_resource type="PackedScene" uid="uid://djm5ty6k5a2wl" path="res://Scenes/Main Menu/waiting_room.tscn" id="2_bbmdl"]
 [ext_resource type="PackedScene" uid="uid://cfyktcr6rqnlf" path="res://Scenes/Board/board.tscn" id="2_opxgs"]
 [ext_resource type="PackedScene" uid="uid://cpau40ahtb812" path="res://Scenes/Multiplayer/multiplayer_manager.tscn" id="3_4uhnj"]
 [ext_resource type="PackedScene" uid="uid://e6snevg8wab5" path="res://Scenes/Multiplayer/client.tscn" id="4_4g0c6"]
@@ -9,6 +10,7 @@
 
 [node name="GAEM" type="Node"]
 script = ExtResource("1_11bf4")
+waiting_room_scene = ExtResource("2_bbmdl")
 board_scene = ExtResource("2_opxgs")
 
 [node name="MainMenu" parent="." instance=ExtResource("2_4uhnj")]

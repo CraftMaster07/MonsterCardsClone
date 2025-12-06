@@ -1,0 +1,70 @@
+[gd_scene load_steps=5 format=3 uid="uid://djm5ty6k5a2wl"]
+
+[ext_resource type="Script" uid="uid://bma3lvovlu70" path="res://Scripts/Main Menu/waiting_room.gd" id="1_fjoyn"]
+[ext_resource type="Theme" uid="uid://f2a4ylwdbwtx" path="res://Assets/Styles/main_theme.tres" id="1_ofjmx"]
+[ext_resource type="Script" uid="uid://bo58rbsxfkhgl" path="res://Scripts/Main Menu/players_container.gd" id="2_4wnbb"]
+[ext_resource type="PackedScene" uid="uid://c6kdc1gxvosmb" path="res://Scenes/Main Menu/waiting_room_player.tscn" id="3_lo71w"]
+
+[node name="WaitingRoom" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+script = ExtResource("1_fjoyn")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.05
+anchor_right = 0.5
+anchor_bottom = 0.05
+offset_left = -325.0
+offset_right = 325.0
+offset_bottom = 267.0
+grow_horizontal = 2
+
+[node name="WaitingForHost" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_ofjmx")
+theme_override_font_sizes/font_size = 30
+text = "Waiting for host to start the game..."
+
+[node name="PlayersContainer" type="VBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_ofjmx")
+alignment = 1
+script = ExtResource("2_4wnbb")
+player_scene = ExtResource("3_lo71w")
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer/PlayersContainer"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="AddBot" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.056
+anchor_top = 0.11800001
+anchor_right = 0.119
+anchor_bottom = 0.165
+grow_horizontal = 2
+grow_vertical = 2
+text = "ADD BOT"
+metadata/_edit_use_anchors_ = true
+
+[node name="Start" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.050347224
+anchor_top = 0.83641976
+anchor_right = 0.11892361
+anchor_bottom = 0.8842593
+grow_horizontal = 2
+grow_vertical = 2
+text = "Start"
+metadata/_edit_use_anchors_ = true
+
+[connection signal="pressed" from="AddBot" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="Start" to="." method="_on_start_pressed"]
