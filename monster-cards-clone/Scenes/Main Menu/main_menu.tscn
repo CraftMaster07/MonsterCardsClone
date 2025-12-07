@@ -3,7 +3,7 @@
 [ext_resource type="FontFile" uid="uid://b13kiadbfhetg" path="res://Assets/Fonts/VCR_OSD_MONO_1.001.ttf" id="1_28flt"]
 [ext_resource type="Script" uid="uid://bxc7py0b1ykhx" path="res://Scripts/Main Menu/main_menu.gd" id="1_48xlc"]
 
-[node name="MainMenu" type="Control" node_paths=PackedStringArray("PlayMenuContainer", "HostMenu", "JoinMenu")]
+[node name="MainMenu" type="Control" node_paths=PackedStringArray("PlayMenuContainer", "HostMenu", "JoinMenu", "NameLineEdit", "IPLineEdit")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -16,9 +16,10 @@ script = ExtResource("1_48xlc")
 PlayMenuContainer = NodePath("PlayMenuContainer")
 HostMenu = NodePath("PlayMenuContainer/HBoxContainer/HostJoinContainer/HostMenu")
 JoinMenu = NodePath("PlayMenuContainer/HBoxContainer/HostJoinContainer/JoinMenu")
+NameLineEdit = NodePath("PlayMenuContainer/HBoxContainer/HostJoinContainer/NameLineEdit")
+IPLineEdit = NodePath("PlayMenuContainer/HBoxContainer/HostJoinContainer/JoinMenu/IPLineEdit")
 
 [node name="PlayMenuContainer" type="MarginContainer" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.4
@@ -52,7 +53,7 @@ layout_mode = 2
 [node name="HostJoinContainer" type="VBoxContainer" parent="PlayMenuContainer/HBoxContainer"]
 layout_mode = 2
 
-[node name="TextEdit" type="LineEdit" parent="PlayMenuContainer/HBoxContainer/HostJoinContainer"]
+[node name="NameLineEdit" type="LineEdit" parent="PlayMenuContainer/HBoxContainer/HostJoinContainer"]
 custom_minimum_size = Vector2(200, 40)
 layout_mode = 2
 placeholder_text = "Name"
@@ -71,7 +72,7 @@ text = "Start"
 visible = false
 layout_mode = 2
 
-[node name="TextEdit" type="LineEdit" parent="PlayMenuContainer/HBoxContainer/HostJoinContainer/JoinMenu"]
+[node name="IPLineEdit" type="LineEdit" parent="PlayMenuContainer/HBoxContainer/HostJoinContainer/JoinMenu"]
 custom_minimum_size = Vector2(200, 40)
 layout_mode = 2
 placeholder_text = "Insert IP"

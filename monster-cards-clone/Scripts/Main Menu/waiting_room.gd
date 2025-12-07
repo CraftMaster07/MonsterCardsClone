@@ -1,3 +1,4 @@
+class_name WaitingRoom
 extends Control
 
 
@@ -42,15 +43,15 @@ func hash_to_color(player_name: String) -> Color:
 	# HUE (0.0 to 1.0): This is the main color tone. 
 	# We want it to be as diverse as possible, so we map the hash directly 
 	# (0 to 1, wrapping around).
-	var h = fmod(rng.randf(), 1.0) 
+	var h = fmod(rng.randf(), 1.0)
 	
 	# SATURATION (0.0 to 1.0): How vibrant the color is.
 	# We want colors to be easily visible, so we keep saturation high.
-	var s = rng.randf_range(0.7, 1.0) 
+	var s = rng.randf_range(0.7, 1.0)
 	
 	# VALUE/BRIGHTNESS (0.0 to 1.0): How bright the color is.
 	# Keep it bright enough to see easily.
-	var v = rng.randf_range(0.8, 1.0) 
+	var v = rng.randf_range(0.8, 1.0)
 	
 	# 4. Create the Color from HSV and return it
 	# The last argument (alpha) is set to 1.0 (fully opaque).

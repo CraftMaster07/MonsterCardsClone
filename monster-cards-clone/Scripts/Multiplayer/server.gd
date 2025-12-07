@@ -31,14 +31,13 @@ func _upnp_setup(server_port: int) -> void:
 			upnp_completed.emit.call_deferred(err)
 
 
-func host_game(port: int) -> void:
+func host_game(port: int, player_name: String) -> void:
 	"""
 	Hosts a game as a server.
 	"""
-	start_server(port)
+	my_name = player_name
 
-	multiplayer.peer_connected.connect(_on_peer_connected)
-	multiplayer.peer_disconnected.connect(_on_player_disconnected)
+	start_server(port)
 
 
 func start_server(port: int):

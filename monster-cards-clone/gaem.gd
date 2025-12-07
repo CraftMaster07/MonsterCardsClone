@@ -5,7 +5,7 @@ extends Node
 @export var waiting_room_scene: PackedScene
 @export var board_scene: PackedScene
 
-var waiting_room: Control = null
+var waiting_room: WaitingRoom = null
 var board: Board = null
 
 
@@ -58,11 +58,16 @@ func stop_main_menu():
 	remove_child(main_menu)
 
 
-func _on_main_menu_join_game() -> void:
-	multiplayer_manager.join_game()
+func _on_main_menu_join_game(player_name: String, ip: String) -> void:
+	multiplayer_manager.join_game(player_name, ip)
 	transition_main_menu_to_waiting_room()
 
 
-func _on_main_menu_host_game() -> void:
-	multiplayer_manager.host_game()
+func _on_main_menu_host_game(player_name: String) -> void:
+	multiplayer_manager.host_game(player_name)
 	transition_main_menu_to_waiting_room()
+
+
+func _on_multiplayer_manager_new_player(player_name: String) -> void:
+	if waiting_room:
+		waiting_room.add_player(player_name)

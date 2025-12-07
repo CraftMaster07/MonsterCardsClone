@@ -1,11 +1,13 @@
 extends Control
 
-signal host_game()
-signal join_game()
+signal host_game(name: String)
+signal join_game(name: String, ip: String)
 
 @export var PlayMenuContainer: Control
 @export var HostMenu: Control
 @export var JoinMenu: Control
+@export var NameLineEdit: LineEdit
+@export var IPLineEdit: LineEdit
 
 func _on_idk_button_pressed() -> void:
 	print("why would you press this?")
@@ -40,8 +42,8 @@ func _on_join_button_pressed() -> void:
 
 
 func _on_host_start_button_pressed() -> void:
-	host_game.emit()
+	host_game.emit(NameLineEdit.text)
 
 
 func _on_join_start_button_pressed() -> void:
-	join_game.emit()
+	join_game.emit(NameLineEdit.text, IPLineEdit.text)
