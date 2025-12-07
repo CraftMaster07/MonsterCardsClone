@@ -11,6 +11,7 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_fjoyn")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
@@ -65,6 +66,14 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "Start"
 metadata/_edit_use_anchors_ = true
+
+[node name="LineEdit" type="LineEdit" parent="."]
+layout_mode = 0
+offset_left = 19.0
+offset_top = 37.0
+offset_right = 174.0
+offset_bottom = 68.0
+placeholder_text = "Name"
 
 [connection signal="pressed" from="AddBot" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="Start" to="." method="_on_start_pressed"]
