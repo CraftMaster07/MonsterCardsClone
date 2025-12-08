@@ -21,3 +21,4 @@ server_scene = ExtResource("5_opxgs")
 
 [connection signal="host_game" from="MainMenu" to="." method="_on_main_menu_host_game"]
 [connection signal="join_game" from="MainMenu" to="." method="_on_main_menu_join_game"]
+[connection signal="new_player" from="MultiplayerManager" to="." method="_on_multiplayer_manager_new_player"]

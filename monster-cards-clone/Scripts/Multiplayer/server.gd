@@ -46,6 +46,8 @@ func start_server(port: int):
 
 	peer.create_server(port)
 	multiplayer.multiplayer_peer = peer
+	new_player.emit(multiplayer.get_unique_id(), my_name)
+
 
 
 func _exit_tree():

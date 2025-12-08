@@ -9,6 +9,7 @@ signal new_player(id: int, name: String)
 func _ready():
     multiplayer.peer_connected.connect(_on_peer_connected)
     multiplayer.peer_disconnected.connect(_on_player_disconnected)
+    multiplayer.connected_to_server.connect(_on_connected_to_server)
 
 func join_game(server_ip: String, port: int, player_name: String) -> void:
     my_name = player_name
@@ -21,7 +22,7 @@ func _on_peer_connected(id: int):
     @param id: The unique network ID of the connected peer.
     """
     print("peer connected: ", id)
-    
+
     send_player_data.rpc_id(id, my_name)
 
 
@@ -30,6 +31,9 @@ func _on_player_disconnected(id: int):
     @param id: The unique network ID of the disconnected peer.
     """
     print("peer disconnected: ", id)
+
+func _on_connected_to_server():
+    new_player.emit(multiplayer.get_unique_id(), my_name)
 
 
 @rpc("any_peer", "call_local", "reliable", 0)

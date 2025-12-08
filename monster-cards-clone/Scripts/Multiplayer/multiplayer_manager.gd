@@ -9,12 +9,11 @@ based on the player's role (host or joiner).
 signal start_game()
 signal new_player(name: String)
 
-@export var client_scene: PackedScene
-@export var server_scene: PackedScene
+@export var server_script: Script
 
 const PORT = 59009
 
-var active_child: Client
+@export var multiplayer_interface: Client = null
 
 """
 READ THIS
@@ -27,25 +26,19 @@ func host_game(player_name) -> void:
 	"""
 	Hosts a game as a server.
 	"""
-	var server = server_scene.instantiate()
-	add_child(server)
-	server.host_game(PORT, player_name)
-	active_child = server
+	multiplayer_interface.set_script(server_script)
+
+	multiplayer_interface.host_game(PORT, player_name)
 
 
 func join_game(player_name, ip) -> void:
 	"""
 	Joins a game as a client.
 	"""
-	var client = client_scene.instantiate()
-	add_child(client)
-	client.join_game(ip, PORT, player_name)
-	active_child = client
+	multiplayer_interface.join_game(ip, PORT, player_name)
 
-func connect_active_child_signals():
-	active_child.new_player.connect(add_new_player)
 
-func add_new_player(player_name: String, id: int):
+func add_new_player(id: int, player_name: String):
 	players.append({"name": player_name, "id": id})
 	new_player.emit(player_name)
 
