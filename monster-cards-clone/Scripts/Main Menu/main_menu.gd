@@ -47,3 +47,12 @@ func _on_host_start_button_pressed() -> void:
 
 func _on_join_start_button_pressed() -> void:
 	join_game.emit(NameLineEdit.text, IPLineEdit.text)
+
+
+func _on_name_line_edit_text_changed(new_text: String) -> void:
+	check_gaster(new_text)
+
+
+func check_gaster(player_name: String) -> void:
+	if player_name.to_lower().find("gaster") != -1:
+		get_tree().quit()
