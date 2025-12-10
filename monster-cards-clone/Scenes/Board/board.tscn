@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://cfyktcr6rqnlf"]
+[gd_scene load_steps=9 format=3 uid="uid://cfyktcr6rqnlf"]
 
 [ext_resource type="Script" uid="uid://ctku11dgwh5at" path="res://Scripts/Board/board.gd" id="1_xiot5"]
 [ext_resource type="PackedScene" uid="uid://cru4gfksm3rbh" path="res://Scenes/Card/board_card.tscn" id="2_dun80"]
@@ -37,22 +37,6 @@ layout_mode = 1
 offset_top = -131.0
 theme_override_constants/margin_bottom = 40
 
-[node name="HostButton" type="Button" parent="."]
-layout_mode = 0
-offset_left = 7.0
-offset_top = 8.0
-offset_right = 51.0
-offset_bottom = 39.0
-text = "Host"
-
-[node name="JoinButton" type="Button" parent="."]
-layout_mode = 0
-offset_left = 8.0
-offset_top = 46.0
-offset_right = 46.0
-offset_bottom = 77.0
-text = "Join"
-
 [node name="Stuff" type="Node" parent="."]
 
 [node name="Icon" type="Sprite2D" parent="Stuff"]
@@ -64,18 +48,6 @@ offset_left = 137.0
 offset_top = 255.0
 offset_right = 183.0
 offset_bottom = 288.0
-
-[node name="Multiplayer" type="Control" parent="."]
-anchors_preset = 0
-offset_left = 297.0
-offset_top = 290.0
-offset_right = 297.0
-offset_bottom = 290.0
-script = ExtResource("7_c3r7o")
-your_field_scene = ExtResource("8_d8vyx")
-enemy_field_scene = ExtResource("8_vw4oq")
-client_scene = ExtResource("9_vjsom")
-server_scene = ExtResource("10_upw65")
 
 [node name="sfx_place" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("11_gti8d")

@@ -1,5 +1,8 @@
 extends Control
 
+signal host_game()
+signal join_game()
+
 @export var PlayMenuContainer: Control
 @export var SettingsMenuContainer: Control
 @export var HostMenu: Control
@@ -46,20 +49,18 @@ func _on_quit_button_pressed() -> void:
 
 
 func _on_host_button_pressed() -> void:
-	if JoinMenu.visible:
-		JoinMenu.visible = false
+	JoinMenu.visible = false
 	HostMenu.visible = true
 
 
 func _on_join_button_pressed() -> void:
-	if HostMenu.visible:
-		HostMenu.visible = false
+	HostMenu.visible = false
 	JoinMenu.visible = true
 
 
 func _on_host_start_button_pressed() -> void:
-	get_tree().change_scene_to_file("res://Scenes/Board/board.tscn")
+	host_game.emit()
 
 
 func _on_join_start_button_pressed() -> void:
-	get_tree().change_scene_to_file("res://Scenes/Board/board.tscn")
+	join_game.emit()
