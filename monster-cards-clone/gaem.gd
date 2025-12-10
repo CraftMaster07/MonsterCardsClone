@@ -59,7 +59,6 @@ func stop_main_menu():
 
 
 func _on_main_menu_join_game(player_name: String, ip: String) -> void:
-	transition_main_menu_to_waiting_room()
 	multiplayer_manager.join_game(player_name, ip)
 
 
@@ -71,3 +70,10 @@ func _on_main_menu_host_game(player_name: String) -> void:
 func _on_multiplayer_manager_new_player(player_name: String) -> void:
 	if waiting_room:
 		waiting_room.add_player(player_name)
+
+
+func _on_multiplayer_manager_connection_success() -> void:
+	transition_main_menu_to_waiting_room()
+
+func _on_multiplayer_manager_connection_failure() -> void:
+	print("Cannot connect to server.")

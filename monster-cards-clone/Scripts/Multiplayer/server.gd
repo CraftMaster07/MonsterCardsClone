@@ -44,10 +44,10 @@ func start_server(port: int):
 	thread = Thread.new()
 	thread.start(_upnp_setup.bind(SERVER_PORT))
 
+	peer = ENetMultiplayerPeer.new()
 	peer.create_server(port)
 	multiplayer.multiplayer_peer = peer
 	new_player.emit(multiplayer.get_unique_id(), my_name)
-
 
 
 func _exit_tree():

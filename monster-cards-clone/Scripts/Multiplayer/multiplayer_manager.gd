@@ -9,6 +9,9 @@ based on the player's role (host or joiner).
 signal start_game()
 signal new_player(name: String)
 
+signal connection_success()
+signal connection_failure()
+
 @export var server_script: Script
 
 const PORT = 59009
@@ -35,6 +38,9 @@ func join_game(player_name, ip) -> void:
 	"""
 	Joins a game as a client.
 	"""
+	if not is_valid_ipv4(ip):
+		print("Invalid IP address.")
+		return
 	multiplayer_interface.join_game(ip, PORT, player_name)
 
 
@@ -44,3 +50,29 @@ func add_new_player(id: int, player_name: String):
 
 func signal_start_game():
 	start_game.emit()
+
+func _on_connection_success() -> void:
+	connection_success.emit()
+
+
+func _on_connection_failure() -> void:
+	connection_failure.emit()
+
+func is_valid_ipv4(addr: String) -> bool:
+	var parts := addr.split(".")
+	if parts.size() != 4:
+		return false
+
+	for part in parts:
+		# empty part not allowed
+		if part == "":
+			return false
+
+		if not part.is_valid_int():
+			return false
+
+		var n := part.to_int()
+		if n < 0 or n > 255:
+			return false
+
+	return true

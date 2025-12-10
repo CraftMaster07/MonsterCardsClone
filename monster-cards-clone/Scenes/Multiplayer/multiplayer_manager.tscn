@@ -12,4 +12,6 @@ multiplayer_interface = NodePath("MultiplayerInterface")
 [node name="MultiplayerInterface" type="Node" parent="."]
 script = ExtResource("2_yxw74")
 
+[connection signal="connection_failure" from="MultiplayerInterface" to="." method="_on_connection_failure"]
+[connection signal="connection_success" from="MultiplayerInterface" to="." method="_on_connection_success"]
 [connection signal="new_player" from="MultiplayerInterface" to="." method="add_new_player"]
