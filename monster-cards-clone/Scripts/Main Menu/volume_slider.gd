@@ -18,7 +18,7 @@ func _ready() -> void:
 		AudioServer.get_bus_volume_db(bus_index)
 	)
 	
-	_update_label(value)
+	update_label(value)
 
 
 func _on_value_changed(new_value: float) -> void:
@@ -26,10 +26,10 @@ func _on_value_changed(new_value: float) -> void:
 		bus_index,
 		linear_to_db(new_value)
 	)
-	_update_label(new_value)
+	update_label(new_value)
 
 
-func _update_label(vol: float) -> void:
+func update_label(vol: float) -> void:
 	if value_label:
 		var percentage = int(vol * 100)
 		value_label.text = str(percentage)
