@@ -14,17 +14,17 @@ func _ready() -> void:
 	menu_containers = [PlayMenuContainer, SettingsMenuContainer]
 
 
-func _close_all_menus() -> void:
+func close_all_menus() -> void:
 	for menu in menu_containers:
 		menu.visible = false
 
 
-func _toggle_menu(menu: Control) -> void:
+func toggle_menu(menu: Control) -> void:
 	if menu.visible:
 		menu.visible = false
 	else:
 		# Close all other menus, then open this one
-		_close_all_menus()
+		close_all_menus()
 		menu.visible = true
 
 
@@ -37,11 +37,11 @@ func _on_deck_button_pressed() -> void:
 
 
 func _on_play_button_pressed() -> void:
-	_toggle_menu(PlayMenuContainer)
+	toggle_menu(PlayMenuContainer)
 
 
 func _on_settings_button_pressed() -> void:
-	_toggle_menu(SettingsMenuContainer)
+	toggle_menu(SettingsMenuContainer)
 
 
 func _on_quit_button_pressed() -> void:
