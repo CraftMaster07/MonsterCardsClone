@@ -8,20 +8,20 @@ var STARTING_HEALTH = 20
 
 
 func _ready():
-	_update_health()
+	update_health()
 
 
 func hit() -> void:
 	print("ouch!")
-	_decrease_health(1)
+	decrease_health(1)
 
 
-func _decrease_health(amount: int) -> void:
+func decrease_health(amount: int) -> void:
 	health -= amount
-	_update_health()
+	update_health()
 
 
-func _update_health() -> void:
+func update_health() -> void:
 	label.text = str(health) + "\\" + str(STARTING_HEALTH)
 
 

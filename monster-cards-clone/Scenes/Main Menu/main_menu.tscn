@@ -24,165 +24,181 @@ JoinMenu = NodePath("PlayMenuContainer/HBoxContainer/HostJoinContainer/JoinMenu"
 visible = false
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.4
-anchor_top = 0.5
-anchor_right = 0.4
-anchor_bottom = 0.5
+anchor_left = 0.35
+anchor_top = 0.4
+anchor_right = 0.65
+anchor_bottom = 0.6
+grow_horizontal = 2
 grow_vertical = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="PlayMenuContainer"]
 layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 4
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PlayMenuContainer/HBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-theme_override_constants/separation = 25
+size_flags_horizontal = 3
+theme_override_constants/separation = 14
 
 [node name="HostButton" type="Button" parent="PlayMenuContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 0
 text = "Host"
 
 [node name="JoinButton" type="Button" parent="PlayMenuContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 0
 text = "Join"
 
 [node name="VSeparator" type="VSeparator" parent="PlayMenuContainer/HBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.1
 
 [node name="HostJoinContainer" type="VBoxContainer" parent="PlayMenuContainer/HBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.5
+theme_override_constants/separation = 14
 
 [node name="TextEdit" type="LineEdit" parent="PlayMenuContainer/HBoxContainer/HostJoinContainer"]
-custom_minimum_size = Vector2(200, 40)
 layout_mode = 2
+size_flags_vertical = 0
 placeholder_text = "Name"
 max_length = 20
 
 [node name="HostMenu" type="VBoxContainer" parent="PlayMenuContainer/HBoxContainer/HostJoinContainer"]
+visible = false
 layout_mode = 2
+size_flags_vertical = 0
 
 [node name="HostStartButton" type="Button" parent="PlayMenuContainer/HBoxContainer/HostJoinContainer/HostMenu"]
 layout_mode = 2
 size_flags_horizontal = 4
-size_flags_vertical = 4
+size_flags_vertical = 0
 text = "Start"
 
 [node name="JoinMenu" type="VBoxContainer" parent="PlayMenuContainer/HBoxContainer/HostJoinContainer"]
-visible = false
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+size_flags_stretch_ratio = 1.5
+theme_override_constants/separation = 14
 
 [node name="TextEdit" type="LineEdit" parent="PlayMenuContainer/HBoxContainer/HostJoinContainer/JoinMenu"]
-custom_minimum_size = Vector2(200, 40)
 layout_mode = 2
+size_flags_vertical = 0
 placeholder_text = "Insert IP"
 max_length = 20
 
 [node name="JoinStartButton" type="Button" parent="PlayMenuContainer/HBoxContainer/HostJoinContainer/JoinMenu"]
 layout_mode = 2
 size_flags_horizontal = 4
-size_flags_vertical = 4
+size_flags_vertical = 0
 text = "Start"
 
 [node name="SettingsMenuContainer" type="MarginContainer" parent="."]
 visible = false
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.4
-anchor_top = 0.5
-anchor_right = 0.4
-anchor_bottom = 0.5
-offset_top = -43.5
-offset_right = 256.00003
-offset_bottom = 43.5
+anchor_left = 0.3
+anchor_top = 0.4
+anchor_right = 0.7
+anchor_bottom = 0.6
 grow_vertical = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="SettingsMenuContainer"]
+custom_minimum_size = Vector2(0, 5.215)
 layout_mode = 2
-theme_override_constants/separation = 14
 
 [node name="MasterContainer" type="HBoxContainer" parent="SettingsMenuContainer/VBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 3
 theme_override_constants/separation = 10
 
 [node name="MasterLabel" type="Label" parent="SettingsMenuContainer/VBoxContainer/MasterContainer"]
 layout_mode = 2
 size_flags_horizontal = 6
-text = "master"
+text = "Master"
 
 [node name="MasterSlider" type="HSlider" parent="SettingsMenuContainer/VBoxContainer/MasterContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_stretch_ratio = 2.0
+size_flags_vertical = 4
+size_flags_stretch_ratio = 4.0
 max_value = 1.3
 step = 0.001
+scrollable = false
 script = ExtResource("2_7xkbd")
 bus_name = "Master"
 
 [node name="MasterValueLabel" type="Label" parent="SettingsMenuContainer/VBoxContainer/MasterContainer"]
 layout_mode = 2
-text = "100%"
+size_flags_horizontal = 6
+size_flags_stretch_ratio = 0.7
 
 [node name="SFXContainer" type="HBoxContainer" parent="SettingsMenuContainer/VBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 3
 theme_override_constants/separation = 10
 
 [node name="SoundLabel" type="Label" parent="SettingsMenuContainer/VBoxContainer/SFXContainer"]
 layout_mode = 2
 size_flags_horizontal = 6
-text = "sound"
+text = "Sound"
 
 [node name="SoundSlider" type="HSlider" parent="SettingsMenuContainer/VBoxContainer/SFXContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_stretch_ratio = 2.0
+size_flags_vertical = 4
+size_flags_stretch_ratio = 4.0
 max_value = 1.3
 step = 0.001
+scrollable = false
 script = ExtResource("2_7xkbd")
 bus_name = "SFX"
 
 [node name="SoundValueLabel" type="Label" parent="SettingsMenuContainer/VBoxContainer/SFXContainer"]
 layout_mode = 2
-text = "100%"
+size_flags_horizontal = 6
+size_flags_stretch_ratio = 0.7
 
 [node name="MusicContainer" type="HBoxContainer" parent="SettingsMenuContainer/VBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 3
 theme_override_constants/separation = 10
 
 [node name="MusicLabel" type="Label" parent="SettingsMenuContainer/VBoxContainer/MusicContainer"]
 layout_mode = 2
 size_flags_horizontal = 6
-text = "music"
+text = "Music"
 
 [node name="MusicSlider" type="HSlider" parent="SettingsMenuContainer/VBoxContainer/MusicContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_stretch_ratio = 2.0
+size_flags_vertical = 4
+size_flags_stretch_ratio = 4.0
 max_value = 1.3
 step = 0.001
+scrollable = false
 script = ExtResource("2_7xkbd")
 bus_name = "Music"
 
 [node name="MusicValueLabel" type="Label" parent="SettingsMenuContainer/VBoxContainer/MusicContainer"]
 layout_mode = 2
-text = "100%"
+size_flags_horizontal = 6
+size_flags_stretch_ratio = 0.7
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
+anchors_preset = -1
+anchor_left = 0.1
 anchor_top = 1.0
-anchor_right = 0.5
+anchor_right = 0.9
 anchor_bottom = 1.0
-offset_left = -320.875
-offset_top = -123.0
-offset_right = 320.875
-offset_bottom = -70.48999
+offset_bottom = -35.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_constants/separation = 49
+theme_override_constants/separation = 39
 
 [node name="IdkButton" type="Button" parent="HBoxContainer"]
 layout_mode = 2
