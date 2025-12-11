@@ -20,3 +20,5 @@ board_scene = ExtResource("2_opxgs")
 [connection signal="connection_failure" from="MultiplayerManager" to="." method="_on_multiplayer_manager_connection_failure"]
 [connection signal="connection_success" from="MultiplayerManager" to="." method="_on_multiplayer_manager_connection_success"]
 [connection signal="new_player" from="MultiplayerManager" to="." method="_on_multiplayer_manager_new_player"]
+[connection signal="player_left" from="MultiplayerManager" to="." method="_on_multiplayer_manager_player_left"]
+[connection signal="server_disconnected" from="MultiplayerManager" to="." method="_on_multiplayer_manager_server_disconnected"]

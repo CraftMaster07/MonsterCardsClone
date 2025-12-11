@@ -7,10 +7,12 @@ based on the player's role (host or joiner).
 """
 
 signal start_game()
-signal new_player(name: String)
+signal new_player(id: int, name: String)
+signal player_left(id: int)
 
 signal connection_success()
 signal connection_failure()
+signal server_disconnected()
 
 @export var server_script: Script
 
@@ -23,7 +25,7 @@ READ THIS
 We can maybe change 'players' later to an array of player objects? right now there already is a player class
 But I'm not sure if we're still using that one,so I'm not making a new one yet.
 """
-var players: Array[Dictionary] = []
+var players: Dictionary = {}
 
 func host_game(player_name) -> void:
 	"""
@@ -45,8 +47,8 @@ func join_game(player_name, ip) -> void:
 
 
 func add_new_player(id: int, player_name: String):
-	players.append({"name": player_name, "id": id})
-	new_player.emit(player_name)
+	players[id] = player_name
+	new_player.emit(id, player_name)
 
 func signal_start_game():
 	start_game.emit()
@@ -76,3 +78,12 @@ func is_valid_ipv4(addr: String) -> bool:
 			return false
 
 	return true
+
+func _on_multiplayer_interface_player_left(id: int) -> void:
+	players.erase(id)
+	player_left.emit(id)
+
+
+func _on_multiplayer_interface_server_disconnected() -> void:
+	players.clear()
+	server_disconnected.emit()

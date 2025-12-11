@@ -5,6 +5,9 @@ var peer: ENetMultiplayerPeer
 var my_name: String
 
 signal new_player(id: int, name: String)
+signal player_left(id: int)
+signal server_disconnected()
+
 signal connection_success()
 signal connection_failure()
 
@@ -13,6 +16,7 @@ func _ready():
 	multiplayer.peer_disconnected.connect(_on_player_disconnected)
 	multiplayer.connected_to_server.connect(_on_connected_to_server)
 	multiplayer.connection_failed.connect(_on_connection_failed)
+	multiplayer.server_disconnected.connect(_on_server_disconnected)
 
 func join_game(server_ip: String, port: int, player_name: String) -> void:
 	my_name = player_name
@@ -41,6 +45,8 @@ func _on_player_disconnected(id: int):
 	"""
 	print("peer disconnected: ", id)
 
+	player_left.emit(id)
+
 
 func _on_connected_to_server():
 	connection_success.emit()
@@ -49,6 +55,10 @@ func _on_connected_to_server():
 func _on_connection_failed():
 	multiplayer.multiplayer_peer = OfflineMultiplayerPeer.new()
 	connection_failure.emit()
+
+func _on_server_disconnected():
+	multiplayer.multiplayer_peer = OfflineMultiplayerPeer.new()
+	server_disconnected.emit()
 
 @rpc("any_peer", "call_local", "reliable", 0)
 func send_player_data(player_name: String):

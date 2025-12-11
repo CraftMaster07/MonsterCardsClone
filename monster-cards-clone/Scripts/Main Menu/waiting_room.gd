@@ -9,16 +9,21 @@ var current_bot_index := 0
 @onready var player_name_input: LineEdit = $LineEdit
 @onready var player_container: VBoxContainer = $VBoxContainer/PlayersContainer
 
+var player_nodes := {}
 
-func add_player(player_name: String, color = null) -> void:
+func add_player(id: int, player_name: String, color = null) -> void:
 	if color == null:
 		color = hash_to_color(player_name)
 
-	player_container.add_player(player_name, color)
+	player_nodes[id] = player_container.add_player(player_name, color)
+
+func remove_player(id: int) -> void:
+	player_container.remove_child(player_nodes[id])
+	player_nodes.erase(id)
 
 
 func _on_button_pressed() -> void:
-	add_player(player_name_input.text, hash_to_color(player_name_input.text))
+	add_player(-1, player_name_input.text, hash_to_color(player_name_input.text))
 	current_bot_index += 1
 
 
