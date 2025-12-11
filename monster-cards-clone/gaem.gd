@@ -35,6 +35,7 @@ func transition_waiting_room_to_main_menu():
 func start_waiting_room():
 	waiting_room = waiting_room_scene.instantiate()
 	waiting_room.start_game.connect(transition_waiting_room_to_board)
+	waiting_room.leave.connect(leave_waiting_room)
 	add_child(waiting_room)
 
 
@@ -89,3 +90,8 @@ func _on_multiplayer_manager_player_left(id: int) -> void:
 func _on_multiplayer_manager_server_disconnected() -> void:
 	transition_waiting_room_to_main_menu()
 	print("Host disconnected.")
+
+
+func leave_waiting_room():
+	transition_waiting_room_to_main_menu()
+	multiplayer_manager.leave_game()

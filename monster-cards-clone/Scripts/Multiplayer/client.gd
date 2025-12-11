@@ -63,3 +63,7 @@ func _on_server_disconnected():
 @rpc("any_peer", "call_local", "reliable", 0)
 func send_player_data(player_name: String):
 	new_player.emit(multiplayer.get_remote_sender_id(), player_name)
+
+func leave_game():
+	multiplayer.multiplayer_peer.disconnect_peer(1)
+	multiplayer.multiplayer_peer = OfflineMultiplayerPeer.new()

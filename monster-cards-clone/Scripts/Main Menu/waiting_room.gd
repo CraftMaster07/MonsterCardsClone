@@ -3,11 +3,13 @@ extends Control
 
 
 signal start_game()
+signal leave()
 
 var rngesus := RandomNumberGenerator.new()
 var current_bot_index := 0
 @onready var player_name_input: LineEdit = $LineEdit
 @onready var player_container: VBoxContainer = $VBoxContainer/PlayersContainer
+
 
 var player_nodes := {}
 
@@ -65,3 +67,7 @@ func hash_to_color(player_name: String) -> Color:
 
 func _on_start_pressed() -> void:
 	start_game.emit()
+
+
+func _on_leave_button_pressed() -> void:
+	leave.emit()

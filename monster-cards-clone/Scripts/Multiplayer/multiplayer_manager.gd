@@ -45,6 +45,9 @@ func join_game(player_name, ip) -> void:
 		return
 	multiplayer_interface.join_game(ip, PORT, player_name)
 
+func leave_game() -> void:
+	players.clear()
+	multiplayer_interface.leave_game()
 
 func add_new_player(id: int, player_name: String):
 	players[id] = player_name
@@ -55,7 +58,6 @@ func signal_start_game():
 
 func _on_connection_success() -> void:
 	connection_success.emit()
-
 
 func _on_connection_failure() -> void:
 	connection_failure.emit()

@@ -59,9 +59,9 @@ metadata/_edit_use_anchors_ = true
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.050347224
-anchor_top = 0.83641976
-anchor_right = 0.11892361
-anchor_bottom = 0.8842593
+anchor_top = 0.8
+anchor_right = 0.12
+anchor_bottom = 0.85
 grow_horizontal = 2
 grow_vertical = 2
 text = "Start"
@@ -75,5 +75,17 @@ offset_right = 174.0
 offset_bottom = 68.0
 placeholder_text = "Name"
 
+[node name="LeaveButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.88
+anchor_top = 0.8
+anchor_right = 0.95
+anchor_bottom = 0.85
+grow_horizontal = 2
+grow_vertical = 2
+text = "Leave"
+
 [connection signal="pressed" from="AddBot" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="LeaveButton" to="." method="_on_leave_button_pressed"]

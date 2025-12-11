@@ -39,8 +39,9 @@ func host_game(port: int, player_name: String) -> void:
 
 	start_server(port)
 
-
 func start_server(port: int):
+	if thread:
+		thread.wait_to_finish()
 	thread = Thread.new()
 	thread.start(_upnp_setup.bind(SERVER_PORT))
 
@@ -53,3 +54,7 @@ func start_server(port: int):
 func _exit_tree():
 	# Wait for thread finish here to handle game exit while the thread is running.
 	thread.wait_to_finish()
+
+func leave_game():
+	multiplayer.multiplayer_peer.close()
+	multiplayer.multiplayer_peer = OfflineMultiplayerPeer.new()
