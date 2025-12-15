@@ -13,21 +13,26 @@ func transition_main_menu_to_board():
 	stop_main_menu()
 	start_board()
 
+
 func transition_board_to_main_menu():
 	stop_board()
 	start_main_menu()
+
 
 func transition_main_menu_to_waiting_room():
 	stop_main_menu()
 	start_waiting_room()
 
+
 func transition_waiting_room_to_board():
 	stop_waiting_room()
 	start_board()
 
+
 func transition_waiting_room_to_main_menu():
 	stop_waiting_room()
 	start_main_menu()
+
 
 func start_waiting_room():
 	waiting_room = waiting_room_scene.instantiate()
@@ -65,6 +70,7 @@ func _on_main_menu_join_game(player_name: String, ip: String) -> void:
 
 func _on_main_menu_host_game(player_name: String) -> void:
 	transition_main_menu_to_waiting_room()
+	waiting_room.allow_starting_game()
 	multiplayer_manager.host_game(player_name)
 
 

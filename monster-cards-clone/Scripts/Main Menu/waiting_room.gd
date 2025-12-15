@@ -7,8 +7,10 @@ signal leave()
 
 var rngesus := RandomNumberGenerator.new()
 var current_bot_index := 0
+
 @onready var player_name_input: LineEdit = $LineEdit
 @onready var player_container: VBoxContainer = $VBoxContainer/PlayersContainer
+@onready var start_button: Button = $Start
 
 
 var player_nodes := {}
@@ -18,6 +20,7 @@ func add_player(id: int, player_name: String, color = null) -> void:
 		color = hash_to_color(player_name)
 
 	player_nodes[id] = player_container.add_player(player_name, color)
+
 
 func remove_player(id: int) -> void:
 	player_container.remove_child(player_nodes[id])
@@ -71,3 +74,8 @@ func _on_start_pressed() -> void:
 
 func _on_leave_button_pressed() -> void:
 	leave.emit()
+
+
+func allow_starting_game() -> void:
+	start_button.disabled = false
+	start_button.visible = true

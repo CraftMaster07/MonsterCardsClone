@@ -50,23 +50,29 @@ func join_game(player_name, ip) -> void:
 		return
 	multiplayer_interface.join_game(ip, PORT, player_name)
 
+
 func leave_game() -> void:
 	players.clear()
 	multiplayer_interface.leave_game()
 	multiplayer_interface.set_script(client_script)
 
+
 func add_new_player(id: int, player_name: String):
 	players[id] = player_name
 	new_player.emit(id, player_name)
 
+
 func signal_start_game():
 	start_game.emit()
+
 
 func _on_connection_success() -> void:
 	connection_success.emit()
 
+
 func _on_connection_failure() -> void:
 	connection_failure.emit()
+
 
 func is_valid_ipv4(addr: String) -> bool:
 	var parts := addr.split(".")
@@ -87,13 +93,16 @@ func is_valid_ipv4(addr: String) -> bool:
 
 	return true
 
+
 func _on_multiplayer_interface_player_left(id: int) -> void:
 	players.erase(id)
 	player_left.emit(id)
 
+
 func _on_multiplayer_interface_server_disconnected() -> void:
 	players.clear()
 	server_disconnected.emit()
+
 
 func start_game_as_host() -> void:
 	multiplayer_interface.start_game()
