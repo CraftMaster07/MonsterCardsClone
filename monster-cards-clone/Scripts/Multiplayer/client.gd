@@ -11,6 +11,8 @@ signal server_disconnected()
 signal connection_success()
 signal connection_failure()
 
+signal host_started_game()
+
 func _ready():
 	multiplayer.peer_connected.connect(_on_peer_connected)
 	multiplayer.peer_disconnected.connect(_on_player_disconnected)
@@ -47,7 +49,6 @@ func _on_player_disconnected(id: int):
 
 	player_left.emit(id)
 
-
 func _on_connected_to_server():
 	connection_success.emit()
 	new_player.emit(multiplayer.get_unique_id(), my_name)
@@ -67,3 +68,7 @@ func send_player_data(player_name: String):
 func leave_game():
 	multiplayer.multiplayer_peer.disconnect_peer(1)
 	multiplayer.multiplayer_peer = OfflineMultiplayerPeer.new()
+
+@rpc("any_peer", "call_local", "reliable", 0)
+func send_host_started_game():
+	host_started_game.emit()

@@ -15,6 +15,7 @@ signal connection_failure()
 signal server_disconnected()
 
 @export var server_script: Script
+@export var client_script: Script
 
 const PORT = 59009
 
@@ -26,6 +27,10 @@ We can maybe change 'players' later to an array of player objects? right now the
 But I'm not sure if we're still using that one,so I'm not making a new one yet.
 """
 var players: Dictionary = {}
+
+
+func _ready() -> void:
+	multiplayer_interface.host_started_game.connect(signal_start_game)
 
 func host_game(player_name) -> void:
 	"""
@@ -48,6 +53,7 @@ func join_game(player_name, ip) -> void:
 func leave_game() -> void:
 	players.clear()
 	multiplayer_interface.leave_game()
+	multiplayer_interface.set_script(client_script)
 
 func add_new_player(id: int, player_name: String):
 	players[id] = player_name
@@ -85,7 +91,9 @@ func _on_multiplayer_interface_player_left(id: int) -> void:
 	players.erase(id)
 	player_left.emit(id)
 
-
 func _on_multiplayer_interface_server_disconnected() -> void:
 	players.clear()
 	server_disconnected.emit()
+
+func start_game_as_host() -> void:
+	multiplayer_interface.start_game()

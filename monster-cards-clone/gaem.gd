@@ -13,16 +13,13 @@ func transition_main_menu_to_board():
 	stop_main_menu()
 	start_board()
 
-
 func transition_board_to_main_menu():
 	stop_board()
 	start_main_menu()
 
-
 func transition_main_menu_to_waiting_room():
 	stop_main_menu()
 	start_waiting_room()
-
 
 func transition_waiting_room_to_board():
 	stop_waiting_room()
@@ -34,7 +31,7 @@ func transition_waiting_room_to_main_menu():
 
 func start_waiting_room():
 	waiting_room = waiting_room_scene.instantiate()
-	waiting_room.start_game.connect(transition_waiting_room_to_board)
+	waiting_room.start_game.connect(start_game_as_host)
 	waiting_room.leave.connect(leave_waiting_room)
 	add_child(waiting_room)
 
@@ -79,8 +76,10 @@ func _on_multiplayer_manager_new_player(id: int, player_name: String) -> void:
 func _on_multiplayer_manager_connection_success() -> void:
 	transition_main_menu_to_waiting_room()
 
+
 func _on_multiplayer_manager_connection_failure() -> void:
 	print("Cannot connect to server.")
+
 
 func _on_multiplayer_manager_player_left(id: int) -> void:
 	if waiting_room:
@@ -92,6 +91,14 @@ func _on_multiplayer_manager_server_disconnected() -> void:
 	print("Host disconnected.")
 
 
+func _on_multiplayer_manager_start_game() -> void:
+	transition_waiting_room_to_board()
+
+
 func leave_waiting_room():
 	transition_waiting_room_to_main_menu()
 	multiplayer_manager.leave_game()
+
+
+func start_game_as_host():
+	multiplayer_manager.start_game_as_host()

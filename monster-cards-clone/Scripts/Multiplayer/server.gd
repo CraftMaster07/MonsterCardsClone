@@ -36,7 +36,6 @@ func host_game(port: int, player_name: String) -> void:
 	Hosts a game as a server.
 	"""
 	my_name = player_name
-
 	start_server(port)
 
 func start_server(port: int):
@@ -58,3 +57,6 @@ func _exit_tree():
 func leave_game():
 	multiplayer.multiplayer_peer.close()
 	multiplayer.multiplayer_peer = OfflineMultiplayerPeer.new()
+
+func start_game():
+	send_host_started_game.rpc()
