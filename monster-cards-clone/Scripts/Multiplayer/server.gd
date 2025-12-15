@@ -12,9 +12,11 @@ func _upnp_setup(server_port: int) -> void:
 	var upnp = UPNP.new()
 	print("UPNP discover")
 	var err = upnp.discover()
+	printerr("UPNP error: ", err)
+	
 
-	if err != UPNP.UPNP_RESULT_SUCCESS:
-		print("UPNP error: ", err)
+	if err != OK:
+		printerr("UPNP error: ", err)
 		push_error(str(err))
 		upnp_completed.emit.call_deferred(err)
 		return
@@ -53,10 +55,3 @@ func start_server(port: int):
 func _exit_tree():
 	# Wait for thread finish here to handle game exit while the thread is running.
 	thread.wait_to_finish()
-
-func leave_game():
-	multiplayer.multiplayer_peer.close()
-	multiplayer.multiplayer_peer = OfflineMultiplayerPeer.new()
-
-func start_game():
-	send_host_started_game.rpc()

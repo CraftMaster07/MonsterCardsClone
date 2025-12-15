@@ -4,30 +4,49 @@ signal host_game(name: String)
 signal join_game(name: String, ip: String)
 
 @export var PlayMenuContainer: Control
+@export var SettingsMenuContainer: Control
 @export var HostMenu: Control
 @export var JoinMenu: Control
 @export var NameLineEdit: LineEdit
 @export var IPLineEdit: LineEdit
+
+var menu_containers: Array[Control] = []
+
+func _ready() -> void:
+	menu_containers = [PlayMenuContainer, SettingsMenuContainer]
+
+
+func close_all_menus() -> void:
+	for menu in menu_containers:
+		menu.visible = false
+
+
+func toggle_menu(menu: Control) -> void:
+	if menu.visible:
+		menu.visible = false
+	else:
+		# Close all other menus, then open this one
+		close_all_menus()
+		menu.visible = true
+
 
 func _on_idk_button_pressed() -> void:
 	print("why would you press this?")
 
 
 func _on_deck_button_pressed() -> void:
-	print("deck button pressed")
+	pass
 
 
 func _on_play_button_pressed() -> void:
-	print("play button pressed")
-	PlayMenuContainer.visible = !PlayMenuContainer.visible
+	toggle_menu(PlayMenuContainer)
 
 
 func _on_settings_button_pressed() -> void:
-	print("settings button pressed")
+	toggle_menu(SettingsMenuContainer)
 
 
 func _on_quit_button_pressed() -> void:
-	print_rich("quit button pressed")
 	get_tree().quit()
 
 
