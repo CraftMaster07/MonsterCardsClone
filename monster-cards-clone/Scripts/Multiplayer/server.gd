@@ -33,24 +33,32 @@ func _upnp_setup(server_port: int) -> void:
 			upnp_completed.emit.call_deferred(err)
 
 
-func host_game(port: int) -> void:
+func host_game(port: int, player_name: String) -> void:
 	"""
 	Hosts a game as a server.
 	"""
+	my_name = player_name
 	start_server(port)
 
-	multiplayer.peer_connected.connect(_on_peer_connected)
-	multiplayer.peer_disconnected.connect(_on_player_disconnected)
-
-
 func start_server(port: int):
+	if thread:
+		thread.wait_to_finish()
 	thread = Thread.new()
 	thread.start(_upnp_setup.bind(SERVER_PORT))
 
+	peer = ENetMultiplayerPeer.new()
 	peer.create_server(port)
 	multiplayer.multiplayer_peer = peer
+	new_player.emit(multiplayer.get_unique_id(), my_name)
 
 
 func _exit_tree():
 	# Wait for thread finish here to handle game exit while the thread is running.
 	thread.wait_to_finish()
+
+func leave_game():
+	multiplayer.multiplayer_peer.close()
+	multiplayer.multiplayer_peer = OfflineMultiplayerPeer.new()
+
+func start_game():
+	send_host_started_game.rpc()

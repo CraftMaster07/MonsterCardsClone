@@ -5,7 +5,8 @@
 [ext_resource type="Script" uid="uid://cpi6pvln7s5fq" path="res://Scripts/Main Menu/volume_slider.gd" id="2_7xkbd"]
 [ext_resource type="AudioStream" uid="uid://dit1tvyol83cj" path="res://Assets/Audio/Music/mus_testing.mp3" id="4_y0aff"]
 
-[node name="MainMenu" type="Control" node_paths=PackedStringArray("PlayMenuContainer", "SettingsMenuContainer", "HostMenu", "JoinMenu")]
+[node name="MainMenu" type="Control" node_paths=PackedStringArray("PlayMenuContainer", "SettingsMenuContainer", "HostMenu", "JoinMenu", "NameLineEdit", "IPLineEdit")]
+
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -19,9 +20,10 @@ PlayMenuContainer = NodePath("PlayMenuContainer")
 SettingsMenuContainer = NodePath("SettingsMenuContainer")
 HostMenu = NodePath("PlayMenuContainer/HBoxContainer/HostJoinContainer/HostMenu")
 JoinMenu = NodePath("PlayMenuContainer/HBoxContainer/HostJoinContainer/JoinMenu")
+NameLineEdit = NodePath("PlayMenuContainer/HBoxContainer/HostJoinContainer/NameLineEdit")
+IPLineEdit = NodePath("PlayMenuContainer/HBoxContainer/HostJoinContainer/JoinMenu/IPLineEdit")
 
 [node name="PlayMenuContainer" type="MarginContainer" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.35
@@ -60,7 +62,8 @@ size_flags_horizontal = 3
 size_flags_stretch_ratio = 1.5
 theme_override_constants/separation = 14
 
-[node name="TextEdit" type="LineEdit" parent="PlayMenuContainer/HBoxContainer/HostJoinContainer"]
+[node name="NameLineEdit" type="LineEdit" parent="PlayMenuContainer/HBoxContainer/HostJoinContainer"]
+custom_minimum_size = Vector2(200, 40)
 layout_mode = 2
 size_flags_vertical = 0
 placeholder_text = "Name"
@@ -84,7 +87,8 @@ size_flags_vertical = 0
 size_flags_stretch_ratio = 1.5
 theme_override_constants/separation = 14
 
-[node name="TextEdit" type="LineEdit" parent="PlayMenuContainer/HBoxContainer/HostJoinContainer/JoinMenu"]
+[node name="IPLineEdit" type="LineEdit" parent="PlayMenuContainer/HBoxContainer/HostJoinContainer/JoinMenu"]
+custom_minimum_size = Vector2(200, 40)
 layout_mode = 2
 size_flags_vertical = 0
 placeholder_text = "Insert IP"
@@ -252,6 +256,7 @@ bus = &"Music"
 
 [connection signal="pressed" from="PlayMenuContainer/HBoxContainer/VBoxContainer/HostButton" to="." method="_on_host_button_pressed"]
 [connection signal="pressed" from="PlayMenuContainer/HBoxContainer/VBoxContainer/JoinButton" to="." method="_on_join_button_pressed"]
+[connection signal="text_changed" from="PlayMenuContainer/HBoxContainer/HostJoinContainer/NameLineEdit" to="." method="_on_name_line_edit_text_changed"]
 [connection signal="pressed" from="PlayMenuContainer/HBoxContainer/HostJoinContainer/HostMenu/HostStartButton" to="." method="_on_host_start_button_pressed"]
 [connection signal="pressed" from="PlayMenuContainer/HBoxContainer/HostJoinContainer/JoinMenu/JoinStartButton" to="." method="_on_join_start_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/IdkButton" to="." method="_on_idk_button_pressed"]
