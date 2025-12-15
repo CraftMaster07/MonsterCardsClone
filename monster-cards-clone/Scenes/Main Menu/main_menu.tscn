@@ -2,7 +2,7 @@
 
 [ext_resource type="FontFile" uid="uid://b13kiadbfhetg" path="res://Assets/Fonts/VCR_OSD_MONO_1.001.ttf" id="1_28flt"]
 [ext_resource type="Script" uid="uid://bxc7py0b1ykhx" path="res://Scripts/Main Menu/main_menu.gd" id="1_48xlc"]
-[ext_resource type="Script" uid="uid://cpi6pvln7s5fq" path="res://Scripts/Main Menu/volume_slider.gd" id="2_7xkbd"]
+[ext_resource type="Script" uid="uid://ynwm51yrslmw" path="res://Scripts/Main Menu/volume_slider.gd" id="2_7xkbd"]
 [ext_resource type="AudioStream" uid="uid://dit1tvyol83cj" path="res://Assets/Audio/Music/mus_testing.mp3" id="4_y0aff"]
 
 [node name="MainMenu" type="Control" node_paths=PackedStringArray("PlayMenuContainer", "SettingsMenuContainer", "HostMenu", "JoinMenu", "NameLineEdit", "IPLineEdit")]

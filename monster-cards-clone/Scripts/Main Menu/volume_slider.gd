@@ -12,7 +12,8 @@ func _ready() -> void:
 	
 	var parent = get_parent()
 	var slider_index = get_index()
-	value_label = parent.get_child(slider_index + 1) as Label # assumes value label is the next sibling after the slider
+	# assumes value label is the next sibling after the slider
+	value_label = parent.get_child(slider_index + 1) as Label 
 	
 	value = db_to_linear(
 		AudioServer.get_bus_volume_db(bus_index)

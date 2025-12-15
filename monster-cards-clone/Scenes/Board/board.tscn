@@ -5,11 +5,6 @@
 [ext_resource type="PackedScene" uid="uid://b6obljxfl8pah" path="res://Scenes/Board/hand.tscn" id="2_shhme"]
 [ext_resource type="Texture2D" uid="uid://cjn63si50nhet" path="res://Assets/icon.svg" id="4_cp8jt"]
 [ext_resource type="PackedScene" uid="uid://dtpst7jgrdpqq" path="res://Scenes/Board/card_slot_container.tscn" id="5_dun80"]
-[ext_resource type="Script" path="res://Scripts/Multiplayer/multiplayer.gd" id="7_c3r7o"]
-[ext_resource type="PackedScene" uid="uid://dgtx0qw3qwnw3" path="res://Scenes/Players/your_player.tscn" id="8_d8vyx"]
-[ext_resource type="PackedScene" uid="uid://c1qkabu180wpv" path="res://Scenes/Players/enemy_player.tscn" id="8_vw4oq"]
-[ext_resource type="PackedScene" uid="uid://e6snevg8wab5" path="res://Scenes/Multiplayer/client.tscn" id="9_vjsom"]
-[ext_resource type="PackedScene" uid="uid://df0cdsnis371" path="res://Scenes/Multiplayer/Server.tscn" id="10_upw65"]
 [ext_resource type="AudioStream" uid="uid://cgatasovfxoyl" path="res://Assets/Audio/Sounds/sfx_place.mp3" id="11_gti8d"]
 [ext_resource type="AudioStream" uid="uid://02oc0voj62j3" path="res://Assets/Audio/Sounds/sfx_select.mp3" id="12_brcfe"]
 [ext_resource type="AudioStream" uid="uid://ch7jr0gor48sm" path="res://Assets/Audio/Sounds/sfx_deselect.mp3" id="13_csi2d"]
@@ -60,6 +55,3 @@ bus = &"SFX"
 [node name="sfx_deselect" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("13_csi2d")
 bus = &"SFX"
-
-[connection signal="pressed" from="HostButton" to="Multiplayer" method="_on_host_button_pressed"]
-[connection signal="pressed" from="JoinButton" to="Multiplayer" method="_on_join_button_pressed"]
