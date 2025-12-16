@@ -12,13 +12,6 @@ func _upnp_setup(server_port: int) -> void:
 	var upnp = UPNP.new()
 	print("UPNP discover")
 	var err = upnp.discover()
-	printerr("UPNP error: ", err)
-	
-
-	if err == OK:
-		push_error("UPNP error: ", error_string(err))
-		upnp_completed.emit.call_deferred(err)
-		return
 
 	if err == UPNP.UPNP_RESULT_SUCCESS:
 		print("UPNP gateway found")
@@ -27,9 +20,15 @@ func _upnp_setup(server_port: int) -> void:
 		print("UPNP device count: ", upnp.get_device_count())
 		if gateway and gateway.is_valid_gateway():
 			print("UPNP success")
-			upnp.add_port_mapping(server_port, server_port, ProjectSettings.get_setting("application/config/name"), "UDP")
-			upnp.add_port_mapping(server_port, server_port, ProjectSettings.get_setting("application/config/name"), "TCP")
+			var app_name = ProjectSettings.get_setting("application/config/name")
+			upnp.add_port_mapping(server_port, server_port, app_name, "UDP")
+			upnp.add_port_mapping(server_port, server_port, app_name, "TCP")
 			upnp_completed.emit.call_deferred(err)
+	else:
+		push_error("UPNP error: ", error_string(err))
+		upnp_completed.emit.call_deferred(err)
+		return
+
 
 
 func host_game(port: int, player_name: String) -> void:

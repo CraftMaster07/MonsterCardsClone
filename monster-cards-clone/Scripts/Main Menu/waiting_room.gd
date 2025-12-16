@@ -6,7 +6,6 @@ signal start_game()
 signal leave()
 
 var rngesus := RandomNumberGenerator.new()
-var current_bot_index := 0
 
 @onready var player_name_input: LineEdit = $LineEdit
 @onready var player_container: VBoxContainer = $VBoxContainer/PlayersContainer
@@ -29,7 +28,6 @@ func remove_player(id: int) -> void:
 
 func _on_button_pressed() -> void:
 	add_player(-1, player_name_input.text, hash_to_color(player_name_input.text))
-	current_bot_index += 1
 
 
 func generate_random_color() -> Color:

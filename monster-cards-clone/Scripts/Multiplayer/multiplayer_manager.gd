@@ -23,8 +23,9 @@ const PORT = 59009
 
 """
 READ THIS
-We can maybe change 'players' later to an array of player objects? right now there already is a player class
-But I'm not sure if we're still using that one,so I'm not making a new one yet.
+We can maybe change 'players' later to an array of player objects? right now there
+already is a player class. But I'm not sure if we're still using that one,
+so I'm not making a new one yet.
 """
 var players: Dictionary = {}
 
