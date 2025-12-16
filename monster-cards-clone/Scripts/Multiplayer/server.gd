@@ -15,9 +15,8 @@ func _upnp_setup(server_port: int) -> void:
 	printerr("UPNP error: ", err)
 	
 
-	if err != OK:
-		printerr("UPNP error: ", err)
-		push_error(str(err))
+	if err == OK:
+		push_error("UPNP error: ", error_string(err))
 		upnp_completed.emit.call_deferred(err)
 		return
 

@@ -13,15 +13,20 @@ config_version=5
 config/name="Monster Cards Clone"
 run/main_scene="uid://b3ownaau48wom"
 config/features=PackedStringArray("4.5", "GL Compatibility")
-config/icon="res://Assets/icon.svg"
+config/icon="uid://cjn63si50nhet"
 
 [audio]
 
 buses/default_bus_layout="res://Assets/default_bus_layout.tres"
 
+[autoload]
+
+AudioManager="*res://Scripts/General/audio_manager.gd"
+
 [display]
 
 window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
 
 [input]
 

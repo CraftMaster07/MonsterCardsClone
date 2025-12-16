@@ -36,7 +36,7 @@ func _on_peer_connected(id: int):
 	Initializes enemy scene on client connect.
 	@param id: The unique network ID of the connected peer.
 	"""
-	print("peer connected: ", id)
+	print("Peer connected: ", id)
 
 	send_player_data.rpc_id(id, my_name)
 
@@ -45,7 +45,7 @@ func _on_player_disconnected(id: int):
 	"""
 	@param id: The unique network ID of the disconnected peer.
 	"""
-	print("peer disconnected: ", id)
+	print("Peer disconnected: ", id)
 
 	player_left.emit(id)
 

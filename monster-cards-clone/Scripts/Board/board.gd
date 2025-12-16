@@ -26,7 +26,9 @@ func slot_clicked(slot: CardSlot):
 
 
 func _place_card_into_slot(card: HandCard, slot: CardSlot):
-	"""Marks the slot as taken, and starts the animation to move the card into the slot"""
+	"""
+	Marks the slot as taken, and starts the animation to move the card into the slot
+	"""
 	slot.take()
 	card.goto_slot(slot)
 	card.tween.tween_callback(_replace_handcard_with_boardcard.bind(card))
@@ -52,11 +54,9 @@ func select_card(card: HandCard):
 		old_card.deselect()
 	selected_card = card
 	sfx_select.play()
-	print("card selected")
 
 
 func deselect_card():
 	if selected_card != null:
 		sfx_deselect.play()
 		selected_card = null
-		print("card deselected")
