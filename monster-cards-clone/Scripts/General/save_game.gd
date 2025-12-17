@@ -4,13 +4,16 @@ extends Resource
 const SAVE_GAME_PATH := "user://save.tres"
 
 @export var master_volume: int = 100
-@export var music_volume: int = 100
 @export var sfx_volume: int = 100
+@export var music_volume: int = 100
+
 
 func write_savegame() -> void:
 	var err = ResourceSaver.save(self, SAVE_GAME_PATH)
 	if err != OK:
 		push_error("Failed to save game: " + error_string(err))
+	else:
+		print("Game saved successfully to: ", SAVE_GAME_PATH)
 
 
 static func load_savegame() -> SaveGame:

@@ -15,8 +15,9 @@ func load_audio_settings() -> void:
 	var save = SaveGame.load_or_create()
 	
 	apply_volume("Master", save.master_volume)
-	apply_volume("Music", save.music_volume)
 	apply_volume("SFX", save.sfx_volume)
+	apply_volume("Music", save.music_volume)
+
 
 
 func apply_volume(bus_name: String, volume: int) -> void:
@@ -28,7 +29,6 @@ func apply_volume(bus_name: String, volume: int) -> void:
 
 func set_volume(bus_name: String, volume: int) -> void:
 	apply_volume(bus_name, volume)
-	
 	# Debounce file writing - wait 0.5s after last change
 	pending_save = true
 	save_timer.start(0.5)
@@ -38,7 +38,7 @@ func get_volume(bus_name: String) -> int:
 	var bus_index = AudioServer.get_bus_index(bus_name)
 	if bus_index != -1:
 		var linear_value = db_to_linear(AudioServer.get_bus_volume_db(bus_index))
-		return int(linear_value * 100)
+		return int(round(linear_value * 100))
 	return 100
 
 
@@ -49,8 +49,8 @@ func _save_now() -> void:
 	var save = SaveGame.load_or_create()
 	
 	save.master_volume = get_volume("Master")
-	save.music_volume = get_volume("Music")
 	save.sfx_volume = get_volume("SFX")
+	save.music_volume = get_volume("Music")
 	
 	save.write_savegame()
 	pending_save = false

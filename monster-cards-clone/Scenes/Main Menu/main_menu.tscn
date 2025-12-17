@@ -21,6 +21,7 @@ NameLineEdit = NodePath("PlayMenuContainer/HBoxContainer/HostJoinContainer/NameL
 IPLineEdit = NodePath("PlayMenuContainer/HBoxContainer/HostJoinContainer/JoinMenu/IPLineEdit")
 
 [node name="PlayMenuContainer" type="MarginContainer" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.35
