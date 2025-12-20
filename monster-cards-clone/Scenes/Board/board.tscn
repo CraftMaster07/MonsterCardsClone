@@ -46,12 +46,12 @@ offset_bottom = 288.0
 
 [node name="sfx_place" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("11_gti8d")
-bus = &"SFX"
+bus = &"Sound"
 
 [node name="sfx_select" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("12_brcfe")
-bus = &"SFX"
+bus = &"Sound"
 
 [node name="sfx_deselect" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("13_csi2d")
-bus = &"SFX"
+bus = &"Sound"

@@ -35,7 +35,7 @@ one_shot = true
 
 [node name="sfx_hover" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_ghj8a")
-bus = &"SFX"
+bus = &"Sound"
 
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

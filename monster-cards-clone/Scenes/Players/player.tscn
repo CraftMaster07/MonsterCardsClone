@@ -3,7 +3,6 @@
 [ext_resource type="Script" uid="uid://dctl127afbmmj" path="res://Scripts/Players/player.gd" id="1_3vyb7"]
 [ext_resource type="FontFile" uid="uid://b13kiadbfhetg" path="res://Assets/Fonts/VCR_OSD_MONO_1.001.ttf" id="2_g2els"]
 
-
 [sub_resource type="LabelSettings" id="LabelSettings_3vyb7"]
 font = ExtResource("2_g2els")
 font_color = Color(1, 0, 0, 1)

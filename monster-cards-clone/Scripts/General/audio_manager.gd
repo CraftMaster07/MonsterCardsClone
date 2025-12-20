@@ -15,7 +15,7 @@ func load_audio_settings() -> void:
 	var save = SaveGame.load_or_create()
 	
 	apply_volume("Master", save.master_volume)
-	apply_volume("SFX", save.sfx_volume)
+	apply_volume("Sound", save.sfx_volume)
 	apply_volume("Music", save.music_volume)
 
 
@@ -49,7 +49,7 @@ func _save_now() -> void:
 	var save = SaveGame.load_or_create()
 	
 	save.master_volume = get_volume("Master")
-	save.sfx_volume = get_volume("SFX")
+	save.sfx_volume = get_volume("Sound")
 	save.music_volume = get_volume("Music")
 	
 	save.write_savegame()

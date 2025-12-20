@@ -2,7 +2,7 @@
 
 [ext_resource type="FontFile" uid="uid://b13kiadbfhetg" path="res://Assets/Fonts/VCR_OSD_MONO_1.001.ttf" id="1_28flt"]
 [ext_resource type="Script" uid="uid://bxc7py0b1ykhx" path="res://Scripts/Main Menu/main_menu.gd" id="1_48xlc"]
-[ext_resource type="Script" uid="uid://ynwm51yrslmw" path="res://Scripts/Main Menu/volume_slider.gd" id="2_7xkbd"]
+[ext_resource type="Script" uid="uid://ynwm51yrslmw" path="res://Scripts/Main Menu/volume_settings.gd" id="2_7xkbd"]
 [ext_resource type="AudioStream" uid="uid://dit1tvyol83cj" path="res://Assets/Audio/Music/mus_testing.mp3" id="4_y0aff"]
 
 [node name="MainMenu" type="Control" node_paths=PackedStringArray("PlayMenuContainer", "SettingsMenuContainer", "HostMenu", "JoinMenu", "NameLineEdit", "IPLineEdit")]
@@ -97,7 +97,6 @@ size_flags_vertical = 0
 text = "Start"
 
 [node name="SettingsMenuContainer" type="MarginContainer" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.3
@@ -106,81 +105,9 @@ anchor_right = 0.7
 anchor_bottom = 0.6
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="SettingsMenuContainer"]
-custom_minimum_size = Vector2(0, 5.215)
+[node name="VolumeSettingsContainer" type="VBoxContainer" parent="SettingsMenuContainer"]
 layout_mode = 2
-
-[node name="MasterContainer" type="HBoxContainer" parent="SettingsMenuContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_constants/separation = 10
-
-[node name="MasterLabel" type="Label" parent="SettingsMenuContainer/VBoxContainer/MasterContainer"]
-layout_mode = 2
-size_flags_horizontal = 6
-text = "Master"
-
-[node name="MasterSlider" type="HSlider" parent="SettingsMenuContainer/VBoxContainer/MasterContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 4
-size_flags_stretch_ratio = 4.0
-scrollable = false
 script = ExtResource("2_7xkbd")
-bus_name = "Master"
-
-[node name="MasterValueLabel" type="Label" parent="SettingsMenuContainer/VBoxContainer/MasterContainer"]
-layout_mode = 2
-size_flags_horizontal = 6
-size_flags_stretch_ratio = 0.7
-
-[node name="SFXContainer" type="HBoxContainer" parent="SettingsMenuContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_constants/separation = 10
-
-[node name="SoundLabel" type="Label" parent="SettingsMenuContainer/VBoxContainer/SFXContainer"]
-layout_mode = 2
-size_flags_horizontal = 6
-text = "Sound"
-
-[node name="SoundSlider" type="HSlider" parent="SettingsMenuContainer/VBoxContainer/SFXContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 4
-size_flags_stretch_ratio = 4.0
-scrollable = false
-script = ExtResource("2_7xkbd")
-bus_name = "SFX"
-
-[node name="SoundValueLabel" type="Label" parent="SettingsMenuContainer/VBoxContainer/SFXContainer"]
-layout_mode = 2
-size_flags_horizontal = 6
-size_flags_stretch_ratio = 0.7
-
-[node name="MusicContainer" type="HBoxContainer" parent="SettingsMenuContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_constants/separation = 10
-
-[node name="MusicLabel" type="Label" parent="SettingsMenuContainer/VBoxContainer/MusicContainer"]
-layout_mode = 2
-size_flags_horizontal = 6
-text = "Music"
-
-[node name="MusicSlider" type="HSlider" parent="SettingsMenuContainer/VBoxContainer/MusicContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 4
-size_flags_stretch_ratio = 4.0
-scrollable = false
-script = ExtResource("2_7xkbd")
-bus_name = "Music"
-
-[node name="MusicValueLabel" type="Label" parent="SettingsMenuContainer/VBoxContainer/MusicContainer"]
-layout_mode = 2
-size_flags_horizontal = 6
-size_flags_stretch_ratio = 0.7
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 1
