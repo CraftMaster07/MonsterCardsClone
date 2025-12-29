@@ -3,17 +3,18 @@ extends Control
 signal host_game(name: String)
 signal join_game(name: String, ip: String)
 
-@export var PlayMenuContainer: Control
-@export var SettingsMenuContainer: Control
-@export var HostMenu: Control
-@export var JoinMenu: Control
-@export var NameLineEdit: LineEdit
-@export var IPLineEdit: LineEdit
+@export var play_menu_container: Control
+@export var settings_menu_container: Control
+@export var host_menu: Control
+@export var join_menu: Control
+@export var name_line_edit: LineEdit
+@export var ip_line_edit: LineEdit
+@export var join_status_label: Label
 
 var menu_containers: Array[Control] = []
 
 func _ready() -> void:
-	menu_containers = [PlayMenuContainer, SettingsMenuContainer]
+	menu_containers = [play_menu_container, settings_menu_container]
 
 
 func close_all_menus() -> void:
@@ -39,11 +40,11 @@ func _on_deck_button_pressed() -> void:
 
 
 func _on_play_button_pressed() -> void:
-	toggle_menu(PlayMenuContainer)
+	toggle_menu(play_menu_container)
 
 
 func _on_settings_button_pressed() -> void:
-	toggle_menu(SettingsMenuContainer)
+	toggle_menu(settings_menu_container)
 
 
 func _on_quit_button_pressed() -> void:
@@ -51,21 +52,23 @@ func _on_quit_button_pressed() -> void:
 
 
 func _on_host_button_pressed() -> void:
-	JoinMenu.visible = false
-	HostMenu.visible = true
+	join_menu.visible = false
+	host_menu.visible = true
 
 
 func _on_join_button_pressed() -> void:
-	HostMenu.visible = false
-	JoinMenu.visible = true
+	host_menu.visible = false
+	join_menu.visible = true
 
 
 func _on_host_start_button_pressed() -> void:
-	host_game.emit(NameLineEdit.text)
+	host_game.emit(name_line_edit.text)
 
 
 func _on_join_start_button_pressed() -> void:
-	join_game.emit(NameLineEdit.text, IPLineEdit.text)
+	join_game.emit(name_line_edit.text, ip_line_edit.text)
+	join_status_label.visible = true
+	join_status_label.text = "Connecting..."
 
 
 func _on_name_line_edit_text_changed(new_text: String) -> void:
