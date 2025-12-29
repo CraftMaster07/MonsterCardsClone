@@ -69,6 +69,6 @@ func leave_game():
 	multiplayer.multiplayer_peer.disconnect_peer(1)
 	multiplayer.multiplayer_peer = OfflineMultiplayerPeer.new()
 
-@rpc("any_peer", "call_local", "reliable", 0)
+@rpc("authority", "call_local", "reliable", 0)
 func send_host_started_game():
 	host_started_game.emit()

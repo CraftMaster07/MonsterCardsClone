@@ -10,6 +10,8 @@ extends Control
 
 var selected_card: HandCard = null
 
+var players := {}
+
 func _ready() -> void:
 	for card in hand.get_cards():
 		card.card_placed.connect(_place_card_into_slot)
@@ -60,3 +62,16 @@ func deselect_card():
 	if selected_card != null:
 		sfx_deselect.play()
 		selected_card = null
+
+
+func init_players(multiplayer_players: Array):
+	for multiplayer_player in multiplayer_players:
+		init_player(multiplayer_player)
+	print("players initialized", players)
+
+
+func init_player(multiplayer_player: Dictionary):
+	players[multiplayer_player['id']] = Player.new(
+		multiplayer_player['id'],
+		multiplayer_player['name'],
+	)

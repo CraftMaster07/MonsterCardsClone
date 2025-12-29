@@ -9,11 +9,6 @@ var waiting_room: WaitingRoom = null
 var board: Board = null
 
 
-func transition_main_menu_to_board():
-	stop_main_menu()
-	start_board()
-
-
 func transition_board_to_main_menu():
 	stop_board()
 	start_main_menu()
@@ -48,6 +43,8 @@ func stop_waiting_room():
 
 func start_board():
 	board = board_scene.instantiate()
+	var pl = multiplayer_players_to_dicts(multiplayer_manager.players)
+	board.init_players(pl)
 	add_child(board)
 
 
@@ -108,3 +105,22 @@ func leave_waiting_room():
 
 func start_game_as_host():
 	multiplayer_manager.start_game_as_host()
+
+
+func multiplayer_players_to_dicts(
+	multiplayer_players: Dictionary#[int, MultiplayerPlayer]
+) -> Array:
+	# we don't want board to know what is a MultiplayerPlayer, so we convert them to dictionaries.
+	var dicts := []
+
+	for multiplayer_player in multiplayer_players.values():
+		dicts.append(multiplayer_player_to_dict(multiplayer_player))
+
+	return dicts
+
+
+func multiplayer_player_to_dict(multiplayer_player: MultiplayerPlayer) -> Dictionary:
+	return {
+		"id": multiplayer_player.player_id,
+		"name": multiplayer_player.player_name
+	}

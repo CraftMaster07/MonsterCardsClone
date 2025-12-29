@@ -59,7 +59,7 @@ func leave_game() -> void:
 
 
 func add_new_player(id: int, player_name: String):
-	players[id] = player_name
+	players[id] = MultiplayerPlayer.new(id, player_name)
 	new_player.emit(id, player_name)
 
 
