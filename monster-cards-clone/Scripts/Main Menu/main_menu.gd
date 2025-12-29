@@ -17,6 +17,11 @@ func _ready() -> void:
 	menu_containers = [play_menu_container, settings_menu_container]
 
 
+func reinitialize() -> void:
+	join_status_label.text = ""
+	join_status_label.visible = false
+
+
 func close_all_menus() -> void:
 	for menu in menu_containers:
 		menu.visible = false

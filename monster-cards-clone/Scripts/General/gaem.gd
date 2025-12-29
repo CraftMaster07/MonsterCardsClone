@@ -54,6 +54,7 @@ func stop_board():
 
 
 func start_main_menu():
+	main_menu.reinitialize()
 	add_child(main_menu)
 
 
