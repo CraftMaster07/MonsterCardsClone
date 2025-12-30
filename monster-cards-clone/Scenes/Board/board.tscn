@@ -20,6 +20,8 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_xiot5")
 board_card_scene = ExtResource("2_dun80")
+your_player_scene = ExtResource("3_me64r")
+enemy_player_scene = ExtResource("4_gti8d")
 
 [node name="Table" type="Control" parent="."]
 layout_mode = 1
@@ -121,3 +123,9 @@ bus = &"Sound"
 
 [connection signal="pressed" from="Table/CameraPivot/CanvasLayer/NextPlayerButton" to="." method="_on_next_player_button_pressed"]
 [connection signal="pressed" from="Table/CameraPivot/CanvasLayer/PrevPlayerButton" to="." method="_on_prev_player_button_pressed"]
+[node name="YourField" parent="." instance=ExtResource("8_4l5f1")]
+layout_mode = 1
+offset_left = -112.5
+offset_top = -45.5
+offset_right = 112.5
+offset_bottom = 45.5

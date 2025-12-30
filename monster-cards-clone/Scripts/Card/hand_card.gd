@@ -46,7 +46,7 @@ func _input(event: InputEvent) -> void:
 			card_placed.emit(self, nearest_area.slot)
 			return
 		
-		_animate_to_position(base_position, dragback_trans, dragback_time, dragback_ease)
+		animate_to_position(base_position, dragback_trans, dragback_time, dragback_ease)
 		tween.tween_callback(_rest)
 
 
@@ -67,7 +67,7 @@ func select():
 func deselect():
 	if not selected:
 		return
-	_animate_to_position(base_position, animation_trans, animation_length)
+	animate_to_position(base_position, animation_trans, animation_length)
 	tween.tween_callback(_rest)
 	selected = false
 	mouse_in_card = card_front.is_hovered()
@@ -91,14 +91,14 @@ func _find_nearest_overlapping_area():
 	return min_area
 
 
-func goto_slot(slot: CardSlot):
+func goto_slot(slot: YourCardSlot):
 	"""
 	Moves cardfront to the desired slot, and disables further dragging/selecting
 	(Should be deleted and replaced with a BoardCard afterwords by the board)
 	"""
 	drag_state = DragState.UNDRAGGABLE
 	var target_position := slot.global_position
-	_animate_to_position(target_position, animation_trans, animation_length, Tween.EASE_IN_OUT, true)
+	animate_to_position(target_position, animation_trans, animation_length, Tween.EASE_IN_OUT, true)
 
 
 func _update_base_position():
@@ -118,7 +118,7 @@ func _on_mouse_entered() -> void:
 		_update_base_position()
 		touched = true
 	
-	_animate_to_position(base_position - Vector2(0, hover_height), animation_trans, animation_length)
+	animate_to_position(base_position - Vector2(0, hover_height), animation_trans, animation_length)
 	sfx_hover.play()
 
 
@@ -128,10 +128,10 @@ func _on_mouse_exited() -> void:
 		return
 	
 	mouse_in_card = false
-	_animate_to_position(base_position, animation_trans, animation_length)
+	animate_to_position(base_position, animation_trans, animation_length)
 
 
-func _animate_to_position(pos, trans_type, length, ease_type = Tween.EASE_IN_OUT, global = false):
+func animate_to_position(pos, trans_type, length, ease_type = Tween.EASE_IN_OUT, global = false):
 	"""
 	Animate the cardfront to the desired position
 	pos - desired position

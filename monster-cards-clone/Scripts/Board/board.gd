@@ -1,6 +1,8 @@
 class_name Board
 extends Control
 
+@onready var hand := $Hand
+@onready var your_field := $YourField
 @onready var camera_pivot: Control = $Table/CameraPivot
 @onready var card_slot_container: MarginContainer = $Table/CardSlotContainer
 @export var board_card_scene: PackedScene
@@ -12,10 +14,15 @@ extends Control
 @onready var sfx_place: AudioStreamPlayer = $sfx_place
 @onready var sfx_select: AudioStreamPlayer = $sfx_select
 @onready var sfx_deselect: AudioStreamPlayer = $sfx_deselect
+@export var board_card_scene: PackedScene
+@export var your_player_scene: PackedScene
+@export var enemy_player_scene: PackedScene
 
 var selected_card: HandCard = null
 
 var players := {}
+var new_player: Player
+var your_id: int
 
 func _ready() -> void:
 	for card in hand.get_cards():
@@ -23,16 +30,18 @@ func _ready() -> void:
 		card.card_selected.connect(select_card)
 		card.card_deselected.connect(deselect_card)
 	
-	for slot in card_slot_container.get_slots():
+	for slot in your_field.get_slots():
 		slot.clicked.connect(slot_clicked)
 
 
-func slot_clicked(slot: CardSlot):
+func slot_clicked(slot: EnemyCardSlot):
+	print("slot clicked")
 	if selected_card != null:
+		print("placing card")
 		_place_card_into_slot(selected_card, slot)
 
 
-func _place_card_into_slot(card: HandCard, slot: CardSlot):
+func _place_card_into_slot(card: HandCard, slot: EnemyCardSlot):
 	"""
 	Marks the slot as taken, and starts the animation to move the card into the slot
 	"""
@@ -70,21 +79,41 @@ func deselect_card():
 
 
 func init_players(multiplayer_players: Array):
-	for multiplayer_player in multiplayer_players:
-		init_player(multiplayer_player)
+	for player_data in multiplayer_players:
+		if player_data['id'] == your_id:
+			init_your_player(player_data)
+		else:
+			init_enemy_player(player_data)
+
 	print("players initialized", players)
 
 
-func init_player(multiplayer_player: Dictionary):
-	players[multiplayer_player['id']] = Player.new(
-		multiplayer_player['id'],
-		multiplayer_player['name'],
-	)
+func init_enemy_player(player_data: Dictionary):
+	new_player = enemy_player_scene.instantiate()
+	new_player.init(player_data['id'], player_data['name'])
+	add_child(new_player)
+	players[player_data['id']] = new_player
 
 
+func init_your_player(player_data: Dictionary):
+	new_player = your_player_scene.instantiate()
+	new_player.init(player_data['id'], player_data['name'])
+	add_child(new_player)
+	players[player_data['id']] = new_player
+
+
+func set_your_id(id: int):
+	your_id = id
+
+
+func remove_player(id: int):
+	remove_child(players[id])
+	players[id].queue_free()
+	players.erase(id)
+	
 func _on_next_player_button_pressed() -> void:
 	camera_pivot.rotate_by(TAU / 2)
 
 
 func _on_prev_player_button_pressed() -> void:
-	camera_pivot.rotate_by(-TAU / 2)
+	camera_pivot.rotate_by(-TAU / 2)	
