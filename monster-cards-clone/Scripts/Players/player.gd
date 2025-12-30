@@ -18,7 +18,6 @@ func init(new_player_id: int, new_player_name: String):
 
 
 func _ready():
-    print(1)
     update_health()
 
 

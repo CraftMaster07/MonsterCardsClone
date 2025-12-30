@@ -72,7 +72,6 @@ func deselect_card():
 
 func init_players(multiplayer_players: Array):
 	for player_data in multiplayer_players:
-		print("player id ", player_data['id'] == your_id)
 		if player_data['id'] == your_id:
 			init_your_player(player_data)
 		else:
