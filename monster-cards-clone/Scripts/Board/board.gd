@@ -1,11 +1,8 @@
 class_name Board
 extends Control
 
-@onready var hand := $Hand
-@onready var your_field := $YourField
+@onready var your_field := $Table/YourField
 @onready var camera_pivot: Control = $Table/CameraPivot
-@onready var card_slot_container: MarginContainer = $Table/CardSlotContainer
-@export var board_card_scene: PackedScene
 @onready var hand: MarginContainer = $Table/CameraPivot/CanvasLayer/Hand
 
 @onready var next_player_button: Button = $Table/CameraPivot/CanvasLayer/NextPlayerButton
