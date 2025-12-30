@@ -43,8 +43,8 @@ func stop_waiting_room():
 
 func start_board():
 	board = board_scene.instantiate()
-	var pl = multiplayer_players_to_dicts(multiplayer_manager.players)
-	board.init_players(pl)
+	board.set_your_id(multiplayer_manager.your_id)
+	board.init_players(multiplayer_players_to_dicts(multiplayer_manager.players))
 	add_child(board)
 
 
@@ -88,6 +88,8 @@ func _on_multiplayer_manager_connection_failure() -> void:
 func _on_multiplayer_manager_player_left(id: int) -> void:
 	if waiting_room:
 		waiting_room.remove_player(id)
+	elif board:
+		board.remove_player(id)
 
 
 func _on_multiplayer_manager_server_disconnected() -> void:
@@ -109,7 +111,7 @@ func start_game_as_host():
 
 
 func multiplayer_players_to_dicts(
-	multiplayer_players: Dictionary#[int, MultiplayerPlayer]
+	multiplayer_players: Dictionary
 ) -> Array:
 	# we don't want board to know what is a MultiplayerPlayer, so we convert them to dictionaries.
 	var dicts := []
