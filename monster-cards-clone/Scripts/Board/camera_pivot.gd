@@ -3,12 +3,13 @@ extends Control
 @export var animation_length: float = 0.5
 @export var animation_trans: Tween.TransitionType = Tween.TRANS_CUBIC
 @export var animation_ease: Tween.EaseType = Tween.EASE_IN_OUT
+@export var hand: Hand
 var prev_target: float = 0
 
 var tween: Tween
 
 func animate_camera_rotation_to(
-	target_rotation: float, 
+	target_rotation: float,
 	duration: float = animation_length,
 	trans_type: Tween.TransitionType = animation_trans,
 	ease_type: Tween.EaseType = animation_ease
@@ -22,7 +23,8 @@ func animate_camera_rotation_to(
 	if tween:
 		tween.kill()
 		rotation = prev_target
-		
+	
+	hand.set_camera_rotation(target_rotation)
 	prev_target = target_rotation
 	tween = create_tween()
 	

@@ -9,6 +9,7 @@ extends Control
 @onready var area2d := $CardFront/Area2D
 @onready var select_timer := $SelectTimer
 @onready var sfx_hover: AudioStreamPlayer = $sfx_hover
+@onready var drag_offset: Vector2 = card_front.size / 2
 
 signal card_placed(card, slot)
 signal card_selected(card)
@@ -25,10 +26,10 @@ var mouse_in_card: bool = false
 var overlapping_slot_areas: Array[SlotArea]
 var tween: Tween
 
+
 func _process(_delta: float) -> void:
 	if drag_state == DragState.DRAGGING:
-		card_front.global_position = get_global_mouse_position()
-
+		card_front.global_position = get_global_mouse_position() - drag_offset
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_released("click") and drag_state == DragState.DRAGGING:
@@ -55,6 +56,10 @@ func _rest():
 	
 	if card_front.is_hovered():
 		_on_mouse_entered()
+
+
+func update_drag_offset(camera_rotation: float):
+	drag_offset = (card_front.size / 2).rotated(camera_rotation)
 
 
 func select():

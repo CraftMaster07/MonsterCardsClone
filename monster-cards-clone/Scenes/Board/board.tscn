@@ -34,7 +34,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("3_qlllu")
 
-[node name="CameraPivot" type="Control" parent="Table"]
+[node name="CameraPivot" type="Control" parent="Table" node_paths=PackedStringArray("hand")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -44,6 +44,7 @@ grow_vertical = 2
 pivot_offset = Vector2(576, 324)
 script = ExtResource("4_me64r")
 animation_ease = 1
+hand = NodePath("UI/Hand")
 
 [node name="Control" type="Control" parent="Table/CameraPivot"]
 layout_mode = 1
