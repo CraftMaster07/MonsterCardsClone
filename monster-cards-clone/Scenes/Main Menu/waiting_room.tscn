@@ -43,51 +43,46 @@ player_scene = ExtResource("3_lo71w")
 custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
 
+[node name="LineEdit" type="LineEdit" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.15
+offset_left = 20.0
+offset_top = 20.0
+placeholder_text = "Name"
+
 [node name="AddBot" type="Button" parent="."]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.056
-anchor_top = 0.11800001
-anchor_right = 0.119
-anchor_bottom = 0.165
-grow_horizontal = 2
-grow_vertical = 2
+anchor_right = 0.15
+offset_left = 20.0
+offset_top = 70.0
 text = "ADD BOT"
 metadata/_edit_use_anchors_ = true
 
-[node name="Start" type="Button" parent="."]
-visible = false
+[node name="StartButton" type="Button" parent="."]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.050347224
-anchor_top = 0.8
-anchor_right = 0.12
-anchor_bottom = 0.85
-grow_horizontal = 2
-grow_vertical = 2
+anchor_top = 0.883
+anchor_right = 0.15
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_bottom = -20.0
 disabled = true
 text = "Start"
 metadata/_edit_use_anchors_ = true
 
-[node name="LineEdit" type="LineEdit" parent="."]
-layout_mode = 0
-offset_left = 19.0
-offset_top = 37.0
-offset_right = 174.0
-offset_bottom = 68.0
-placeholder_text = "Name"
-
 [node name="LeaveButton" type="Button" parent="."]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.88
-anchor_top = 0.8
-anchor_right = 0.95
-anchor_bottom = 0.85
-grow_horizontal = 2
-grow_vertical = 2
+anchor_left = 0.85
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -20.0
+offset_bottom = -30.0
 text = "Leave"
 
 [connection signal="pressed" from="AddBot" to="." method="_on_button_pressed"]
-[connection signal="pressed" from="Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="LeaveButton" to="." method="_on_leave_button_pressed"]

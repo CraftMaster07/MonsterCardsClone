@@ -1,9 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://cfyktcr6rqnlf"]
+[gd_scene load_steps=11 format=3 uid="uid://cfyktcr6rqnlf"]
 
 [ext_resource type="Script" uid="uid://ctku11dgwh5at" path="res://Scripts/Board/board.gd" id="1_xiot5"]
 [ext_resource type="PackedScene" uid="uid://cru4gfksm3rbh" path="res://Scenes/Card/board_card.tscn" id="2_dun80"]
 [ext_resource type="PackedScene" uid="uid://b6obljxfl8pah" path="res://Scenes/Board/hand.tscn" id="2_shhme"]
+[ext_resource type="Script" uid="uid://4wekwqlpwfc0" path="res://Scripts/Board/table.gd" id="3_qlllu"]
 [ext_resource type="Texture2D" uid="uid://cjn63si50nhet" path="res://Assets/icon.svg" id="4_cp8jt"]
+[ext_resource type="Script" uid="uid://d1k20uuilb7jg" path="res://Scenes/Board/camera_pivot.gd" id="4_me64r"]
 [ext_resource type="PackedScene" uid="uid://dtpst7jgrdpqq" path="res://Scenes/Board/card_slot_container.tscn" id="5_dun80"]
 [ext_resource type="AudioStream" uid="uid://cgatasovfxoyl" path="res://Assets/Audio/Sounds/sfx_place.mp3" id="11_gti8d"]
 [ext_resource type="AudioStream" uid="uid://02oc0voj62j3" path="res://Assets/Audio/Sounds/sfx_select.mp3" id="12_brcfe"]
@@ -19,30 +21,91 @@ grow_vertical = 2
 script = ExtResource("1_xiot5")
 board_card_scene = ExtResource("2_dun80")
 
-[node name="CardSlotContainer" parent="." instance=ExtResource("5_dun80")]
+[node name="Table" type="Control" parent="."]
+layout_mode = 1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_qlllu")
+
+[node name="CameraPivot" type="Control" parent="Table"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("4_me64r")
+animation_ease = 1
+
+[node name="Camera" type="Camera2D" parent="Table/CameraPivot"]
+position = Vector2(0, 100)
+ignore_rotation = false
+
+[node name="CanvasLayer" type="Control" parent="Table/CameraPivot"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Hand" parent="Table/CameraPivot/CanvasLayer" instance=ExtResource("2_shhme")]
+layout_mode = 1
+offset_top = -131.0
+theme_override_constants/margin_bottom = 40
+
+[node name="Icon" type="Sprite2D" parent="Table/CameraPivot/CanvasLayer"]
+position = Vector2(399, -50)
+texture = ExtResource("4_cp8jt")
+
+[node name="DamageButton" type="CheckButton" parent="Table/CameraPivot/CanvasLayer"]
+layout_mode = 0
+offset_left = 137.0
+offset_top = 255.0
+offset_right = 183.0
+offset_bottom = 288.0
+
+[node name="NextPlayerButton" type="Button" parent="Table/CameraPivot/CanvasLayer"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.8
+anchor_top = 0.8
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -50.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "-->"
+
+[node name="PrevPlayerButton" type="Button" parent="Table/CameraPivot/CanvasLayer"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.2
+anchor_top = 0.8
+anchor_right = 0.2
+anchor_bottom = 1.0
+offset_bottom = -50.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "<--"
+
+[node name="CardSlotContainer" parent="Table" instance=ExtResource("5_dun80")]
 layout_mode = 1
 anchors_preset = 15
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-
-[node name="Hand" parent="." instance=ExtResource("2_shhme")]
-layout_mode = 1
-offset_top = -131.0
-theme_override_constants/margin_bottom = 40
-
-[node name="Stuff" type="Node" parent="."]
-
-[node name="Icon" type="Sprite2D" parent="Stuff"]
-position = Vector2(929, 188)
-texture = ExtResource("4_cp8jt")
-
-[node name="DamageButton" type="CheckButton" parent="Stuff"]
-offset_left = 137.0
-offset_top = 255.0
-offset_right = 183.0
-offset_bottom = 288.0
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 205.0
+offset_bottom = 71.0
 
 [node name="sfx_place" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("11_gti8d")
@@ -55,3 +118,6 @@ bus = &"Sound"
 [node name="sfx_deselect" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("13_csi2d")
 bus = &"Sound"
+
+[connection signal="pressed" from="Table/CameraPivot/CanvasLayer/NextPlayerButton" to="." method="_on_next_player_button_pressed"]
+[connection signal="pressed" from="Table/CameraPivot/CanvasLayer/PrevPlayerButton" to="." method="_on_prev_player_button_pressed"]

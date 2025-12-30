@@ -1,9 +1,14 @@
 class_name Board
 extends Control
 
-@onready var hand := $Hand
-@onready var card_slot_container := $CardSlotContainer
+@onready var camera_pivot: Control = $Table/CameraPivot
+@onready var card_slot_container: MarginContainer = $Table/CardSlotContainer
 @export var board_card_scene: PackedScene
+@onready var hand: MarginContainer = $Table/CameraPivot/CanvasLayer/Hand
+
+@onready var next_player_button: Button = $Table/CameraPivot/CanvasLayer/NextPlayerButton
+@onready var prev_player_button: Button = $Table/CameraPivot/CanvasLayer/PrevPlayerButton
+
 @onready var sfx_place: AudioStreamPlayer = $sfx_place
 @onready var sfx_select: AudioStreamPlayer = $sfx_select
 @onready var sfx_deselect: AudioStreamPlayer = $sfx_deselect
@@ -75,3 +80,11 @@ func init_player(multiplayer_player: Dictionary):
 		multiplayer_player['id'],
 		multiplayer_player['name'],
 	)
+
+
+func _on_next_player_button_pressed() -> void:
+	camera_pivot.rotate_by(TAU / 2)
+
+
+func _on_prev_player_button_pressed() -> void:
+	camera_pivot.rotate_by(-TAU / 2)
