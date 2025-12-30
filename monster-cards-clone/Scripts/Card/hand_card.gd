@@ -19,15 +19,15 @@ enum DragState {RESTING, DRAGGING, UNDRAGGABLE}
 var drag_state: DragState = DragState.RESTING
 var selected: bool = false
 var mouse_in_card: bool = false
-@export var dragback_time : float = 0.5
-@export var dragback_trans : Tween.TransitionType = Tween.TRANS_ELASTIC
-@export var dragback_ease : Tween.EaseType = Tween.EASE_OUT
-var overlapping_slot_areas : Array[SlotArea]
+@export var dragback_time: float = 0.5
+@export var dragback_trans: Tween.TransitionType = Tween.TRANS_ELASTIC
+@export var dragback_ease: Tween.EaseType = Tween.EASE_OUT
+var overlapping_slot_areas: Array[SlotArea]
 var tween: Tween
 
 func _process(_delta: float) -> void:
 	if drag_state == DragState.DRAGGING:
-		card_front.global_position = get_global_mouse_position() - card_front.size/2
+		card_front.global_position = get_global_mouse_position()
 
 
 func _input(event: InputEvent) -> void:

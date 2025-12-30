@@ -27,16 +27,25 @@ enemy_player_scene = ExtResource("4_gti8d")
 
 [node name="Table" type="Control" parent="."]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("3_qlllu")
 
 [node name="CameraPivot" type="Control" parent="Table"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(576, 324)
+script = ExtResource("4_me64r")
+animation_ease = 1
+
+[node name="Control" type="Control" parent="Table/CameraPivot"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -45,14 +54,12 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("4_me64r")
-animation_ease = 1
 
-[node name="Camera" type="Camera2D" parent="Table/CameraPivot"]
+[node name="Camera" type="Camera2D" parent="Table/CameraPivot/Control"]
 position = Vector2(0, 100)
 ignore_rotation = false
 
-[node name="CanvasLayer" type="Control" parent="Table/CameraPivot"]
+[node name="UI" type="Control" parent="Table/CameraPivot"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -60,23 +67,23 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Hand" parent="Table/CameraPivot/CanvasLayer" instance=ExtResource("2_shhme")]
+[node name="Hand" parent="Table/CameraPivot/UI" instance=ExtResource("2_shhme")]
 layout_mode = 1
 offset_top = -131.0
 theme_override_constants/margin_bottom = 40
 
-[node name="Icon" type="Sprite2D" parent="Table/CameraPivot/CanvasLayer"]
+[node name="Icon" type="Sprite2D" parent="Table/CameraPivot/UI"]
 position = Vector2(399, -50)
 texture = ExtResource("4_cp8jt")
 
-[node name="DamageButton" type="CheckButton" parent="Table/CameraPivot/CanvasLayer"]
+[node name="DamageButton" type="CheckButton" parent="Table/CameraPivot/UI"]
 layout_mode = 0
 offset_left = 137.0
 offset_top = 255.0
 offset_right = 183.0
 offset_bottom = 288.0
 
-[node name="NextPlayerButton" type="Button" parent="Table/CameraPivot/CanvasLayer"]
+[node name="NextPlayerButton" type="Button" parent="Table/CameraPivot/UI"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.8
@@ -91,7 +98,7 @@ grow_horizontal = 0
 grow_vertical = 0
 text = "-->"
 
-[node name="PrevPlayerButton" type="Button" parent="Table/CameraPivot/CanvasLayer"]
+[node name="PrevPlayerButton" type="Button" parent="Table/CameraPivot/UI"]
 layout_mode = 1
 anchors_preset = -1
 offset_left = -223.0
@@ -103,8 +110,12 @@ grow_vertical = 0
 text = "<--"
 
 [node name="YourField" parent="Table" instance=ExtResource("8_4l5f1")]
-layout_mode = 0
-anchors_preset = 0
+layout_mode = 1
+anchors_preset = -1
+offset_left = 36.0
+offset_top = 9.0
+offset_right = 261.0
+offset_bottom = 100.0
 
 [node name="sfx_place" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("11_gti8d")
@@ -118,5 +129,5 @@ bus = &"Sound"
 stream = ExtResource("13_csi2d")
 bus = &"Sound"
 
-[connection signal="pressed" from="Table/CameraPivot/CanvasLayer/NextPlayerButton" to="." method="_on_next_player_button_pressed"]
-[connection signal="pressed" from="Table/CameraPivot/CanvasLayer/PrevPlayerButton" to="." method="_on_prev_player_button_pressed"]
+[connection signal="pressed" from="Table/CameraPivot/UI/NextPlayerButton" to="." method="_on_next_player_button_pressed"]
+[connection signal="pressed" from="Table/CameraPivot/UI/PrevPlayerButton" to="." method="_on_prev_player_button_pressed"]

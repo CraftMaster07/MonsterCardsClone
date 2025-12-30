@@ -3,10 +3,10 @@ extends Control
 
 @onready var your_field := $Table/YourField
 @onready var camera_pivot: Control = $Table/CameraPivot
-@onready var hand: MarginContainer = $Table/CameraPivot/CanvasLayer/Hand
+@onready var hand: MarginContainer = $Table/CameraPivot/UI/Hand
 
-@onready var next_player_button: Button = $Table/CameraPivot/CanvasLayer/NextPlayerButton
-@onready var prev_player_button: Button = $Table/CameraPivot/CanvasLayer/PrevPlayerButton
+@onready var next_player_button: Button = $Table/CameraPivot/UI/NextPlayerButton
+@onready var prev_player_button: Button = $Table/CameraPivot/UI/PrevPlayerButton
 
 @onready var sfx_place: AudioStreamPlayer = $sfx_place
 @onready var sfx_select: AudioStreamPlayer = $sfx_select
@@ -54,7 +54,7 @@ func _replace_handcard_with_boardcard(card: HandCard):
 	This should be done after the card is moved into a slot
 	"""
 	var new_board_card := board_card_scene.instantiate()
-	add_child(new_board_card) #temporary, should add underneath some container and not directly
+	add_child(new_board_card) # temporary, should add underneath some container and not directly
 	new_board_card.global_position = card.card_front.global_position
 	card.queue_free()
 	sfx_place.play()
@@ -113,4 +113,4 @@ func _on_next_player_button_pressed() -> void:
 
 
 func _on_prev_player_button_pressed() -> void:
-	camera_pivot.rotate_by(-TAU / 2)	
+	camera_pivot.rotate_by(-TAU / 2)
