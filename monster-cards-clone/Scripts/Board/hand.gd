@@ -10,6 +10,7 @@ func get_cards() -> Array[HandCard]:
 		cards.append(child as HandCard)
 	return cards
 
+
 func set_camera_rotation(camera_rotation: float):
 	for card in get_cards():
 		card.update_drag_offset(camera_rotation)

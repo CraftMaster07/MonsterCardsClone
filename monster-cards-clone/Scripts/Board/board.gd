@@ -1,34 +1,43 @@
 class_name Board
 extends Control
 
-@onready var your_field := $Table/YourField
-@onready var camera_pivot: Control = $Table/CameraPivot
-@onready var hand: MarginContainer = $Table/CameraPivot/UI/Hand
-
-@onready var next_player_button: Button = $Table/CameraPivot/UI/NextPlayerButton
-@onready var prev_player_button: Button = $Table/CameraPivot/UI/PrevPlayerButton
-
 @onready var sfx_place: AudioStreamPlayer = $sfx_place
 @onready var sfx_select: AudioStreamPlayer = $sfx_select
 @onready var sfx_deselect: AudioStreamPlayer = $sfx_deselect
+
+@export var camera_pivot: Control
+@export var table: Control
+@export var field_spawner_pivot: Control
+@export var hand: MarginContainer
+
+@export var next_player_button: Button
+@export var prev_player_button: Button
+
 @export var board_card_scene: PackedScene
 @export var your_player_scene: PackedScene
 @export var enemy_player_scene: PackedScene
 
+const DEFAULT_TABLE_RADIUS: float = 500.0
+const CAMERA_ADDITIONAL_RADIUS: float = -100.0
+const FIELD_SPAWNER_ADDITIONAL_RADIUS: float = -100.0
+
 var selected_card: HandCard = null
 
 var players := {}
-var new_player: Player
 var your_id: int
 
+
 func _ready() -> void:
+	var table_radius: float = calculate_table_radius(len(players))
+	set_radii(table_radius)
+
 	for card in hand.get_cards():
 		card.card_placed.connect(_place_card_into_slot)
 		card.card_selected.connect(select_card)
 		card.card_deselected.connect(deselect_card)
 	
-	for slot in your_field.get_slots():
-		slot.clicked.connect(slot_clicked)
+	# for slot in your_field.get_slots():
+	# 	slot.clicked.connect(slot_clicked)
 
 
 func slot_clicked(slot: EnemyCardSlot):
@@ -86,14 +95,14 @@ func init_players(multiplayer_players: Array):
 
 
 func init_enemy_player(player_data: Dictionary):
-	new_player = enemy_player_scene.instantiate()
+	var new_player: Player = enemy_player_scene.instantiate()
 	new_player.init(player_data['id'], player_data['name'])
 	add_child(new_player)
 	players[player_data['id']] = new_player
 
 
 func init_your_player(player_data: Dictionary):
-	new_player = your_player_scene.instantiate()
+	var new_player: Player = your_player_scene.instantiate()
 	new_player.init(player_data['id'], player_data['name'])
 	add_child(new_player)
 	players[player_data['id']] = new_player
@@ -114,3 +123,13 @@ func _on_next_player_button_pressed() -> void:
 
 func _on_prev_player_button_pressed() -> void:
 	camera_pivot.rotate_by(-TAU / 2)
+
+
+func calculate_table_radius(players_count: int) -> float:
+	return DEFAULT_TABLE_RADIUS if players_count < 3 else players_count * 100.0
+
+
+func set_radii(radius: float):
+	table.set_radius(radius)
+	camera_pivot.update_camera_radius(radius + CAMERA_ADDITIONAL_RADIUS)
+	field_spawner_pivot.set_radius_and_spawn_fields(radius + FIELD_SPAWNER_ADDITIONAL_RADIUS, len(players))

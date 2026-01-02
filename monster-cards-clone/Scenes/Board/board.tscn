@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://cfyktcr6rqnlf"]
+[gd_scene load_steps=15 format=3 uid="uid://cfyktcr6rqnlf"]
 
 [ext_resource type="Script" uid="uid://ctku11dgwh5at" path="res://Scripts/Board/board.gd" id="1_xiot5"]
 [ext_resource type="PackedScene" uid="uid://cru4gfksm3rbh" path="res://Scenes/Card/board_card.tscn" id="2_dun80"]
@@ -9,11 +9,13 @@
 [ext_resource type="PackedScene" uid="uid://c1qkabu180wpv" path="res://Scenes/Players/enemy_player.tscn" id="4_gti8d"]
 [ext_resource type="Script" uid="uid://d1k20uuilb7jg" path="res://Scripts/Board/camera_pivot.gd" id="4_me64r"]
 [ext_resource type="PackedScene" uid="uid://7ukrl57uilte" path="res://Scenes/Board/your_field.tscn" id="8_4l5f1"]
+[ext_resource type="Script" uid="uid://7i1gkuidppy1" path="res://Scripts/Board/field_spawner_pivot.gd" id="10_brcfe"]
+[ext_resource type="PackedScene" uid="uid://dtpst7jgrdpqq" path="res://Scenes/Board/enemy_field.tscn" id="11_csi2d"]
 [ext_resource type="AudioStream" uid="uid://cgatasovfxoyl" path="res://Assets/Audio/Sounds/sfx_place.mp3" id="11_gti8d"]
 [ext_resource type="AudioStream" uid="uid://02oc0voj62j3" path="res://Assets/Audio/Sounds/sfx_select.mp3" id="12_brcfe"]
 [ext_resource type="AudioStream" uid="uid://ch7jr0gor48sm" path="res://Assets/Audio/Sounds/sfx_deselect.mp3" id="13_csi2d"]
 
-[node name="Board" type="Control"]
+[node name="Board" type="Control" node_paths=PackedStringArray("camera_pivot", "table", "field_spawner_pivot", "hand", "next_player_button", "prev_player_button")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -21,6 +23,12 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_xiot5")
+camera_pivot = NodePath("Table/CameraPivot")
+table = NodePath("Table")
+field_spawner_pivot = NodePath("Table/FieldSpawnerPivot")
+hand = NodePath("Table/CameraPivot/UI/Hand")
+next_player_button = NodePath("Table/CameraPivot/UI/NextPlayerButton")
+prev_player_button = NodePath("Table/CameraPivot/UI/PrevPlayerButton")
 board_card_scene = ExtResource("2_dun80")
 your_player_scene = ExtResource("3_me64r")
 enemy_player_scene = ExtResource("4_gti8d")
@@ -34,7 +42,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("3_qlllu")
 
-[node name="CameraPivot" type="Control" parent="Table" node_paths=PackedStringArray("hand")]
+[node name="CameraPivot" type="Control" parent="Table" node_paths=PackedStringArray("camera", "hand")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -43,22 +51,8 @@ grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(576, 324)
 script = ExtResource("4_me64r")
-animation_ease = 1
+camera = NodePath("Camera")
 hand = NodePath("UI/Hand")
-
-[node name="Control" type="Control" parent="Table/CameraPivot"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Camera" type="Camera2D" parent="Table/CameraPivot/Control"]
-position = Vector2(0, 100)
-ignore_rotation = false
 
 [node name="UI" type="Control" parent="Table/CameraPivot"]
 layout_mode = 1
@@ -69,12 +63,14 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Hand" parent="Table/CameraPivot/UI" instance=ExtResource("2_shhme")]
+visible = false
 layout_mode = 1
-offset_top = -131.0
+offset_top = -29.0
+offset_bottom = 102.0
 theme_override_constants/margin_bottom = 40
 
 [node name="Icon" type="Sprite2D" parent="Table/CameraPivot/UI"]
-position = Vector2(399, -50)
+position = Vector2(576, 524)
 texture = ExtResource("4_cp8jt")
 
 [node name="DamageButton" type="CheckButton" parent="Table/CameraPivot/UI"]
@@ -102,21 +98,39 @@ text = "-->"
 [node name="PrevPlayerButton" type="Button" parent="Table/CameraPivot/UI"]
 layout_mode = 1
 anchors_preset = -1
-offset_left = -223.0
-offset_top = 77.0
-offset_right = -195.0
-offset_bottom = 108.0
+offset_left = 103.0
+offset_top = 678.0
+offset_right = 131.0
+offset_bottom = 709.0
 grow_horizontal = 0
 grow_vertical = 0
 text = "<--"
 
-[node name="YourField" parent="Table" instance=ExtResource("8_4l5f1")]
+[node name="Camera" type="Camera2D" parent="Table/CameraPivot"]
+position = Vector2(576, 424)
+ignore_rotation = false
+
+[node name="FieldSpawnerPivot" type="Control" parent="Table" node_paths=PackedStringArray("board", "field_spawner")]
 layout_mode = 1
-anchors_preset = -1
-offset_left = 36.0
-offset_top = 9.0
-offset_right = 261.0
-offset_bottom = 100.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("10_brcfe")
+enemy_field_scene = ExtResource("11_csi2d")
+your_field_scene = ExtResource("8_4l5f1")
+board = NodePath("../..")
+field_spawner = NodePath("FieldSpawner")
+animation_length = 0.0
+
+[node name="FieldSpawner" type="Control" parent="Table/FieldSpawnerPivot"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Icon" type="Sprite2D" parent="Table/FieldSpawnerPivot/FieldSpawner"]
+texture = ExtResource("4_cp8jt")
 
 [node name="sfx_place" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("11_gti8d")

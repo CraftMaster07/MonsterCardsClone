@@ -1,3 +1,4 @@
+class_name Field
 extends MarginContainer
 
 @onready var slot_container = $HBoxContainer
