@@ -63,7 +63,6 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Hand" parent="Table/CameraPivot/UI" instance=ExtResource("2_shhme")]
-visible = false
 layout_mode = 1
 offset_top = -29.0
 offset_bottom = 102.0
