@@ -70,7 +70,7 @@ offset_bottom = 102.0
 theme_override_constants/margin_bottom = 40
 
 [node name="Icon" type="Sprite2D" parent="Table/CameraPivot/UI"]
-position = Vector2(576, 524)
+position = Vector2(85.00018, 561)
 texture = ExtResource("4_cp8jt")
 
 [node name="DamageButton" type="CheckButton" parent="Table/CameraPivot/UI"]
@@ -129,9 +129,6 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="Icon" type="Sprite2D" parent="Table/FieldSpawnerPivot/FieldSpawner"]
-texture = ExtResource("4_cp8jt")
-
 [node name="sfx_place" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("11_gti8d")
 bus = &"Sound"
@@ -146,3 +143,4 @@ bus = &"Sound"
 
 [connection signal="pressed" from="Table/CameraPivot/UI/NextPlayerButton" to="." method="_on_next_player_button_pressed"]
 [connection signal="pressed" from="Table/CameraPivot/UI/PrevPlayerButton" to="." method="_on_prev_player_button_pressed"]
+[connection signal="spawning_finished" from="Table/FieldSpawnerPivot" to="." method="_on_field_spawner_pivot_spawning_finished"]

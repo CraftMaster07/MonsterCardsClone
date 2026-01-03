@@ -7,6 +7,8 @@ extends ObjectPivot
 
 var radius: float
 
+signal spawning_finished()
+
 
 func _ready() -> void:
 	super._ready()
@@ -37,6 +39,8 @@ func set_new_field_position(new_field: Field) -> void:
 func set_radius_and_spawn_fields(table_radius: float, total_player_count: int) -> void:
 	update_object_radius(table_radius)
 	spawn_fields(total_player_count)
+	spawning_finished.emit()
+
 
 
 func spawn_fields(total_player_count: int) -> void:
@@ -47,6 +51,10 @@ func spawn_fields(total_player_count: int) -> void:
 		if tween:
 			await tween.finished
 		spawn_enemy_field()
+
+	if tween:
+		await tween.finished
+
 
 
 func set_radius(new_radius: float) -> void:

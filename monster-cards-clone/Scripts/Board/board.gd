@@ -116,7 +116,8 @@ func remove_player(id: int):
 	remove_child(players[id])
 	players[id].queue_free()
 	players.erase(id)
-	
+
+
 func _on_next_player_button_pressed() -> void:
 	camera_pivot.rotate_by(TAU / len(players))
 
@@ -133,3 +134,8 @@ func set_radii(radius: float):
 	table.set_radius(radius)
 	camera_pivot.update_camera_radius(radius + CAMERA_ADDITIONAL_RADIUS)
 	field_spawner_pivot.set_radius_and_spawn_fields(radius + FIELD_SPAWNER_ADDITIONAL_RADIUS, len(players))
+
+
+func _on_field_spawner_pivot_spawning_finished() -> void:
+	remove_child(field_spawner_pivot)
+	field_spawner_pivot.queue_free()

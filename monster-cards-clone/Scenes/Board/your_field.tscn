@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://dt4wxwmhsr5fe" path="res://Scenes/Board/your_card_slot.tscn" id="2_cucen"]
 
 [node name="YourField" type="MarginContainer"]
-offset_right = 225.0
+offset_right = 305.0
 offset_bottom = 91.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
