@@ -4,6 +4,7 @@ extends Control
 @onready var sfx_place: AudioStreamPlayer = $sfx_place
 @onready var sfx_select: AudioStreamPlayer = $sfx_select
 @onready var sfx_deselect: AudioStreamPlayer = $sfx_deselect
+@onready var sfx_spin: AudioStreamPlayer = $sfx_spin
 
 @export var camera_pivot: Control
 @export var table: Control
@@ -80,8 +81,8 @@ func select_card(card: HandCard):
 
 func deselect_card():
 	if selected_card != null:
-		sfx_deselect.play()
 		selected_card = null
+		sfx_deselect.play()
 
 
 func init_players(multiplayer_players: Array):
@@ -120,10 +121,12 @@ func remove_player(id: int):
 
 func _on_next_player_button_pressed() -> void:
 	camera_pivot.rotate_by(TAU / len(players))
+	sfx_spin.play()
 
 
 func _on_prev_player_button_pressed() -> void:
 	camera_pivot.rotate_by(-TAU / len(players))
+	sfx_spin.play()
 
 
 func calculate_table_radius(players_count: int) -> float:
