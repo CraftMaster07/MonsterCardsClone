@@ -9,7 +9,7 @@ var rngesus := RandomNumberGenerator.new()
 
 @onready var player_name_input: LineEdit = $LineEdit
 @onready var player_container: VBoxContainer = $VBoxContainer/PlayersContainer
-@onready var start_button: Button = $Start
+@onready var start_button: Button = $StartButton
 
 
 var player_nodes := {}
@@ -66,7 +66,7 @@ func hash_to_color(player_name: String) -> Color:
 	return Color.from_hsv(h, s, v, 1.0)
 
 
-func _on_start_pressed() -> void:
+func _on_start_button_pressed() -> void:
 	start_game.emit()
 
 

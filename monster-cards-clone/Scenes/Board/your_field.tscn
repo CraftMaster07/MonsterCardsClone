@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=3 uid="uid://7ukrl57uilte"]
+
+[ext_resource type="Script" uid="uid://pel84vvq26ns" path="res://Scripts/Board/your_field.gd" id="1_cucen"]
+[ext_resource type="PackedScene" uid="uid://dt4wxwmhsr5fe" path="res://Scenes/Board/your_card_slot.tscn" id="2_cucen"]
+
+[node name="YourField" type="MarginContainer"]
+offset_right = 305.0
+offset_bottom = 91.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("1_cucen")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 15
+
+[node name="YourCardSlot" parent="HBoxContainer" instance=ExtResource("2_cucen")]
+layout_mode = 2
+
+[node name="YourCardSlot2" parent="HBoxContainer" instance=ExtResource("2_cucen")]
+layout_mode = 2
+
+[node name="YourCardSlot3" parent="HBoxContainer" instance=ExtResource("2_cucen")]
+layout_mode = 2
+
+[node name="YourCardSlot4" parent="HBoxContainer" instance=ExtResource("2_cucen")]
+layout_mode = 2

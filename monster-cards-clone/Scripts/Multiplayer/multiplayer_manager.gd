@@ -28,6 +28,7 @@ already is a player class. But I'm not sure if we're still using that one,
 so I'm not making a new one yet.
 """
 var players: Dictionary = {}
+var your_id: int
 
 
 func _ready() -> void:
@@ -40,6 +41,7 @@ func host_game(player_name) -> void:
 	multiplayer_interface.set_script(server_script)
 
 	multiplayer_interface.host_game(PORT, player_name)
+	your_id = multiplayer.get_unique_id()
 
 
 func join_game(player_name, ip) -> void:
@@ -50,6 +52,7 @@ func join_game(player_name, ip) -> void:
 		print("Invalid IP address.")
 		return
 	multiplayer_interface.join_game(ip, PORT, player_name)
+	your_id = multiplayer.get_unique_id()
 
 
 func leave_game() -> void:
@@ -59,7 +62,7 @@ func leave_game() -> void:
 
 
 func add_new_player(id: int, player_name: String):
-	players[id] = player_name
+	players[id] = MultiplayerPlayer.new(id, player_name)
 	new_player.emit(id, player_name)
 
 
@@ -107,3 +110,6 @@ func _on_multiplayer_interface_server_disconnected() -> void:
 
 func start_game_as_host() -> void:
 	multiplayer_interface.start_game()
+
+func set_your_id(id: int) -> void:
+	your_id = id

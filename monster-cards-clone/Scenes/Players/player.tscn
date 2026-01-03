@@ -7,7 +7,7 @@
 font = ExtResource("2_g2els")
 font_color = Color(1, 0, 0, 1)
 
-[node name="PlayerHandler" type="Node"]
+[node name="Player" type="Node"]
 script = ExtResource("1_3vyb7")
 
 [node name="HealthLabel" type="Label" parent="."]

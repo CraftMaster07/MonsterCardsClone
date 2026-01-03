@@ -1,5 +1,5 @@
 class_name SlotArea
 extends Area2D
 
-@export var slot : CardSlot
+@export var slot : EnemyCardSlot
 var taken := false

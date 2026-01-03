@@ -9,11 +9,6 @@ var waiting_room: WaitingRoom = null
 var board: Board = null
 
 
-func transition_main_menu_to_board():
-	stop_main_menu()
-	start_board()
-
-
 func transition_board_to_main_menu():
 	stop_board()
 	start_main_menu()
@@ -48,6 +43,8 @@ func stop_waiting_room():
 
 func start_board():
 	board = board_scene.instantiate()
+	board.set_your_id(multiplayer_manager.your_id)
+	board.init_players(multiplayer_players_to_dicts(multiplayer_manager.players))
 	add_child(board)
 
 
@@ -57,6 +54,7 @@ func stop_board():
 
 
 func start_main_menu():
+	main_menu.reinitialize()
 	add_child(main_menu)
 
 
@@ -90,6 +88,8 @@ func _on_multiplayer_manager_connection_failure() -> void:
 func _on_multiplayer_manager_player_left(id: int) -> void:
 	if waiting_room:
 		waiting_room.remove_player(id)
+	elif board:
+		board.remove_player(id)
 
 
 func _on_multiplayer_manager_server_disconnected() -> void:
@@ -108,3 +108,22 @@ func leave_waiting_room():
 
 func start_game_as_host():
 	multiplayer_manager.start_game_as_host()
+
+
+func multiplayer_players_to_dicts(
+	multiplayer_players: Dictionary
+) -> Array:
+	# we don't want board to know what is a MultiplayerPlayer, so we convert them to dictionaries.
+	var dicts := []
+
+	for multiplayer_player in multiplayer_players.values():
+		dicts.append(multiplayer_player_to_dict(multiplayer_player))
+
+	return dicts
+
+
+func multiplayer_player_to_dict(multiplayer_player: MultiplayerPlayer) -> Dictionary:
+	return {
+		"id": multiplayer_player.player_id,
+		"name": multiplayer_player.player_name
+	}

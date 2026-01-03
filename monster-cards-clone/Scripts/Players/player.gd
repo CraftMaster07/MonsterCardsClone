@@ -1,10 +1,20 @@
 class_name Player
 extends Node
 
-var STARTING_HEALTH = 20
-@export var health : int = STARTING_HEALTH
+const STARTING_HEALTH: int = 20
+var health: int
+var deck: Array
+var hand: PackedScene
+var player_name: String
+var player_id: int
 
 @onready var label: Label = $HealthLabel
+
+
+func init(new_player_id: int, new_player_name: String):
+	player_id = new_player_id
+	player_name = new_player_name
+	health = STARTING_HEALTH
 
 
 func _ready():
@@ -22,9 +32,8 @@ func decrease_health(amount: int) -> void:
 
 
 func update_health() -> void:
-	label.text = str(health) + "\\" + str(STARTING_HEALTH)
+	label.text = player_name + ": " + str(health) + "\\" + str(STARTING_HEALTH)
 
 
-func _on_check_button_toggled(toggled_on: bool) -> void:
-	if toggled_on:
-		hit()
+func _on_damage_button_pressed() -> void:
+	hit()

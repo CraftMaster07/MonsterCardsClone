@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://syfm2kspvm70" path="res://Scenes/Players/player.tscn" id="1_26tvg"]
 [ext_resource type="Script" uid="uid://u4wc1jxgs8su" path="res://Scripts/Players/enemy_player.gd" id="2_bnq1i"]
 
-[node name="EnemyPlayerHandler" instance=ExtResource("1_26tvg")]
+[node name="EnemyPlayer" instance=ExtResource("1_26tvg")]
 script = ExtResource("2_bnq1i")
 
 [node name="HealthLabel" parent="." index="0"]

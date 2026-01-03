@@ -5,7 +5,7 @@
 [ext_resource type="Script" uid="uid://ynwm51yrslmw" path="res://Scripts/Main Menu/volume_settings.gd" id="2_7xkbd"]
 [ext_resource type="AudioStream" uid="uid://dit1tvyol83cj" path="res://Assets/Audio/Music/mus_testing.mp3" id="4_y0aff"]
 
-[node name="MainMenu" type="Control" node_paths=PackedStringArray("PlayMenuContainer", "SettingsMenuContainer", "HostMenu", "JoinMenu", "NameLineEdit", "IPLineEdit")]
+[node name="MainMenu" type="Control" node_paths=PackedStringArray("play_menu_container", "settings_menu_container", "host_menu", "join_menu", "name_line_edit", "ip_line_edit", "join_status_label")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -13,21 +13,22 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_48xlc")
-PlayMenuContainer = NodePath("PlayMenuContainer")
-SettingsMenuContainer = NodePath("SettingsMenuContainer")
-HostMenu = NodePath("PlayMenuContainer/HBoxContainer/HostJoinContainer/HostMenu")
-JoinMenu = NodePath("PlayMenuContainer/HBoxContainer/HostJoinContainer/JoinMenu")
-NameLineEdit = NodePath("PlayMenuContainer/HBoxContainer/HostJoinContainer/NameLineEdit")
-IPLineEdit = NodePath("PlayMenuContainer/HBoxContainer/HostJoinContainer/JoinMenu/IPLineEdit")
+play_menu_container = NodePath("PlayMenuContainer")
+settings_menu_container = NodePath("SettingsMenuContainer")
+host_menu = NodePath("PlayMenuContainer/HBoxContainer/HostJoinContainer/HostMenu")
+join_menu = NodePath("PlayMenuContainer/HBoxContainer/HostJoinContainer/JoinMenu")
+name_line_edit = NodePath("PlayMenuContainer/HBoxContainer/HostJoinContainer/NameLineEdit")
+ip_line_edit = NodePath("PlayMenuContainer/HBoxContainer/HostJoinContainer/JoinMenu/IPLineEdit")
+join_status_label = NodePath("PlayMenuContainer/JoinStatusLabel")
 
-[node name="PlayMenuContainer" type="MarginContainer" parent="."]
-visible = false
+[node name="PlayMenuContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.35
 anchor_top = 0.4
 anchor_right = 0.65
 anchor_bottom = 0.6
+offset_bottom = 18.399994
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -95,6 +96,11 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0
 text = "Start"
+
+[node name="JoinStatusLabel" type="Label" parent="PlayMenuContainer"]
+visible = false
+layout_mode = 2
+horizontal_alignment = 1
 
 [node name="SettingsMenuContainer" type="MarginContainer" parent="."]
 visible = false
