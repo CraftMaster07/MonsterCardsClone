@@ -3,7 +3,7 @@ extends Control
 
 @export var animation_length: float = 0.5
 @export var animation_trans: Tween.TransitionType = Tween.TRANS_CUBIC
-@export var animation_ease: Tween.EaseType = Tween.EASE_IN_OUT
+@export var animation_ease: Tween.EaseType = Tween.EASE_OUT
 var revolving_object: Node
 
 var prev_target: float = 0
@@ -20,14 +20,14 @@ func set_revolving_object(object: Node) -> void:
 	revolving_object = object
 
 
-func animate_revolving_object_rotation_to(
+func animate_rotation_to(
 	target_rotation: float,
 	duration: float = animation_length,
 	trans_type: Tween.TransitionType = animation_trans,
 	ease_type: Tween.EaseType = animation_ease
 ) -> void:
 	"""
-	Animate the revolving_object's pivot to the desired rotation
+	Animate an object's rotation to the desired value
 	target_rotation - desired rotation in radians
 	duration - animation length in seconds
 	trans_type, ease_type - animation settings
@@ -58,7 +58,7 @@ func rotate_by(
 	ease_type: Tween.EaseType = animation_ease
 ) -> void:
 	"""
-	Rotate the node by a relative amount (in radians)
+	Animate an object's rotation by a relative amount
 	angle_delta - amount to rotate by in radians
 	duration - animation length in seconds
 	trans_type, ease_type - animation settings
@@ -68,7 +68,7 @@ func rotate_by(
 		tween.kill()
 		rotation = prev_target
 	
-	animate_revolving_object_rotation_to(rotation + angle_delta, duration, trans_type, ease_type)
+	animate_rotation_to(rotation + angle_delta, duration, trans_type, ease_type)
 
 
 func update_object_radius(new_radius: float):

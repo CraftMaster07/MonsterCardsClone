@@ -118,11 +118,11 @@ func remove_player(id: int):
 	players.erase(id)
 	
 func _on_next_player_button_pressed() -> void:
-	camera_pivot.rotate_by(TAU / 2)
+	camera_pivot.rotate_by(TAU / len(players))
 
 
 func _on_prev_player_button_pressed() -> void:
-	camera_pivot.rotate_by(-TAU / 2)
+	camera_pivot.rotate_by(-TAU / len(players))
 
 
 func calculate_table_radius(players_count: int) -> float:
