@@ -30,7 +30,6 @@ func _upnp_setup(server_port: int) -> void:
 		return
 
 
-
 func host_game(port: int, player_name: String) -> void:
 	"""
 	Hosts a game as a server.
@@ -55,6 +54,8 @@ func _exit_tree():
 	thread.wait_to_finish()
 
 func leave_game():
+	if thread:
+		thread.wait_to_finish()
 	multiplayer.multiplayer_peer.close()
 	multiplayer.multiplayer_peer = OfflineMultiplayerPeer.new()
 
