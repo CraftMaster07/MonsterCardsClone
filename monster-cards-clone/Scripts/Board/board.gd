@@ -140,5 +140,4 @@ func set_radii(radius: float):
 
 
 func _on_field_spawner_pivot_spawning_finished() -> void:
-	remove_child(field_spawner_pivot)
 	field_spawner_pivot.queue_free()
