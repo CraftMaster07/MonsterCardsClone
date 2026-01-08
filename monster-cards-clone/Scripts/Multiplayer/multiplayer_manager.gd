@@ -14,6 +14,8 @@ signal connection_success()
 signal connection_failure()
 signal server_disconnected()
 
+signal sync_game(game_state: Dictionary)
+
 @export var server_script: Script
 @export var client_script: Script
 
@@ -111,5 +113,16 @@ func _on_multiplayer_interface_server_disconnected() -> void:
 func start_game_as_host() -> void:
 	multiplayer_interface.start_game()
 
+
 func set_your_id(id: int) -> void:
 	your_id = id
+
+
+func call_sync_game(game_state: Dictionary) -> void:
+	if not multiplayer.is_server(): return
+
+	multiplayer_interface.send_sync_game(game_state)
+
+
+func _on_multiplayer_interface_sync_game(game_state: Dictionary) -> void:
+	sync_game.emit(game_state)

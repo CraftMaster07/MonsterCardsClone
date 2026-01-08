@@ -43,6 +43,7 @@ func stop_waiting_room():
 
 func start_board():
 	board = board_scene.instantiate()
+	board.call_sync_game.connect(call_sync_game)
 	board.set_your_id(multiplayer_manager.your_id)
 	board.init_players(multiplayer_players_to_dicts(multiplayer_manager.players))
 	add_child(board)
@@ -127,3 +128,11 @@ func multiplayer_player_to_dict(multiplayer_player: MultiplayerPlayer) -> Dictio
 		"id": multiplayer_player.player_id,
 		"name": multiplayer_player.player_name
 	}
+
+
+func _on_multiplayer_manager_sync_game(game_state: Dictionary) -> void:
+	board.update_game_state(game_state)
+
+
+func call_sync_game(game_state: Dictionary) -> void:
+	multiplayer_manager.call_sync_game(game_state)

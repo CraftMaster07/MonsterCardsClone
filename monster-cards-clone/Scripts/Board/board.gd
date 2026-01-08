@@ -22,6 +22,8 @@ const DEFAULT_TABLE_RADIUS: float = 500.0
 const CAMERA_ADDITIONAL_RADIUS: float = -100.0
 const FIELD_SPAWNER_ADDITIONAL_RADIUS: float = -100.0
 
+signal call_sync_game(game_state: Dictionary)
+
 var selected_card: HandCard = null
 
 var players := {}
@@ -37,6 +39,11 @@ func _ready() -> void:
 		card.card_selected.connect(select_card)
 		card.card_deselected.connect(deselect_card)
 	
+	#TODO: obviously delete this when putting real syncing. WTH IS TS
+	if multiplayer.is_server(): 
+		$Table/CameraPivot/UI/SyncButton.visible = true
+		$Table/CameraPivot/UI/SyncButton.process_mode = Node.PROCESS_MODE_INHERIT
+
 	# for slot in your_field.get_slots():
 	# 	slot.clicked.connect(slot_clicked)
 
@@ -141,3 +148,19 @@ func set_radii(radius: float):
 
 func _on_field_spawner_pivot_spawning_finished() -> void:
 	field_spawner_pivot.queue_free()
+
+
+func send_game_state():
+	call_sync_game.emit(get_game_state())
+
+
+func get_game_state() -> Dictionary:
+	return {"hi!": "hello"}
+
+
+func update_game_state(game_state: Dictionary):
+	print(game_state)
+
+
+func _on_sync_button_pressed() -> void:
+	send_game_state()
