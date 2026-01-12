@@ -68,4 +68,3 @@ func start_game():
 
 func send_sync_game(game_state: Dictionary):
 	rpc("receive_sync_game", game_state)
-
