@@ -44,9 +44,6 @@ func _ready() -> void:
 		$Table/CameraPivot/UI/SyncButton.visible = true
 		$Table/CameraPivot/UI/SyncButton.process_mode = Node.PROCESS_MODE_INHERIT
 
-	# for slot in your_field.get_slots():
-	# 	slot.clicked.connect(slot_clicked)
-
 
 func slot_clicked(slot: EnemyCardSlot):
 	print("slot clicked")
@@ -134,6 +131,11 @@ func _on_next_player_button_pressed() -> void:
 func _on_prev_player_button_pressed() -> void:
 	camera_pivot.rotate_by(-TAU / len(players))
 	sfx_spin.play()
+
+
+func set_your_field(your_field: YourField):
+	for slot in your_field.get_slots():
+		slot.clicked.connect(slot_clicked)
 
 
 func calculate_table_radius(players_count: int) -> float:

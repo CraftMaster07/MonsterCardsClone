@@ -44,7 +44,7 @@ func set_radius_and_spawn_fields(table_radius: float, total_player_count: int) -
 
 
 func spawn_fields(total_player_count: int) -> void:
-	spawn_your_field()
+	board.set_your_field(spawn_your_field())
 
 	for i in range(1, total_player_count):
 		rotate_by(TAU / total_player_count)
