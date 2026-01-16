@@ -2,11 +2,11 @@ extends ObjectPivot
 
 @export var enemy_field_scene: PackedScene
 @export var your_field_scene: PackedScene
-@export var board: Control
 @export var field_spawner: Control
 
 var radius: float
 
+signal new_field_spawned(field: Field)
 signal spawning_finished()
 
 
@@ -18,7 +18,7 @@ func _ready() -> void:
 func spawn_field(field: PackedScene) -> Field:
 	var new_field := field.instantiate()
 	set_new_field_position(new_field)
-	board.add_child(new_field)
+	new_field_spawned.emit(new_field)
 	return new_field
 
 
@@ -34,17 +34,10 @@ func set_new_field_position(new_field: Field) -> void:
 	new_field.pivot_offset = new_field.size / 2
 	new_field.global_position = field_spawner.global_position - new_field.size / 2
 	new_field.rotation = rotation
-
-
-func set_radius_and_spawn_fields(table_radius: float, total_player_count: int) -> void:
-	update_object_radius(table_radius)
-	spawn_fields(total_player_count)
-	spawning_finished.emit()
-
-
+	
 
 func spawn_fields(total_player_count: int) -> void:
-	board.set_your_field(spawn_your_field())
+	spawn_your_field()
 
 	for i in range(1, total_player_count):
 		rotate_by(TAU / total_player_count)
@@ -54,8 +47,10 @@ func spawn_fields(total_player_count: int) -> void:
 
 	if tween:
 		await tween.finished
-
+	
+	spawning_finished.emit()
 
 
 func set_radius(new_radius: float) -> void:
 	radius = new_radius
+	update_object_radius(new_radius)

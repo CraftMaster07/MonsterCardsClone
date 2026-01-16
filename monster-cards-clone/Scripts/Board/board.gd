@@ -29,10 +29,12 @@ var selected_card: HandCard = null
 var players := {}
 var your_id: int
 
+var unassigned_field_players: Array
 
 func _ready() -> void:
 	var table_radius: float = calculate_table_radius(len(players))
 	set_radii(table_radius)
+	spawn_fields(len(players))
 
 	for card in hand.get_cards():
 		card.card_placed.connect(_place_card_into_slot)
@@ -47,6 +49,7 @@ func _ready() -> void:
 
 func slot_clicked(slot: EnemyCardSlot):
 	print("slot clicked")
+
 	if selected_card != null:
 		print("placing card")
 		_place_card_into_slot(selected_card, slot)
@@ -79,6 +82,7 @@ func select_card(card: HandCard):
 		var old_card = selected_card
 		selected_card = null
 		old_card.deselect()
+
 	selected_card = card
 	sfx_select.play()
 
@@ -134,8 +138,15 @@ func _on_prev_player_button_pressed() -> void:
 
 
 func set_your_field(your_field: YourField):
+	set_player_field(your_field, players[your_id])
+
 	for slot in your_field.get_slots():
 		slot.clicked.connect(slot_clicked)
+
+
+func spawn_fields(players_count: int):
+	init_unassigned_field_players()
+	field_spawner_pivot.spawn_fields(players_count)
 
 
 func calculate_table_radius(players_count: int) -> float:
@@ -145,7 +156,7 @@ func calculate_table_radius(players_count: int) -> float:
 func set_radii(radius: float):
 	table.set_radius(radius)
 	camera_pivot.update_camera_radius(radius + CAMERA_ADDITIONAL_RADIUS)
-	field_spawner_pivot.set_radius_and_spawn_fields(radius + FIELD_SPAWNER_ADDITIONAL_RADIUS, len(players))
+	field_spawner_pivot.set_radius(radius + FIELD_SPAWNER_ADDITIONAL_RADIUS)
 
 
 func _on_field_spawner_pivot_spawning_finished() -> void:
@@ -157,12 +168,50 @@ func send_game_state():
 
 
 func get_game_state() -> Dictionary:
-	return {"hi!": "hello"}
+	return {"players": players, }
 
 
-func update_game_state(game_state: Dictionary):
-	print(game_state)
+func set_game_state(game_state: Dictionary):
+	# TODO: finish TS
+	players = game_state['players']
 
 
 func _on_sync_button_pressed() -> void:
 	send_game_state()
+
+
+func get_fields_data():
+	for player in players.values():
+		return player.get_fields_data()
+
+
+func init_unassigned_field_players():
+	for player in players.values():
+		if player.player_id == your_id:
+			continue
+
+		if player.get_field() == null:
+			unassigned_field_players.append(player)
+
+
+func set_player_field(field: Field, player: Player):
+	player.set_field(field)
+
+
+func set_first_player_field(field: Field):
+	"""
+	Sets field to the first player in the list which doesn't have one.
+	"""
+	for player in players.values():
+		if player.get_field() == null:
+			set_player_field(field, player)
+			break
+
+
+func _on_field_spawner_pivot_new_field_spawned(field: Field) -> void:
+	table.add_child(field)
+
+	if is_instance_of(field, YourField):
+		set_your_field(field)
+	else:
+		set_first_player_field(field)

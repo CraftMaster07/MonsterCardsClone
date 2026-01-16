@@ -4,6 +4,7 @@ extends Node
 const STARTING_HEALTH: int = 20
 var health: int
 var deck: Array
+var field: Field
 var hand: PackedScene
 var player_name: String
 var player_id: int
@@ -37,3 +38,11 @@ func update_health() -> void:
 
 func _on_damage_button_pressed() -> void:
 	hit()
+
+
+func get_field():
+	return field
+
+
+func set_field(new_field: Field):
+	field = new_field

@@ -131,7 +131,7 @@ func multiplayer_player_to_dict(multiplayer_player: MultiplayerPlayer) -> Dictio
 
 
 func _on_multiplayer_manager_sync_game(game_state: Dictionary) -> void:
-	board.update_game_state(game_state)
+	board.set_game_state(game_state)
 
 
 func call_sync_game(game_state: Dictionary) -> void:

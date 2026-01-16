@@ -14,7 +14,7 @@
 [ext_resource type="AudioStream" uid="uid://cgatasovfxoyl" path="res://Assets/Audio/Sounds/sfx_place.mp3" id="11_gti8d"]
 [ext_resource type="AudioStream" uid="uid://02oc0voj62j3" path="res://Assets/Audio/Sounds/sfx_select.mp3" id="12_brcfe"]
 [ext_resource type="AudioStream" uid="uid://ch7jr0gor48sm" path="res://Assets/Audio/Sounds/sfx_deselect.mp3" id="13_csi2d"]
-[ext_resource type="AudioStream" uid="uid://y8iakw7esq4q" path="res://Assets/Audio/Sounds/sfx_spin.mp3" id="15_s2gku"]
+[ext_resource type="AudioStream" uid="uid://b8rn0abqnjh57" path="res://Assets/Audio/Sounds/sfx_spin.mp3" id="15_s2gku"]
 
 [node name="Board" type="Control" node_paths=PackedStringArray("camera_pivot", "table", "field_spawner_pivot", "hand", "next_player_button", "prev_player_button")]
 layout_mode = 3
@@ -119,7 +119,7 @@ text = "Sync"
 position = Vector2(576, 424)
 ignore_rotation = false
 
-[node name="FieldSpawnerPivot" type="Control" parent="Table" node_paths=PackedStringArray("board", "field_spawner")]
+[node name="FieldSpawnerPivot" type="Control" parent="Table" node_paths=PackedStringArray("field_spawner")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -129,7 +129,6 @@ grow_vertical = 2
 script = ExtResource("10_brcfe")
 enemy_field_scene = ExtResource("11_csi2d")
 your_field_scene = ExtResource("8_4l5f1")
-board = NodePath("../..")
 field_spawner = NodePath("FieldSpawner")
 animation_length = 0.0
 
@@ -157,4 +156,5 @@ bus = &"Sound"
 [connection signal="pressed" from="Table/CameraPivot/UI/NextPlayerButton" to="." method="_on_next_player_button_pressed"]
 [connection signal="pressed" from="Table/CameraPivot/UI/PrevPlayerButton" to="." method="_on_prev_player_button_pressed"]
 [connection signal="pressed" from="Table/CameraPivot/UI/SyncButton" to="." method="_on_sync_button_pressed"]
+[connection signal="new_field_spawned" from="Table/FieldSpawnerPivot" to="." method="_on_field_spawner_pivot_new_field_spawned"]
 [connection signal="spawning_finished" from="Table/FieldSpawnerPivot" to="." method="_on_field_spawner_pivot_spawning_finished"]
