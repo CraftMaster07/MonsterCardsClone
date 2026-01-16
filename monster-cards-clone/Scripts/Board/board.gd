@@ -6,8 +6,7 @@ extends Control
 @onready var sfx_deselect: AudioStreamPlayer = $sfx_deselect
 @onready var sfx_spin: AudioStreamPlayer = $sfx_spin
 
-@export var camera_pivot: Control
-@export var table: Control
+@export var table: Table
 @export var field_spawner_pivot: Control
 @export var hand: MarginContainer
 
@@ -40,11 +39,14 @@ func _ready() -> void:
 		card.card_placed.connect(_place_card_into_slot)
 		card.card_selected.connect(select_card)
 		card.card_deselected.connect(deselect_card)
-	
+
+	# Node hierarchy here is outdated, change before uncommenting
+	"""
 	#TODO: obviously delete this when putting real syncing. WTH IS TS
-	if multiplayer.is_server(): 
+	if multiplayer.is_server():
 		$Table/CameraPivot/UI/SyncButton.visible = true
 		$Table/CameraPivot/UI/SyncButton.process_mode = Node.PROCESS_MODE_INHERIT
+	"""
 
 
 func slot_clicked(slot: EnemyCardSlot):
@@ -61,17 +63,17 @@ func _place_card_into_slot(card: HandCard, slot: EnemyCardSlot):
 	"""
 	slot.take()
 	card.goto_slot(slot)
-	card.tween.tween_callback(_replace_handcard_with_boardcard.bind(card))
+	card.tween.tween_callback(_replace_handcard_with_boardcard.bind(card, slot))
 	print("card placed")
 
 
-func _replace_handcard_with_boardcard(card: HandCard):
+func _replace_handcard_with_boardcard(card: HandCard, slot: EnemyCardSlot):
 	"""
 	Replaces the HandCard with a BoardCard object
 	This should be done after the card is moved into a slot
 	"""
 	var new_board_card := board_card_scene.instantiate()
-	add_child(new_board_card) # temporary, should add underneath some container and not directly
+	slot.add_child(new_board_card) # probably shouldnt add as child of slot itself
 	new_board_card.global_position = card.card_front.global_position
 	card.queue_free()
 	sfx_place.play()
@@ -128,12 +130,12 @@ func remove_player(id: int):
 
 
 func _on_next_player_button_pressed() -> void:
-	camera_pivot.rotate_by(TAU / len(players))
+	table.rotate(TAU / len(players))
 	sfx_spin.play()
 
 
 func _on_prev_player_button_pressed() -> void:
-	camera_pivot.rotate_by(-TAU / len(players))
+	table.rotate(-TAU / len(players))
 	sfx_spin.play()
 
 
@@ -154,8 +156,8 @@ func calculate_table_radius(players_count: int) -> float:
 
 
 func set_radii(radius: float):
+	table.global_position.y -= radius + CAMERA_ADDITIONAL_RADIUS
 	table.set_radius(radius)
-	camera_pivot.update_camera_radius(radius + CAMERA_ADDITIONAL_RADIUS)
 	field_spawner_pivot.set_radius(radius + FIELD_SPAWNER_ADDITIONAL_RADIUS)
 
 
@@ -210,6 +212,7 @@ func set_first_player_field(field: Field):
 
 func _on_field_spawner_pivot_new_field_spawned(field: Field) -> void:
 	table.add_child(field)
+	print("New field added at pos ", field.global_position)
 
 	if is_instance_of(field, YourField):
 		set_your_field(field)

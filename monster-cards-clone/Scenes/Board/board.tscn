@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://cfyktcr6rqnlf"]
+[gd_scene load_steps=18 format=3 uid="uid://cfyktcr6rqnlf"]
 
 [ext_resource type="Script" uid="uid://ctku11dgwh5at" path="res://Scripts/Board/board.gd" id="1_xiot5"]
 [ext_resource type="PackedScene" uid="uid://cru4gfksm3rbh" path="res://Scenes/Card/board_card.tscn" id="2_dun80"]
@@ -7,7 +7,7 @@
 [ext_resource type="Script" uid="uid://4wekwqlpwfc0" path="res://Scripts/Board/table.gd" id="3_qlllu"]
 [ext_resource type="Texture2D" uid="uid://cjn63si50nhet" path="res://Assets/icon.svg" id="4_cp8jt"]
 [ext_resource type="PackedScene" uid="uid://c1qkabu180wpv" path="res://Scenes/Players/enemy_player.tscn" id="4_gti8d"]
-[ext_resource type="Script" uid="uid://d1k20uuilb7jg" path="res://Scripts/Board/camera_pivot.gd" id="4_me64r"]
+[ext_resource type="Script" uid="uid://hvpfm3s0svah" path="res://Scripts/Board/animated_rotation.gd" id="6_s2gku"]
 [ext_resource type="PackedScene" uid="uid://7ukrl57uilte" path="res://Scenes/Board/your_field.tscn" id="8_4l5f1"]
 [ext_resource type="Script" uid="uid://7i1gkuidppy1" path="res://Scripts/Board/field_spawner_pivot.gd" id="10_brcfe"]
 [ext_resource type="PackedScene" uid="uid://dtpst7jgrdpqq" path="res://Scenes/Board/enemy_field.tscn" id="11_csi2d"]
@@ -16,7 +16,16 @@
 [ext_resource type="AudioStream" uid="uid://ch7jr0gor48sm" path="res://Assets/Audio/Sounds/sfx_deselect.mp3" id="13_csi2d"]
 [ext_resource type="AudioStream" uid="uid://b8rn0abqnjh57" path="res://Assets/Audio/Sounds/sfx_spin.mp3" id="15_s2gku"]
 
-[node name="Board" type="Control" node_paths=PackedStringArray("camera_pivot", "table", "field_spawner_pivot", "hand", "next_player_button", "prev_player_button")]
+[sub_resource type="Resource" id="Resource_xqaal"]
+script = ExtResource("6_s2gku")
+metadata/_custom_type_script = "uid://hvpfm3s0svah"
+
+[sub_resource type="Resource" id="Resource_dqnt6"]
+script = ExtResource("6_s2gku")
+animation_length = 0.0
+metadata/_custom_type_script = "uid://hvpfm3s0svah"
+
+[node name="Board" type="Control" node_paths=PackedStringArray("table", "field_spawner_pivot", "hand", "next_player_button", "prev_player_button")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -24,89 +33,109 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_xiot5")
-camera_pivot = NodePath("Table/CameraPivot")
 table = NodePath("Table")
 field_spawner_pivot = NodePath("Table/FieldSpawnerPivot")
-hand = NodePath("Table/CameraPivot/UI/Hand")
-next_player_button = NodePath("Table/CameraPivot/UI/NextPlayerButton")
-prev_player_button = NodePath("Table/CameraPivot/UI/PrevPlayerButton")
+hand = NodePath("UI/Hand")
+next_player_button = NodePath("UI/NextPlayerButton")
+prev_player_button = NodePath("UI/PrevPlayerButton")
 board_card_scene = ExtResource("2_dun80")
 your_player_scene = ExtResource("3_me64r")
 enemy_player_scene = ExtResource("4_gti8d")
 
 [node name="Table" type="Control" parent="."]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("3_qlllu")
+animated_rotation = SubResource("Resource_xqaal")
 
-[node name="CameraPivot" type="Control" parent="Table" node_paths=PackedStringArray("camera", "hand")]
+[node name="FieldSpawnerPivot" type="Control" parent="Table" node_paths=PackedStringArray("field_spawner")]
+layout_mode = 1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("10_brcfe")
+enemy_field_scene = ExtResource("11_csi2d")
+your_field_scene = ExtResource("8_4l5f1")
+field_spawner = NodePath("FieldSpawner")
+animated_rotation = SubResource("Resource_dqnt6")
+
+[node name="FieldSpawner" type="Control" parent="Table/FieldSpawnerPivot"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="UI" type="Control" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-pivot_offset = Vector2(576, 324)
-script = ExtResource("4_me64r")
-camera = NodePath("Camera")
-hand = NodePath("UI/Hand")
 
-[node name="UI" type="Control" parent="Table/CameraPivot"]
+[node name="Hand" parent="UI" instance=ExtResource("2_shhme")]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Hand" parent="Table/CameraPivot/UI" instance=ExtResource("2_shhme")]
-layout_mode = 1
-offset_top = -29.0
-offset_bottom = 102.0
+offset_left = -2.0
+offset_top = -145.0
+offset_right = -2.0
+offset_bottom = -14.0
 theme_override_constants/margin_bottom = 40
 
-[node name="Icon" type="Sprite2D" parent="Table/CameraPivot/UI"]
+[node name="Icon" type="Sprite2D" parent="UI"]
 position = Vector2(85.00018, 561)
 texture = ExtResource("4_cp8jt")
 
-[node name="DamageButton" type="CheckButton" parent="Table/CameraPivot/UI"]
+[node name="DamageButton" type="CheckButton" parent="UI"]
 layout_mode = 0
 offset_left = 137.0
 offset_top = 255.0
 offset_right = 183.0
 offset_bottom = 288.0
 
-[node name="NextPlayerButton" type="Button" parent="Table/CameraPivot/UI"]
+[node name="NextPlayerButton" type="Button" parent="UI"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.8
 anchor_top = 0.8
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -164.0
-offset_top = 79.0
-offset_right = -136.0
-offset_bottom = 110.0
+offset_left = -188.60004
+offset_top = -85.400024
+offset_right = -160.60004
+offset_bottom = -54.400024
 grow_horizontal = 0
 grow_vertical = 0
 text = "-->"
 
-[node name="PrevPlayerButton" type="Button" parent="Table/CameraPivot/UI"]
+[node name="PrevPlayerButton" type="Button" parent="UI"]
 layout_mode = 1
 anchors_preset = -1
-offset_left = 103.0
-offset_top = 678.0
-offset_right = 131.0
-offset_bottom = 709.0
+offset_left = 184.0
+offset_top = 448.0
+offset_right = 212.0
+offset_bottom = 479.0
 grow_horizontal = 0
 grow_vertical = 0
 text = "<--"
 
-[node name="SyncButton" type="Button" parent="Table/CameraPivot/UI"]
+[node name="SyncButton" type="Button" parent="UI"]
 process_mode = 4
 layout_mode = 0
 offset_left = 1059.0
@@ -114,28 +143,6 @@ offset_top = 603.0
 offset_right = 1103.0
 offset_bottom = 634.0
 text = "Sync"
-
-[node name="Camera" type="Camera2D" parent="Table/CameraPivot"]
-position = Vector2(576, 424)
-ignore_rotation = false
-
-[node name="FieldSpawnerPivot" type="Control" parent="Table" node_paths=PackedStringArray("field_spawner")]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("10_brcfe")
-enemy_field_scene = ExtResource("11_csi2d")
-your_field_scene = ExtResource("8_4l5f1")
-field_spawner = NodePath("FieldSpawner")
-animation_length = 0.0
-
-[node name="FieldSpawner" type="Control" parent="Table/FieldSpawnerPivot"]
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
 
 [node name="sfx_place" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("11_gti8d")
@@ -153,8 +160,8 @@ bus = &"Sound"
 stream = ExtResource("15_s2gku")
 bus = &"Sound"
 
-[connection signal="pressed" from="Table/CameraPivot/UI/NextPlayerButton" to="." method="_on_next_player_button_pressed"]
-[connection signal="pressed" from="Table/CameraPivot/UI/PrevPlayerButton" to="." method="_on_prev_player_button_pressed"]
-[connection signal="pressed" from="Table/CameraPivot/UI/SyncButton" to="." method="_on_sync_button_pressed"]
 [connection signal="new_field_spawned" from="Table/FieldSpawnerPivot" to="." method="_on_field_spawner_pivot_new_field_spawned"]
 [connection signal="spawning_finished" from="Table/FieldSpawnerPivot" to="." method="_on_field_spawner_pivot_spawning_finished"]
+[connection signal="pressed" from="UI/NextPlayerButton" to="." method="_on_next_player_button_pressed"]
+[connection signal="pressed" from="UI/PrevPlayerButton" to="." method="_on_prev_player_button_pressed"]
+[connection signal="pressed" from="UI/SyncButton" to="." method="_on_sync_button_pressed"]

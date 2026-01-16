@@ -4,7 +4,7 @@ signal upnp_completed(error: UPNP.UPNPResult)
 
 
 # Replace this with your own server port number between 1024 and 65535.
-const SERVER_PORT = 59009
+const SERVER_PORT = 59007
 var thread = null
 
 

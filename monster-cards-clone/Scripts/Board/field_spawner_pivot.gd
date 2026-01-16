@@ -34,20 +34,19 @@ func set_new_field_position(new_field: Field) -> void:
 	new_field.pivot_offset = new_field.size / 2
 	new_field.global_position = field_spawner.global_position - new_field.size / 2
 	new_field.rotation = rotation
-	
+
 
 func spawn_fields(total_player_count: int) -> void:
 	spawn_your_field()
-
 	for i in range(1, total_player_count):
 		rotate_by(TAU / total_player_count)
-		if tween:
-			await tween.finished
+		if animated_rotation.tween:
+			await animated_rotation.tween.finished
 		spawn_enemy_field()
 
-	if tween:
-		await tween.finished
-	
+	if animated_rotation.tween:
+		await animated_rotation.tween.finished
+
 	spawning_finished.emit()
 
 
