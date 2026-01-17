@@ -40,13 +40,11 @@ func _ready() -> void:
 		card.card_selected.connect(select_card)
 		card.card_deselected.connect(deselect_card)
 
-	# Node hierarchy here is outdated, change before uncommenting
-	"""
 	#TODO: obviously delete this when putting real syncing. WTH IS TS
 	if multiplayer.is_server():
-		$Table/CameraPivot/UI/SyncButton.visible = true
-		$Table/CameraPivot/UI/SyncButton.process_mode = Node.PROCESS_MODE_INHERIT
-	"""
+		$UI/SyncButton.visible = true
+		$UI/SyncButton.process_mode = Node.PROCESS_MODE_INHERIT
+
 
 
 func slot_clicked(slot: EnemyCardSlot):
@@ -176,6 +174,7 @@ func get_game_state() -> Dictionary:
 func set_game_state(game_state: Dictionary):
 	# TODO: finish TS
 	players = game_state['players']
+	print("players set", players)
 
 
 func _on_sync_button_pressed() -> void:
@@ -204,10 +203,8 @@ func set_first_player_field(field: Field):
 	"""
 	Sets field to the first player in the list which doesn't have one.
 	"""
-	for player in players.values():
-		if player.get_field() == null:
-			set_player_field(field, player)
-			break
+	set_player_field(field, unassigned_field_players[0])
+	unassigned_field_players.remove_at(0)
 
 
 func _on_field_spawner_pivot_new_field_spawned(field: Field) -> void:

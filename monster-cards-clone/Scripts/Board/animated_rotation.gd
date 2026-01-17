@@ -9,8 +9,10 @@ var prev_target: float = 0
 var tween: Tween
 var rotating_object: Control
 
+
 func set_rotating_object(object: Control) -> void:
 	rotating_object = object
+
 
 func animate_rotation_to(
 	target_rotation: float,
@@ -41,6 +43,7 @@ func animate_rotation_to(
 			duration
 		).set_trans(trans_type).set_ease(ease_type)
 
+
 func rotate_by(
 	angle_delta: float,
 	duration: float = animation_length,
@@ -53,7 +56,6 @@ func rotate_by(
 	duration - animation length in seconds
 	trans_type, ease_type - animation settings
 	"""
-
 	if tween:
 		tween.kill()
 		rotating_object.rotation = prev_target

@@ -56,6 +56,7 @@ animated_rotation = SubResource("Resource_xqaal")
 
 [node name="FieldSpawnerPivot" type="Control" parent="Table" node_paths=PackedStringArray("field_spawner")]
 layout_mode = 1
+anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5

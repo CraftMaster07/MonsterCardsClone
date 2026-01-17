@@ -33,6 +33,7 @@ func animate_rotation_to(
 	#print("rotating to: ", target_rotation)
 	animated_rotation.animate_rotation_to(target_rotation, duration, trans_type, ease_type)
 
+
 func rotate_by(
 	angle_delta: float,
 	duration: float = animated_rotation.animation_length,
@@ -45,7 +46,6 @@ func rotate_by(
 	duration - animation length in seconds
 	trans_type, ease_type - animation settings
 	"""
-
 	animated_rotation.rotate_by(angle_delta, duration, trans_type, ease_type)
 
 
