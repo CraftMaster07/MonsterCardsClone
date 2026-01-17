@@ -56,4 +56,4 @@ func update_object_radius(new_radius: float):
 
 
 func set_object_position(new_position: Vector2):
-	revolving_object.global_position = new_position
+	revolving_object.position = new_position

@@ -46,7 +46,6 @@ func _ready() -> void:
 		$UI/SyncButton.process_mode = Node.PROCESS_MODE_INHERIT
 
 
-
 func slot_clicked(slot: EnemyCardSlot):
 	print("slot clicked")
 
@@ -160,7 +159,8 @@ func set_radii(radius: float):
 
 
 func _on_field_spawner_pivot_spawning_finished() -> void:
-	field_spawner_pivot.queue_free()
+	#field_spawner_pivot.queue_free()
+	pass
 
 
 func send_game_state():

@@ -83,6 +83,9 @@ offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="Sprite2D" type="Sprite2D" parent="Table/FieldSpawnerPivot"]
+texture = ExtResource("4_cp8jt")
+
 [node name="UI" type="Control" parent="."]
 layout_mode = 1
 anchors_preset = 15
