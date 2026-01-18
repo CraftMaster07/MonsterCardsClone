@@ -32,6 +32,7 @@ func transition_waiting_room_to_main_menu():
 func start_waiting_room():
 	waiting_room = waiting_room_scene.instantiate()
 	waiting_room.start_game.connect(start_game_as_host)
+	waiting_room.new_bot.connect(add_bot)
 	waiting_room.leave.connect(leave_waiting_room)
 	add_child(waiting_room)
 
@@ -109,6 +110,10 @@ func leave_waiting_room():
 
 func start_game_as_host():
 	multiplayer_manager.start_game_as_host()
+
+
+func add_bot(id: int, name: String):
+	multiplayer_manager.add_new_player(id, name)
 
 
 func multiplayer_players_to_dicts(

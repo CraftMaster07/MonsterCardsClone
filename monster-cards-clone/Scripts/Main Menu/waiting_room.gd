@@ -1,7 +1,7 @@
 class_name WaitingRoom
 extends Control
 
-
+signal new_bot(id: int, name: String)
 signal start_game()
 signal leave()
 
@@ -24,10 +24,6 @@ func add_player(id: int, player_name: String, color = null) -> void:
 func remove_player(id: int) -> void:
 	player_container.remove_child(player_nodes[id])
 	player_nodes.erase(id)
-
-
-func _on_button_pressed() -> void:
-	add_player(-1, player_name_input.text, hash_to_color(player_name_input.text))
 
 
 func generate_random_color() -> Color:
@@ -64,6 +60,10 @@ func hash_to_color(player_name: String) -> Color:
 	# 4. Create the Color from HSV and return it
 	# The last argument (alpha) is set to 1.0 (fully opaque).
 	return Color.from_hsv(h, s, v, 1.0)
+
+
+func _on_add_bot_button_pressed() -> void:
+	new_bot.emit(1, player_name_input.text) # 1 is placeholder because idk
 
 
 func _on_start_button_pressed() -> void:

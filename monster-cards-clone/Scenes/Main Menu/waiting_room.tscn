@@ -51,7 +51,7 @@ offset_left = 20.0
 offset_top = 20.0
 placeholder_text = "Name"
 
-[node name="AddBot" type="Button" parent="."]
+[node name="AddBotButton" type="Button" parent="."]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 0.15
@@ -83,6 +83,6 @@ offset_right = -20.0
 offset_bottom = -20.0
 text = "Leave"
 
-[connection signal="pressed" from="AddBot" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="AddBotButton" to="." method="_on_add_bot_button_pressed"]
 [connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="LeaveButton" to="." method="_on_leave_button_pressed"]
