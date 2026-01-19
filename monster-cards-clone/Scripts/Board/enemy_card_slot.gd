@@ -5,18 +5,22 @@ extends Control
 
 
 func take():
-	slot_area.taken = true
+	_set_taken(true)
+
+
+func _set_taken(taken: bool):
+	slot_area.taken = taken
 
 
 func is_taken():
 	return slot_area.taken
 
 
-func get_data():
+func serialize():
 	return {
-		"taken": slot_area.taken
+		"taken": is_taken()
 	}
 
 
-func set_data(data: Dictionary):
-	slot_area.taken = data['taken']
+func deserialise(serialised_slot: Dictionary):
+	_set_taken(serialised_slot['taken'])

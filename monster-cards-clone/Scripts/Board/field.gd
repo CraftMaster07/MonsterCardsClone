@@ -9,15 +9,17 @@ func get_slots():
 	return slot_container.get_children()
 
 
-func get_data():
+func serialize():
 	var slots_data := []
 
 	for slot in get_slots():
-		slots_data.append(slot.get_data())
+		slots_data.append(slot.serialize())
 
 	return slots_data
 
 
-func set_data(slots_data: Array):
-	for slot in get_slots():
-		slot.set_data(slots_data.pop_front())
+func deserialise(slots_data: Array):
+	var slots = get_slots()
+
+	for i in range(len(slots_data)):
+		slots[i].deserialise(slots_data[i])

@@ -12,10 +12,10 @@ var player_id: int
 @onready var label: Label = $HealthLabel
 
 
-func init(new_player_id: int, new_player_name: String):
+func init(new_player_id: int, new_player_name: String, health: int = STARTING_HEALTH):
 	player_id = new_player_id
 	player_name = new_player_name
-	health = STARTING_HEALTH
+	health = health
 
 
 func _ready():
@@ -46,3 +46,21 @@ func get_field():
 
 func set_field(new_field: Field):
 	field = new_field
+
+
+func serialize():
+	return {
+		"player_id": player_id,
+		"player_name": player_name,
+		"health": health,
+		"field": field.serialize(),
+	}
+
+
+func deserialise(serialized_player: Dictionary):
+	player_id = serialized_player['player_id']
+	player_name = serialized_player['player_name']
+	health = serialized_player['health']
+	update_health()
+	field.deserialise(serialized_player['field'])
+	

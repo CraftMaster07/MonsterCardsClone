@@ -38,7 +38,8 @@ func set_new_field_position(new_field: Field) -> void:
 	(doing so will just set the local position instead)
 	we want to set the local position to the local positon of the field spawner, however
 	since we dont actually move the field spawner(we only do so by rotating the pivot)
-	its local position never changes so we need to use its global position offseted by the global position of the pivot
+	its local position never changes so we need to use its global position offseted by the global
+	position of the pivot
 	(This seems really stupid, should probably change this system later)
 	And then we add the local position of the pivot cause it in the middle of the table
 	since we want the new position to be relative to the table's center

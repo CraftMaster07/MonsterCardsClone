@@ -47,8 +47,6 @@ func _ready() -> void:
 
 
 func slot_clicked(slot: EnemyCardSlot):
-	print("slot clicked")
-
 	if selected_card != null:
 		print("placing card")
 		_place_card_into_slot(selected_card, slot)
@@ -168,22 +166,31 @@ func send_game_state():
 
 
 func get_game_state() -> Dictionary:
-	return {"players": players, }
+	return {"players": seriaize_players()}
 
 
 func set_game_state(game_state: Dictionary):
 	# TODO: finish TS
-	players = game_state['players']
+	deserialize_players(game_state['players'])
 	print("players set", players)
 
 
+func seriaize_players():
+	var serialized_players := {}
+
+	for player in players.values():
+		serialized_players[player.player_id] = (player.serialize())
+
+	return serialized_players
+
+
+func deserialize_players(serialized_players: Dictionary):
+	for serialized_player_id in serialized_players:
+		players[serialized_player_id].deserialise(serialized_players[serialized_player_id])
+		
+
 func _on_sync_button_pressed() -> void:
 	send_game_state()
-
-
-func get_fields_data():
-	for player in players.values():
-		return player.get_fields_data()
 
 
 func init_unassigned_field_players():
