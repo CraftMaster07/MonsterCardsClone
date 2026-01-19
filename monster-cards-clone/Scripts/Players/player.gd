@@ -12,10 +12,10 @@ var player_id: int
 @onready var label: Label = $HealthLabel
 
 
-func init(new_player_id: int, new_player_name: String, health: int = STARTING_HEALTH):
+func init(new_player_id: int, new_player_name: String, new_health: int = STARTING_HEALTH):
 	player_id = new_player_id
 	player_name = new_player_name
-	health = health
+	health = new_health
 
 
 func _ready():

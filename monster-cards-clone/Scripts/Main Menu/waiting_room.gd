@@ -63,7 +63,7 @@ func hash_to_color(player_name: String) -> Color:
 
 
 func _on_add_bot_button_pressed() -> void:
-	new_bot.emit(1, player_name_input.text) # 1 is placeholder because idk
+	new_bot.emit(rngesus.randi(), player_name_input.text)
 
 
 func _on_start_button_pressed() -> void:

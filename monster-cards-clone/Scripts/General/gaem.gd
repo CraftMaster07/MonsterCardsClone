@@ -112,8 +112,8 @@ func start_game_as_host():
 	multiplayer_manager.start_game_as_host()
 
 
-func add_bot(id: int, name: String):
-	multiplayer_manager.add_new_player(id, name)
+func add_bot(id: int, bot_name: String):
+	multiplayer_manager.add_new_player(id, bot_name)
 
 
 func multiplayer_players_to_dicts(
