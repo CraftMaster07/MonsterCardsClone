@@ -18,9 +18,9 @@ func set_revolving_object(object: Node) -> void:
 
 func animate_rotation_to(
 	target_rotation: float,
-	duration: float = animated_rotation.animation_length,
-	trans_type: Tween.TransitionType = animated_rotation.animation_trans,
-	ease_type: Tween.EaseType = animated_rotation.animation_ease
+	duration: float = animated_rotation.DEFAULT_DURATION,
+	trans_type: Tween.TransitionType = animated_rotation.DEFAULT_TRANS,
+	ease_type: Tween.EaseType = animated_rotation.DEFAULT_EASE
 ) -> void:
 	"""
 	Animate an object's rotation to the desired value
@@ -34,9 +34,9 @@ func animate_rotation_to(
 
 func rotate_by(
 	angle_delta: float,
-	duration: float = animated_rotation.animation_length,
-	trans_type: Tween.TransitionType = animated_rotation.animation_trans,
-	ease_type: Tween.EaseType = animated_rotation.animation_ease
+	duration: float = animated_rotation.DEFAULT_DURATION,
+	trans_type: Tween.TransitionType = animated_rotation.DEFAULT_TRANS,
+	ease_type: Tween.EaseType = animated_rotation.DEFAULT_EASE
 ) -> void:
 	"""
 	Animate an object's rotation by a relative amount

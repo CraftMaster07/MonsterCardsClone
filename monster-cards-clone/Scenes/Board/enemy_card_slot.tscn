@@ -7,7 +7,6 @@
 size = Vector2(65, 91)
 
 [node name="EnemyCardSlot" type="Control"]
-custom_minimum_size = Vector2(65, 91)
 layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5

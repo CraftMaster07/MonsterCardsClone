@@ -116,7 +116,7 @@ func _on_mouse_entered() -> void:
 	if drag_state != DragState.RESTING:
 		return
 	
-	if mouse_in_card: # Prevents activation immediately after deselecting by click
+	if mouse_in_card: # Prevents activation immediately after deselecting
 		return
 	
 	if not touched:

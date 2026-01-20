@@ -58,7 +58,7 @@ func set_new_field_position(new_field: Field) -> void:
 func spawn_fields(total_player_count: int) -> void:
 	spawn_your_field()
 	for i in range(1, total_player_count):
-		rotate_by(TAU / total_player_count)
+		rotate_by(TAU / total_player_count, 0)
 		if animated_rotation.tween:
 			await animated_rotation.tween.finished
 		spawn_enemy_field()
