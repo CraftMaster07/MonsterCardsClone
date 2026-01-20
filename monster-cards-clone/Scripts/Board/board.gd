@@ -17,18 +17,19 @@ extends Control
 @export var your_player_scene: PackedScene
 @export var enemy_player_scene: PackedScene
 
-const DEFAULT_TABLE_RADIUS: float = 500.0
-const CAMERA_ADDITIONAL_RADIUS: float = -100.0
-const FIELD_SPAWNER_ADDITIONAL_RADIUS: float = -100.0
-
-signal call_sync_game(game_state: Dictionary)
-
 var selected_card: HandCard = null
 
 var players := {}
 var your_id: int
 
 var unassigned_field_players: Array
+
+const MIN_TABLE_RADIUS: float = 400.0
+const CAMERA_ADDITIONAL_RADIUS: float = -100.0
+const FIELD_SPAWNER_ADDITIONAL_RADIUS: float = -100.0
+
+signal call_sync_game(game_state: Dictionary)
+
 
 func _ready() -> void:
 	var table_radius: float = calculate_table_radius(len(players))
@@ -147,7 +148,7 @@ func spawn_fields(players_count: int):
 
 
 func calculate_table_radius(players_count: int) -> float:
-	return DEFAULT_TABLE_RADIUS if players_count < 3 else players_count * 100.0
+	return max(MIN_TABLE_RADIUS, players_count * 70.0)
 
 
 func set_radii(radius: float):

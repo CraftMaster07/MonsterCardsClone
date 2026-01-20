@@ -11,8 +11,8 @@ var rngesus := RandomNumberGenerator.new()
 @onready var player_container: VBoxContainer = $VBoxContainer/PlayersContainer
 @onready var start_button: Button = $StartButton
 
-
 var player_nodes := {}
+
 
 func add_player(id: int, player_name: String, color = null) -> void:
 	if color == null:

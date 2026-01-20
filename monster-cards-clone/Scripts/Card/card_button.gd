@@ -22,6 +22,7 @@ var current_health : int
 
 signal card_selected(card)
 
+
 func _on_button_up() -> void:
 	card_selected.emit(self)
 

@@ -5,8 +5,6 @@ extends Control
 
 var revolving_object: Node
 
-var prev_target: float = 0
-
 
 func _ready() -> void:
 	pivot_offset = size / 2

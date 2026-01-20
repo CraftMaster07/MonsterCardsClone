@@ -1,10 +1,6 @@
 class_name AnimatedRotation
 extends Resource
 
-@export var animation_length: float = 0.5
-@export var animation_trans: Tween.TransitionType = Tween.TRANS_CUBIC
-@export var animation_ease: Tween.EaseType = Tween.EASE_OUT
-
 var prev_target: float = 0
 var tween: Tween
 var rotating_object: Control
@@ -16,9 +12,9 @@ func set_rotating_object(object: Control) -> void:
 
 func animate_rotation_to(
 	target_rotation: float,
-	duration: float = animation_length,
-	trans_type: Tween.TransitionType = animation_trans,
-	ease_type: Tween.EaseType = animation_ease) -> void:
+	duration: float = 0,
+	trans_type: Tween.TransitionType = Tween.TRANS_LINEAR,
+	ease_type: Tween.EaseType = Tween.EASE_IN) -> void:
 	"""
 	Animate an object's rotation to the desired value
 	target_rotation - desired rotation in radians
@@ -46,9 +42,9 @@ func animate_rotation_to(
 
 func rotate_by(
 	angle_delta: float,
-	duration: float = animation_length,
-	trans_type: Tween.TransitionType = animation_trans,
-	ease_type: Tween.EaseType = animation_ease
+	duration: float = 0,
+	trans_type: Tween.TransitionType = Tween.TRANS_LINEAR,
+	ease_type: Tween.EaseType = Tween.EASE_IN
 ) -> void:
 	"""
 	Animate an object's rotation by a relative amount

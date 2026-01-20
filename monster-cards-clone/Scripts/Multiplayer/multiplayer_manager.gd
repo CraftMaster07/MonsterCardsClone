@@ -36,6 +36,7 @@ var your_id: int
 func _ready() -> void:
 	multiplayer_interface.host_started_game.connect(signal_start_game)
 
+
 func host_game(player_name) -> void:
 	"""
 	Hosts a game as a server.

@@ -38,6 +38,7 @@ func host_game(port: int, player_name: String) -> void:
 	my_name = player_name
 	start_server(port)
 
+
 func start_server(port: int):
 	if thread:
 		thread.wait_to_finish()

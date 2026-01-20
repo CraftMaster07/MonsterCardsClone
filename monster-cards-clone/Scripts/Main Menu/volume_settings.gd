@@ -7,8 +7,10 @@ extends VBoxContainer
 var sliders: Dictionary = {}
 var value_labels: Dictionary = {}
 
+
 func _ready() -> void:
 	create_volume_controls()
+
 
 func create_volume_controls() -> void:
 	for bus_name in buses:

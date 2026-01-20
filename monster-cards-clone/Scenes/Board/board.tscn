@@ -22,7 +22,6 @@ metadata/_custom_type_script = "uid://hvpfm3s0svah"
 
 [sub_resource type="Resource" id="Resource_dqnt6"]
 script = ExtResource("6_s2gku")
-animation_length = 0.0
 metadata/_custom_type_script = "uid://hvpfm3s0svah"
 
 [node name="Board" type="Control" node_paths=PackedStringArray("table", "field_spawner_pivot", "hand", "next_player_button", "prev_player_button")]
