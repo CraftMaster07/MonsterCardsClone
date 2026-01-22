@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://cru4gfksm3rbh" path="res://Scenes/Card/board_card.tscn" id="2_ham7t"]
 
 [node name="EnemyCardSlot" type="Control"]
+custom_minimum_size = Vector2(65, 91)
 layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
@@ -32,7 +33,7 @@ grow_vertical = 2
 mouse_filter = 1
 
 [node name="ColorRect" type="ColorRect" parent="TextureButton"]
-custom_minimum_size = Vector2(65, 91)
+custom_minimum_size = Vector2(66, 91)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5

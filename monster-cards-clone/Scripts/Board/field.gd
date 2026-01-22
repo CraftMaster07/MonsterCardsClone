@@ -2,7 +2,7 @@ class_name Field
 extends MarginContainer
 
 @onready var slot_container = $HBoxContainer
-var slots := slot_container.get_children()
+@onready var slots := slot_container.get_children()
 
 
 func _ready():
