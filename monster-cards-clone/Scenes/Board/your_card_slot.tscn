@@ -1,9 +1,22 @@
-[gd_scene load_steps=3 format=3 uid="uid://dt4wxwmhsr5fe"]
+[gd_scene load_steps=5 format=3 uid="uid://dt4wxwmhsr5fe"]
 
 [ext_resource type="Script" uid="uid://b2pftirfs38gn" path="res://Scripts/Board/your_card_slot.gd" id="1_fgx8f"]
 [ext_resource type="PackedScene" uid="uid://ct317gmjddic1" path="res://Scenes/Board/enemy_card_slot.tscn" id="1_wf40b"]
+[ext_resource type="Script" uid="uid://bm1n8bs1aa01n" path="res://Scripts/Board/slot_area.gd" id="3_jq1mv"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pfv1y"]
+size = Vector2(65, 91)
 
 [node name="YourCardSlot" instance=ExtResource("1_wf40b")]
 script = ExtResource("1_fgx8f")
+
+[node name="SlotArea" type="Area2D" parent="." index="0" node_paths=PackedStringArray("slot")]
+position = Vector2(32.5, 45.5)
+collision_layer = 2
+script = ExtResource("3_jq1mv")
+slot = NodePath("..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SlotArea" index="0"]
+shape = SubResource("RectangleShape2D_pfv1y")
 
 [connection signal="pressed" from="TextureButton" to="." method="_on_texture_button_pressed"]

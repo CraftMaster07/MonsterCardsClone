@@ -1,10 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://ct317gmjddic1"]
+[gd_scene load_steps=3 format=3 uid="uid://ct317gmjddic1"]
 
 [ext_resource type="Script" uid="uid://b5r3jibev8gde" path="res://Scripts/Board/enemy_card_slot.gd" id="1_ham7t"]
-[ext_resource type="Script" uid="uid://bm1n8bs1aa01n" path="res://Scripts/Board/slot_area.gd" id="2_0y4q6"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_2yd5i"]
-size = Vector2(65, 91)
+[ext_resource type="PackedScene" uid="uid://cru4gfksm3rbh" path="res://Scenes/Card/board_card.tscn" id="2_ham7t"]
 
 [node name="EnemyCardSlot" type="Control"]
 layout_mode = 3
@@ -22,15 +19,7 @@ grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 script = ExtResource("1_ham7t")
-
-[node name="SlotArea" type="Area2D" parent="." node_paths=PackedStringArray("slot")]
-position = Vector2(32.5, 45.5)
-collision_layer = 2
-script = ExtResource("2_0y4q6")
-slot = NodePath("..")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="SlotArea"]
-shape = SubResource("RectangleShape2D_2yd5i")
+board_card_scene = ExtResource("2_ham7t")
 
 [node name="TextureButton" type="TextureButton" parent="."]
 custom_minimum_size = Vector2(65, 91)

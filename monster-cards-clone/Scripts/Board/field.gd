@@ -2,11 +2,15 @@ class_name Field
 extends MarginContainer
 
 @onready var slot_container = $HBoxContainer
+var slots := slot_container.get_children()
+
+
+func _ready():
+	pass
 
 
 func get_slots():
-	print(slot_container)
-	return slot_container.get_children()
+	return slots
 
 
 func serialize():
@@ -19,7 +23,9 @@ func serialize():
 
 
 func deserialise(slots_data: Array):
-	var slots = get_slots()
-
 	for i in range(len(slots_data)):
 		slots[i].deserialise(slots_data[i])
+
+
+func deserialise_slot(slot_data: Dictionary, slot_index: int):
+	slots[slot_index].deserialise(slot_data)

@@ -69,8 +69,7 @@ func _replace_handcard_with_boardcard(card: HandCard, slot: EnemyCardSlot):
 	This should be done after the card is moved into a slot
 	"""
 	var new_board_card := board_card_scene.instantiate()
-	slot.add_child(new_board_card) # probably shouldnt add as child of slot itself
-	new_board_card.global_position = card.card_front.global_position
+	slot.place_card(new_board_card)
 	card.queue_free()
 	sfx_place.play()
 
@@ -223,3 +222,7 @@ func _on_field_spawner_pivot_new_field_spawned(field: Field) -> void:
 		set_your_field(field)
 	else:
 		set_first_player_field(field)
+
+
+func verify_card_placement(player_id: int, slot_id: int) -> bool:
+	return player_id == your_id or player_id == your_id
