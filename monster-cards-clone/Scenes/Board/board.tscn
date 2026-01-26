@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://cfyktcr6rqnlf"]
+[gd_scene format=3 uid="uid://cfyktcr6rqnlf"]
 
 [ext_resource type="Script" uid="uid://ctku11dgwh5at" path="res://Scripts/Board/board.gd" id="1_xiot5"]
 [ext_resource type="PackedScene" uid="uid://cru4gfksm3rbh" path="res://Scenes/Card/board_card.tscn" id="2_dun80"]
@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://dtpst7jgrdpqq" path="res://Scenes/Board/enemy_field.tscn" id="11_csi2d"]
 [ext_resource type="AudioStream" uid="uid://cgatasovfxoyl" path="res://Assets/Audio/Sounds/sfx_place.mp3" id="11_gti8d"]
 [ext_resource type="AudioStream" uid="uid://02oc0voj62j3" path="res://Assets/Audio/Sounds/sfx_select.mp3" id="12_brcfe"]
+[ext_resource type="FontFile" uid="uid://b13kiadbfhetg" path="res://Assets/Fonts/VCR_OSD_MONO_1.001.ttf" id="12_xqaal"]
 [ext_resource type="AudioStream" uid="uid://ch7jr0gor48sm" path="res://Assets/Audio/Sounds/sfx_deselect.mp3" id="13_csi2d"]
 [ext_resource type="AudioStream" uid="uid://b8rn0abqnjh57" path="res://Assets/Audio/Sounds/sfx_spin.mp3" id="15_s2gku"]
 
@@ -24,7 +25,11 @@ metadata/_custom_type_script = "uid://hvpfm3s0svah"
 script = ExtResource("6_s2gku")
 metadata/_custom_type_script = "uid://hvpfm3s0svah"
 
-[node name="Board" type="Control" node_paths=PackedStringArray("table", "field_spawner_pivot", "hand", "next_player_button", "prev_player_button")]
+[sub_resource type="LabelSettings" id="LabelSettings_dqnt6"]
+font = ExtResource("12_xqaal")
+font_color = Color(0.29998645, 0.71706825, 1.5263317, 1)
+
+[node name="Board" type="Control" unique_id=65642768 node_paths=PackedStringArray("table", "field_spawner_pivot", "hand", "next_player_button", "prev_player_button", "current_player_label")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -40,8 +45,9 @@ prev_player_button = NodePath("UI/PrevPlayerButton")
 board_card_scene = ExtResource("2_dun80")
 your_player_scene = ExtResource("3_me64r")
 enemy_player_scene = ExtResource("4_gti8d")
+current_player_label = NodePath("UI/CurrentPlayerLabel")
 
-[node name="Table" type="Control" parent="."]
+[node name="Table" type="Control" parent="." unique_id=915297040]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -53,7 +59,7 @@ grow_vertical = 2
 script = ExtResource("3_qlllu")
 animated_rotation = SubResource("Resource_xqaal")
 
-[node name="FieldSpawnerPivot" type="Control" parent="Table" node_paths=PackedStringArray("field_spawner")]
+[node name="FieldSpawnerPivot" type="Control" parent="Table" unique_id=525479343 node_paths=PackedStringArray("field_spawner")]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -68,7 +74,7 @@ your_field_scene = ExtResource("8_4l5f1")
 field_spawner = NodePath("FieldSpawner")
 animated_rotation = SubResource("Resource_dqnt6")
 
-[node name="FieldSpawner" type="Control" parent="Table/FieldSpawnerPivot"]
+[node name="FieldSpawner" type="Control" parent="Table/FieldSpawnerPivot" unique_id=1518046023]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -82,10 +88,10 @@ offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Sprite2D" type="Sprite2D" parent="Table/FieldSpawnerPivot"]
+[node name="Sprite2D" type="Sprite2D" parent="Table/FieldSpawnerPivot" unique_id=655082248]
 texture = ExtResource("4_cp8jt")
 
-[node name="UI" type="Control" parent="."]
+[node name="UI" type="Control" parent="." unique_id=224199160]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -94,7 +100,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Hand" parent="UI" instance=ExtResource("2_shhme")]
+[node name="Hand" parent="UI" unique_id=1698699269 instance=ExtResource("2_shhme")]
 layout_mode = 1
 offset_left = -2.0
 offset_top = -145.0
@@ -102,18 +108,18 @@ offset_right = -2.0
 offset_bottom = -14.0
 theme_override_constants/margin_bottom = 40
 
-[node name="Icon" type="Sprite2D" parent="UI"]
+[node name="Icon" type="Sprite2D" parent="UI" unique_id=1686537728]
 position = Vector2(85.00018, 561)
 texture = ExtResource("4_cp8jt")
 
-[node name="DamageButton" type="CheckButton" parent="UI"]
+[node name="DamageButton" type="CheckButton" parent="UI" unique_id=1176615803]
 layout_mode = 0
 offset_left = 137.0
 offset_top = 255.0
 offset_right = 183.0
 offset_bottom = 288.0
 
-[node name="NextPlayerButton" type="Button" parent="UI"]
+[node name="NextPlayerButton" type="Button" parent="UI" unique_id=70634696]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.8
@@ -128,7 +134,7 @@ grow_horizontal = 0
 grow_vertical = 0
 text = "-->"
 
-[node name="PrevPlayerButton" type="Button" parent="UI"]
+[node name="PrevPlayerButton" type="Button" parent="UI" unique_id=521537178]
 layout_mode = 1
 anchors_preset = -1
 offset_left = 184.0
@@ -139,7 +145,7 @@ grow_horizontal = 0
 grow_vertical = 0
 text = "<--"
 
-[node name="SyncButton" type="Button" parent="UI"]
+[node name="SyncButton" type="Button" parent="UI" unique_id=298300565]
 process_mode = 4
 layout_mode = 0
 offset_left = 1059.0
@@ -148,19 +154,30 @@ offset_right = 1103.0
 offset_bottom = 634.0
 text = "Sync"
 
-[node name="sfx_place" type="AudioStreamPlayer" parent="."]
+[node name="CurrentPlayerLabel" type="Label" parent="UI" unique_id=287045273]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -11.5
+offset_right = 142.0
+offset_bottom = 11.5
+grow_vertical = 2
+label_settings = SubResource("LabelSettings_dqnt6")
+
+[node name="sfx_place" type="AudioStreamPlayer" parent="." unique_id=539857139]
 stream = ExtResource("11_gti8d")
 bus = &"Sound"
 
-[node name="sfx_select" type="AudioStreamPlayer" parent="."]
+[node name="sfx_select" type="AudioStreamPlayer" parent="." unique_id=1512280711]
 stream = ExtResource("12_brcfe")
 bus = &"Sound"
 
-[node name="sfx_deselect" type="AudioStreamPlayer" parent="."]
+[node name="sfx_deselect" type="AudioStreamPlayer" parent="." unique_id=605739958]
 stream = ExtResource("13_csi2d")
 bus = &"Sound"
 
-[node name="sfx_spin" type="AudioStreamPlayer" parent="."]
+[node name="sfx_spin" type="AudioStreamPlayer" parent="." unique_id=1334164546]
 stream = ExtResource("15_s2gku")
 bus = &"Sound"
 

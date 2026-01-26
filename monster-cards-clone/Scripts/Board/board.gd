@@ -17,6 +17,8 @@ extends Control
 @export var your_player_scene: PackedScene
 @export var enemy_player_scene: PackedScene
 
+@export var current_player_label: Label
+
 var selected_card: HandCard = null
 
 var players := {}
@@ -51,6 +53,8 @@ func _ready() -> void:
 	if multiplayer.is_server():
 		$UI/SyncButton.visible = true
 		$UI/SyncButton.process_mode = Node.PROCESS_MODE_INHERIT
+	
+	start_round()
 
 
 func slot_clicked(slot: EnemyCardSlot):
@@ -63,6 +67,13 @@ func _place_card_into_slot(card: HandCard, slot: EnemyCardSlot):
 	"""
 	Marks the slot as taken, and starts the animation to move the card into the slot
 	"""
+	var status = verify_card_placement(your_id, players[your_id].get_slot_id(slot))
+
+	if status != ValidationResponses.OK:
+		print("invalid placement, status code:", status)
+		card.go_back_to_hand()
+		return
+
 	slot.take()
 	card.goto_slot(slot)
 	card.tween.tween_callback(_replace_handcard_with_boardcard.bind(card, slot))
@@ -232,22 +243,24 @@ func _on_field_spawner_pivot_new_field_spawned(field: Field) -> void:
 		set_first_player_field(field)
 
 
-func turn(player_id: int):
+func start_turn(player_id: int):
 	current_player_id = player_id
+	print("turn: ", current_player_id)
+	current_player_label.text = players[current_player_id].player_name + "'s turn"
 
 	if current_player_id >= len(players):
 		current_player_index = 0
 
 
-func round():
+func start_round():
 	for player_id in players:
-		turn(player_id)
+		start_turn(player_id)
 		await end_turn
 
 
 func verify_card_placement(player_id: int, slot_id: int) -> ValidationResponses:
-	# if current_player_id != player_id:
-	# 	return ValidationResponses.NOT_YOUR_TURN
+	if current_player_id != player_id:
+		return ValidationResponses.NOT_YOUR_TURN
 	
 	if players[player_id].is_slot_taken(slot_id):
 		return ValidationResponses.SLOT_TAKEN
@@ -263,7 +276,7 @@ func client_placed_card(player_id: int, serialised_card: Dictionary, slot_id: in
 		ValidationResponses.SLOT_TAKEN:
 			print("invalid placement: (Player: ", player_id, ", Slot: ", slot_id, ")")
 		ValidationResponses.NOT_YOUR_TURN:
-			print("not his turn (Player: ", player_id, ")")
+			print("not his start_turn (Player: ", player_id, ")")
 		ValidationResponses.INVALID:
 			print("unexpected error occured (Player: ", player_id, ", Slot: ", slot_id, ")")
 

@@ -48,8 +48,12 @@ func _input(event: InputEvent) -> void:
 			card_placed.emit(self, nearest_area.slot)
 			return
 		
-		animate_to_position(base_position, dragback_trans, dragback_time, dragback_ease)
-		tween.tween_callback(_rest)
+		go_back_to_hand()
+
+
+func go_back_to_hand():
+	animate_to_position(base_position, dragback_trans, dragback_time, dragback_ease)
+	tween.tween_callback(_rest)
 
 
 func _rest():
