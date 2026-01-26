@@ -286,6 +286,7 @@ func client_placed_card(player_id: int, serialized_card: Dictionary, slot_id: in
 
 
 func _on_end_turn_pressed() -> void:
+	print("yo I'm ending turn")
 	if current_player_id == your_id:
 		send_end_turn.emit()
 

@@ -155,7 +155,6 @@ offset_bottom = 631.0
 text = "Sync"
 
 [node name="EndTurn" type="Button" parent="UI" unique_id=657077339]
-process_mode = 4
 layout_mode = 0
 offset_left = 1043.0
 offset_top = 600.0
