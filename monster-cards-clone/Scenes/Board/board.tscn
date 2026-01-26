@@ -126,10 +126,10 @@ anchor_left = 0.8
 anchor_top = 0.8
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -188.60004
+offset_left = -192.60004
 offset_top = -85.400024
-offset_right = -160.60004
-offset_bottom = -54.400024
+offset_right = -248.0
+offset_bottom = -112.0
 grow_horizontal = 0
 grow_vertical = 0
 text = "-->"
@@ -137,10 +137,10 @@ text = "-->"
 [node name="PrevPlayerButton" type="Button" parent="UI" unique_id=521537178]
 layout_mode = 1
 anchors_preset = -1
-offset_left = 184.0
-offset_top = 448.0
-offset_right = 212.0
-offset_bottom = 479.0
+offset_left = 241.0
+offset_top = 437.0
+offset_right = 416.0
+offset_bottom = 540.0
 grow_horizontal = 0
 grow_vertical = 0
 text = "<--"
@@ -148,11 +148,20 @@ text = "<--"
 [node name="SyncButton" type="Button" parent="UI" unique_id=298300565]
 process_mode = 4
 layout_mode = 0
-offset_left = 1059.0
-offset_top = 603.0
-offset_right = 1103.0
-offset_bottom = 634.0
+offset_left = 978.0
+offset_top = 600.0
+offset_right = 1022.0
+offset_bottom = 631.0
 text = "Sync"
+
+[node name="EndTurn" type="Button" parent="UI" unique_id=657077339]
+process_mode = 4
+layout_mode = 0
+offset_left = 1043.0
+offset_top = 600.0
+offset_right = 1121.0
+offset_bottom = 631.0
+text = "End Turn"
 
 [node name="CurrentPlayerLabel" type="Label" parent="UI" unique_id=287045273]
 layout_mode = 1
