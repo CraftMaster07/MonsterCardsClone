@@ -26,14 +26,14 @@ func serialize():
 	return slots_data
 
 
-func deserialise(slots_data: Array):
+func deserialize(slots_data: Array):
 	for i in range(len(slots_data)):
-		slots[i].deserialise(slots_data[i])
+		slots[i].deserialize(slots_data[i])
 
 
-func deserialise_slot(slot_data: Dictionary, slot_index: int):
-	slots[slot_index].deserialise(slot_data)
+func deserialize_slot(slot_data: Dictionary, slot_index: int):
+	slots[slot_index].deserialize(slot_data)
 
 
-func place_serialised_card_into_slot(serialised_card: Dictionary, slot_index: int):
-	slots[slot_index].place_serialised_card(serialised_card)
+func place_serialized_card_into_slot(serialized_card: Dictionary, slot_index: int):
+	slots[slot_index].place_serialized_card(serialized_card)

@@ -22,21 +22,21 @@ func place_card(new_card: BoardCard):
 
 func serialize():
 	return {
-		"card": card.serialise() if card else {}
+		"card": card.serialize() if card else {}
 	}
 
 
-func deserialise(serialised_slot: Dictionary):
-	if serialised_slot['card'] and card:
-		card.deserialise(serialised_slot['card'])
-	elif serialised_slot['card']:
+func deserialize(serialized_slot: Dictionary):
+	if serialized_slot['card'] and card:
+		card.deserialize(serialized_slot['card'])
+	elif serialized_slot['card']:
 		place_card(board_card_scene.instantiate())
 
 
-func place_serialised_card(serialised_card: Dictionary):
+func place_serialized_card(serialized_card: Dictionary):
 	if card:
-		card.deserialise(serialised_card)
+		card.deserialize(serialized_card)
 	else:
 		var new_card := board_card_scene.instantiate()
-		new_card.deserialise(serialised_card)
+		new_card.deserialize(serialized_card)
 		place_card(new_card)

@@ -34,7 +34,7 @@ const CAMERA_ADDITIONAL_RADIUS: float = -100.0
 const FIELD_SPAWNER_ADDITIONAL_RADIUS: float = -100.0
 
 signal call_sync_game(game_state: Dictionary)
-signal send_placed_card(serialised_card: Dictionary, slot_id: int)
+signal send_placed_card(serialized_card: Dictionary, slot_id: int)
 signal end_turn()
 
 enum ValidationResponses {INVALID = -1, OK = 0, NOT_YOUR_TURN, SLOT_TAKEN}
@@ -87,7 +87,7 @@ func _replace_handcard_with_boardcard(card: HandCard, slot: EnemyCardSlot):
 	This should be done after the card is moved into a slot
 	"""
 	var new_board_card := board_card_scene.instantiate()
-	send_placed_card.emit(new_board_card.serialise(), players[your_id].get_slot_id(slot))
+	send_placed_card.emit(new_board_card.serialize(), players[your_id].get_slot_id(slot))
 	slot.place_card(new_board_card)
 	card.queue_free()  # might replace with remove_child
 	sfx_place.play()
@@ -185,7 +185,7 @@ func send_game_state():
 
 
 func get_game_state() -> Dictionary:
-	return {"players": serialise_players()}  # add last_action for animations
+	return {"players": serialize_players()}  # add last_action for animations
 
 
 func set_game_state(game_state: Dictionary):
@@ -194,7 +194,7 @@ func set_game_state(game_state: Dictionary):
 	print("players set", players)
 
 
-func serialise_players():
+func serialize_players():
 	var serialized_players := {}
 
 	for player in players.values():
@@ -205,7 +205,7 @@ func serialise_players():
 
 func deserialize_players(serialized_players: Dictionary):
 	for serialized_player_id in serialized_players:
-		players[serialized_player_id].deserialise(serialized_players[serialized_player_id])
+		players[serialized_player_id].deserialize(serialized_players[serialized_player_id])
 		
 
 func _on_sync_button_pressed() -> void:
@@ -268,11 +268,11 @@ func verify_card_placement(player_id: int, slot_id: int) -> ValidationResponses:
 	return ValidationResponses.OK
 
 
-func client_placed_card(player_id: int, serialised_card: Dictionary, slot_id: int):
+func client_placed_card(player_id: int, serialized_card: Dictionary, slot_id: int):
 	var status := verify_card_placement(player_id, slot_id)
 	match status:
 		ValidationResponses.OK:
-			players[player_id].place_serialised_card_into_slot(serialised_card, slot_id)
+			players[player_id].place_serialized_card_into_slot(serialized_card, slot_id)
 		ValidationResponses.SLOT_TAKEN:
 			print("invalid placement: (Player: ", player_id, ", Slot: ", slot_id, ")")
 		ValidationResponses.NOT_YOUR_TURN:

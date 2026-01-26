@@ -15,7 +15,7 @@ signal connection_failure()
 signal server_disconnected()
 
 signal sync_game(game_state: Dictionary)
-signal client_placed_card(player_id: int, serialised_card: Dictionary, slot_id: int)
+signal client_placed_card(player_id: int, serialized_card: Dictionary, slot_id: int)
 
 @export var server_script: Script
 @export var client_script: Script
@@ -131,9 +131,9 @@ func _on_multiplayer_interface_sync_game(game_state: Dictionary) -> void:
 	sync_game.emit(game_state)
 
 
-func send_placed_card(serialised_card: Dictionary, slot_id: int) -> void:
-	multiplayer_interface.send_placed_card(serialised_card, slot_id)
+func send_placed_card(serialized_card: Dictionary, slot_id: int) -> void:
+	multiplayer_interface.send_placed_card(serialized_card, slot_id)
 
 
-func _on_multiplayer_interface_client_placed_card(player_id: int, serialised_card: Dictionary, slot_id: int) -> void:
-	client_placed_card.emit(player_id, serialised_card, slot_id)
+func _on_multiplayer_interface_client_placed_card(player_id: int, serialized_card: Dictionary, slot_id: int) -> void:
+	client_placed_card.emit(player_id, serialized_card, slot_id)

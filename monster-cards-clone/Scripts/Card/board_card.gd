@@ -2,11 +2,11 @@ class_name BoardCard
 extends Control
 
 
-func serialise() -> Dictionary:
+func serialize() -> Dictionary:
 	return {
 		"card_name": "test"
 	}
 
 
-func deserialise(_data):
+func deserialize(_data):
 	pass

@@ -144,9 +144,9 @@ func call_sync_game(game_state: Dictionary) -> void:
 	multiplayer_manager.call_sync_game(game_state)
 
 
-func _on_board_send_placed_card(serialised_card: Dictionary, slot_id: int) -> void:
-	multiplayer_manager.send_placed_card(serialised_card, slot_id)
+func _on_board_send_placed_card(serialized_card: Dictionary, slot_id: int) -> void:
+	multiplayer_manager.send_placed_card(serialized_card, slot_id)
 
 
-func _on_multiplayer_manager_client_placed_card(player_id: int, serialised_card: Dictionary, slot_id: int) -> void:
-	board.client_placed_card(player_id, serialised_card, slot_id)
+func _on_multiplayer_manager_client_placed_card(player_id: int, serialized_card: Dictionary, slot_id: int) -> void:
+	board.client_placed_card(player_id, serialized_card, slot_id)

@@ -65,13 +65,13 @@ func serialize():
 	}
 
 
-func deserialise(serialized_player: Dictionary):
+func deserialize(serialized_player: Dictionary):
 	player_id = serialized_player['player_id']
 	player_name = serialized_player['player_name']
 	health = serialized_player['health']
 	update_health()
-	field.deserialise(serialized_player['field'])
+	field.deserialize(serialized_player['field'])
 
 
-func place_serialised_card_into_slot(serialised_card: Dictionary, slot_id: int):
-	field.place_serialised_card_into_slot(serialised_card, slot_id)
+func place_serialized_card_into_slot(serialized_card: Dictionary, slot_id: int):
+	field.place_serialized_card_into_slot(serialized_card, slot_id)
