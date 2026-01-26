@@ -21,11 +21,12 @@ extends Control
 
 var selected_card: HandCard = null
 
-var players := {}
+var players: Dictionary[int, Player] = {}
 var your_id: int
 
 var current_player_index: int = 0
 var current_player_id: int
+var turn_order: Array[int]
 
 var unassigned_field_players: Array
 
@@ -34,8 +35,8 @@ const CAMERA_ADDITIONAL_RADIUS: float = -100.0
 const FIELD_SPAWNER_ADDITIONAL_RADIUS: float = -100.0
 
 signal call_sync_game(game_state: Dictionary)
-signal send_placed_card(serialized_card: Dictionary, slot_id: int)
-signal end_turn()
+signal send_placed_card(serialised_card: Dictionary, slot_id: int)
+signal send_end_turn()
 
 enum ValidationResponses {INVALID = -1, OK = 0, NOT_YOUR_TURN, SLOT_TAKEN}
 
@@ -53,8 +54,8 @@ func _ready() -> void:
 	if multiplayer.is_server():
 		$UI/SyncButton.visible = true
 		$UI/SyncButton.process_mode = Node.PROCESS_MODE_INHERIT
-	
-	start_round()
+
+	next_turn()
 
 
 func slot_clicked(slot: EnemyCardSlot):
@@ -78,7 +79,6 @@ func _place_card_into_slot(card: HandCard, slot: EnemyCardSlot):
 	card.goto_slot(slot)
 	card.tween.tween_callback(_replace_handcard_with_boardcard.bind(card, slot))
 	print("card placed")
-	
 
 
 func _replace_handcard_with_boardcard(card: HandCard, slot: EnemyCardSlot):
@@ -89,7 +89,7 @@ func _replace_handcard_with_boardcard(card: HandCard, slot: EnemyCardSlot):
 	var new_board_card := board_card_scene.instantiate()
 	send_placed_card.emit(new_board_card.serialize(), players[your_id].get_slot_id(slot))
 	slot.place_card(new_board_card)
-	card.queue_free()  # might replace with remove_child
+	card.queue_free() # might replace with remove_child
 	sfx_place.play()
 
 
@@ -117,6 +117,7 @@ func init_players(multiplayer_players: Array):
 			init_enemy_player(player_data)
 
 	print("players initialized", players)
+	init_turn_order()
 
 
 func init_enemy_player(player_data: Dictionary):
@@ -132,6 +133,9 @@ func init_your_player(player_data: Dictionary):
 	add_child(new_player)
 	players[player_data['id']] = new_player
 
+
+func init_turn_order():
+	turn_order = players.keys()
 
 func set_your_id(id: int):
 	your_id = id
@@ -185,12 +189,14 @@ func send_game_state():
 
 
 func get_game_state() -> Dictionary:
-	return {"players": serialize_players()}  # add last_action for animations
+	return {"players": serialise_players(), "current_player_id": current_player_id}
+	# add last_action for animations
 
 
 func set_game_state(game_state: Dictionary):
 	# TODO: finish TS
 	deserialize_players(game_state['players'])
+	start_turn(game_state['current_player_id'])
 	print("players set", players)
 
 
@@ -248,20 +254,16 @@ func start_turn(player_id: int):
 	print("turn: ", current_player_id)
 	current_player_label.text = players[current_player_id].player_name + "'s turn"
 
-	if current_player_id >= len(players):
-		current_player_index = 0
 
-
-func start_round():
-	for player_id in players:
-		start_turn(player_id)
-		await end_turn
+func next_turn():
+	start_turn(turn_order[current_player_index])
+	current_player_index = (current_player_index + 1) % len(turn_order)
 
 
 func verify_card_placement(player_id: int, slot_id: int) -> ValidationResponses:
 	if current_player_id != player_id:
 		return ValidationResponses.NOT_YOUR_TURN
-	
+
 	if players[player_id].is_slot_taken(slot_id):
 		return ValidationResponses.SLOT_TAKEN
 
@@ -281,3 +283,8 @@ func client_placed_card(player_id: int, serialized_card: Dictionary, slot_id: in
 			print("unexpected error occured (Player: ", player_id, ", Slot: ", slot_id, ")")
 
 	send_game_state()
+
+
+func _on_end_turn_pressed() -> void:
+	if current_player_id == your_id:
+		send_end_turn.emit()

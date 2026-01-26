@@ -78,3 +78,6 @@ func receive_client_placed_card(serialized_cardcard: Dictionary, slot_id: int):
 	sender = sender if sender else 1
 	print("received card from ", sender)
 	client_placed_card.emit(sender, serialized_cardcard, slot_id)
+
+func send_placed_card(serialized_card: Dictionary, slot_id: int):
+	receive_client_placed_card(serialized_card, slot_id)

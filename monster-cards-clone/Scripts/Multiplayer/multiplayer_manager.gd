@@ -1,3 +1,4 @@
+class_name MultiplayerManager
 extends Node
 """
 Manages the multiplayer setup for hosting or joining a network game using ENet.

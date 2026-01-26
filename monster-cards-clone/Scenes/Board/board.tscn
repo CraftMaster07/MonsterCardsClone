@@ -195,3 +195,4 @@ bus = &"Sound"
 [connection signal="pressed" from="UI/NextPlayerButton" to="." method="_on_next_player_button_pressed"]
 [connection signal="pressed" from="UI/PrevPlayerButton" to="." method="_on_prev_player_button_pressed"]
 [connection signal="pressed" from="UI/SyncButton" to="." method="_on_sync_button_pressed"]
+[connection signal="pressed" from="UI/EndTurn" to="." method="_on_end_turn_pressed"]
