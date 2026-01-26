@@ -17,6 +17,7 @@ signal server_disconnected()
 
 signal sync_game(game_state: Dictionary)
 signal client_placed_card(player_id: int, serialized_card: Dictionary, slot_id: int)
+signal client_ended_turn(player_id: int)
 
 @export var server_script: Script
 @export var client_script: Script
@@ -45,6 +46,7 @@ func host_game(player_name) -> void:
 	"""
 	multiplayer_interface.set_script(server_script)
 	multiplayer_interface.client_placed_card.connect(_on_multiplayer_interface_client_placed_card)
+	multiplayer_interface.client_ended_turn.connect(_on_multiplayer_interface_client_ended_turn)
 
 	multiplayer_interface.host_game(PORT, player_name)
 	your_id = multiplayer.get_unique_id()
@@ -136,5 +138,13 @@ func send_placed_card(serialized_card: Dictionary, slot_id: int) -> void:
 	multiplayer_interface.send_placed_card(serialized_card, slot_id)
 
 
-func _on_multiplayer_interface_client_placed_card(player_id: int, serialized_card: Dictionary, slot_id: int) -> void:
+func _on_multiplayer_interface_client_placed_card(
+	player_id: int, serialized_card: Dictionary, slot_id: int
+) -> void:
 	client_placed_card.emit(player_id, serialized_card, slot_id)
+
+func send_end_turn() -> void:
+	multiplayer_interface.send_end_turn()
+
+func _on_multiplayer_interface_client_ended_turn(player_id: int) -> void:
+	client_ended_turn.emit(player_id)

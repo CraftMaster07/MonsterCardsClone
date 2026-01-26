@@ -150,10 +150,14 @@ func _on_board_send_placed_card(serialized_card: Dictionary, slot_id: int) -> vo
 
 
 func _on_multiplayer_manager_client_placed_card(
-	player_id: int, serialised_card: Dictionary, slot_id: int
+	player_id: int, serialized_card: Dictionary, slot_id: int
 ) -> void:
-	board.client_placed_card(player_id, serialised_card, slot_id)
+	board.client_placed_card(player_id, serialized_card, slot_id)
 
 
 func _on_end_turn_pressed() -> void:
 	multiplayer_manager.send_end_turn()
+
+
+func _on_multiplayer_manager_client_ended_turn(player_id: int) -> void:
+	board.client_ended_turn(player_id)

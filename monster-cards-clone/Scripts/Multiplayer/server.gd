@@ -3,6 +3,7 @@ extends Client
 signal upnp_completed(error: UPNP.UPNPResult)
 
 signal client_placed_card(player_id: int, serialized_card: Dictionary, slot_id: int)
+signal client_ended_turn(player_id: int)
 
 # Replace this with your own server port number between 1024 and 65535.
 const SERVER_PORT = 59007
@@ -81,3 +82,13 @@ func receive_client_placed_card(serialized_cardcard: Dictionary, slot_id: int):
 
 func send_placed_card(serialized_card: Dictionary, slot_id: int):
 	receive_client_placed_card(serialized_card, slot_id)
+
+func send_end_turn():
+	receive_end_turn()
+
+@rpc("any_peer", "call_remote", "reliable", 0)
+func receive_end_turn():
+	var sender := multiplayer.get_remote_sender_id()
+	sender = sender if sender else 1
+	print("received end turn from ", sender)
+	client_ended_turn.emit(sender)

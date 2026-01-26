@@ -35,7 +35,7 @@ const CAMERA_ADDITIONAL_RADIUS: float = -100.0
 const FIELD_SPAWNER_ADDITIONAL_RADIUS: float = -100.0
 
 signal call_sync_game(game_state: Dictionary)
-signal send_placed_card(serialised_card: Dictionary, slot_id: int)
+signal send_placed_card(serialized_card: Dictionary, slot_id: int)
 signal send_end_turn()
 
 enum ValidationResponses {INVALID = -1, OK = 0, NOT_YOUR_TURN, SLOT_TAKEN}
@@ -189,7 +189,7 @@ func send_game_state():
 
 
 func get_game_state() -> Dictionary:
-	return {"players": serialise_players(), "current_player_id": current_player_id}
+	return {"players": serialize_players(), "current_player_id": current_player_id}
 	# add last_action for animations
 
 
@@ -212,7 +212,7 @@ func serialize_players():
 func deserialize_players(serialized_players: Dictionary):
 	for serialized_player_id in serialized_players:
 		players[serialized_player_id].deserialize(serialized_players[serialized_player_id])
-		
+
 
 func _on_sync_button_pressed() -> void:
 	send_game_state()
@@ -288,3 +288,11 @@ func client_placed_card(player_id: int, serialized_card: Dictionary, slot_id: in
 func _on_end_turn_pressed() -> void:
 	if current_player_id == your_id:
 		send_end_turn.emit()
+
+
+func client_ended_turn(player_id: int):
+	if player_id != current_player_id:
+		return
+
+	next_turn()
+	send_game_state()

@@ -73,7 +73,7 @@ func deserialize(serialized_player: Dictionary):
 	field.deserialize(serialized_player['field'])
 
 
-func place_serialised_card_into_slot(serialized_card: Dictionary, slot_id: int):
+func place_serialized_card_into_slot(serialized_card: Dictionary, slot_id: int):
 	field.place_serialized_card_into_slot(serialized_card, slot_id)
 
 func get_id():
