@@ -2,7 +2,7 @@ class_name BoardCard
 extends Control
 
 
-func serialise():
+func serialise() -> Dictionary:
     return {
         "card_name": "test"
     }

@@ -48,6 +48,14 @@ func set_field(new_field: Field):
 	field = new_field
 
 
+func is_slot_taken(slot_id: int) -> bool:
+	return field.is_slot_taken(slot_id)
+
+
+func get_slot_id(slot: EnemyCardSlot) -> int:
+	return field.get_slot_id(slot)
+
+
 func serialize():
 	return {
 		"player_id": player_id,
@@ -63,4 +71,7 @@ func deserialise(serialized_player: Dictionary):
 	health = serialized_player['health']
 	update_health()
 	field.deserialise(serialized_player['field'])
-	
+
+
+func place_serialised_card_into_slot(serialised_card: Dictionary, slot_id: int):
+	field.place_serialised_card_into_slot(serialised_card, slot_id)

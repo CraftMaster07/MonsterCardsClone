@@ -17,6 +17,7 @@ board_scene = ExtResource("2_opxgs")
 
 [connection signal="host_game" from="MainMenu" to="." method="_on_main_menu_host_game"]
 [connection signal="join_game" from="MainMenu" to="." method="_on_main_menu_join_game"]
+[connection signal="client_placed_card" from="MultiplayerManager" to="." method="_on_multiplayer_manager_client_placed_card"]
 [connection signal="connection_failure" from="MultiplayerManager" to="." method="_on_multiplayer_manager_connection_failure"]
 [connection signal="connection_success" from="MultiplayerManager" to="." method="_on_multiplayer_manager_connection_success"]
 [connection signal="new_player" from="MultiplayerManager" to="." method="_on_multiplayer_manager_new_player"]

@@ -2,6 +2,7 @@ extends Client
 
 signal upnp_completed(error: UPNP.UPNPResult)
 
+signal client_placed_card(player_id: int, serialised_card: Dictionary, slot_id: int)
 
 # Replace this with your own server port number between 1024 and 65535.
 const SERVER_PORT = 59007
@@ -68,4 +69,12 @@ func start_game():
 
 
 func send_sync_game(game_state: Dictionary):
-	rpc("receive_sync_game", game_state)
+	receive_sync_game.rpc(game_state)
+
+
+@rpc("any_peer", "call_remote", "reliable", 0)
+func receive_client_placed_card(serialised_cardcard: Dictionary, slot_id: int):
+	var sender := multiplayer.get_remote_sender_id()
+	sender = sender if sender else 1
+	print("received card from ", sender)
+	client_placed_card.emit(sender, serialised_cardcard, slot_id)

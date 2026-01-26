@@ -47,6 +47,7 @@ func start_board():
 	board.call_sync_game.connect(call_sync_game)
 	board.set_your_id(multiplayer_manager.your_id)
 	board.init_players(multiplayer_players_to_dicts(multiplayer_manager.players))
+	board.send_placed_card.connect(_on_board_send_placed_card)
 	add_child(board)
 
 
@@ -141,3 +142,11 @@ func _on_multiplayer_manager_sync_game(game_state: Dictionary) -> void:
 
 func call_sync_game(game_state: Dictionary) -> void:
 	multiplayer_manager.call_sync_game(game_state)
+
+
+func _on_board_send_placed_card(serialised_card: Dictionary, slot_id: int) -> void:
+	multiplayer_manager.send_placed_card(serialised_card, slot_id)
+
+
+func _on_multiplayer_manager_client_placed_card(player_id: int, serialised_card: Dictionary, slot_id: int) -> void:
+	board.client_placed_card(player_id, serialised_card, slot_id)

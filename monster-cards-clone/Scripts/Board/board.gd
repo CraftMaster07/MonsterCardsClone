@@ -22,6 +22,9 @@ var selected_card: HandCard = null
 var players := {}
 var your_id: int
 
+var current_player_index: int = 0
+var current_player_id: int
+
 var unassigned_field_players: Array
 
 const MIN_TABLE_RADIUS: float = 400.0
@@ -29,7 +32,10 @@ const CAMERA_ADDITIONAL_RADIUS: float = -100.0
 const FIELD_SPAWNER_ADDITIONAL_RADIUS: float = -100.0
 
 signal call_sync_game(game_state: Dictionary)
+signal send_placed_card(serialised_card: Dictionary, slot_id: int)
+signal end_turn()
 
+enum ValidationResponses {INVALID = -1, OK = 0, NOT_YOUR_TURN, SLOT_TAKEN}
 
 func _ready() -> void:
 	var table_radius: float = calculate_table_radius(len(players))
@@ -61,6 +67,7 @@ func _place_card_into_slot(card: HandCard, slot: EnemyCardSlot):
 	card.goto_slot(slot)
 	card.tween.tween_callback(_replace_handcard_with_boardcard.bind(card, slot))
 	print("card placed")
+	
 
 
 func _replace_handcard_with_boardcard(card: HandCard, slot: EnemyCardSlot):
@@ -69,8 +76,9 @@ func _replace_handcard_with_boardcard(card: HandCard, slot: EnemyCardSlot):
 	This should be done after the card is moved into a slot
 	"""
 	var new_board_card := board_card_scene.instantiate()
+	send_placed_card.emit(new_board_card.serialise(), players[your_id].get_slot_id(slot))
 	slot.place_card(new_board_card)
-	card.queue_free()
+	card.queue_free()  # might replace with remove_child
 	sfx_place.play()
 
 
@@ -166,7 +174,7 @@ func send_game_state():
 
 
 func get_game_state() -> Dictionary:
-	return {"players": seriaize_players()}
+	return {"players": serialise_players()}  # add last_action for animations
 
 
 func set_game_state(game_state: Dictionary):
@@ -175,7 +183,7 @@ func set_game_state(game_state: Dictionary):
 	print("players set", players)
 
 
-func seriaize_players():
+func serialise_players():
 	var serialized_players := {}
 
 	for player in players.values():
@@ -224,5 +232,39 @@ func _on_field_spawner_pivot_new_field_spawned(field: Field) -> void:
 		set_first_player_field(field)
 
 
-func verify_card_placement(player_id: int, slot_id: int) -> bool:
-	return player_id == your_id or player_id == your_id
+func turn(player_id: int):
+	current_player_id = player_id
+
+	if current_player_id >= len(players):
+		current_player_index = 0
+
+
+func round():
+	for player_id in players:
+		turn(player_id)
+		await end_turn
+
+
+func verify_card_placement(player_id: int, slot_id: int) -> ValidationResponses:
+	# if current_player_id != player_id:
+	# 	return ValidationResponses.NOT_YOUR_TURN
+	
+	if players[player_id].is_slot_taken(slot_id):
+		return ValidationResponses.SLOT_TAKEN
+
+	return ValidationResponses.OK
+
+
+func client_placed_card(player_id: int, serialised_card: Dictionary, slot_id: int):
+	var status := verify_card_placement(player_id, slot_id)
+	match status:
+		ValidationResponses.OK:
+			players[player_id].place_serialised_card_into_slot(serialised_card, slot_id)
+		ValidationResponses.SLOT_TAKEN:
+			print("invalid placement: (Player: ", player_id, ", Slot: ", slot_id, ")")
+		ValidationResponses.NOT_YOUR_TURN:
+			print("not his turn (Player: ", player_id, ")")
+		ValidationResponses.INVALID:
+			print("unexpected error occured (Player: ", player_id, ", Slot: ", slot_id, ")")
+
+	send_game_state()

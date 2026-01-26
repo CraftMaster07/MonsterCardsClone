@@ -15,6 +15,7 @@ signal connection_failure()
 signal server_disconnected()
 
 signal sync_game(game_state: Dictionary)
+signal client_placed_card(player_id: int, serialised_card: Dictionary, slot_id: int)
 
 @export var server_script: Script
 @export var client_script: Script
@@ -42,6 +43,7 @@ func host_game(player_name) -> void:
 	Hosts a game as a server.
 	"""
 	multiplayer_interface.set_script(server_script)
+	multiplayer_interface.client_placed_card.connect(_on_multiplayer_interface_client_placed_card)
 
 	multiplayer_interface.host_game(PORT, player_name)
 	your_id = multiplayer.get_unique_id()
@@ -127,3 +129,11 @@ func call_sync_game(game_state: Dictionary) -> void:
 
 func _on_multiplayer_interface_sync_game(game_state: Dictionary) -> void:
 	sync_game.emit(game_state)
+
+
+func send_placed_card(serialised_card: Dictionary, slot_id: int) -> void:
+	multiplayer_interface.send_placed_card(serialised_card, slot_id)
+
+
+func _on_multiplayer_interface_client_placed_card(player_id: int, serialised_card: Dictionary, slot_id: int) -> void:
+	client_placed_card.emit(player_id, serialised_card, slot_id)

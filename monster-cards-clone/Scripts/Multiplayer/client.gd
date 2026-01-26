@@ -87,3 +87,16 @@ func send_host_started_game():
 @rpc("authority", "call_local", "reliable", 0)
 func receive_sync_game(game_state: Dictionary):
 	sync_game.emit(game_state)
+
+
+func send_placed_card(serialised_card: Dictionary, slot_id: int):
+	if multiplayer.is_server():
+		receive_client_placed_card(serialised_card, slot_id)
+	else:
+		receive_client_placed_card.rpc_id(1, serialised_card, slot_id)
+
+
+@rpc("any_peer", "call_remote", "reliable", 0)
+func receive_client_placed_card(_serialised_cardcard: Dictionary, _slot_id: int):
+	# server side function
+	pass

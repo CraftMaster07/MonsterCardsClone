@@ -3,8 +3,15 @@ extends Control
 
 @export var board_card_scene: PackedScene
 
-@onready var slot_area = $SlotArea
 var card: BoardCard
+
+
+func take():
+	push_error("take() not implemented")
+
+
+func is_taken():
+	return card != null
 
 
 func place_card(new_card: BoardCard):
@@ -15,7 +22,7 @@ func place_card(new_card: BoardCard):
 
 func serialize():
 	return {
-		"card": card.serialise() if card else null
+		"card": card.serialise() if card else {}
 	}
 
 
@@ -24,10 +31,12 @@ func deserialise(serialised_slot: Dictionary):
 		card.deserialise(serialised_slot['card'])
 	elif serialised_slot['card']:
 		place_card(board_card_scene.instantiate())
-	
-	_deserialise(serialised_slot)
 
 
-func _deserialise(_serialised_slot: Dictionary):
-	# Implement this in child classes
-	pass
+func place_serialised_card(serialised_card: Dictionary):
+	if card:
+		card.deserialise(serialised_card)
+	else:
+		var new_card := board_card_scene.instantiate()
+		new_card.deserialise(serialised_card)
+		place_card(new_card)
