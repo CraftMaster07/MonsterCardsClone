@@ -6,7 +6,7 @@ extends Control
 @export var radius: float = 100.0
 @export var color: Color = Color(0.256, 0.256, 0.256, 1.0)
 @export var spin_time: float = 0.5
-@export var spin_trans: Tween.TransitionType = Tween.TRANS_CUBIC
+@export var spin_trans: Tween.TransitionType = Tween.TRANS_BACK
 @export var spin_ease: Tween.EaseType = Tween.EASE_OUT
 
 
