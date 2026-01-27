@@ -1,10 +1,10 @@
 class_name Board
 extends Control
 
-@onready var sfx_place: AudioStreamPlayer = $sfx_place
-@onready var sfx_select: AudioStreamPlayer = $sfx_select
-@onready var sfx_deselect: AudioStreamPlayer = $sfx_deselect
-@onready var sfx_spin: AudioStreamPlayer = $sfx_spin
+@export var sfx_place: AudioStreamPlayer
+@export var sfx_select: AudioStreamPlayer
+@export var sfx_deselect: AudioStreamPlayer
+@export var sfx_spin: AudioStreamPlayer
 
 @export var table: Table
 @export var field_spawner_pivot: Control
@@ -12,6 +12,7 @@ extends Control
 
 @export var next_player_button: Button
 @export var prev_player_button: Button
+@export var spin_charge_timer: Timer
 
 @export var board_card_scene: PackedScene
 @export var your_player_scene: PackedScene
@@ -148,12 +149,12 @@ func remove_player(id: int):
 
 
 func _on_next_player_button_pressed() -> void:
-	table.rotate(TAU / len(players))
+	table.rotate_by(TAU / len(players))
 	sfx_spin.play()
 
 
 func _on_prev_player_button_pressed() -> void:
-	table.rotate(-TAU / len(players))
+	table.rotate_by(-TAU / len(players))
 	sfx_spin.play()
 
 

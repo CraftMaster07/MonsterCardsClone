@@ -27,5 +27,5 @@ func set_radius(new_radius: float):
 	queue_redraw()
 
 
-func rotate(angle_delta: float):
+func rotate_by(angle_delta: float):
 	animated_rotation.rotate_by(angle_delta, spin_time, spin_trans, spin_ease)

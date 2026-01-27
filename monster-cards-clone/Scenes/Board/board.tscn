@@ -29,7 +29,7 @@ metadata/_custom_type_script = "uid://hvpfm3s0svah"
 font = ExtResource("12_xqaal")
 font_color = Color(0.29998645, 0.71706825, 1.5263317, 1)
 
-[node name="Board" type="Control" unique_id=65642768 node_paths=PackedStringArray("table", "field_spawner_pivot", "hand", "next_player_button", "prev_player_button", "current_player_label")]
+[node name="Board" type="Control" unique_id=65642768 node_paths=PackedStringArray("sfx_place", "sfx_select", "sfx_deselect", "sfx_spin", "table", "field_spawner_pivot", "hand", "next_player_button", "prev_player_button", "spin_charge_timer", "current_player_label")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -37,11 +37,16 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_xiot5")
+sfx_place = NodePath("sfx_place")
+sfx_select = NodePath("sfx_select")
+sfx_deselect = NodePath("sfx_deselect")
+sfx_spin = NodePath("sfx_spin")
 table = NodePath("Table")
 field_spawner_pivot = NodePath("Table/FieldSpawnerPivot")
 hand = NodePath("UI/Hand")
 next_player_button = NodePath("UI/NextPlayerButton")
 prev_player_button = NodePath("UI/PrevPlayerButton")
+spin_charge_timer = NodePath("SpinChargeTimer")
 board_card_scene = ExtResource("2_dun80")
 your_player_scene = ExtResource("3_me64r")
 enemy_player_scene = ExtResource("4_gti8d")
@@ -172,6 +177,8 @@ offset_right = 142.0
 offset_bottom = 11.5
 grow_vertical = 2
 label_settings = SubResource("LabelSettings_dqnt6")
+
+[node name="SpinChargeTimer" type="Timer" parent="." unique_id=1559694101]
 
 [node name="sfx_place" type="AudioStreamPlayer" parent="." unique_id=539857139]
 stream = ExtResource("11_gti8d")
