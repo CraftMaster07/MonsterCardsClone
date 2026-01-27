@@ -1,3 +1,4 @@
+class_name MultiplayerManager
 extends Node
 """
 Manages the multiplayer setup for hosting or joining a network game using ENet.
@@ -13,6 +14,10 @@ signal player_left(id: int)
 signal connection_success()
 signal connection_failure()
 signal server_disconnected()
+
+signal sync_game(game_state: Dictionary)
+signal client_placed_card(player_id: int, serialized_card: Dictionary, slot_id: int)
+signal client_ended_turn(player_id: int)
 
 @export var server_script: Script
 @export var client_script: Script
@@ -34,11 +39,14 @@ var your_id: int
 func _ready() -> void:
 	multiplayer_interface.host_started_game.connect(signal_start_game)
 
+
 func host_game(player_name) -> void:
 	"""
 	Hosts a game as a server.
 	"""
 	multiplayer_interface.set_script(server_script)
+	multiplayer_interface.client_placed_card.connect(_on_multiplayer_interface_client_placed_card)
+	multiplayer_interface.client_ended_turn.connect(_on_multiplayer_interface_client_ended_turn)
 
 	multiplayer_interface.host_game(PORT, player_name)
 	your_id = multiplayer.get_unique_id()
@@ -111,5 +119,32 @@ func _on_multiplayer_interface_server_disconnected() -> void:
 func start_game_as_host() -> void:
 	multiplayer_interface.start_game()
 
+
 func set_your_id(id: int) -> void:
 	your_id = id
+
+
+func call_sync_game(game_state: Dictionary) -> void:
+	if not multiplayer.is_server(): return
+
+	multiplayer_interface.send_sync_game(game_state)
+
+
+func _on_multiplayer_interface_sync_game(game_state: Dictionary) -> void:
+	sync_game.emit(game_state)
+
+
+func send_placed_card(serialized_card: Dictionary, slot_id: int) -> void:
+	multiplayer_interface.send_placed_card(serialized_card, slot_id)
+
+
+func _on_multiplayer_interface_client_placed_card(
+	player_id: int, serialized_card: Dictionary, slot_id: int
+) -> void:
+	client_placed_card.emit(player_id, serialized_card, slot_id)
+
+func send_end_turn() -> void:
+	multiplayer_interface.send_end_turn()
+
+func _on_multiplayer_interface_client_ended_turn(player_id: int) -> void:
+	client_ended_turn.emit(player_id)

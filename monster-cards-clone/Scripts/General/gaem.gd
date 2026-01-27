@@ -1,6 +1,6 @@
 extends Node
 
-@onready var multiplayer_manager = $MultiplayerManager
+@onready var multiplayer_manager : MultiplayerManager = $MultiplayerManager
 @onready var main_menu = $MainMenu
 @export var waiting_room_scene: PackedScene
 @export var board_scene: PackedScene
@@ -32,6 +32,7 @@ func transition_waiting_room_to_main_menu():
 func start_waiting_room():
 	waiting_room = waiting_room_scene.instantiate()
 	waiting_room.start_game.connect(start_game_as_host)
+	waiting_room.new_bot.connect(add_bot)
 	waiting_room.leave.connect(leave_waiting_room)
 	add_child(waiting_room)
 
@@ -43,8 +44,11 @@ func stop_waiting_room():
 
 func start_board():
 	board = board_scene.instantiate()
+	board.call_sync_game.connect(call_sync_game)
 	board.set_your_id(multiplayer_manager.your_id)
 	board.init_players(multiplayer_players_to_dicts(multiplayer_manager.players))
+	board.send_placed_card.connect(_on_board_send_placed_card)
+	board.send_end_turn.connect(_on_end_turn_pressed)
 	add_child(board)
 
 
@@ -110,6 +114,10 @@ func start_game_as_host():
 	multiplayer_manager.start_game_as_host()
 
 
+func add_bot(id: int, bot_name: String):
+	multiplayer_manager.add_new_player(id, bot_name)
+
+
 func multiplayer_players_to_dicts(
 	multiplayer_players: Dictionary
 ) -> Array:
@@ -127,3 +135,29 @@ func multiplayer_player_to_dict(multiplayer_player: MultiplayerPlayer) -> Dictio
 		"id": multiplayer_player.player_id,
 		"name": multiplayer_player.player_name
 	}
+
+
+func _on_multiplayer_manager_sync_game(game_state: Dictionary) -> void:
+	board.set_game_state(game_state)
+
+
+func call_sync_game(game_state: Dictionary) -> void:
+	multiplayer_manager.call_sync_game(game_state)
+
+
+func _on_board_send_placed_card(serialized_card: Dictionary, slot_id: int) -> void:
+	multiplayer_manager.send_placed_card(serialized_card, slot_id)
+
+
+func _on_multiplayer_manager_client_placed_card(
+	player_id: int, serialized_card: Dictionary, slot_id: int
+) -> void:
+	board.client_placed_card(player_id, serialized_card, slot_id)
+
+
+func _on_end_turn_pressed() -> void:
+	multiplayer_manager.send_end_turn()
+
+
+func _on_multiplayer_manager_client_ended_turn(player_id: int) -> void:
+	board.client_ended_turn(player_id)

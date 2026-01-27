@@ -3,6 +3,7 @@ extends MarginContainer
 
 @onready var cards_container := $HBoxContainer
 
+
 func get_cards() -> Array[HandCard]:
 	var children = cards_container.get_children()
 	var cards: Array[HandCard] = []

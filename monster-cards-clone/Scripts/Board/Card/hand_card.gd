@@ -31,6 +31,7 @@ func _process(_delta: float) -> void:
 	if drag_state == DragState.DRAGGING:
 		card_front.global_position = get_global_mouse_position() - drag_offset
 
+
 func _input(event: InputEvent) -> void:
 	if event.is_action_released("click") and drag_state == DragState.DRAGGING:
 		if not select_timer.is_stopped():
@@ -47,8 +48,12 @@ func _input(event: InputEvent) -> void:
 			card_placed.emit(self, nearest_area.slot)
 			return
 		
-		animate_to_position(base_position, dragback_trans, dragback_time, dragback_ease)
-		tween.tween_callback(_rest)
+		go_back_to_hand()
+
+
+func go_back_to_hand():
+	animate_to_position(base_position, dragback_trans, dragback_time, dragback_ease)
+	tween.tween_callback(_rest)
 
 
 func _rest():
@@ -116,7 +121,7 @@ func _on_mouse_entered() -> void:
 	if drag_state != DragState.RESTING:
 		return
 	
-	if mouse_in_card: # Prevents activation immediately after deselecting by click
+	if mouse_in_card: # Prevents activation immediately after deselecting
 		return
 	
 	if not touched:
@@ -154,6 +159,7 @@ func animate_to_position(pos, trans_type, length, ease_type = Tween.EASE_IN_OUT,
 	else:
 		tween.tween_property(card_front, "position", pos, length).set_trans(trans_type).set_ease(ease_type)
 
+
 func scale_card(target_scale: Vector2, trans_type = animation_trans, length = animation_length, ease_type = Tween.EASE_OUT):
 	"""
 	Animate the card_front to the desired scale
@@ -167,6 +173,7 @@ func scale_card(target_scale: Vector2, trans_type = animation_trans, length = an
 	tween = create_tween()
 	tween.tween_property(card_front, "scale", target_scale, length).set_trans(trans_type).set_ease(ease_type)
 
+
 func _on_card_front_button_down() -> void:
 	if drag_state == DragState.RESTING:
 		drag_state = DragState.DRAGGING
@@ -177,9 +184,8 @@ func _on_area_2d_area_entered(area: Area2D) -> void:
 	if area is not SlotArea:
 		print_rich("why the [b][color=red]fuck[/color][/b] is this happening")
 		return
-	
-	if not area.taken:
-		overlapping_slot_areas.append(area)
+
+	overlapping_slot_areas.append(area)
 
 
 func _on_area_2d_area_exited(area: Area2D) -> void:

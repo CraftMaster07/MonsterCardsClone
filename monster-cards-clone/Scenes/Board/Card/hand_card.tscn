@@ -1,13 +1,14 @@
-[gd_scene load_steps=5 format=3 uid="uid://d2efqpfk6vwcm"]
+[gd_scene format=3 uid="uid://d2efqpfk6vwcm"]
 
-[ext_resource type="Script" uid="uid://052i7e5dlcs" path="res://Scripts/Card/hand_card.gd" id="1_vvs6b"]
-[ext_resource type="PackedScene" uid="uid://b1rfo4m4p3w8h" path="res://Scenes/Card/card_front.tscn" id="2_ss82o"]
+[ext_resource type="Script" uid="uid://052i7e5dlcs" path="res://Scripts/Board/Card/hand_card.gd" id="1_vvs6b"]
+[ext_resource type="PackedScene" uid="uid://b1rfo4m4p3w8h" path="res://Scenes/Board/Card/card_front.tscn" id="2_ss82o"]
 [ext_resource type="AudioStream" uid="uid://b7x08b8ji35ne" path="res://Assets/Audio/Sounds/sfx_hover.mp3" id="3_ghj8a"]
+
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vvs6b"]
 size = Vector2(65, 91)
 
-[node name="CardHand" type="Control"]
+[node name="CardHand" type="Control" unique_id=1066999664]
 custom_minimum_size = Vector2(65, 91)
 layout_mode = 3
 anchors_preset = 0
@@ -19,21 +20,21 @@ script = ExtResource("1_vvs6b")
 animation_length = 0.15
 animation_trans = 2
 
-[node name="CardFront" parent="." instance=ExtResource("2_ss82o")]
+[node name="CardFront" parent="." unique_id=1069194403 instance=ExtResource("2_ss82o")]
 layout_mode = 1
 
-[node name="Area2D" type="Area2D" parent="CardFront"]
+[node name="Area2D" type="Area2D" parent="CardFront" unique_id=886463518]
 position = Vector2(32.5, 45.5)
 collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CardFront/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CardFront/Area2D" unique_id=274136000]
 shape = SubResource("RectangleShape2D_vvs6b")
 
-[node name="SelectTimer" type="Timer" parent="."]
+[node name="SelectTimer" type="Timer" parent="." unique_id=387354093]
 wait_time = 0.2
 one_shot = true
 
-[node name="sfx_hover" type="AudioStreamPlayer" parent="."]
+[node name="sfx_hover" type="AudioStreamPlayer" parent="." unique_id=444640031]
 stream = ExtResource("3_ghj8a")
 bus = &"Sound"
 

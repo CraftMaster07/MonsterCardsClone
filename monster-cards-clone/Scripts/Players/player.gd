@@ -4,6 +4,7 @@ extends Node
 const STARTING_HEALTH: int = 20
 var health: int
 var deck: Array
+var field: Field
 var hand: PackedScene
 var player_name: String
 var player_id: int
@@ -11,10 +12,10 @@ var player_id: int
 @onready var label: Label = $HealthLabel
 
 
-func init(new_player_id: int, new_player_name: String):
+func init(new_player_id: int, new_player_name: String, new_health: int = STARTING_HEALTH):
 	player_id = new_player_id
 	player_name = new_player_name
-	health = STARTING_HEALTH
+	health = new_health
 
 
 func _ready():
@@ -37,3 +38,43 @@ func update_health() -> void:
 
 func _on_damage_button_pressed() -> void:
 	hit()
+
+
+func get_field():
+	return field
+
+
+func set_field(new_field: Field):
+	field = new_field
+
+
+func is_slot_taken(slot_id: int) -> bool:
+	return field.is_slot_taken(slot_id)
+
+
+func get_slot_id(slot: EnemyCardSlot) -> int:
+	return field.get_slot_id(slot)
+
+
+func serialize():
+	return {
+		"player_id": player_id,
+		"player_name": player_name,
+		"health": health,
+		"field": field.serialize(),
+	}
+
+
+func deserialize(serialized_player: Dictionary):
+	player_id = serialized_player['player_id']
+	player_name = serialized_player['player_name']
+	health = serialized_player['health']
+	update_health()
+	field.deserialize(serialized_player['field'])
+
+
+func place_serialized_card_into_slot(serialized_card: Dictionary, slot_id: int):
+	field.place_serialized_card_into_slot(serialized_card, slot_id)
+
+func get_id():
+	return player_id

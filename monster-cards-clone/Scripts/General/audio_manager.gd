@@ -3,6 +3,7 @@ extends Node
 var save_timer: Timer
 var pending_save := false
 
+
 func _ready() -> void:
 	save_timer = Timer.new()
 	save_timer.one_shot = true
@@ -11,13 +12,13 @@ func _ready() -> void:
 	
 	load_audio_settings()
 
+
 func load_audio_settings() -> void:
 	var save = SaveGame.load_or_create()
 	
 	apply_volume("Master", save.master_volume)
 	apply_volume("Sound", save.sfx_volume)
 	apply_volume("Music", save.music_volume)
-
 
 
 func apply_volume(bus_name: String, volume: int) -> void:

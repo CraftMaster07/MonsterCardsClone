@@ -2,8 +2,11 @@ extends Client
 
 signal upnp_completed(error: UPNP.UPNPResult)
 
+signal client_placed_card(player_id: int, serialized_card: Dictionary, slot_id: int)
+signal client_ended_turn(player_id: int)
+
 # Replace this with your own server port number between 1024 and 65535.
-const SERVER_PORT = 59009
+const SERVER_PORT = 59007
 var thread = null
 
 
@@ -37,6 +40,7 @@ func host_game(port: int, player_name: String) -> void:
 	my_name = player_name
 	start_server(port)
 
+
 func start_server(port: int):
 	if thread:
 		thread.wait_to_finish()
@@ -53,11 +57,38 @@ func _exit_tree():
 	# Wait for thread finish here to handle game exit while the thread is running.
 	thread.wait_to_finish()
 
+
 func leave_game():
 	if thread:
 		thread.wait_to_finish()
 	multiplayer.multiplayer_peer.close()
 	multiplayer.multiplayer_peer = OfflineMultiplayerPeer.new()
 
+
 func start_game():
 	send_host_started_game.rpc()
+
+
+func send_sync_game(game_state: Dictionary):
+	receive_sync_game.rpc(game_state)
+
+
+@rpc("any_peer", "call_remote", "reliable", 0)
+func receive_client_placed_card(serialized_cardcard: Dictionary, slot_id: int):
+	var sender := multiplayer.get_remote_sender_id()
+	sender = sender if sender else 1
+	print("received card from ", sender)
+	client_placed_card.emit(sender, serialized_cardcard, slot_id)
+
+func send_placed_card(serialized_card: Dictionary, slot_id: int):
+	receive_client_placed_card(serialized_card, slot_id)
+
+func send_end_turn():
+	receive_end_turn()
+
+@rpc("any_peer", "call_remote", "reliable", 0)
+func receive_end_turn():
+	var sender := multiplayer.get_remote_sender_id()
+	sender = sender if sender else 1
+	print("received end turn from ", sender)
+	client_ended_turn.emit(sender)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://b3ownaau48wom"]
+[gd_scene format=3 uid="uid://b3ownaau48wom"]
 
 [ext_resource type="Script" uid="uid://cxqogbpmguhrt" path="res://Scripts/General/gaem.gd" id="1_11bf4"]
 [ext_resource type="PackedScene" uid="uid://b51s74cxqcxp6" path="res://Scenes/Main Menu/main_menu.tscn" id="2_4uhnj"]
@@ -6,20 +6,23 @@
 [ext_resource type="PackedScene" uid="uid://cfyktcr6rqnlf" path="res://Scenes/Board/board.tscn" id="2_opxgs"]
 [ext_resource type="PackedScene" uid="uid://cpau40ahtb812" path="res://Scenes/Multiplayer/multiplayer_manager.tscn" id="3_4uhnj"]
 
-[node name="GAEM" type="Node"]
+[node name="GAEM" type="Node" unique_id=577313856]
 script = ExtResource("1_11bf4")
 waiting_room_scene = ExtResource("2_bbmdl")
 board_scene = ExtResource("2_opxgs")
 
-[node name="MainMenu" parent="." instance=ExtResource("2_4uhnj")]
+[node name="MainMenu" parent="." unique_id=842849383 instance=ExtResource("2_4uhnj")]
 
-[node name="MultiplayerManager" parent="." instance=ExtResource("3_4uhnj")]
+[node name="MultiplayerManager" parent="." unique_id=1411320644 instance=ExtResource("3_4uhnj")]
 
 [connection signal="host_game" from="MainMenu" to="." method="_on_main_menu_host_game"]
 [connection signal="join_game" from="MainMenu" to="." method="_on_main_menu_join_game"]
+[connection signal="client_ended_turn" from="MultiplayerManager" to="." method="_on_multiplayer_manager_client_ended_turn"]
+[connection signal="client_placed_card" from="MultiplayerManager" to="." method="_on_multiplayer_manager_client_placed_card"]
 [connection signal="connection_failure" from="MultiplayerManager" to="." method="_on_multiplayer_manager_connection_failure"]
 [connection signal="connection_success" from="MultiplayerManager" to="." method="_on_multiplayer_manager_connection_success"]
 [connection signal="new_player" from="MultiplayerManager" to="." method="_on_multiplayer_manager_new_player"]
 [connection signal="player_left" from="MultiplayerManager" to="." method="_on_multiplayer_manager_player_left"]
 [connection signal="server_disconnected" from="MultiplayerManager" to="." method="_on_multiplayer_manager_server_disconnected"]
 [connection signal="start_game" from="MultiplayerManager" to="." method="_on_multiplayer_manager_start_game"]
+[connection signal="sync_game" from="MultiplayerManager" to="." method="_on_multiplayer_manager_sync_game"]

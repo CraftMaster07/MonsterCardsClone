@@ -13,6 +13,7 @@ signal join_game(name: String, ip: String)
 
 var menu_containers: Array[Control] = []
 
+
 func _ready() -> void:
 	menu_containers = [play_menu_container, settings_menu_container]
 
