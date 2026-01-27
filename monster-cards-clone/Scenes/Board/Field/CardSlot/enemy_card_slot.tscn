@@ -1,9 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://ct317gmjddic1"]
+[gd_scene format=3 uid="uid://ct317gmjddic1"]
 
-[ext_resource type="Script" uid="uid://b5r3jibev8gde" path="res://Scripts/Board/enemy_card_slot.gd" id="1_ham7t"]
-[ext_resource type="PackedScene" uid="uid://cru4gfksm3rbh" path="res://Scenes/Card/board_card.tscn" id="2_ham7t"]
+[ext_resource type="Script" uid="uid://b5r3jibev8gde" path="res://Scripts/Board/Field/CardSlot/enemy_card_slot.gd" id="1_dnrky"]
+[ext_resource type="PackedScene" uid="uid://cru4gfksm3rbh" path="res://Scenes/Board/Card/board_card.tscn" id="2_25xjd"]
 
-[node name="EnemyCardSlot" type="Control"]
+[node name="EnemyCardSlot" type="Control" unique_id=1241227526]
 custom_minimum_size = Vector2(65, 91)
 layout_mode = 3
 anchors_preset = 8
@@ -19,10 +19,10 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-script = ExtResource("1_ham7t")
-board_card_scene = ExtResource("2_ham7t")
+script = ExtResource("1_dnrky")
+board_card_scene = ExtResource("2_25xjd")
 
-[node name="TextureButton" type="TextureButton" parent="."]
+[node name="TextureButton" type="TextureButton" parent="." unique_id=1633903640]
 custom_minimum_size = Vector2(65, 91)
 layout_mode = 1
 anchors_preset = 15
@@ -32,7 +32,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 
-[node name="ColorRect" type="ColorRect" parent="TextureButton"]
+[node name="ColorRect" type="ColorRect" parent="TextureButton" unique_id=1372011412]
 custom_minimum_size = Vector2(66, 91)
 layout_mode = 1
 anchors_preset = 8

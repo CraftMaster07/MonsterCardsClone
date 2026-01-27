@@ -58,13 +58,13 @@ func _ready() -> void:
 
 	next_turn()
 
-
+#UI
 func slot_clicked(slot: EnemyCardSlot):
 	if selected_card != null:
 		print("placing card")
 		_place_card_into_slot(selected_card, slot)
 
-
+#UI
 func _place_card_into_slot(card: HandCard, slot: EnemyCardSlot):
 	"""
 	Marks the slot as taken, and starts the animation to move the card into the slot
@@ -81,7 +81,7 @@ func _place_card_into_slot(card: HandCard, slot: EnemyCardSlot):
 	card.tween.tween_callback(_replace_handcard_with_boardcard.bind(card, slot))
 	print("card placed")
 
-
+#UI
 func _replace_handcard_with_boardcard(card: HandCard, slot: EnemyCardSlot):
 	"""
 	Replaces the HandCard with a BoardCard object
@@ -93,7 +93,7 @@ func _replace_handcard_with_boardcard(card: HandCard, slot: EnemyCardSlot):
 	card.queue_free() # might replace with remove_child
 	sfx_place.play()
 
-
+#UI
 func select_card(card: HandCard):
 	if selected_card != null and selected_card != card:
 		var old_card = selected_card
@@ -103,13 +103,73 @@ func select_card(card: HandCard):
 	selected_card = card
 	sfx_select.play()
 
-
+#UI
 func deselect_card():
 	if selected_card != null:
 		selected_card = null
 		sfx_deselect.play()
 
+#UI
+func _on_next_player_button_pressed() -> void:
+	table.rotate_by(TAU / len(players))
+	sfx_spin.play()
 
+#UI
+func _on_prev_player_button_pressed() -> void:
+	table.rotate_by(-TAU / len(players))
+	sfx_spin.play()
+
+#UI?
+func calculate_table_radius(players_count: int) -> float:
+	return max(MIN_TABLE_RADIUS, players_count * 70.0)
+
+#UI?
+func set_radii(radius: float):
+	table.global_position.y -= radius + CAMERA_ADDITIONAL_RADIUS
+	table.set_radius(radius)
+	field_spawner_pivot.set_radius(radius + FIELD_SPAWNER_ADDITIONAL_RADIUS)
+
+#UI
+func _on_end_turn_pressed() -> void:
+	print("yo I'm ending turn")
+	if current_player_id == your_id:
+		send_end_turn.emit()
+
+#UI
+func set_your_field(your_field: YourField):
+	set_player_field(your_field, players[your_id])
+
+	for slot in your_field.get_slots():
+		slot.clicked.connect(slot_clicked)
+
+#UI
+func spawn_fields(players_count: int):
+	init_unassigned_field_players()
+	field_spawner_pivot.spawn_fields(players_count)
+
+#UI
+func _on_field_spawner_pivot_spawning_finished() -> void:
+	field_spawner_pivot.queue_free()
+
+#UI
+func set_first_player_field(field: Field):
+	"""
+	Sets field to the first player in the list which doesn't have one.
+	"""
+	set_player_field(field, unassigned_field_players[0])
+	unassigned_field_players.remove_at(0)
+
+#UI
+func _on_field_spawner_pivot_new_field_spawned(field: Field) -> void:
+	table.add_child(field)
+	print("New field added at pos ", field.global_position)
+
+	if is_instance_of(field, YourField):
+		set_your_field(field)
+	else:
+		set_first_player_field(field)
+
+#PLAYERS
 func init_players(multiplayer_players: Array):
 	for player_data in multiplayer_players:
 		if player_data['id'] == your_id:
@@ -120,87 +180,27 @@ func init_players(multiplayer_players: Array):
 	print("players initialized", players)
 	init_turn_order()
 
-
+#PLAYERS
 func init_enemy_player(player_data: Dictionary):
 	var new_player: Player = enemy_player_scene.instantiate()
 	new_player.init(player_data['id'], player_data['name'])
 	add_child(new_player)
 	players[player_data['id']] = new_player
 
-
+#PLAYERS
 func init_your_player(player_data: Dictionary):
 	var new_player: Player = your_player_scene.instantiate()
 	new_player.init(player_data['id'], player_data['name'])
 	add_child(new_player)
 	players[player_data['id']] = new_player
 
-
-func init_turn_order():
-	turn_order = players.keys()
-
-func set_your_id(id: int):
-	your_id = id
-
-
+#PLAYERS
 func remove_player(id: int):
 	remove_child(players[id])
 	players[id].queue_free()
 	players.erase(id)
 
-
-func _on_next_player_button_pressed() -> void:
-	table.rotate_by(TAU / len(players))
-	sfx_spin.play()
-
-
-func _on_prev_player_button_pressed() -> void:
-	table.rotate_by(-TAU / len(players))
-	sfx_spin.play()
-
-
-func set_your_field(your_field: YourField):
-	set_player_field(your_field, players[your_id])
-
-	for slot in your_field.get_slots():
-		slot.clicked.connect(slot_clicked)
-
-
-func spawn_fields(players_count: int):
-	init_unassigned_field_players()
-	field_spawner_pivot.spawn_fields(players_count)
-
-
-func calculate_table_radius(players_count: int) -> float:
-	return max(MIN_TABLE_RADIUS, players_count * 70.0)
-
-
-func set_radii(radius: float):
-	table.global_position.y -= radius + CAMERA_ADDITIONAL_RADIUS
-	table.set_radius(radius)
-	field_spawner_pivot.set_radius(radius + FIELD_SPAWNER_ADDITIONAL_RADIUS)
-
-
-func _on_field_spawner_pivot_spawning_finished() -> void:
-	#field_spawner_pivot.queue_free()
-	pass
-
-
-func send_game_state():
-	call_sync_game.emit(get_game_state())
-
-
-func get_game_state() -> Dictionary:
-	return {"players": serialize_players(), "current_player_id": current_player_id}
-	# add last_action for animations
-
-
-func set_game_state(game_state: Dictionary):
-	# TODO: finish TS
-	deserialize_players(game_state['players'])
-	start_turn(game_state['current_player_id'])
-	print("players set", players)
-
-
+#PLAYERS
 func serialize_players():
 	var serialized_players := {}
 
@@ -209,16 +209,12 @@ func serialize_players():
 
 	return serialized_players
 
-
+#PLAYERS
 func deserialize_players(serialized_players: Dictionary):
 	for serialized_player_id in serialized_players:
 		players[serialized_player_id].deserialize(serialized_players[serialized_player_id])
 
-
-func _on_sync_button_pressed() -> void:
-	send_game_state()
-
-
+#PLAYERS
 func init_unassigned_field_players():
 	for player in players.values():
 		if player.player_id == your_id:
@@ -227,40 +223,38 @@ func init_unassigned_field_players():
 		if player.get_field() == null:
 			unassigned_field_players.append(player)
 
-
+#PLAYERS
 func set_player_field(field: Field, player: Player):
 	player.set_field(field)
 
+#PLAYERS
+func set_your_id(id: int):
+	your_id = id
 
-func set_first_player_field(field: Field):
-	"""
-	Sets field to the first player in the list which doesn't have one.
-	"""
-	set_player_field(field, unassigned_field_players[0])
-	unassigned_field_players.remove_at(0)
-
-
-func _on_field_spawner_pivot_new_field_spawned(field: Field) -> void:
-	table.add_child(field)
-	print("New field added at pos ", field.global_position)
-
-	if is_instance_of(field, YourField):
-		set_your_field(field)
-	else:
-		set_first_player_field(field)
-
-
+#ROUNDS
 func start_turn(player_id: int):
 	current_player_id = player_id
 	print("turn: ", current_player_id)
 	current_player_label.text = players[current_player_id].player_name + "'s turn"
 
-
+#ROUNDS
 func next_turn():
 	start_turn(turn_order[current_player_index])
 	current_player_index = (current_player_index + 1) % len(turn_order)
 
+#ROUNDS
+func client_ended_turn(player_id: int):
+	if player_id != current_player_id:
+		return
 
+	next_turn()
+	send_game_state()
+
+#ROUNDS
+func init_turn_order():
+	turn_order = players.keys()
+
+#BOARD? need to split this to rounds and players/ui
 func verify_card_placement(player_id: int, slot_id: int) -> ValidationResponses:
 	if current_player_id != player_id:
 		return ValidationResponses.NOT_YOUR_TURN
@@ -270,7 +264,7 @@ func verify_card_placement(player_id: int, slot_id: int) -> ValidationResponses:
 
 	return ValidationResponses.OK
 
-
+#BOARD
 func client_placed_card(player_id: int, serialized_card: Dictionary, slot_id: int):
 	var status := verify_card_placement(player_id, slot_id)
 	match status:
@@ -285,16 +279,22 @@ func client_placed_card(player_id: int, serialized_card: Dictionary, slot_id: in
 
 	send_game_state()
 
-
-func _on_end_turn_pressed() -> void:
-	print("yo I'm ending turn")
-	if current_player_id == your_id:
-		send_end_turn.emit()
-
-
-func client_ended_turn(player_id: int):
-	if player_id != current_player_id:
-		return
-
-	next_turn()
+#BOARD
+func _on_sync_button_pressed() -> void:
 	send_game_state()
+
+#BOARD
+func send_game_state():
+	call_sync_game.emit(get_game_state())
+
+#BOARD
+func get_game_state() -> Dictionary:
+	return {"players": serialize_players(), "current_player_id": current_player_id}
+	# add last_action for animations
+
+#BOARD
+func set_game_state(game_state: Dictionary):
+	# TODO: finish TS
+	deserialize_players(game_state['players'])
+	start_turn(game_state['current_player_id'])
+	print("players set", players)

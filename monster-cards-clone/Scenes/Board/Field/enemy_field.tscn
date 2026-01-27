@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://dtpst7jgrdpqq"]
+
+[ext_resource type="Script" uid="uid://brdia574yytmk" path="res://Scripts/Board/Field/field.gd" id="1_ei2li"]
+[ext_resource type="PackedScene" uid="uid://ct317gmjddic1" path="res://Scenes/Board/Field/CardSlot/enemy_card_slot.tscn" id="2_5ysx4"]
+
+[node name="EnemyField" type="MarginContainer" unique_id=43736776]
+offset_right = 225.0
+offset_bottom = 91.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("1_ei2li")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=508165927]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="EnemyCardSlot" parent="HBoxContainer" unique_id=1937960157 instance=ExtResource("2_5ysx4")]
+layout_mode = 2
+
+[node name="EnemyCardSlot2" parent="HBoxContainer" unique_id=588752270 instance=ExtResource("2_5ysx4")]
+layout_mode = 2
+
+[node name="EnemyCardSlot3" parent="HBoxContainer" unique_id=937353179 instance=ExtResource("2_5ysx4")]
+layout_mode = 2
