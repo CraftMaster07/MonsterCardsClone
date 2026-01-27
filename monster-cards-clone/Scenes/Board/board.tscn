@@ -16,9 +16,13 @@
 [ext_resource type="FontFile" uid="uid://b13kiadbfhetg" path="res://Assets/Fonts/VCR_OSD_MONO_1.001.ttf" id="12_xqaal"]
 [ext_resource type="AudioStream" uid="uid://ch7jr0gor48sm" path="res://Assets/Audio/Sounds/sfx_deselect.mp3" id="13_csi2d"]
 [ext_resource type="AudioStream" uid="uid://b8rn0abqnjh57" path="res://Assets/Audio/Sounds/sfx_spin.mp3" id="15_s2gku"]
+[ext_resource type="AudioStream" uid="uid://bgq0un822d5e" path="res://Assets/Audio/Sounds/sfx_wrong.mp3" id="17_dqnt6"]
 
 [sub_resource type="Resource" id="Resource_xqaal"]
 script = ExtResource("6_s2gku")
+default_duration = 0.5
+default_trans_type = 10
+default_ease_type = 1
 metadata/_custom_type_script = "uid://hvpfm3s0svah"
 
 [sub_resource type="Resource" id="Resource_dqnt6"]
@@ -29,7 +33,7 @@ metadata/_custom_type_script = "uid://hvpfm3s0svah"
 font = ExtResource("12_xqaal")
 font_color = Color(0.29998645, 0.71706825, 1.5263317, 1)
 
-[node name="Board" type="Control" unique_id=65642768 node_paths=PackedStringArray("sfx_place", "sfx_select", "sfx_deselect", "sfx_spin", "table", "field_spawner_pivot", "hand", "next_player_button", "prev_player_button", "spin_charge_timer", "current_player_label")]
+[node name="Board" type="Control" unique_id=65642768 node_paths=PackedStringArray("table", "field_spawner_pivot", "hand", "next_player_button", "prev_player_button", "spin_charge_timer", "current_player_label")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -37,10 +41,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_xiot5")
-sfx_place = NodePath("sfx_place")
-sfx_select = NodePath("sfx_select")
-sfx_deselect = NodePath("sfx_deselect")
-sfx_spin = NodePath("sfx_spin")
 table = NodePath("Table")
 field_spawner_pivot = NodePath("Table/FieldSpawnerPivot")
 hand = NodePath("UI/Hand")
@@ -194,6 +194,10 @@ bus = &"Sound"
 
 [node name="sfx_spin" type="AudioStreamPlayer" parent="." unique_id=1334164546]
 stream = ExtResource("15_s2gku")
+bus = &"Sound"
+
+[node name="sfx_wrong" type="AudioStreamPlayer" parent="." unique_id=1587650501]
+stream = ExtResource("17_dqnt6")
 bus = &"Sound"
 
 [connection signal="new_field_spawned" from="Table/FieldSpawnerPivot" to="." method="_on_field_spawner_pivot_new_field_spawned"]

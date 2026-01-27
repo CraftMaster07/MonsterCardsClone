@@ -5,9 +5,9 @@ var prev_target: float = 0
 var tween: Tween
 var rotating_object: Control
 
-const DEFAULT_DURATION: float = 1
-const DEFAULT_TRANS: Tween.TransitionType = Tween.TRANS_LINEAR
-const DEFAULT_EASE: Tween.EaseType = Tween.EASE_IN
+@export var default_duration: float = 1
+@export var default_trans_type: Tween.TransitionType = Tween.TRANS_LINEAR
+@export var default_ease_type: Tween.EaseType = Tween.EASE_IN
 
 
 func set_rotating_object(object: Control) -> void:
@@ -16,9 +16,9 @@ func set_rotating_object(object: Control) -> void:
 
 func animate_rotation_to(
 	target_rotation: float,
-	duration: float = DEFAULT_DURATION,
-	trans_type: Tween.TransitionType = DEFAULT_TRANS,
-	ease_type: Tween.EaseType = DEFAULT_EASE) -> void:
+	duration: float = default_duration,
+	trans_type: Tween.TransitionType = default_trans_type,
+	ease_type: Tween.EaseType = default_ease_type) -> void:
 	"""
 	Animate an object's rotation to the desired value
 	target_rotation - desired rotation in radians
@@ -46,9 +46,9 @@ func animate_rotation_to(
 
 func rotate_by(
 	angle_delta: float,
-	duration: float = DEFAULT_DURATION,
-	trans_type: Tween.TransitionType = DEFAULT_TRANS,
-	ease_type: Tween.EaseType = DEFAULT_EASE
+	duration: float = default_duration,
+	trans_type: Tween.TransitionType = default_trans_type,
+	ease_type: Tween.EaseType = default_ease_type
 ) -> void:
 	"""
 	Animate an object's rotation by a relative amount

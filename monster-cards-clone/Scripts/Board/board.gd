@@ -1,10 +1,11 @@
 class_name Board
 extends Control
 
-@export var sfx_place: AudioStreamPlayer
-@export var sfx_select: AudioStreamPlayer
-@export var sfx_deselect: AudioStreamPlayer
-@export var sfx_spin: AudioStreamPlayer
+@onready var sfx_place: AudioStreamPlayer = $sfx_place
+@onready var sfx_select: AudioStreamPlayer = $sfx_select
+@onready var sfx_deselect: AudioStreamPlayer = $sfx_deselect
+@onready var sfx_spin: AudioStreamPlayer = $sfx_spin
+@onready var sfx_wrong: AudioStreamPlayer = $sfx_wrong
 
 @export var table: Table
 @export var field_spawner_pivot: Control
