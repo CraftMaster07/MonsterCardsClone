@@ -3,8 +3,7 @@
 [ext_resource type="Script" uid="uid://bma3dob710djm" path="res://Scripts/Board/hand.gd" id="1_u7o8q"]
 [ext_resource type="PackedScene" uid="uid://d2efqpfk6vwcm" path="res://Scenes/Board/Card/hand_card.tscn" id="2_u7o8q"]
 
-
-[node name="Hand" type="MarginContainer"]
+[node name="Hand" type="MarginContainer" unique_id=2133211725]
 anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
@@ -16,17 +15,17 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 script = ExtResource("1_u7o8q")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1112983540]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_constants/separation = 4
 
-[node name="Card" parent="HBoxContainer" instance=ExtResource("2_u7o8q")]
+[node name="Card" parent="HBoxContainer" unique_id=351121464 instance=ExtResource("2_u7o8q")]
 layout_mode = 2
 
-[node name="Card2" parent="HBoxContainer" instance=ExtResource("2_u7o8q")]
+[node name="Card2" parent="HBoxContainer" unique_id=431071669 instance=ExtResource("2_u7o8q")]
 layout_mode = 2
 
-[node name="Card3" parent="HBoxContainer" instance=ExtResource("2_u7o8q")]
+[node name="Card3" parent="HBoxContainer" unique_id=1253987715 instance=ExtResource("2_u7o8q")]
 layout_mode = 2

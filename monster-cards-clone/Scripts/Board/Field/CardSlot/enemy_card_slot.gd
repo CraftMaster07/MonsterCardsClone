@@ -2,8 +2,20 @@ class_name EnemyCardSlot
 extends Control
 
 @export var board_card_scene: PackedScene
+@export var color_rect: ColorRect
+
+@export var base_color: Color = Color(0.4, 0.4, 0.4, 0.723)
+@export var error_color: Color = Color(0.816, 0.0, 0.186, 0.723)
+@export var flash_duration: float = 0.25
+@export var flash_trans_type: Tween.TransitionType = Tween.TRANS_CUBIC
+@export var flash_ease_type: Tween.EaseType = Tween.EASE_OUT
 
 var card: BoardCard
+var tween: Tween
+
+
+func _ready():
+	color_rect.color = base_color
 
 
 func take():
@@ -40,3 +52,15 @@ func place_serialized_card(serialized_card: Dictionary):
 		var new_card := board_card_scene.instantiate()
 		new_card.deserialize(serialized_card)
 		place_card(new_card)
+
+
+func flash_color(flashed_color: Color = error_color):
+	color_rect.color = flashed_color
+
+	tween = color_rect.create_tween()
+	tween.tween_property(
+		color_rect,
+		"color",
+		base_color,
+		flash_duration
+	).set_trans(flash_trans_type).set_ease(flash_ease_type)

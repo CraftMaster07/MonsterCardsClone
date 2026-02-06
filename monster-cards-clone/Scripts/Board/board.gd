@@ -73,8 +73,10 @@ func _place_card_into_slot(card: HandCard, slot: EnemyCardSlot):
 	var status = verify_card_placement(your_id, players[your_id].get_slot_id(slot))
 
 	if status != ValidationResponses.OK:
-		print("invalid placement, status code:", status)
+		slot.flash_color()
+		sfx_wrong.play()
 		card.go_back_to_hand()
+		print("invalid placement, status code:", status)
 		return
 
 	slot.take()
@@ -272,7 +274,7 @@ func client_placed_card(player_id: int, serialized_card: Dictionary, slot_id: in
 		ValidationResponses.OK:
 			players[player_id].place_serialized_card_into_slot(serialized_card, slot_id)
 		ValidationResponses.SLOT_TAKEN:
-			print("invalid placement: (Player: ", player_id, ", Slot: ", slot_id, ")")
+			print("slot taken: (Player: ", player_id, ", Slot: ", slot_id, ")")
 		ValidationResponses.NOT_YOUR_TURN:
 			print("not his start_turn (Player: ", player_id, ")")
 		ValidationResponses.INVALID:
