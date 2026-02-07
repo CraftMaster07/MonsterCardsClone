@@ -21,14 +21,12 @@ extends Control
 
 @export var current_player_label: Label
 
+@export var round_manager: Node
+
 var selected_card: HandCard = null
 
 var players: Dictionary[int, Player] = {}
 var your_id: int
-
-var current_player_index: int = 0
-var current_player_id: int
-var turn_order: Array[int]
 
 var unassigned_field_players: Array
 
@@ -57,7 +55,7 @@ func _ready() -> void:
 		$UI/SyncButton.visible = true
 		$UI/SyncButton.process_mode = Node.PROCESS_MODE_INHERIT
 
-	next_turn()
+	round_manager.next_turn()
 
 #UI
 func slot_clicked(slot: EnemyCardSlot):
@@ -134,8 +132,8 @@ func set_radii(radius: float):
 
 #UI
 func _on_end_turn_pressed() -> void:
-	print("yo I'm ending turn")
-	if current_player_id == your_id:
+	if round_manager.is_player_turn(your_id):
+		print("yo I'm ending turn")
 		send_end_turn.emit()
 
 #UI
@@ -165,7 +163,6 @@ func set_first_player_field(field: Field):
 #UI
 func _on_field_spawner_pivot_new_field_spawned(field: Field) -> void:
 	table.add_child(field)
-	print("New field added at pos ", field.global_position)
 
 	if is_instance_of(field, YourField):
 		set_your_field(field)
@@ -180,8 +177,7 @@ func init_players(multiplayer_players: Array):
 		else:
 			init_enemy_player(player_data)
 
-	print("players initialized", players)
-	init_turn_order()
+	round_manager.init_turn_order(players.keys())
 
 #PLAYERS
 func init_enemy_player(player_data: Dictionary):
@@ -234,32 +230,9 @@ func set_player_field(field: Field, player: Player):
 func set_your_id(id: int):
 	your_id = id
 
-#ROUNDS
-func start_turn(player_id: int):
-	current_player_id = player_id
-	print("turn: ", current_player_id)
-	current_player_label.text = players[current_player_id].player_name + "'s turn"
-
-#ROUNDS
-func next_turn():
-	start_turn(turn_order[current_player_index])
-	current_player_index = (current_player_index + 1) % len(turn_order)
-
-#ROUNDS
-func client_ended_turn(player_id: int):
-	if player_id != current_player_id:
-		return
-
-	next_turn()
-	send_game_state()
-
-#ROUNDS
-func init_turn_order():
-	turn_order = players.keys()
-
 #BOARD? need to split this to rounds and players/ui
 func verify_card_placement(player_id: int, slot_id: int) -> ValidationResponses:
-	if current_player_id != player_id:
+	if not round_manager.is_player_turn(player_id):
 		return ValidationResponses.NOT_YOUR_TURN
 
 	if players[player_id].is_slot_taken(slot_id):
@@ -276,7 +249,7 @@ func client_placed_card(player_id: int, serialized_card: Dictionary, slot_id: in
 		ValidationResponses.SLOT_TAKEN:
 			print("slot taken: (Player: ", player_id, ", Slot: ", slot_id, ")")
 		ValidationResponses.NOT_YOUR_TURN:
-			print("not his start_turn (Player: ", player_id, ")")
+			print("not his turn (Player: ", player_id, ")")
 		ValidationResponses.INVALID:
 			print("unexpected error occured (Player: ", player_id, ", Slot: ", slot_id, ")")
 
@@ -292,12 +265,23 @@ func send_game_state():
 
 #BOARD
 func get_game_state() -> Dictionary:
-	return {"players": serialize_players(), "current_player_id": current_player_id}
+	return {"players": serialize_players(), "round_manager": round_manager.serialize()}
 	# add last_action for animations
 
 #BOARD
 func set_game_state(game_state: Dictionary):
 	# TODO: finish TS
 	deserialize_players(game_state['players'])
-	start_turn(game_state['current_player_id'])
-	print("players set", players)
+	round_manager.deserialize(game_state['round_manager'])
+
+
+func _on_round_manager_send_started_turn() -> void:
+	send_game_state()
+
+
+func client_ended_turn(player_id: int):
+	round_manager.client_ended_turn(player_id)
+
+
+func _on_round_manager_started_turn(player_id: int) -> void:
+	current_player_label.text = players[player_id].player_name + "'s turn"
