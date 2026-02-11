@@ -25,6 +25,7 @@ extends Control
 @onready var your_id = player_manager.your_id
 
 var selected_card: HandCard = null
+var phase: Phase = Phase.PREP
 
 var unassigned_field_player_ids: Array
 
@@ -36,7 +37,8 @@ signal call_sync_game(game_state: Dictionary)
 signal send_placed_card(serialized_card: Dictionary, slot_id: int)
 signal send_end_turn()
 
-enum ValidationResponses {INVALID = -1, OK = 0, NOT_YOUR_TURN, SLOT_TAKEN}
+enum ValidationResponses {INVALID = -1, OK = 0, NOT_YOUR_TURN, SLOT_TAKEN, NOT_IN_PREP}
+enum Phase {PREP, COMBAT}
 
 func _ready() -> void:
 	var table_radius: float = calculate_table_radius(player_manager.get_player_count())
@@ -175,6 +177,9 @@ func verify_card_placement(player_id: int, slot_id: int) -> ValidationResponses:
 	if player_manager.get_player(player_id).is_slot_taken(slot_id):
 		return ValidationResponses.SLOT_TAKEN
 
+	if phase != Phase.PREP:
+		return ValidationResponses.NOT_IN_PREP
+
 	return ValidationResponses.OK
 
 #BOARD
@@ -187,6 +192,8 @@ func client_placed_card(player_id: int, serialized_card: Dictionary, slot_id: in
 			print("slot taken: (Player: ", player_id, ", Slot: ", slot_id, ")")
 		ValidationResponses.NOT_YOUR_TURN:
 			print("not his turn (Player: ", player_id, ")")
+		ValidationResponses.NOT_IN_PREP:
+			print("not in prep phase (Player: ", player_id, ")")
 		ValidationResponses.INVALID:
 			print("unexpected error occured (Player: ", player_id, ", Slot: ", slot_id, ")")
 
@@ -203,7 +210,8 @@ func send_game_state():
 #BOARD
 func get_game_state() -> Dictionary:
 	return {"players": player_manager.serialize_players(),
-			"round_manager": round_manager.serialize()}
+			"round_manager": round_manager.serialize(),
+			"phase": phase}
 	# add last_action for animations
 
 #BOARD
@@ -211,6 +219,7 @@ func set_game_state(game_state: Dictionary):
 	# TODO: finish TS
 	player_manager.deserialize_players(game_state['players'])
 	round_manager.deserialize(game_state['round_manager'])
+	phase = game_state['phase']
 
 
 func _on_round_manager_send_started_turn() -> void:
@@ -237,3 +246,8 @@ func set_player_field(field: Field, player_id: int):
 func set_your_id(id: int):
 	player_manager.set_your_id(id)
 	your_id = id
+
+
+func _on_round_manager_round_ended() -> void:
+	phase = Phase.COMBAT
+	send_game_state()
