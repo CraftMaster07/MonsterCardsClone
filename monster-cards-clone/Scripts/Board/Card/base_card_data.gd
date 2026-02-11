@@ -1,5 +1,5 @@
-extends TextureButton
-class_name Card
+class_name BaseCardData
+extends Resource
 
 @export var display_name : String
 @export var description : String
@@ -20,14 +20,8 @@ var current_damage : int
 var current_health : int
 
 
-signal card_selected(card)
-
-
-func _on_button_up() -> void:
-	card_selected.emit(self)
-
-
 func take_damage(amount : int) -> void:
 	current_health -= amount
 	if current_health <= 0:
-		queue_free()
+		pass
+		#DIE

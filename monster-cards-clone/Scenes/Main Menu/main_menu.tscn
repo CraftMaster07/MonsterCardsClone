@@ -1,11 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://b51s74cxqcxp6"]
+[gd_scene format=3 uid="uid://b51s74cxqcxp6"]
 
 [ext_resource type="FontFile" uid="uid://b13kiadbfhetg" path="res://Assets/Fonts/VCR_OSD_MONO_1.001.ttf" id="1_28flt"]
 [ext_resource type="Script" uid="uid://bxc7py0b1ykhx" path="res://Scripts/Main Menu/main_menu.gd" id="1_48xlc"]
 [ext_resource type="Script" uid="uid://ynwm51yrslmw" path="res://Scripts/Main Menu/volume_settings.gd" id="2_7xkbd"]
 [ext_resource type="AudioStream" uid="uid://dit1tvyol83cj" path="res://Assets/Audio/Music/mus_testing.mp3" id="4_y0aff"]
 
-[node name="MainMenu" type="Control" node_paths=PackedStringArray("play_menu_container", "settings_menu_container", "host_menu", "join_menu", "name_line_edit", "ip_line_edit", "join_status_label")]
+[node name="MainMenu" type="Control" unique_id=574280643 node_paths=PackedStringArray("play_menu_container", "settings_menu_container", "host_menu", "join_menu", "name_line_edit", "ip_line_edit", "join_status_label")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -21,7 +21,7 @@ name_line_edit = NodePath("PlayMenuContainer/HBoxContainer/HostJoinContainer/Nam
 ip_line_edit = NodePath("PlayMenuContainer/HBoxContainer/HostJoinContainer/JoinMenu/IPLineEdit")
 join_status_label = NodePath("PlayMenuContainer/JoinStatusLabel")
 
-[node name="PlayMenuContainer" type="VBoxContainer" parent="."]
+[node name="PlayMenuContainer" type="VBoxContainer" parent="." unique_id=1022227935]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.35
@@ -32,77 +32,77 @@ offset_bottom = 18.399994
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="PlayMenuContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="PlayMenuContainer" unique_id=2006635514]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PlayMenuContainer/HBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="PlayMenuContainer/HBoxContainer" unique_id=1279754989]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 14
 
-[node name="HostButton" type="Button" parent="PlayMenuContainer/HBoxContainer/VBoxContainer"]
+[node name="HostButton" type="Button" parent="PlayMenuContainer/HBoxContainer/VBoxContainer" unique_id=505760190]
 layout_mode = 2
 size_flags_vertical = 0
 text = "Host"
 
-[node name="JoinButton" type="Button" parent="PlayMenuContainer/HBoxContainer/VBoxContainer"]
+[node name="JoinButton" type="Button" parent="PlayMenuContainer/HBoxContainer/VBoxContainer" unique_id=430821864]
 layout_mode = 2
 size_flags_vertical = 0
 text = "Join"
 
-[node name="VSeparator" type="VSeparator" parent="PlayMenuContainer/HBoxContainer"]
+[node name="VSeparator" type="VSeparator" parent="PlayMenuContainer/HBoxContainer" unique_id=343429550]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.1
 
-[node name="HostJoinContainer" type="VBoxContainer" parent="PlayMenuContainer/HBoxContainer"]
+[node name="HostJoinContainer" type="VBoxContainer" parent="PlayMenuContainer/HBoxContainer" unique_id=1870499126]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 1.5
 theme_override_constants/separation = 14
 
-[node name="NameLineEdit" type="LineEdit" parent="PlayMenuContainer/HBoxContainer/HostJoinContainer"]
+[node name="NameLineEdit" type="LineEdit" parent="PlayMenuContainer/HBoxContainer/HostJoinContainer" unique_id=1260809270]
 layout_mode = 2
 size_flags_vertical = 0
 placeholder_text = "Name"
 max_length = 100
 
-[node name="HostMenu" type="VBoxContainer" parent="PlayMenuContainer/HBoxContainer/HostJoinContainer"]
+[node name="HostMenu" type="VBoxContainer" parent="PlayMenuContainer/HBoxContainer/HostJoinContainer" unique_id=1658650857]
 visible = false
 layout_mode = 2
 size_flags_vertical = 0
 
-[node name="HostStartButton" type="Button" parent="PlayMenuContainer/HBoxContainer/HostJoinContainer/HostMenu"]
+[node name="HostStartButton" type="Button" parent="PlayMenuContainer/HBoxContainer/HostJoinContainer/HostMenu" unique_id=1614351611]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0
 text = "Start"
 
-[node name="JoinMenu" type="VBoxContainer" parent="PlayMenuContainer/HBoxContainer/HostJoinContainer"]
+[node name="JoinMenu" type="VBoxContainer" parent="PlayMenuContainer/HBoxContainer/HostJoinContainer" unique_id=1489294916]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 0
 size_flags_stretch_ratio = 1.5
 theme_override_constants/separation = 14
 
-[node name="IPLineEdit" type="LineEdit" parent="PlayMenuContainer/HBoxContainer/HostJoinContainer/JoinMenu"]
+[node name="IPLineEdit" type="LineEdit" parent="PlayMenuContainer/HBoxContainer/HostJoinContainer/JoinMenu" unique_id=1980559487]
 layout_mode = 2
 size_flags_vertical = 0
 placeholder_text = "Insert IP"
 max_length = 20
 
-[node name="JoinStartButton" type="Button" parent="PlayMenuContainer/HBoxContainer/HostJoinContainer/JoinMenu"]
+[node name="JoinStartButton" type="Button" parent="PlayMenuContainer/HBoxContainer/HostJoinContainer/JoinMenu" unique_id=289888653]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0
 text = "Start"
 
-[node name="JoinStatusLabel" type="Label" parent="PlayMenuContainer"]
+[node name="JoinStatusLabel" type="Label" parent="PlayMenuContainer" unique_id=1028086030]
 visible = false
 layout_mode = 2
 horizontal_alignment = 1
 
-[node name="SettingsMenuContainer" type="MarginContainer" parent="."]
+[node name="SettingsMenuContainer" type="MarginContainer" parent="." unique_id=1057504405]
 visible = false
 layout_mode = 1
 anchors_preset = -1
@@ -112,11 +112,11 @@ anchor_right = 0.7
 anchor_bottom = 0.6
 grow_vertical = 2
 
-[node name="VolumeSettingsContainer" type="VBoxContainer" parent="SettingsMenuContainer"]
+[node name="VolumeSettingsContainer" type="VBoxContainer" parent="SettingsMenuContainer" unique_id=1456166459]
 layout_mode = 2
 script = ExtResource("2_7xkbd")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1828789807]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.1
@@ -128,37 +128,37 @@ grow_horizontal = 2
 grow_vertical = 0
 theme_override_constants/separation = 39
 
-[node name="IdkButton" type="Button" parent="HBoxContainer"]
+[node name="IdkButton" type="Button" parent="HBoxContainer" unique_id=1547690900]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/h_separation = 0
 text = "idk"
 
-[node name="DeckButton" type="Button" parent="HBoxContainer"]
+[node name="DeckButton" type="Button" parent="HBoxContainer" unique_id=2040224909]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/h_separation = 0
 text = "deck"
 
-[node name="PlayButton" type="Button" parent="HBoxContainer"]
+[node name="PlayButton" type="Button" parent="HBoxContainer" unique_id=692011457]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/h_separation = 0
 text = "play"
 
-[node name="SettingsButton" type="Button" parent="HBoxContainer"]
+[node name="SettingsButton" type="Button" parent="HBoxContainer" unique_id=1117987217]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/h_separation = 0
 text = "settings"
 
-[node name="QuitButton" type="Button" parent="HBoxContainer"]
+[node name="QuitButton" type="Button" parent="HBoxContainer" unique_id=324794968]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/h_separation = 0
 text = "quit"
 
-[node name="Title" type="Label" parent="."]
+[node name="Title" type="Label" parent="." unique_id=437561456]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -172,7 +172,7 @@ theme_override_fonts/font = ExtResource("1_28flt")
 theme_override_font_sizes/font_size = 51
 text = "monster cards clone"
 
-[node name="mus_menu" type="AudioStreamPlayer" parent="."]
+[node name="mus_menu" type="AudioStreamPlayer" parent="." unique_id=1613754843]
 stream = ExtResource("4_y0aff")
 volume_db = -14.0
 autoplay = true
