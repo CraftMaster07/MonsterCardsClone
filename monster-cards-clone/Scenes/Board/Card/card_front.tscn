@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://b1rfo4m4p3w8h"]
+[gd_scene format=3 uid="uid://b1rfo4m4p3w8h"]
 
 [ext_resource type="Theme" uid="uid://f2a4ylwdbwtx" path="res://Assets/Styles/main_theme.tres" id="1_sgpad"]
 [ext_resource type="Texture2D" uid="uid://f38y60f1hbws" path="res://Assets/Sprites/icon_sheet.png" id="2_3ak4q"]
@@ -16,7 +16,7 @@ region = Rect2(0, 0, 16, 16)
 atlas = ExtResource("2_3ak4q")
 region = Rect2(16, 0, 16, 16)
 
-[node name="CardFront" type="TextureButton"]
+[node name="CardFront" type="TextureButton" unique_id=20270715]
 custom_minimum_size = Vector2(65, 91)
 anchors_preset = 8
 anchor_left = 0.5
@@ -36,7 +36,7 @@ mouse_filter = 1
 mouse_default_cursor_shape = 2
 theme = ExtResource("1_sgpad")
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="ColorRect" type="ColorRect" parent="." unique_id=289001140]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -46,7 +46,7 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0.058658905, 0.1516783, 0.30782342, 1)
 
-[node name="costTexture" type="TextureRect" parent="."]
+[node name="costTexture" type="TextureRect" parent="." unique_id=570230339]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 1
 anchors_preset = 1
@@ -59,7 +59,7 @@ offset_bottom = 15.0
 grow_horizontal = 0
 texture = SubResource("AtlasTexture_eumee")
 
-[node name="costDisplay" type="Label" parent="costTexture"]
+[node name="costDisplay" type="Label" parent="costTexture" unique_id=1354381290]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -71,7 +71,7 @@ label_settings = ExtResource("3_o3uea")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="attackTexture" type="TextureRect" parent="."]
+[node name="attackTexture" type="TextureRect" parent="." unique_id=553737098]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 1
 anchors_preset = -1
@@ -87,7 +87,7 @@ grow_horizontal = 0
 grow_vertical = 0
 texture = SubResource("AtlasTexture_e6po8")
 
-[node name="attackDisplay" type="Label" parent="attackTexture"]
+[node name="attackDisplay" type="Label" parent="attackTexture" unique_id=94239877]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -100,7 +100,7 @@ label_settings = ExtResource("3_o3uea")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="healthTexture" type="TextureRect" parent="."]
+[node name="healthTexture" type="TextureRect" parent="." unique_id=319546632]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 1
 anchors_preset = -1
@@ -115,7 +115,7 @@ offset_bottom = 4.0999985
 grow_vertical = 0
 texture = SubResource("AtlasTexture_bnspj")
 
-[node name="healthDisplay" type="Label" parent="healthTexture"]
+[node name="healthDisplay" type="Label" parent="healthTexture" unique_id=793430888]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
