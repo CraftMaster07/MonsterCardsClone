@@ -16,19 +16,17 @@ extends Control
 @export var spin_charge_timer: Timer
 
 @export var board_card_scene: PackedScene
-@export var your_player_scene: PackedScene
-@export var enemy_player_scene: PackedScene
 
 @export var current_player_label: Label
 
 @export var round_manager: Node
+@export var player_manager: Node
+
+@onready var your_id = player_manager.your_id
 
 var selected_card: HandCard = null
 
-var players: Dictionary[int, Player] = {}
-var your_id: int
-
-var unassigned_field_players: Array
+var unassigned_field_player_ids: Array
 
 const MIN_TABLE_RADIUS: float = 400.0
 const CAMERA_ADDITIONAL_RADIUS: float = -100.0
@@ -41,9 +39,9 @@ signal send_end_turn()
 enum ValidationResponses {INVALID = -1, OK = 0, NOT_YOUR_TURN, SLOT_TAKEN}
 
 func _ready() -> void:
-	var table_radius: float = calculate_table_radius(len(players))
+	var table_radius: float = calculate_table_radius(player_manager.get_player_count())
 	set_radii(table_radius)
-	spawn_fields(len(players))
+	spawn_fields(player_manager.get_player_count())
 
 	for card in hand.get_cards():
 		card.card_placed.connect(_place_card_into_slot)
@@ -68,7 +66,7 @@ func _place_card_into_slot(card: HandCard, slot: EnemyCardSlot):
 	"""
 	Marks the slot as taken, and starts the animation to move the card into the slot
 	"""
-	var status = verify_card_placement(your_id, players[your_id].get_slot_id(slot))
+	var status = verify_card_placement(your_id, player_manager.get_player(your_id).get_slot_id(slot))
 
 	if status != ValidationResponses.OK:
 		slot.flash_color()
@@ -89,7 +87,7 @@ func _replace_handcard_with_boardcard(card: HandCard, slot: EnemyCardSlot):
 	This should be done after the card is moved into a slot
 	"""
 	var new_board_card := board_card_scene.instantiate()
-	send_placed_card.emit(new_board_card.serialize(), players[your_id].get_slot_id(slot))
+	send_placed_card.emit(new_board_card.serialize(), player_manager.get_player(your_id).get_slot_id(slot))
 	slot.place_card(new_board_card)
 	card.queue_free() # might replace with remove_child
 	sfx_place.play()
@@ -112,12 +110,12 @@ func deselect_card():
 
 #UI
 func _on_next_player_button_pressed() -> void:
-	table.rotate_by(TAU / len(players))
+	table.rotate_by(TAU / player_manager.get_player_count())
 	sfx_spin.play()
 
 #UI
 func _on_prev_player_button_pressed() -> void:
-	table.rotate_by(-TAU / len(players))
+	table.rotate_by(-TAU / player_manager.get_player_count())
 	sfx_spin.play()
 
 #UI?
@@ -138,14 +136,14 @@ func _on_end_turn_pressed() -> void:
 
 #UI
 func set_your_field(your_field: YourField):
-	set_player_field(your_field, players[your_id])
+	set_player_field(your_field, your_id)
 
 	for slot in your_field.get_slots():
 		slot.clicked.connect(slot_clicked)
 
 #UI
 func spawn_fields(players_count: int):
-	init_unassigned_field_players()
+	unassigned_field_player_ids = player_manager.get_unassigned_field_player_ids()
 	field_spawner_pivot.spawn_fields(players_count)
 
 #UI
@@ -157,8 +155,8 @@ func set_first_player_field(field: Field):
 	"""
 	Sets field to the first player in the list which doesn't have one.
 	"""
-	set_player_field(field, unassigned_field_players[0])
-	unassigned_field_players.remove_at(0)
+	set_player_field(field, unassigned_field_player_ids[0])
+	unassigned_field_player_ids.remove_at(0)
 
 #UI
 func _on_field_spawner_pivot_new_field_spawned(field: Field) -> void:
@@ -169,73 +167,12 @@ func _on_field_spawner_pivot_new_field_spawned(field: Field) -> void:
 	else:
 		set_first_player_field(field)
 
-#PLAYERS
-func init_players(multiplayer_players: Array):
-	for player_data in multiplayer_players:
-		if player_data['id'] == your_id:
-			init_your_player(player_data)
-		else:
-			init_enemy_player(player_data)
-
-	round_manager.init_turn_order(players.keys())
-
-#PLAYERS
-func init_enemy_player(player_data: Dictionary):
-	var new_player: Player = enemy_player_scene.instantiate()
-	new_player.init(player_data['id'], player_data['name'])
-	add_child(new_player)
-	players[player_data['id']] = new_player
-
-#PLAYERS
-func init_your_player(player_data: Dictionary):
-	var new_player: Player = your_player_scene.instantiate()
-	new_player.init(player_data['id'], player_data['name'])
-	add_child(new_player)
-	players[player_data['id']] = new_player
-
-#PLAYERS
-func remove_player(id: int):
-	remove_child(players[id])
-	players[id].queue_free()
-	players.erase(id)
-
-#PLAYERS
-func serialize_players():
-	var serialized_players := {}
-
-	for player in players.values():
-		serialized_players[player.player_id] = (player.serialize())
-
-	return serialized_players
-
-#PLAYERS
-func deserialize_players(serialized_players: Dictionary):
-	for serialized_player_id in serialized_players:
-		players[serialized_player_id].deserialize(serialized_players[serialized_player_id])
-
-#PLAYERS
-func init_unassigned_field_players():
-	for player in players.values():
-		if player.player_id == your_id:
-			continue
-
-		if player.get_field() == null:
-			unassigned_field_players.append(player)
-
-#PLAYERS
-func set_player_field(field: Field, player: Player):
-	player.set_field(field)
-
-#PLAYERS
-func set_your_id(id: int):
-	your_id = id
-
 #BOARD? need to split this to rounds and players/ui
 func verify_card_placement(player_id: int, slot_id: int) -> ValidationResponses:
 	if not round_manager.is_player_turn(player_id):
 		return ValidationResponses.NOT_YOUR_TURN
 
-	if players[player_id].is_slot_taken(slot_id):
+	if player_manager.get_player(player_id).is_slot_taken(slot_id):
 		return ValidationResponses.SLOT_TAKEN
 
 	return ValidationResponses.OK
@@ -245,7 +182,7 @@ func client_placed_card(player_id: int, serialized_card: Dictionary, slot_id: in
 	var status := verify_card_placement(player_id, slot_id)
 	match status:
 		ValidationResponses.OK:
-			players[player_id].place_serialized_card_into_slot(serialized_card, slot_id)
+			player_manager.get_player(player_id).place_serialized_card_into_slot(serialized_card, slot_id)
 		ValidationResponses.SLOT_TAKEN:
 			print("slot taken: (Player: ", player_id, ", Slot: ", slot_id, ")")
 		ValidationResponses.NOT_YOUR_TURN:
@@ -265,13 +202,14 @@ func send_game_state():
 
 #BOARD
 func get_game_state() -> Dictionary:
-	return {"players": serialize_players(), "round_manager": round_manager.serialize()}
+	return {"players": player_manager.serialize_players(),
+			"round_manager": round_manager.serialize()}
 	# add last_action for animations
 
 #BOARD
 func set_game_state(game_state: Dictionary):
 	# TODO: finish TS
-	deserialize_players(game_state['players'])
+	player_manager.deserialize_players(game_state['players'])
 	round_manager.deserialize(game_state['round_manager'])
 
 
@@ -284,4 +222,18 @@ func client_ended_turn(player_id: int):
 
 
 func _on_round_manager_started_turn(player_id: int) -> void:
-	current_player_label.text = players[player_id].player_name + "'s turn"
+	current_player_label.text = player_manager.get_player(player_id).player_name + "'s turn"
+
+
+func init_players(multiplayer_players: Array):
+	player_manager.init_players(multiplayer_players)
+	round_manager.init_turn_order(player_manager.get_player_ids())
+
+
+func set_player_field(field: Field, player_id: int):
+	player_manager.set_player_field(field, player_id)
+
+
+func set_your_id(id: int):
+	player_manager.set_your_id(id)
+	your_id = id

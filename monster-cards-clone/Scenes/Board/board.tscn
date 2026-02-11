@@ -16,6 +16,7 @@
 [ext_resource type="FontFile" uid="uid://b13kiadbfhetg" path="res://Assets/Fonts/VCR_OSD_MONO_1.001.ttf" id="12_xqaal"]
 [ext_resource type="AudioStream" uid="uid://ch7jr0gor48sm" path="res://Assets/Audio/Sounds/sfx_deselect.mp3" id="13_csi2d"]
 [ext_resource type="AudioStream" uid="uid://b8rn0abqnjh57" path="res://Assets/Audio/Sounds/sfx_spin.mp3" id="15_s2gku"]
+[ext_resource type="Script" uid="uid://djbt1h7cvlwoj" path="res://Scripts/Board/player_manager.gd" id="17_a1ark"]
 [ext_resource type="AudioStream" uid="uid://cl61y0ceouwou" path="res://Assets/Audio/Sounds/sfx_wrong.mp3" id="17_dqnt6"]
 [ext_resource type="Script" uid="uid://n6sr1aw5vff" path="res://Scripts/Board/round_manager.gd" id="18_63xfs"]
 
@@ -34,7 +35,7 @@ metadata/_custom_type_script = "uid://hvpfm3s0svah"
 font = ExtResource("12_xqaal")
 font_color = Color(0.29998645, 0.71706825, 1.5263317, 1)
 
-[node name="Board" type="Control" unique_id=65642768 node_paths=PackedStringArray("table", "field_spawner_pivot", "hand", "next_player_button", "prev_player_button", "spin_charge_timer", "current_player_label", "round_manager")]
+[node name="Board" type="Control" unique_id=65642768 node_paths=PackedStringArray("table", "field_spawner_pivot", "hand", "next_player_button", "prev_player_button", "spin_charge_timer", "current_player_label", "round_manager", "player_manager")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -49,10 +50,9 @@ next_player_button = NodePath("UI/NextPlayerButton")
 prev_player_button = NodePath("UI/PrevPlayerButton")
 spin_charge_timer = NodePath("SpinChargeTimer")
 board_card_scene = ExtResource("2_dun80")
-your_player_scene = ExtResource("3_me64r")
-enemy_player_scene = ExtResource("4_gti8d")
 current_player_label = NodePath("UI/CurrentPlayerLabel")
-round_manager = NodePath("round_manager")
+round_manager = NodePath("RoundManager")
+player_manager = NodePath("PlayerManager")
 
 [node name="Table" type="Control" parent="." unique_id=915297040]
 layout_mode = 1
@@ -202,8 +202,13 @@ bus = &"Sound"
 stream = ExtResource("17_dqnt6")
 bus = &"Sound"
 
-[node name="round_manager" type="Node" parent="." unique_id=978461839]
+[node name="RoundManager" type="Node" parent="." unique_id=978461839]
 script = ExtResource("18_63xfs")
+
+[node name="PlayerManager" type="Node" parent="." unique_id=696774598]
+script = ExtResource("17_a1ark")
+your_player_scene = ExtResource("3_me64r")
+enemy_player_scene = ExtResource("4_gti8d")
 
 [connection signal="new_field_spawned" from="Table/FieldSpawnerPivot" to="." method="_on_field_spawner_pivot_new_field_spawned"]
 [connection signal="spawning_finished" from="Table/FieldSpawnerPivot" to="." method="_on_field_spawner_pivot_spawning_finished"]
@@ -211,5 +216,5 @@ script = ExtResource("18_63xfs")
 [connection signal="pressed" from="UI/PrevPlayerButton" to="." method="_on_prev_player_button_pressed"]
 [connection signal="pressed" from="UI/SyncButton" to="." method="_on_sync_button_pressed"]
 [connection signal="pressed" from="UI/EndTurn" to="." method="_on_end_turn_pressed"]
-[connection signal="send_started_turn" from="round_manager" to="." method="_on_round_manager_send_started_turn"]
-[connection signal="started_turn" from="round_manager" to="." method="_on_round_manager_started_turn"]
+[connection signal="send_started_turn" from="RoundManager" to="." method="_on_round_manager_send_started_turn"]
+[connection signal="started_turn" from="RoundManager" to="." method="_on_round_manager_started_turn"]
