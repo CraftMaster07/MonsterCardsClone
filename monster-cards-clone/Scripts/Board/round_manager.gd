@@ -5,7 +5,6 @@ var current_player_id: int
 var turn_order: Array[int]
 
 signal started_turn(player_id: int)
-signal send_started_turn()
 signal round_ended()
 
 
@@ -27,9 +26,7 @@ func client_ended_turn(player_id: int):
 
 	if current_player_index == 0:
 		round_ended.emit()
-	else:
-		next_turn()
-		send_started_turn.emit()
+	next_turn()
 
 
 func init_turn_order(player_ids: Array[int]):

@@ -36,6 +36,7 @@ const FIELD_SPAWNER_ADDITIONAL_RADIUS: float = -100.0
 signal call_sync_game(game_state: Dictionary)
 signal send_placed_card(serialized_card: Dictionary, slot_id: int)
 signal send_end_turn()
+signal send_player_attacked(attacked_id: int)
 
 enum ValidationResponses {INVALID = -1, OK = 0, NOT_YOUR_TURN, SLOT_TAKEN, NOT_IN_PREP}
 enum Phase {PREP, COMBAT}
@@ -132,6 +133,8 @@ func set_radii(radius: float):
 
 #UI
 func _on_end_turn_pressed() -> void:
+	if phase != Phase.PREP:
+		return
 	if round_manager.is_player_turn(your_id):
 		print("yo I'm ending turn")
 		send_end_turn.emit()
@@ -222,13 +225,9 @@ func set_game_state(game_state: Dictionary):
 	phase = game_state['phase']
 
 
-func _on_round_manager_send_started_turn() -> void:
-	send_game_state()
-
-
 func client_ended_turn(player_id: int):
 	round_manager.client_ended_turn(player_id)
-
+	send_game_state()
 
 func _on_round_manager_started_turn(player_id: int) -> void:
 	current_player_label.text = player_manager.get_player(player_id).player_name + "'s turn"
@@ -249,5 +248,29 @@ func set_your_id(id: int):
 
 
 func _on_round_manager_round_ended() -> void:
-	phase = Phase.COMBAT
+	if phase == Phase.COMBAT:
+		player_manager.reset_attack_history()
+		phase = Phase.PREP
+	else:
+		phase = Phase.COMBAT
+	send_game_state()
+
+
+func _on_player_manager_player_attacked(player_id: int) -> void:
+	if phase != Phase.COMBAT:
+		return
+	send_player_attacked.emit(player_id)
+
+
+func client_attacked(player_id: int, attacked_id: int):
+	if phase != Phase.COMBAT:
+		return
+	if player_id != round_manager.current_player_id:
+		return
+
+	var err: Error = player_manager.do_player_attack(player_id, attacked_id)
+	if err != Error.OK:
+		return
+
+	round_manager.client_ended_turn(player_id)
 	send_game_state()

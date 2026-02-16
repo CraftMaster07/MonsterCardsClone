@@ -49,6 +49,7 @@ func start_board():
 	board.init_players(multiplayer_players_to_dicts(multiplayer_manager.players))
 	board.send_placed_card.connect(_on_board_send_placed_card)
 	board.send_end_turn.connect(_on_end_turn_pressed)
+	board.send_player_attacked.connect(_on_board_player_attacked)
 	add_child(board)
 
 
@@ -161,3 +162,11 @@ func _on_end_turn_pressed() -> void:
 
 func _on_multiplayer_manager_client_ended_turn(player_id: int) -> void:
 	board.client_ended_turn(player_id)
+
+
+func _on_board_player_attacked(attacked_id: int) -> void:
+	multiplayer_manager.send_player_attacked(attacked_id)
+
+
+func _on_multiplayer_manager_client_attacked(player_id: int, attacked_id: int) -> void:
+	board.client_attacked(player_id, attacked_id)

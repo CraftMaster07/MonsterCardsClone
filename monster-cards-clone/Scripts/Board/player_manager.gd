@@ -1,5 +1,6 @@
 extends Node
 
+signal player_attacked(player_id: int)
 
 @export var your_player_scene: PackedScene
 @export var enemy_player_scene: PackedScene
@@ -15,7 +16,7 @@ func get_player_ids():
 	return players.keys()
 
 
-func get_player(player_id: int):
+func get_player(player_id: int) -> Player:
 	return players[player_id]
 
 
@@ -32,6 +33,8 @@ func init_enemy_player(player_data: Dictionary):
 	new_player.init(player_data['id'], player_data['name'])
 	add_child(new_player)
 	players[player_data['id']] = new_player
+
+	new_player.attacked.connect(on_enemy_player_attacked)
 
 
 func init_your_player(player_data: Dictionary):
@@ -80,3 +83,26 @@ func set_player_field(field: Field, player_id: int):
 
 func set_your_id(id: int):
 	your_id = id
+
+
+func on_enemy_player_attacked(player_id: int):
+	player_attacked.emit(player_id)
+
+
+func do_player_attack(attacker_id: int, attacked_id: int) -> Error:
+	var attacker := get_player(attacker_id)
+	var attacked := get_player(attacked_id)
+	if attacker.attacking_id != 0 or attacked.attacked_by_id != 0:
+		print("invalid attack")
+		return FAILED
+
+	print("Player ", attacker_id, " attacks Player ", attacked_id)
+	attacker.attacking_id = attacked_id
+	attacked.attacked_by_id = attacker_id
+	return OK
+
+
+func reset_attack_history():
+	for player in players.values():
+		player.attacking_id = 0
+		player.attacked_by_id = 0

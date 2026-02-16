@@ -1,9 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://c1qkabu180wpv"]
+[gd_scene format=3 uid="uid://c1qkabu180wpv"]
 
 [ext_resource type="PackedScene" uid="uid://syfm2kspvm70" path="res://Scenes/Players/player.tscn" id="1_26tvg"]
 [ext_resource type="Script" uid="uid://u4wc1jxgs8su" path="res://Scripts/Players/enemy_player.gd" id="2_bnq1i"]
 
-[node name="EnemyPlayer" instance=ExtResource("1_26tvg")]
+[node name="EnemyPlayer" unique_id=1327553364 instance=ExtResource("1_26tvg")]
 script = ExtResource("2_bnq1i")
 
 [node name="HealthLabel" parent="." index="0"]
@@ -11,3 +11,13 @@ offset_left = 3.0
 offset_top = 40.0
 offset_right = 81.0
 offset_bottom = 63.0
+text = "ph"
+
+[node name="Button" type="Button" parent="." index="1" unique_id=2039981296]
+offset_left = 101.0
+offset_top = 33.0
+offset_right = 202.0
+offset_bottom = 62.0
+text = "attack"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

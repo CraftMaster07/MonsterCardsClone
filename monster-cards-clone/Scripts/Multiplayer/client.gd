@@ -105,3 +105,11 @@ func send_end_turn():
 func receive_end_turn():
 	# server side function
 	pass
+
+func send_player_attacked(attacked_id: int):
+	receive_player_attacked.rpc_id(1, attacked_id)
+
+@rpc("any_peer", "call_remote", "reliable", 0)
+func receive_player_attacked(_attacked_id: int):
+	# server side function
+	pass

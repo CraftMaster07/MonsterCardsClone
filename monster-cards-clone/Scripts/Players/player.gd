@@ -9,6 +9,9 @@ var hand: PackedScene
 var player_name: String
 var player_id: int
 
+var attacking_id: int = 0
+var attacked_by_id: int = 0
+
 @onready var label: Label = $HealthLabel
 
 
