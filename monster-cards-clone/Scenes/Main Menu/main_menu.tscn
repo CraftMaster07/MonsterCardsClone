@@ -4,6 +4,9 @@
 [ext_resource type="Script" uid="uid://bxc7py0b1ykhx" path="res://Scripts/Main Menu/main_menu.gd" id="1_48xlc"]
 [ext_resource type="Script" uid="uid://ynwm51yrslmw" path="res://Scripts/Main Menu/volume_settings.gd" id="2_7xkbd"]
 [ext_resource type="AudioStream" uid="uid://dit1tvyol83cj" path="res://Assets/Audio/Music/mus_testing.mp3" id="4_y0aff"]
+[ext_resource type="AudioStream" uid="uid://dljbks8ardak0" path="res://Assets/Audio/Sounds/sfx_volume_change.mp3" id="5_r7gth"]
+[ext_resource type="AudioStream" uid="uid://crq47eckoofsl" path="res://Assets/Audio/Sounds/sfx_click.mp3" id="6_46knf"]
+[ext_resource type="AudioStream" uid="uid://b0uveyn2hopcg" path="res://Assets/Audio/Sounds/sfx_unclick.mp3" id="7_46knf"]
 
 [node name="MainMenu" type="Control" unique_id=574280643 node_paths=PackedStringArray("play_menu_container", "settings_menu_container", "host_menu", "join_menu", "name_line_edit", "ip_line_edit", "join_status_label")]
 layout_mode = 3
@@ -116,6 +119,10 @@ grow_vertical = 2
 layout_mode = 2
 script = ExtResource("2_7xkbd")
 
+[node name="sfx_volume_change" type="AudioStreamPlayer" parent="SettingsMenuContainer/VolumeSettingsContainer" unique_id=2084806042]
+stream = ExtResource("5_r7gth")
+bus = &"Sound"
+
 [node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1828789807]
 layout_mode = 1
 anchors_preset = -1
@@ -177,6 +184,14 @@ stream = ExtResource("4_y0aff")
 volume_db = -14.0
 autoplay = true
 bus = &"Music"
+
+[node name="sfx_click" type="AudioStreamPlayer" parent="." unique_id=1495992114]
+stream = ExtResource("6_46knf")
+bus = &"Sound"
+
+[node name="sfx_unclick" type="AudioStreamPlayer" parent="." unique_id=32157662]
+stream = ExtResource("7_46knf")
+bus = &"Sound"
 
 [connection signal="pressed" from="PlayMenuContainer/HBoxContainer/VBoxContainer/HostButton" to="." method="_on_host_button_pressed"]
 [connection signal="pressed" from="PlayMenuContainer/HBoxContainer/VBoxContainer/JoinButton" to="." method="_on_join_button_pressed"]

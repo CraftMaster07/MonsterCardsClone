@@ -2,6 +2,7 @@ extends VBoxContainer
 
 # Define which buses to create controls for
 @export var buses: Array[String] = ["Master", "Sound", "Music"]
+@onready var sfx_volume_change: AudioStreamPlayer = $sfx_volume_change
 
 # Store references if needed later
 var sliders: Dictionary = {}
@@ -59,7 +60,18 @@ func create_volume_controls() -> void:
 		value_label.text = str(int(slider.value))
 		
 		slider.value_changed.connect(_on_slider_changed.bind(bus_name, value_label))
+		slider.drag_started.connect(_on_slider_drag_started)
+		slider.drag_ended.connect(_on_slider_drag_ended)
 
 func _on_slider_changed(new_value: float, bus_name: String, label: Label) -> void:
 	AudioManager.set_volume(bus_name, int(new_value))
 	label.text = str(int(new_value))
+
+	
+func _on_slider_drag_started() -> void:
+	sfx_volume_change.play()
+
+
+func _on_slider_drag_ended(value_changed: bool) -> void:
+	AudioManager.save_volume()
+	sfx_volume_change.stop()
