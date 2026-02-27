@@ -4,6 +4,7 @@ signal player_attacked(player_id: int)
 
 @export var your_player_scene: PackedScene
 @export var enemy_player_scene: PackedScene
+@export var player_container: VBoxContainer
 
 var players: Dictionary[int, Player] = {}
 var your_id: int
@@ -31,7 +32,7 @@ func init_players(multiplayer_players: Array):
 func init_enemy_player(player_data: Dictionary):
 	var new_player: Player = enemy_player_scene.instantiate()
 	new_player.init(player_data['id'], player_data['name'])
-	add_child(new_player)
+	player_container.add_child(new_player)
 	players[player_data['id']] = new_player
 
 	new_player.attacked.connect(on_enemy_player_attacked)

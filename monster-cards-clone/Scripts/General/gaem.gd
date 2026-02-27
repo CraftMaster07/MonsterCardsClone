@@ -1,6 +1,6 @@
 extends Node
 
-@onready var multiplayer_manager : MultiplayerManager = $MultiplayerManager
+@onready var multiplayer_manager: MultiplayerManager = $MultiplayerManager
 @onready var main_menu = $MainMenu
 @export var waiting_room_scene: PackedScene
 @export var board_scene: PackedScene
@@ -44,6 +44,7 @@ func stop_waiting_room():
 
 func start_board():
 	board = board_scene.instantiate()
+	
 	board.call_sync_game.connect(call_sync_game)
 	board.set_your_id(multiplayer_manager.your_id)
 	board.init_players(multiplayer_players_to_dicts(multiplayer_manager.players))
@@ -51,7 +52,7 @@ func start_board():
 	board.send_end_turn.connect(_on_end_turn_pressed)
 	board.send_player_attacked.connect(_on_board_player_attacked)
 	add_child(board)
-
+	
 
 func stop_board():
 	remove_child(board)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://syfm2kspvm70"]
+[gd_scene format=3 uid="uid://syfm2kspvm70"]
 
 [ext_resource type="Script" uid="uid://dctl127afbmmj" path="res://Scripts/Players/player.gd" id="1_3vyb7"]
 [ext_resource type="FontFile" uid="uid://b13kiadbfhetg" path="res://Assets/Fonts/VCR_OSD_MONO_1.001.ttf" id="2_g2els"]
@@ -7,10 +7,13 @@
 font = ExtResource("2_g2els")
 font_color = Color(1, 0, 0, 1)
 
-[node name="Player" type="Node"]
+[node name="Player" type="Control" unique_id=2017731080]
+layout_mode = 3
+anchors_preset = 0
 script = ExtResource("1_3vyb7")
 
-[node name="HealthLabel" type="Label" parent="."]
+[node name="HealthLabel" type="Label" parent="." unique_id=1082498548]
+layout_mode = 0
 offset_right = 78.0
 offset_bottom = 23.0
 label_settings = SubResource("LabelSettings_3vyb7")

@@ -1,5 +1,5 @@
 class_name Player
-extends Node
+extends Control
 
 const STARTING_HEALTH: int = 20
 var health: int

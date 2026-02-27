@@ -72,6 +72,6 @@ func _on_slider_drag_started() -> void:
 	sfx_volume_change.play()
 
 
-func _on_slider_drag_ended(value_changed: bool) -> void:
+func _on_slider_drag_ended(_value_changed: bool) -> void:
 	AudioManager.save_volume()
 	sfx_volume_change.stop()

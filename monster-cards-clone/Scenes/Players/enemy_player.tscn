@@ -4,9 +4,10 @@
 [ext_resource type="Script" uid="uid://u4wc1jxgs8su" path="res://Scripts/Players/enemy_player.gd" id="2_bnq1i"]
 
 [node name="EnemyPlayer" unique_id=1327553364 instance=ExtResource("1_26tvg")]
+custom_minimum_size = Vector2(0, 50)
 script = ExtResource("2_bnq1i")
 
-[node name="HealthLabel" parent="." index="0"]
+[node name="HealthLabel" parent="." index="0" unique_id=1082498548]
 offset_left = 3.0
 offset_top = 40.0
 offset_right = 81.0
@@ -14,6 +15,7 @@ offset_bottom = 63.0
 text = "ph"
 
 [node name="Button" type="Button" parent="." index="1" unique_id=2039981296]
+layout_mode = 0
 offset_left = 101.0
 offset_top = 33.0
 offset_right = 202.0
