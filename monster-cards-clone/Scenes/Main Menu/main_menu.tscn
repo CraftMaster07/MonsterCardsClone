@@ -2,11 +2,9 @@
 
 [ext_resource type="FontFile" uid="uid://b13kiadbfhetg" path="res://Assets/Fonts/VCR_OSD_MONO_1.001.ttf" id="1_28flt"]
 [ext_resource type="Script" uid="uid://bxc7py0b1ykhx" path="res://Scripts/Main Menu/main_menu.gd" id="1_48xlc"]
-[ext_resource type="Script" uid="uid://ynwm51yrslmw" path="res://Scripts/Main Menu/volume_settings.gd" id="2_7xkbd"]
+[ext_resource type="PackedScene" uid="uid://dh65loc4m8hmo" path="res://Scenes/Main Menu/ui_sounds.tscn" id="2_r7gth"]
 [ext_resource type="AudioStream" uid="uid://dit1tvyol83cj" path="res://Assets/Audio/Music/mus_testing.mp3" id="4_y0aff"]
-[ext_resource type="AudioStream" uid="uid://dljbks8ardak0" path="res://Assets/Audio/Sounds/sfx_volume_change.mp3" id="5_r7gth"]
-[ext_resource type="AudioStream" uid="uid://crq47eckoofsl" path="res://Assets/Audio/Sounds/sfx_click.mp3" id="6_46knf"]
-[ext_resource type="AudioStream" uid="uid://b0uveyn2hopcg" path="res://Assets/Audio/Sounds/sfx_unclick.mp3" id="7_46knf"]
+[ext_resource type="PackedScene" uid="uid://ci6tydy38xeqp" path="res://Scenes/Main Menu/volume_slider.tscn" id="5_r7gth"]
 
 [node name="MainMenu" type="Control" unique_id=574280643 node_paths=PackedStringArray("play_menu_container", "settings_menu_container", "host_menu", "join_menu", "name_line_edit", "ip_line_edit", "join_status_label")]
 layout_mode = 3
@@ -16,96 +14,117 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_48xlc")
-play_menu_container = NodePath("PlayMenuContainer")
-settings_menu_container = NodePath("SettingsMenuContainer")
-host_menu = NodePath("PlayMenuContainer/HBoxContainer/HostJoinContainer/HostMenu")
-join_menu = NodePath("PlayMenuContainer/HBoxContainer/HostJoinContainer/JoinMenu")
-name_line_edit = NodePath("PlayMenuContainer/HBoxContainer/HostJoinContainer/NameLineEdit")
-ip_line_edit = NodePath("PlayMenuContainer/HBoxContainer/HostJoinContainer/JoinMenu/IPLineEdit")
-join_status_label = NodePath("PlayMenuContainer/JoinStatusLabel")
+play_menu_container = NodePath("UI/PlayMenuContainer")
+settings_menu_container = NodePath("UI/SettingsMenuContainer")
+host_menu = NodePath("UI/PlayMenuContainer/HBoxContainer/HostJoinContainer/HostMenu")
+join_menu = NodePath("UI/PlayMenuContainer/HBoxContainer/HostJoinContainer/JoinMenu")
+name_line_edit = NodePath("UI/PlayMenuContainer/HBoxContainer/HostJoinContainer/NameLineEdit")
+ip_line_edit = NodePath("UI/PlayMenuContainer/HBoxContainer/HostJoinContainer/JoinMenu/IPLineEdit")
+join_status_label = NodePath("UI/PlayMenuContainer/JoinStatusLabel")
 
-[node name="PlayMenuContainer" type="VBoxContainer" parent="." unique_id=1022227935]
+[node name="UiSounds" parent="." unique_id=780402468 instance=ExtResource("2_r7gth")]
+root_path = NodePath("../UI")
+
+[node name="UI" type="Control" parent="." unique_id=7129608]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Title" type="Label" parent="UI" unique_id=437561456]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 0.5
+offset_top = 30.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("1_28flt")
+theme_override_font_sizes/font_size = 51
+text = "monster cards clone"
+
+[node name="PlayMenuContainer" type="VBoxContainer" parent="UI" unique_id=1022227935]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.35
 anchor_top = 0.4
 anchor_right = 0.65
 anchor_bottom = 0.6
-offset_bottom = 18.399994
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="PlayMenuContainer" unique_id=2006635514]
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/PlayMenuContainer" unique_id=2006635514]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PlayMenuContainer/HBoxContainer" unique_id=1279754989]
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/PlayMenuContainer/HBoxContainer" unique_id=1279754989]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 14
 
-[node name="HostButton" type="Button" parent="PlayMenuContainer/HBoxContainer/VBoxContainer" unique_id=505760190]
+[node name="HostButton" type="Button" parent="UI/PlayMenuContainer/HBoxContainer/VBoxContainer" unique_id=505760190]
 layout_mode = 2
 size_flags_vertical = 0
 text = "Host"
 
-[node name="JoinButton" type="Button" parent="PlayMenuContainer/HBoxContainer/VBoxContainer" unique_id=430821864]
+[node name="JoinButton" type="Button" parent="UI/PlayMenuContainer/HBoxContainer/VBoxContainer" unique_id=430821864]
 layout_mode = 2
 size_flags_vertical = 0
 text = "Join"
 
-[node name="VSeparator" type="VSeparator" parent="PlayMenuContainer/HBoxContainer" unique_id=343429550]
+[node name="VSeparator" type="VSeparator" parent="UI/PlayMenuContainer/HBoxContainer" unique_id=343429550]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.1
 
-[node name="HostJoinContainer" type="VBoxContainer" parent="PlayMenuContainer/HBoxContainer" unique_id=1870499126]
+[node name="HostJoinContainer" type="VBoxContainer" parent="UI/PlayMenuContainer/HBoxContainer" unique_id=1870499126]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 1.5
 theme_override_constants/separation = 14
 
-[node name="NameLineEdit" type="LineEdit" parent="PlayMenuContainer/HBoxContainer/HostJoinContainer" unique_id=1260809270]
+[node name="NameLineEdit" type="LineEdit" parent="UI/PlayMenuContainer/HBoxContainer/HostJoinContainer" unique_id=1260809270]
 layout_mode = 2
 size_flags_vertical = 0
 placeholder_text = "Name"
 max_length = 100
 
-[node name="HostMenu" type="VBoxContainer" parent="PlayMenuContainer/HBoxContainer/HostJoinContainer" unique_id=1658650857]
+[node name="HostMenu" type="VBoxContainer" parent="UI/PlayMenuContainer/HBoxContainer/HostJoinContainer" unique_id=1658650857]
 visible = false
 layout_mode = 2
 size_flags_vertical = 0
 
-[node name="HostStartButton" type="Button" parent="PlayMenuContainer/HBoxContainer/HostJoinContainer/HostMenu" unique_id=1614351611]
+[node name="HostStartButton" type="Button" parent="UI/PlayMenuContainer/HBoxContainer/HostJoinContainer/HostMenu" unique_id=1614351611]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0
 text = "Start"
 
-[node name="JoinMenu" type="VBoxContainer" parent="PlayMenuContainer/HBoxContainer/HostJoinContainer" unique_id=1489294916]
+[node name="JoinMenu" type="VBoxContainer" parent="UI/PlayMenuContainer/HBoxContainer/HostJoinContainer" unique_id=1489294916]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 0
 size_flags_stretch_ratio = 1.5
 theme_override_constants/separation = 14
 
-[node name="IPLineEdit" type="LineEdit" parent="PlayMenuContainer/HBoxContainer/HostJoinContainer/JoinMenu" unique_id=1980559487]
+[node name="IPLineEdit" type="LineEdit" parent="UI/PlayMenuContainer/HBoxContainer/HostJoinContainer/JoinMenu" unique_id=1980559487]
 layout_mode = 2
 size_flags_vertical = 0
 placeholder_text = "Insert IP"
 max_length = 20
 
-[node name="JoinStartButton" type="Button" parent="PlayMenuContainer/HBoxContainer/HostJoinContainer/JoinMenu" unique_id=289888653]
+[node name="JoinStartButton" type="Button" parent="UI/PlayMenuContainer/HBoxContainer/HostJoinContainer/JoinMenu" unique_id=289888653]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0
 text = "Start"
 
-[node name="JoinStatusLabel" type="Label" parent="PlayMenuContainer" unique_id=1028086030]
+[node name="JoinStatusLabel" type="Label" parent="UI/PlayMenuContainer" unique_id=1028086030]
 visible = false
 layout_mode = 2
 horizontal_alignment = 1
 
-[node name="SettingsMenuContainer" type="MarginContainer" parent="." unique_id=1057504405]
+[node name="SettingsMenuContainer" type="MarginContainer" parent="UI" unique_id=1057504405]
 visible = false
 layout_mode = 1
 anchors_preset = -1
@@ -115,69 +134,62 @@ anchor_right = 0.7
 anchor_bottom = 0.6
 grow_vertical = 2
 
-[node name="VolumeSettingsContainer" type="VBoxContainer" parent="SettingsMenuContainer" unique_id=1456166459]
+[node name="VolumeSettingsContainer" type="VBoxContainer" parent="UI/SettingsMenuContainer" unique_id=1456166459]
 layout_mode = 2
-script = ExtResource("2_7xkbd")
 
-[node name="sfx_volume_change" type="AudioStreamPlayer" parent="SettingsMenuContainer/VolumeSettingsContainer" unique_id=2084806042]
-stream = ExtResource("5_r7gth")
-bus = &"Sound"
+[node name="MasterSlider" parent="UI/SettingsMenuContainer/VolumeSettingsContainer" unique_id=134327656 instance=ExtResource("5_r7gth")]
+layout_mode = 2
+bus_name = "Master"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1828789807]
+[node name="SoundSlider" parent="UI/SettingsMenuContainer/VolumeSettingsContainer" unique_id=1506573048 instance=ExtResource("5_r7gth")]
+layout_mode = 2
+bus_name = "Sound"
+
+[node name="MusicSlider" parent="UI/SettingsMenuContainer/VolumeSettingsContainer" unique_id=750565473 instance=ExtResource("5_r7gth")]
+layout_mode = 2
+bus_name = "Music"
+
+[node name="Menu Buttons" type="HBoxContainer" parent="UI" unique_id=1828789807]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.1
 anchor_top = 1.0
 anchor_right = 0.9
 anchor_bottom = 1.0
-offset_bottom = -35.0
+offset_bottom = -20.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_constants/separation = 39
 
-[node name="IdkButton" type="Button" parent="HBoxContainer" unique_id=1547690900]
+[node name="IdkButton" type="Button" parent="UI/Menu Buttons" unique_id=1547690900]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/h_separation = 0
 text = "idk"
 
-[node name="DeckButton" type="Button" parent="HBoxContainer" unique_id=2040224909]
+[node name="DeckButton" type="Button" parent="UI/Menu Buttons" unique_id=2040224909]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/h_separation = 0
 text = "deck"
 
-[node name="PlayButton" type="Button" parent="HBoxContainer" unique_id=692011457]
+[node name="PlayButton" type="Button" parent="UI/Menu Buttons" unique_id=692011457]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/h_separation = 0
 text = "play"
 
-[node name="SettingsButton" type="Button" parent="HBoxContainer" unique_id=1117987217]
+[node name="SettingsButton" type="Button" parent="UI/Menu Buttons" unique_id=1117987217]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/h_separation = 0
 text = "settings"
 
-[node name="QuitButton" type="Button" parent="HBoxContainer" unique_id=324794968]
+[node name="QuitButton" type="Button" parent="UI/Menu Buttons" unique_id=324794968]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/h_separation = 0
 text = "quit"
-
-[node name="Title" type="Label" parent="." unique_id=437561456]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -89.5
-offset_top = 68.0
-offset_right = 89.5
-offset_bottom = 83.0
-grow_horizontal = 2
-theme_override_fonts/font = ExtResource("1_28flt")
-theme_override_font_sizes/font_size = 51
-text = "monster cards clone"
 
 [node name="mus_menu" type="AudioStreamPlayer" parent="." unique_id=1613754843]
 stream = ExtResource("4_y0aff")
@@ -185,21 +197,13 @@ volume_db = -14.0
 autoplay = true
 bus = &"Music"
 
-[node name="sfx_click" type="AudioStreamPlayer" parent="." unique_id=1495992114]
-stream = ExtResource("6_46knf")
-bus = &"Sound"
-
-[node name="sfx_unclick" type="AudioStreamPlayer" parent="." unique_id=32157662]
-stream = ExtResource("7_46knf")
-bus = &"Sound"
-
-[connection signal="pressed" from="PlayMenuContainer/HBoxContainer/VBoxContainer/HostButton" to="." method="_on_host_button_pressed"]
-[connection signal="pressed" from="PlayMenuContainer/HBoxContainer/VBoxContainer/JoinButton" to="." method="_on_join_button_pressed"]
-[connection signal="text_changed" from="PlayMenuContainer/HBoxContainer/HostJoinContainer/NameLineEdit" to="." method="_on_name_line_edit_text_changed"]
-[connection signal="pressed" from="PlayMenuContainer/HBoxContainer/HostJoinContainer/HostMenu/HostStartButton" to="." method="_on_host_start_button_pressed"]
-[connection signal="pressed" from="PlayMenuContainer/HBoxContainer/HostJoinContainer/JoinMenu/JoinStartButton" to="." method="_on_join_start_button_pressed"]
-[connection signal="pressed" from="HBoxContainer/IdkButton" to="." method="_on_idk_button_pressed"]
-[connection signal="pressed" from="HBoxContainer/DeckButton" to="." method="_on_deck_button_pressed"]
-[connection signal="pressed" from="HBoxContainer/PlayButton" to="." method="_on_play_button_pressed"]
-[connection signal="pressed" from="HBoxContainer/SettingsButton" to="." method="_on_settings_button_pressed"]
-[connection signal="pressed" from="HBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
+[connection signal="pressed" from="UI/PlayMenuContainer/HBoxContainer/VBoxContainer/HostButton" to="." method="_on_host_button_pressed"]
+[connection signal="pressed" from="UI/PlayMenuContainer/HBoxContainer/VBoxContainer/JoinButton" to="." method="_on_join_button_pressed"]
+[connection signal="text_changed" from="UI/PlayMenuContainer/HBoxContainer/HostJoinContainer/NameLineEdit" to="." method="_on_name_line_edit_text_changed"]
+[connection signal="pressed" from="UI/PlayMenuContainer/HBoxContainer/HostJoinContainer/HostMenu/HostStartButton" to="." method="_on_host_start_button_pressed"]
+[connection signal="pressed" from="UI/PlayMenuContainer/HBoxContainer/HostJoinContainer/JoinMenu/JoinStartButton" to="." method="_on_join_start_button_pressed"]
+[connection signal="pressed" from="UI/Menu Buttons/IdkButton" to="." method="_on_idk_button_pressed"]
+[connection signal="pressed" from="UI/Menu Buttons/DeckButton" to="." method="_on_deck_button_pressed"]
+[connection signal="pressed" from="UI/Menu Buttons/PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="UI/Menu Buttons/SettingsButton" to="." method="_on_settings_button_pressed"]
+[connection signal="pressed" from="UI/Menu Buttons/QuitButton" to="." method="_on_quit_button_pressed"]

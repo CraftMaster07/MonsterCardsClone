@@ -13,7 +13,6 @@ extends Control
 
 @export var next_player_button: Button
 @export var prev_player_button: Button
-@export var spin_charge_timer: Timer
 
 @export var board_card_scene: PackedScene
 

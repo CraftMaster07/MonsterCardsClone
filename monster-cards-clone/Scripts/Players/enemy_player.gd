@@ -4,4 +4,4 @@ extends Player
 signal attacked(player_id: int)
 
 func _on_button_pressed() -> void:
-    attacked.emit(player_id)
+	attacked.emit(player_id)

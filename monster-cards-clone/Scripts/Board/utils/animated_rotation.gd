@@ -5,9 +5,9 @@ var prev_target: float = 0
 var tween: Tween
 var rotating_object: Control
 
-@export var default_duration: float = 1
-@export var default_trans_type: Tween.TransitionType = Tween.TRANS_LINEAR
-@export var default_ease_type: Tween.EaseType = Tween.EASE_IN
+@export var default_duration: float
+@export var default_trans_type: Tween.TransitionType
+@export var default_ease_type: Tween.EaseType
 
 
 func set_rotating_object(object: Control) -> void:

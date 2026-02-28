@@ -7,10 +7,10 @@ extends Resource
 
 @export var cost : int = 1:
 	set(value):
-		cost = clamp(value, 0, 999)
+		cost = clamp(value, -999, 999)
 @export var damage : int = 1:
 	set(value):
-		damage = clamp(value, 0, 999)
+		damage = clamp(value, -999, 999)
 @export var health : int = 1:
 	set(value):
 		health = clamp(value, 0, 999)

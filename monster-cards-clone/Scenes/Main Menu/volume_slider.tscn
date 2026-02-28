@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://ci6tydy38xeqp"]
+
+[ext_resource type="Script" uid="uid://cbtnrgu1ggw87" path="res://Scripts/Main Menu/volume_slider.gd" id="1_4qerq"]
+
+[node name="VolumeSlider" type="HBoxContainer" unique_id=134327656]
+script = ExtResource("1_4qerq")
+
+[node name="BusLabel" type="Label" parent="." unique_id=430383772]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Bus name"
+horizontal_alignment = 1
+vertical_alignment = 3
+
+[node name="HSlider" type="HSlider" parent="." unique_id=127028174]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+size_flags_stretch_ratio = 4.0
+max_value = 130.0
+
+[node name="ValueLabel" type="Label" parent="." unique_id=1928765003]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.6
+horizontal_alignment = 1
+vertical_alignment = 3
+
+[connection signal="drag_ended" from="HSlider" to="." method="_on_slider_drag_ended"]
+[connection signal="value_changed" from="HSlider" to="." method="_on_slider_value_changed"]

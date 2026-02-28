@@ -11,7 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://7ukrl57uilte" path="res://Scenes/Board/Field/your_field.tscn" id="8_4l5f1"]
 [ext_resource type="Script" uid="uid://7i1gkuidppy1" path="res://Scripts/Board/field_spawner_pivot.gd" id="10_brcfe"]
 [ext_resource type="PackedScene" uid="uid://dtpst7jgrdpqq" path="res://Scenes/Board/Field/enemy_field.tscn" id="11_csi2d"]
-[ext_resource type="AudioStream" uid="uid://cgatasovfxoyl" path="res://Assets/Audio/Sounds/sfx_place.mp3" id="11_gti8d"]
+[ext_resource type="AudioStream" uid="uid://rc71aygfcedk" path="res://Assets/Audio/Sounds/sfx_place.mp3" id="11_gti8d"]
 [ext_resource type="AudioStream" uid="uid://02oc0voj62j3" path="res://Assets/Audio/Sounds/sfx_select.mp3" id="12_brcfe"]
 [ext_resource type="FontFile" uid="uid://b13kiadbfhetg" path="res://Assets/Fonts/VCR_OSD_MONO_1.001.ttf" id="12_xqaal"]
 [ext_resource type="AudioStream" uid="uid://ch7jr0gor48sm" path="res://Assets/Audio/Sounds/sfx_deselect.mp3" id="13_csi2d"]
@@ -35,7 +35,7 @@ metadata/_custom_type_script = "uid://hvpfm3s0svah"
 font = ExtResource("12_xqaal")
 font_color = Color(0.29998645, 0.71706825, 1.5263317, 1)
 
-[node name="Board" type="Control" unique_id=65642768 node_paths=PackedStringArray("table", "field_spawner_pivot", "hand", "next_player_button", "prev_player_button", "spin_charge_timer", "current_player_label", "round_manager", "player_manager")]
+[node name="Board" type="Control" unique_id=65642768 node_paths=PackedStringArray("table", "field_spawner_pivot", "hand", "next_player_button", "prev_player_button", "current_player_label", "round_manager", "player_manager")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -48,7 +48,6 @@ field_spawner_pivot = NodePath("Table/FieldSpawnerPivot")
 hand = NodePath("UI/Hand")
 next_player_button = NodePath("UI/NextPlayerButton")
 prev_player_button = NodePath("UI/PrevPlayerButton")
-spin_charge_timer = NodePath("SpinChargeTimer")
 board_card_scene = ExtResource("2_dun80")
 current_player_label = NodePath("UI/CurrentPlayerLabel")
 round_manager = NodePath("RoundManager")
@@ -124,13 +123,6 @@ theme_override_constants/margin_bottom = 40
 [node name="Icon" type="Sprite2D" parent="UI" unique_id=1686537728]
 position = Vector2(85.00018, 561)
 texture = ExtResource("4_cp8jt")
-
-[node name="DamageButton" type="CheckButton" parent="UI" unique_id=1176615803]
-layout_mode = 0
-offset_left = 137.0
-offset_top = 255.0
-offset_right = 183.0
-offset_bottom = 288.0
 
 [node name="NextPlayerButton" type="Button" parent="UI" unique_id=70634696]
 layout_mode = 1
