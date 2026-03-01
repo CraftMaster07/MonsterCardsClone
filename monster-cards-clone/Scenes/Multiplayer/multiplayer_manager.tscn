@@ -1,16 +1,16 @@
-[gd_scene load_steps=4 format=3 uid="uid://cpau40ahtb812"]
+[gd_scene format=3 uid="uid://cpau40ahtb812"]
 
 [ext_resource type="Script" uid="uid://cdhyg6ijnqfcm" path="res://Scripts/Multiplayer/multiplayer_manager.gd" id="1_sch45"]
 [ext_resource type="Script" uid="uid://r65rt28a00k" path="res://Scripts/Multiplayer/client.gd" id="2_yxw74"]
 [ext_resource type="Script" uid="uid://brgn6mrsukmix" path="res://Scripts/Multiplayer/server.gd" id="3_xx516"]
 
-[node name="MultiplayerManager" type="Node" node_paths=PackedStringArray("multiplayer_interface")]
+[node name="MultiplayerManager" type="Node" unique_id=1400635828 node_paths=PackedStringArray("multiplayer_interface")]
 script = ExtResource("1_sch45")
 server_script = ExtResource("3_xx516")
 client_script = ExtResource("2_yxw74")
 multiplayer_interface = NodePath("MultiplayerInterface")
 
-[node name="MultiplayerInterface" type="Node" parent="."]
+[node name="MultiplayerInterface" type="Node" parent="." unique_id=423244989]
 script = ExtResource("2_yxw74")
 
 [connection signal="connection_failure" from="MultiplayerInterface" to="." method="_on_connection_failure"]

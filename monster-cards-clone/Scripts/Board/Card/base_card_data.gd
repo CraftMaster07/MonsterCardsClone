@@ -1,7 +1,5 @@
-class_name BaseCardData
+class_name CardData
 extends Resource
-
-static var base_card_data_resource: Resource = preload("res://Scripts/Board/Card/base_card_data.gd")
 
 @export var card_name: String
 @export var image_id: int
@@ -16,15 +14,12 @@ var health: int
 var attack: int
 var cost: int
 
-var current_cost : int
-var current_damage : int
-var current_health : int
+var is_ghost: bool = false
 
-func init():
+func _init():
 	health = STARTING_HEALTH
 	attack = STARTING_ATTACK
 	cost = STARTING_COST
-	print("base_card_data loaded")
 
 
 func serialize() -> Dictionary:
@@ -42,12 +37,21 @@ func deserialize(data):
 	health = data["health"]
 	attack = data["attack"]
 	cost = data["cost"]
+	check_death()
 
 
 func take_damage(amount : int) -> void:
-	current_health -= amount
-	if current_health <= 0:
+	health -= amount
+	check_death()
+
+
+func check_death():
+	if health <= 0:
 		print_rich("[color=red]Card destroyed![/color]")
+		die()
+
+func die():
+	is_ghost = true
 
 
 func query_updated_image_id():
@@ -57,7 +61,8 @@ func query_updated_image_id():
 	return null
 
 
-static func new_with_init():
-	var new_card_data = base_card_data_resource.new()
-	new_card_data.init()
-	return new_card_data
+func hit(target):
+	if target.has_method("take_damage"):
+		target.take_damage(attack)
+	else:
+		push_error("target does not have take_damage method")

@@ -1,3 +1,4 @@
+class_name PlayerManager
 extends Node
 
 signal player_attacked(player_id: int)
@@ -107,3 +108,8 @@ func reset_attack_history():
 	for player in players.values():
 		player.attacking_id = 0
 		player.attacked_by_id = 0
+
+
+func exorcise():
+	for player in players.values():
+		player.exorcise()

@@ -14,12 +14,12 @@ extends Control
 @export var next_player_button: Button
 @export var prev_player_button: Button
 
-var board_card_scene = BoardCard
+@export var board_card_scene: PackedScene
 
 @export var current_player_label: Label
 
 @export var round_manager: Node
-@export var player_manager: Node
+@export var player_manager: PlayerManager
 
 @onready var your_id = player_manager.your_id
 
@@ -40,7 +40,7 @@ signal send_player_attacked(attacked_id: int)
 enum ValidationResponses {INVALID = -1, OK = 0, NOT_YOUR_TURN, SLOT_TAKEN, NOT_IN_PREP}
 enum Phase {PREP, COMBAT}
 
-func _ready() -> void:
+func _ready():
 	var table_radius: float = calculate_table_radius(player_manager.get_player_count())
 	set_radii(table_radius)
 	spawn_fields(player_manager.get_player_count())
@@ -88,7 +88,7 @@ func _replace_handcard_with_boardcard(card: HandCard, slot: EnemyCardSlot):
 	Replaces the HandCard with a BoardCard object
 	This should be done after the card is moved into a slot
 	"""
-	var new_board_card := create_board_card()
+	var new_board_card := board_card_scene.instantiate()
 	send_placed_card.emit(new_board_card.serialize(), player_manager.get_player(your_id).get_slot_id(slot))
 	slot.place_card(new_board_card)
 	card.queue_free() # might replace with remove_child
@@ -189,7 +189,8 @@ func client_placed_card(player_id: int, serialized_card: Dictionary, slot_id: in
 	var status := verify_card_placement(player_id, slot_id)
 	match status:
 		ValidationResponses.OK:
-			player_manager.get_player(player_id).place_serialized_card_into_slot(serialized_card, slot_id)
+			if player_id != 1:
+				player_manager.get_player(player_id).place_serialized_card_into_slot(serialized_card, slot_id)
 		ValidationResponses.SLOT_TAKEN:
 			print("slot taken: (Player: ", player_id, ", Slot: ", slot_id, ")")
 		ValidationResponses.NOT_YOUR_TURN:
@@ -249,6 +250,7 @@ func set_your_id(id: int):
 func _on_round_manager_round_ended() -> void:
 	if phase == Phase.COMBAT:
 		player_manager.reset_attack_history()
+		exorcise()
 		phase = Phase.PREP
 	else:
 		phase = Phase.COMBAT
@@ -271,11 +273,31 @@ func client_attacked(player_id: int, attacked_id: int):
 	if err != Error.OK:
 		return
 
+	combat(player_id, attacked_id)
+
 	round_manager.client_ended_turn(player_id)
 	send_game_state()
 
 
-func create_board_card() -> Node:
-	var new_board_card = board_card_scene.instantiate_with_init()
-	new_board_card.init()
-	return new_board_card
+func combat(attacker_id: int, attacked_id: int):
+	var attacker := player_manager.get_player(attacker_id)
+	var attacked := player_manager.get_player(attacked_id)
+
+	var attacker_field := attacker.get_field()
+	var attacked_field := attacked.get_field()
+
+	for i in range(attacker_field.get_slot_count()):
+		var attacker_card = attacker_field.get_card(i)
+		var attacked_card = attacked_field.get_card(i)
+
+		print(attacker_card, attacked_card)
+		if not attacker_card:
+			continue
+		elif not attacked_card:
+			attacker_card.hit(attacked)
+		else:
+			attacker_card.hit(attacked_card)
+
+
+func exorcise():
+	player_manager.exorcise()

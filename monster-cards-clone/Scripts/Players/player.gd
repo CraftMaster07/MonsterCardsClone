@@ -26,9 +26,9 @@ func _ready():
 	update_health()
 
 
-func hit() -> void:
+func take_damage(amount: int) -> void:
 	print("ouch!")
-	decrease_health(1)
+	decrease_health(amount)
 
 
 func decrease_health(amount: int) -> void:
@@ -41,10 +41,10 @@ func update_health() -> void:
 
 
 func _on_damage_button_pressed() -> void:
-	hit()
+	take_damage(1)
 
 
-func get_field():
+func get_field() -> Field:
 	return field
 
 
@@ -80,5 +80,10 @@ func deserialize(serialized_player: Dictionary):
 func place_serialized_card_into_slot(serialized_card: Dictionary, slot_id: int):
 	field.place_serialized_card_into_slot(serialized_card, slot_id)
 
+
 func get_id():
 	return player_id
+
+
+func exorcise():
+	field.exorcise()

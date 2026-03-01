@@ -1,15 +1,16 @@
 [gd_scene format=3 uid="uid://cru4gfksm3rbh"]
 
-[ext_resource type="PackedScene" uid="uid://d2efqpfk6vwcm" path="res://Scenes/Board/Card/hand_card.tscn" id="1_m7piv"]
 [ext_resource type="Script" uid="uid://83v8f08puap4" path="res://Scripts/Board/Card/board_card.gd" id="1_ychx5"]
+[ext_resource type="PackedScene" uid="uid://b1rfo4m4p3w8h" path="res://Scenes/Board/Card/card_front.tscn" id="2_b7ogw"]
 
-[node name="BoardCard" type="Control" unique_id=1849831439]
+[node name="BoardCard" type="Control" unique_id=1849831439 node_paths=PackedStringArray("card_front")]
 layout_mode = 3
 anchors_preset = 0
 size_flags_horizontal = 8
 size_flags_vertical = 4
 script = ExtResource("1_ychx5")
+card_front = NodePath("CardFront")
 
-[node name="CardFront" parent="." unique_id=1343933675 instance=ExtResource("1_m7piv")]
-layout_mode = 1
-script = null
+[node name="CardFront" parent="." unique_id=20270715 instance=ExtResource("2_b7ogw")]
+layout_mode = 0
+anchors_preset = 0

@@ -10,12 +10,10 @@ signal round_ended()
 
 func start_turn(player_id: int):
 	current_player_id = player_id
-	print("turn: ", current_player_id)
 	started_turn.emit(current_player_id)
 
 
 func next_turn():
-	print("turn order: ", turn_order)
 	start_turn(turn_order[current_player_index])
 	current_player_index = (current_player_index + 1) % len(turn_order)
 
