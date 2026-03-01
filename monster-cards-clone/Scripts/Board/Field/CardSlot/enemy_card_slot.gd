@@ -77,3 +77,4 @@ func exorcise():
 	if card and card.is_ghost():
 		remove_child(card)
 		card.queue_free()
+		card = null

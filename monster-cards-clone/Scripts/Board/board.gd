@@ -89,10 +89,10 @@ func _replace_handcard_with_boardcard(card: HandCard, slot: EnemyCardSlot):
 	This should be done after the card is moved into a slot
 	"""
 	var new_board_card := board_card_scene.instantiate()
-	send_placed_card.emit(new_board_card.serialize(), player_manager.get_player(your_id).get_slot_id(slot))
 	slot.place_card(new_board_card)
 	card.queue_free() # might replace with remove_child
 	sfx_place.play()
+	send_placed_card.emit(new_board_card.serialize(), player_manager.get_player(your_id).get_slot_id(slot))
 
 #UI
 func select_card(card: HandCard):
