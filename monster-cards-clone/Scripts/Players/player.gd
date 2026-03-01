@@ -1,13 +1,14 @@
 class_name Player
 extends Control
 
+var player_name: String
+var player_id: int
+
 const STARTING_HEALTH: int = 20
 var health: int
 var deck: Array
 var field: Field
 var hand: PackedScene
-var player_name: String
-var player_id: int
 
 var attacking_id: int = 0
 var attacked_by_id: int = 0

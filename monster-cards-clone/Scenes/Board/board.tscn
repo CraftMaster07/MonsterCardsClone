@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://cfyktcr6rqnlf"]
 
 [ext_resource type="Script" uid="uid://ctku11dgwh5at" path="res://Scripts/Board/board.gd" id="1_xiot5"]
-[ext_resource type="PackedScene" uid="uid://cru4gfksm3rbh" path="res://Scenes/Board/Card/board_card.tscn" id="2_dun80"]
 [ext_resource type="PackedScene" uid="uid://b6obljxfl8pah" path="res://Scenes/Board/hand.tscn" id="2_shhme"]
 [ext_resource type="PackedScene" uid="uid://dgtx0qw3qwnw3" path="res://Scenes/Players/your_player.tscn" id="3_me64r"]
 [ext_resource type="Script" uid="uid://4wekwqlpwfc0" path="res://Scripts/Board/table.gd" id="3_qlllu"]
@@ -48,7 +47,6 @@ field_spawner_pivot = NodePath("Table/FieldSpawnerPivot")
 hand = NodePath("UI/Hand")
 next_player_button = NodePath("UI/NextPlayerButton")
 prev_player_button = NodePath("UI/PrevPlayerButton")
-board_card_scene = ExtResource("2_dun80")
 current_player_label = NodePath("UI/CurrentPlayerLabel")
 round_manager = NodePath("RoundManager")
 player_manager = NodePath("PlayerManager")

@@ -14,7 +14,7 @@ extends Control
 @export var next_player_button: Button
 @export var prev_player_button: Button
 
-@export var board_card_scene: PackedScene
+var board_card_scene = BoardCard
 
 @export var current_player_label: Label
 
@@ -88,7 +88,7 @@ func _replace_handcard_with_boardcard(card: HandCard, slot: EnemyCardSlot):
 	Replaces the HandCard with a BoardCard object
 	This should be done after the card is moved into a slot
 	"""
-	var new_board_card := board_card_scene.instantiate()
+	var new_board_card := create_board_card()
 	send_placed_card.emit(new_board_card.serialize(), player_manager.get_player(your_id).get_slot_id(slot))
 	slot.place_card(new_board_card)
 	card.queue_free() # might replace with remove_child
@@ -273,3 +273,9 @@ func client_attacked(player_id: int, attacked_id: int):
 
 	round_manager.client_ended_turn(player_id)
 	send_game_state()
+
+
+func create_board_card() -> Node:
+	var new_board_card = board_card_scene.instantiate_with_init()
+	new_board_card.init()
+	return new_board_card
