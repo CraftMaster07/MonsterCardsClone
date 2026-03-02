@@ -50,12 +50,8 @@ func _ready():
 		card.card_selected.connect(select_card)
 		card.card_deselected.connect(deselect_card)
 
-	#TODO: obviously delete this when putting real syncing. WTH IS TS
-	if multiplayer.is_server():
-		$UI/SyncButton.visible = true
-		$UI/SyncButton.process_mode = Node.PROCESS_MODE_INHERIT
-
 	round_manager.next_turn()
+	send_game_state()
 
 #UI
 func slot_clicked(slot: EnemyCardSlot):
@@ -202,9 +198,6 @@ func client_placed_card(player_id: int, serialized_card: Dictionary, slot_id: in
 
 	send_game_state()
 
-#BOARD
-func _on_sync_button_pressed() -> void:
-	send_game_state()
 
 #BOARD
 func send_game_state():

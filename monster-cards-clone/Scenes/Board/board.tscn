@@ -150,15 +150,6 @@ grow_horizontal = 0
 grow_vertical = 0
 text = "<--"
 
-[node name="SyncButton" type="Button" parent="UI" unique_id=298300565]
-process_mode = 4
-layout_mode = 0
-offset_left = 978.0
-offset_top = 600.0
-offset_right = 1022.0
-offset_bottom = 631.0
-text = "Sync"
-
 [node name="EndTurn" type="Button" parent="UI" unique_id=657077339]
 layout_mode = 0
 offset_left = 1043.0
@@ -213,7 +204,6 @@ player_container = NodePath("../UI/PlayerContainer")
 [connection signal="spawning_finished" from="Table/FieldSpawnerPivot" to="." method="_on_field_spawner_pivot_spawning_finished"]
 [connection signal="pressed" from="UI/NextPlayerButton" to="." method="_on_next_player_button_pressed"]
 [connection signal="pressed" from="UI/PrevPlayerButton" to="." method="_on_prev_player_button_pressed"]
-[connection signal="pressed" from="UI/SyncButton" to="." method="_on_sync_button_pressed"]
 [connection signal="pressed" from="UI/EndTurn" to="." method="_on_end_turn_pressed"]
 [connection signal="round_ended" from="RoundManager" to="." method="_on_round_manager_round_ended"]
 [connection signal="started_turn" from="RoundManager" to="." method="_on_round_manager_started_turn"]
