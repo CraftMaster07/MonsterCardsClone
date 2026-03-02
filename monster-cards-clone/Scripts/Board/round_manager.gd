@@ -48,3 +48,7 @@ func deserialize(data: Dictionary):
 	current_player_id = data["current_player_id"]
 	turn_order = data["turn_order"]
 	start_turn(current_player_id)
+
+
+func remove_player(player_id: int):
+	turn_order.erase(player_id)

@@ -298,3 +298,4 @@ func exorcise():
 
 func remove_player(player_id: int):
 	player_manager.remove_player(player_id)
+	round_manager.remove_player(player_id)
