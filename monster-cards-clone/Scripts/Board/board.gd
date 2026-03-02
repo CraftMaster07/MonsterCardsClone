@@ -294,3 +294,7 @@ func combat(attacker_id: int, attacked_id: int):
 
 func exorcise():
 	player_manager.exorcise()
+
+
+func remove_player(player_id: int):
+	player_manager.remove_player(player_id)
