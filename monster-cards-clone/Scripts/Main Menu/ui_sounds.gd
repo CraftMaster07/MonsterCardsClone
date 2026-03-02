@@ -27,7 +27,7 @@ func install_sounds(node: Node) -> void:
 	for i in node.get_children():
 		if i is Button:
 			i.button_down.connect( ui_sfx_play.bind(&"sfx_click") )
-			i.button_up.connect( ui_sfx_play.bind(&"sfx_unclick") )
+			i.pressed.connect( ui_sfx_play.bind(&"sfx_unclick") )
 		install_sounds(i)
 
 func ui_sfx_play(sound : String) -> void:

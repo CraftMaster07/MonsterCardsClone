@@ -32,6 +32,14 @@ AudioManager="*res://Scripts/General/audio_manager.gd"
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 
+[file_customization]
+
+folder_colors={
+"res://Assets/": "yellow",
+"res://Scenes/": "blue",
+"res://Scripts/": "red"
+}
+
 [input]
 
 click={

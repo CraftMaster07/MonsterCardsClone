@@ -1,8 +1,13 @@
-[gd_resource type="Theme" load_steps=2 format=3 uid="uid://f2a4ylwdbwtx"]
+[gd_resource type="Theme" format=3 uid="uid://f2a4ylwdbwtx"]
 
+[ext_resource type="StyleBox" uid="uid://c1ifrx2wpuyay" path="res://Assets/Styles/style_box_flat_theme.tres" id="1_0hbpg"]
 [ext_resource type="FontFile" uid="uid://b13kiadbfhetg" path="res://Assets/Fonts/VCR_OSD_MONO_1.001.ttf" id="1_iw1ms"]
 
 [resource]
 default_base_scale = 1.5
 default_font = ExtResource("1_iw1ms")
-default_font_size = 12
+default_font_size = 20
+Button/constants/h_separation = 0
+Button/styles/normal = ExtResource("1_0hbpg")
+HSlider/styles/slider = ExtResource("1_0hbpg")
+LineEdit/styles/normal = ExtResource("1_0hbpg")
