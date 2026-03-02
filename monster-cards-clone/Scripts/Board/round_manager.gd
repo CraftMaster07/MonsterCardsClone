@@ -1,6 +1,6 @@
 extends Node
 
-var current_player_index: int = 0
+var current_player_index: int = -1
 var current_player_id: int
 var turn_order: Array[int]
 
@@ -14,15 +14,15 @@ func start_turn(player_id: int):
 
 
 func next_turn():
+	current_player_index = calculate_next_player_index()
 	start_turn(turn_order[current_player_index])
-	current_player_index = (current_player_index + 1) % len(turn_order)
 
 
 func client_ended_turn(player_id: int):
 	if player_id != current_player_id:
 		return
 
-	if current_player_index == 0:
+	if calculate_next_player_index() == 0:
 		round_ended.emit()
 	next_turn()
 
@@ -52,3 +52,11 @@ func deserialize(data: Dictionary):
 
 func remove_player(player_id: int):
 	turn_order.erase(player_id)
+
+	if current_player_id == player_id:
+		current_player_index -= 1
+		next_turn()
+
+
+func calculate_next_player_index():
+	return (current_player_index + 1) % len(turn_order)

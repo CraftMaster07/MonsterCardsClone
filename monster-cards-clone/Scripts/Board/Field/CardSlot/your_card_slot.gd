@@ -11,5 +11,5 @@ func take():
 
 
 func _on_texture_button_pressed() -> void:
-	print("slot clicked")
+	#print("slot clicked")
 	clicked.emit(self)

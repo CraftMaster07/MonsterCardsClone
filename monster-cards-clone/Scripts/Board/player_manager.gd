@@ -10,8 +10,14 @@ signal player_attacked(player_id: int)
 var players: Dictionary[int, Player] = {}
 var your_id: int
 
+var original_player_count: int
+
 func get_player_count():
 	return len(players)
+
+
+func get_original_player_count():
+	return original_player_count
 
 
 func get_player_ids():
@@ -28,6 +34,7 @@ func init_players(multiplayer_players: Array):
 			init_your_player(player_data)
 		else:
 			init_enemy_player(player_data)
+	original_player_count = get_player_count()
 
 
 func init_enemy_player(player_data: Dictionary):

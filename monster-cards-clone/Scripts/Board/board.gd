@@ -108,12 +108,12 @@ func deselect_card():
 
 #UI
 func _on_next_player_button_pressed() -> void:
-	table.rotate_by(TAU / player_manager.get_player_count())
+	table.rotate_by(TAU / player_manager.get_original_player_count())
 	sfx_spin.play()
 
 #UI
 func _on_prev_player_button_pressed() -> void:
-	table.rotate_by(-TAU / player_manager.get_player_count())
+	table.rotate_by(-TAU / player_manager.get_original_player_count())
 	sfx_spin.play()
 
 #UI?
@@ -283,7 +283,6 @@ func combat(attacker_id: int, attacked_id: int):
 		var attacker_card = attacker_field.get_card(i)
 		var attacked_card = attacked_field.get_card(i)
 
-		print(attacker_card, attacked_card)
 		if not attacker_card:
 			continue
 		elif not attacked_card:
@@ -299,3 +298,4 @@ func exorcise():
 func remove_player(player_id: int):
 	player_manager.remove_player(player_id)
 	round_manager.remove_player(player_id)
+	send_game_state()
