@@ -5,16 +5,11 @@
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vch02"]
 bg_color = Color(0.05882353, 0.15294118, 0.30588236, 1)
 
-[node name="DeckCard" type="Control" unique_id=608550109]
-layout_mode = 3
-anchors_preset = 0
-
-[node name="PanelContainer" type="PanelContainer" parent="." unique_id=188047879]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="DeckCard" type="PanelContainer" unique_id=1221809532]
+offset_right = 60.0
+offset_bottom = 90.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_vch02")
 
-[node name="TextureRect" type="TextureRect" parent="PanelContainer" unique_id=1995087353]
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1995087353]
 layout_mode = 2
 texture = ExtResource("1_vch02")
