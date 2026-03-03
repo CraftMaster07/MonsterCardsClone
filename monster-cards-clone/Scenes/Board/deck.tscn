@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://dxt0343x16g61"]
+
+[ext_resource type="Script" uid="uid://bbrpcmbklqpmc" path="res://Scripts/Board/deck.gd" id="1_25u8u"]
+[ext_resource type="PackedScene" uid="uid://cwrvcgm3n85bl" path="res://Scenes/Board/Card/deck_card.tscn" id="1_40wud"]
+
+[node name="Deck" type="Control" unique_id=2006721711]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_25u8u")
+deck_card_scene = ExtResource("1_40wud")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=113345194]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="DeckCard" parent="HBoxContainer" unique_id=608550109 instance=ExtResource("1_40wud")]
+layout_mode = 2
+
+[node name="DeckCard2" parent="HBoxContainer" unique_id=2143279966 instance=ExtResource("1_40wud")]
+layout_mode = 2
+
+[node name="DeckCard3" parent="HBoxContainer" unique_id=587921943 instance=ExtResource("1_40wud")]
+layout_mode = 2
+
+[node name="DeckCard4" parent="HBoxContainer" unique_id=648979507 instance=ExtResource("1_40wud")]
+layout_mode = 2
+
+[node name="DeckCard5" parent="HBoxContainer" unique_id=1406037525 instance=ExtResource("1_40wud")]
+layout_mode = 2
