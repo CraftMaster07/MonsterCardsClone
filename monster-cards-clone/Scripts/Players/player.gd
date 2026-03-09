@@ -66,7 +66,7 @@ func serialize():
 		"player_name": player_name,
 		"health": health,
 		"field": field.serialize(),
-	#	"deck": deck.serialize(),
+		"deck": deck.serialize(),
 	}
 
 
@@ -76,7 +76,7 @@ func deserialize(serialized_player: Dictionary):
 	health = serialized_player['health']
 	update_health()
 	field.deserialize(serialized_player['field'])
-	#deck.deserialize(serialized_player['deck'])
+	deck.deserialize(serialized_player['deck'])
 
 
 func place_serialized_card_into_slot(serialized_card: Dictionary, slot_id: int):

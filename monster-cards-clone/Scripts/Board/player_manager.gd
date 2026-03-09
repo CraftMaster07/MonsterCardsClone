@@ -73,17 +73,17 @@ func deserialize_players(serialized_players: Dictionary):
 		players[serialized_player_id].deserialize(serialized_players[serialized_player_id])
 
 
-func get_unassigned_field_player_ids():
-	var unassigned_field_player_ids := []
+func get_unassigned_area_player_ids():
+	var unassigned_area_player_ids := []
 
 	for player in players.values():
 		if player.player_id == your_id:
 			continue
 
-		if player.get_field() == null:
-			unassigned_field_player_ids.append(player.player_id)
+		if player.get_field() == null or player.get_deck() == null:
+			unassigned_area_player_ids.append(player.player_id)
 
-	return unassigned_field_player_ids
+	return unassigned_area_player_ids
 
 
 func set_player_field(field: Field, player_id: int):

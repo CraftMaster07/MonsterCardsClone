@@ -36,9 +36,9 @@ window/stretch/aspect="expand"
 [file_customization]
 
 folder_colors={
-"res://Assets/": "yellow",
+"res://Assets/": "gray",
 "res://Scenes/": "blue",
-"res://Scripts/": "red"
+"res://Scripts/": "orange"
 }
 
 [input]

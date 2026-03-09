@@ -7,10 +7,10 @@
 [ext_resource type="Script" uid="uid://4wekwqlpwfc0" path="res://Scripts/Board/table.gd" id="3_qlllu"]
 [ext_resource type="Texture2D" uid="uid://cjn63si50nhet" path="res://Assets/icon.svg" id="4_cp8jt"]
 [ext_resource type="PackedScene" uid="uid://c1qkabu180wpv" path="res://Scenes/Players/enemy_player.tscn" id="4_gti8d"]
+[ext_resource type="PackedScene" uid="uid://if4366cpnfs0" path="res://Scenes/Board/PlayerArea/enemy_player_area.tscn" id="6_a1ark"]
 [ext_resource type="Script" uid="uid://hvpfm3s0svah" path="res://Scripts/Board/utils/animated_rotation.gd" id="6_s2gku"]
-[ext_resource type="PackedScene" uid="uid://7ukrl57uilte" path="res://Scenes/Board/Field/your_field.tscn" id="8_4l5f1"]
-[ext_resource type="Script" uid="uid://7i1gkuidppy1" path="res://Scripts/Board/field_spawner_pivot.gd" id="10_brcfe"]
-[ext_resource type="PackedScene" uid="uid://dtpst7jgrdpqq" path="res://Scenes/Board/Field/enemy_field.tscn" id="11_csi2d"]
+[ext_resource type="PackedScene" uid="uid://bmbkajbu0quju" path="res://Scenes/Board/PlayerArea/your_player_area.tscn" id="7_rt3kt"]
+[ext_resource type="Script" uid="uid://7i1gkuidppy1" path="res://Scripts/Board/player_area_spawner_pivot.gd" id="10_brcfe"]
 [ext_resource type="AudioStream" uid="uid://rc71aygfcedk" path="res://Assets/Audio/Sounds/sfx_place.mp3" id="11_gti8d"]
 [ext_resource type="AudioStream" uid="uid://02oc0voj62j3" path="res://Assets/Audio/Sounds/sfx_select.mp3" id="12_brcfe"]
 [ext_resource type="FontFile" uid="uid://b13kiadbfhetg" path="res://Assets/Fonts/VCR_OSD_MONO_1.001.ttf" id="12_xqaal"]
@@ -35,7 +35,7 @@ metadata/_custom_type_script = "uid://hvpfm3s0svah"
 font = ExtResource("12_xqaal")
 font_color = Color(0.29998645, 0.71706825, 1.5263317, 1)
 
-[node name="Board" type="Control" unique_id=65642768 node_paths=PackedStringArray("table", "field_spawner_pivot", "hand", "next_player_button", "prev_player_button", "current_player_label", "round_manager", "player_manager")]
+[node name="Board" type="Control" unique_id=65642768 node_paths=PackedStringArray("table", "player_area_spawner_pivot", "hand", "next_player_button", "prev_player_button", "current_player_label", "round_manager", "player_manager")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -44,7 +44,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_xiot5")
 table = NodePath("Table")
-field_spawner_pivot = NodePath("Table/FieldSpawnerPivot")
+player_area_spawner_pivot = NodePath("Table/PlayerAreaSpawnerPivot")
 hand = NodePath("UI/Hand")
 next_player_button = NodePath("UI/NextPlayerButton")
 prev_player_button = NodePath("UI/PrevPlayerButton")
@@ -65,7 +65,7 @@ grow_vertical = 2
 script = ExtResource("3_qlllu")
 animated_rotation = SubResource("Resource_xqaal")
 
-[node name="FieldSpawnerPivot" type="Control" parent="Table" unique_id=525479343 node_paths=PackedStringArray("field_spawner")]
+[node name="PlayerAreaSpawnerPivot" type="Control" parent="Table" unique_id=525479343 node_paths=PackedStringArray("player_area_spawner")]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -75,12 +75,12 @@ anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("10_brcfe")
-enemy_field_scene = ExtResource("11_csi2d")
-your_field_scene = ExtResource("8_4l5f1")
-field_spawner = NodePath("FieldSpawner")
+enemy_player_area_scene = ExtResource("6_a1ark")
+your_player_area_scene = ExtResource("7_rt3kt")
+player_area_spawner = NodePath("FieldSpawner")
 animated_rotation = SubResource("Resource_dqnt6")
 
-[node name="FieldSpawner" type="Control" parent="Table/FieldSpawnerPivot" unique_id=1518046023]
+[node name="FieldSpawner" type="Control" parent="Table/PlayerAreaSpawnerPivot" unique_id=1518046023]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -94,7 +94,7 @@ offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Sprite2D" type="Sprite2D" parent="Table/FieldSpawnerPivot" unique_id=655082248]
+[node name="Sprite2D" type="Sprite2D" parent="Table/PlayerAreaSpawnerPivot" unique_id=655082248]
 texture = ExtResource("4_cp8jt")
 
 [node name="UI" type="Control" parent="." unique_id=224199160]
@@ -200,8 +200,8 @@ your_player_scene = ExtResource("3_me64r")
 enemy_player_scene = ExtResource("4_gti8d")
 player_container = NodePath("../UI/PlayerContainer")
 
-[connection signal="new_field_spawned" from="Table/FieldSpawnerPivot" to="." method="_on_field_spawner_pivot_new_field_spawned"]
-[connection signal="spawning_finished" from="Table/FieldSpawnerPivot" to="." method="_on_field_spawner_pivot_spawning_finished"]
+[connection signal="new_area_spawned" from="Table/PlayerAreaSpawnerPivot" to="." method="_on_player_area_spawner_pivot_new_area_spawned"]
+[connection signal="spawning_finished" from="Table/PlayerAreaSpawnerPivot" to="." method="_on_player_area_spawner_pivot_spawning_finished"]
 [connection signal="pressed" from="UI/NextPlayerButton" to="." method="_on_next_player_button_pressed"]
 [connection signal="pressed" from="UI/PrevPlayerButton" to="." method="_on_prev_player_button_pressed"]
 [connection signal="pressed" from="UI/EndTurn" to="." method="_on_end_turn_pressed"]

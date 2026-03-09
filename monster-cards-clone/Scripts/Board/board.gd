@@ -8,7 +8,7 @@ extends Control
 @onready var sfx_wrong: AudioStreamPlayer = $sfx_wrong
 
 @export var table: Table
-@export var field_spawner_pivot: Control
+@export var player_area_spawner_pivot: ObjectPivot
 @export var hand: MarginContainer
 
 @export var next_player_button: Button
@@ -26,11 +26,11 @@ extends Control
 var selected_card: HandCard = null
 var phase: Phase = Phase.PREP
 
-var unassigned_field_player_ids: Array
+var unassigned_area_player_ids: Array
 
 const MIN_TABLE_RADIUS: float = 400.0
 const CAMERA_ADDITIONAL_RADIUS: float = -100.0
-const FIELD_SPAWNER_ADDITIONAL_RADIUS: float = -100.0
+const PLAYER_AREA_SPAWNER_ADDITIONAL_RADIUS: float = -100.0
 
 signal call_sync_game(game_state: Dictionary)
 signal send_placed_card(serialized_card: Dictionary, slot_id: int)
@@ -43,7 +43,7 @@ enum Phase {PREP, COMBAT}
 func _ready():
 	var table_radius: float = calculate_table_radius(player_manager.get_player_count())
 	set_radii(table_radius)
-	spawn_fields(player_manager.get_player_count())
+	spawn_player_areas(player_manager.get_player_count())
 
 	for card in hand.get_cards():
 		card.card_placed.connect(_place_card_into_slot)
@@ -124,7 +124,7 @@ func calculate_table_radius(players_count: int) -> float:
 func set_radii(radius: float):
 	table.global_position.y -= radius + CAMERA_ADDITIONAL_RADIUS
 	table.set_radius(radius)
-	field_spawner_pivot.set_radius(radius + FIELD_SPAWNER_ADDITIONAL_RADIUS)
+	player_area_spawner_pivot.set_radius(radius + PLAYER_AREA_SPAWNER_ADDITIONAL_RADIUS)
 
 #UI
 func _on_end_turn_pressed() -> void:
@@ -141,31 +141,46 @@ func set_your_field(your_field: YourField):
 	for slot in your_field.get_slots():
 		slot.clicked.connect(slot_clicked)
 
-#UI
-func spawn_fields(players_count: int):
-	unassigned_field_player_ids = player_manager.get_unassigned_field_player_ids()
-	field_spawner_pivot.spawn_fields(players_count)
+
+func set_your_area(player_area: PlayerArea):
+	set_your_field(player_area.get_field())
+	set_player_deck(player_area.get_deck(), your_id)
 
 #UI
-func _on_field_spawner_pivot_spawning_finished() -> void:
-	field_spawner_pivot.queue_free()
+func spawn_player_areas(players_count: int):
+	unassigned_area_player_ids = player_manager.get_unassigned_area_player_ids()
+	player_area_spawner_pivot.spawn_player_areas(players_count)
+
+#UI
+func _on_player_area_spawner_pivot_spawning_finished() -> void:
+	player_area_spawner_pivot.queue_free()
 
 #UI
 func set_first_player_field(field: Field):
 	"""
 	Sets field to the first player in the list which doesn't have one.
 	"""
-	set_player_field(field, unassigned_field_player_ids[0])
-	unassigned_field_player_ids.remove_at(0)
+	set_player_field(field, unassigned_area_player_ids[0])
+	unassigned_area_player_ids.remove_at(0)
 
 #UI
-func _on_field_spawner_pivot_new_field_spawned(field: Field) -> void:
-	table.add_child(field)
+func _on_player_area_spawner_pivot_new_area_spawned(new_player_area: PlayerArea) -> void:
+	table.add_child(new_player_area)
 
-	if is_instance_of(field, YourField):
-		set_your_field(field)
+	if is_instance_of(new_player_area, YourPlayerArea):
+		set_your_area(new_player_area)
 	else:
-		set_first_player_field(field)
+		set_first_player_area(new_player_area)
+
+
+func set_first_player_area(player_area: PlayerArea):
+	var player_id = unassigned_area_player_ids[0]
+
+	set_player_field(player_area.get_field(), player_id)
+	set_player_deck(player_area.get_deck(), player_id)
+
+	unassigned_area_player_ids.remove_at(0)
+
 
 #BOARD? need to split this to rounds and players/ui
 func verify_card_placement(player_id: int, slot_id: int) -> ValidationResponses:
@@ -233,6 +248,10 @@ func init_players(multiplayer_players: Array):
 
 func set_player_field(field: Field, player_id: int):
 	player_manager.set_player_field(field, player_id)
+
+
+func set_player_deck(deck: Deck, player_id: int):
+	player_manager.set_player_deck(deck, player_id)
 
 
 func set_your_id(id: int):

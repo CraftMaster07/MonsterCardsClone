@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://if4366cpnfs0"]
+
+[ext_resource type="PackedScene" uid="uid://dtpst7jgrdpqq" path="res://Scenes/Board/Field/enemy_field.tscn" id="1_5s5d8"]
+[ext_resource type="Script" uid="uid://sxpdfiiwyig7" path="res://Scripts/Board/PlayerArea/player_area.gd" id="1_r08ff"]
+[ext_resource type="PackedScene" uid="uid://dxt0343x16g61" path="res://Scenes/Board/deck.tscn" id="2_1a8a0"]
+
+[node name="EnemyPlayerArea" type="Control" unique_id=1536100535]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_r08ff")
+
+[node name="Field" parent="." unique_id=43736776 instance=ExtResource("1_5s5d8")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Deck" parent="." unique_id=1804813508 instance=ExtResource("2_1a8a0")]
+layout_mode = 0
+offset_left = 176.0
+offset_top = -100.0
+offset_right = 236.0
+offset_bottom = -10.0
