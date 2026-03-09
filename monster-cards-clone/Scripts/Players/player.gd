@@ -6,7 +6,7 @@ var player_id: int
 
 const STARTING_HEALTH: int = 20
 var health: int
-var deck: Array
+var deck: Deck
 var field: Field
 var hand: PackedScene
 
@@ -66,6 +66,7 @@ func serialize():
 		"player_name": player_name,
 		"health": health,
 		"field": field.serialize(),
+	#	"deck": deck.serialize(),
 	}
 
 
@@ -75,6 +76,7 @@ func deserialize(serialized_player: Dictionary):
 	health = serialized_player['health']
 	update_health()
 	field.deserialize(serialized_player['field'])
+	#deck.deserialize(serialized_player['deck'])
 
 
 func place_serialized_card_into_slot(serialized_card: Dictionary, slot_id: int):
@@ -87,3 +89,11 @@ func get_id():
 
 func exorcise():
 	field.exorcise()
+
+
+func set_deck(new_deck: Deck):
+	deck = new_deck
+
+
+func draw_card():
+	return deck.draw_card()

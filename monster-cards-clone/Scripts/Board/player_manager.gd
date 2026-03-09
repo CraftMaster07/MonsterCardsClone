@@ -90,6 +90,10 @@ func set_player_field(field: Field, player_id: int):
 	get_player(player_id).set_field(field)
 
 
+func set_player_deck(deck: Deck, player_id: int):
+	get_player(player_id).set_deck(deck)
+
+
 func set_your_id(id: int):
 	your_id = id
 

@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bbrpcmbklqpmc" path="res://Scripts/Board/deck.gd" id="1_25u8u"]
 [ext_resource type="PackedScene" uid="uid://cwrvcgm3n85bl" path="res://Scenes/Board/Card/deck_card.tscn" id="1_40wud"]
+[ext_resource type="Theme" uid="uid://f2a4ylwdbwtx" path="res://Assets/Styles/main_theme.tres" id="3_01vfr"]
 
 [node name="Deck" type="MarginContainer" unique_id=1804813508 node_paths=PackedStringArray("cards_container", "card_count_label")]
 offset_right = 60.0
@@ -31,8 +32,8 @@ layout_mode = 0
 
 [node name="CardCountLabel" type="RichTextLabel" parent="." unique_id=2083648762]
 layout_mode = 2
+theme = ExtResource("3_01vfr")
 bbcode_enabled = true
 text = "[color=red]-1[/color]"
-tab_size = 5
 horizontal_alignment = 1
 vertical_alignment = 1

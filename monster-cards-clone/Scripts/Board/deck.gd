@@ -1,3 +1,4 @@
+class_name Deck
 extends Control
 
 @export var deck_card_scene: PackedScene
@@ -60,4 +61,4 @@ func get_card_count():
 
 
 func update_cards_count_label():
-	card_count_label.text = ColorConstants.RED_TEXT.format([str(get_card_count())])
+	card_count_label.text = str(get_card_count())
