@@ -8,7 +8,7 @@
 size = Vector2(65, 91)
 
 [node name="CardHand" type="Control" unique_id=1066999664]
-custom_minimum_size = Vector2(65, 91)
+custom_minimum_size = Vector2(60, 90)
 layout_mode = 3
 anchors_preset = 0
 offset_right = 65.0

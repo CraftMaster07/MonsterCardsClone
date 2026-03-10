@@ -17,7 +17,6 @@ atlas = ExtResource("2_3ak4q")
 region = Rect2(16, 0, 16, 16)
 
 [node name="CardFront" type="TextureButton" unique_id=20270715 node_paths=PackedStringArray("health_label")]
-custom_minimum_size = Vector2(65, 91)
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -25,8 +24,8 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -32.5
 offset_top = -45.5
-offset_right = 32.5
-offset_bottom = 45.5
+offset_right = 27.5
+offset_bottom = 44.5
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(32, 45)
@@ -46,9 +45,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-color = Color(0.058658905, 0.1516783, 0.30782342, 1)
 
 [node name="costTexture" type="TextureRect" parent="." unique_id=570230339]
+visible = false
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 1
 anchors_preset = 1
@@ -73,7 +72,14 @@ text = "2"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="Polygon2D" type="Polygon2D" parent="." unique_id=1416910620]
+position = Vector2(51.5, 75.5)
+scale = Vector2(1.9, 1.875)
+color = Color(0.98862165, 0, 0.08697771, 1)
+polygon = PackedVector2Array(0, -0.5333252, 1.0526428, -1.6000061, 2, -2, 4, -1, 4.210541, 1.6000061, 3, 4, 0, 6, -3, 4, -4.736847, 1.0666656, -4, -1, -2, -2, -1.0526123, -1.6000061)
+
 [node name="attackTexture" type="TextureRect" parent="." unique_id=553737098]
+visible = false
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 1
 anchors_preset = -1
@@ -103,6 +109,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="healthTexture" type="TextureRect" parent="." unique_id=319546632]
+visible = false
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 1
 anchors_preset = -1
