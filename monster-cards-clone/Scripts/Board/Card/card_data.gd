@@ -50,6 +50,7 @@ func check_death():
 		print_rich("[color=red]Card destroyed![/color]")
 		die()
 
+
 func die():
 	is_ghost = true
 
@@ -66,3 +67,13 @@ func hit(target):
 		target.take_damage(attack)
 	else:
 		push_error("target does not have take_damage method")
+
+
+func get_hash():
+	return hash(str(serialize()))
+
+
+func reset():
+	health = STARTING_HEALTH
+	attack = STARTING_ATTACK
+	cost = STARTING_COST
