@@ -17,6 +17,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 config/name="Monster Cards Clone"
 run/main_scene="uid://b3ownaau48wom"
 config/features=PackedStringArray("4.6", "GL Compatibility")
+run/max_fps=240
 config/icon="uid://cjn63si50nhet"
 
 [audio]
