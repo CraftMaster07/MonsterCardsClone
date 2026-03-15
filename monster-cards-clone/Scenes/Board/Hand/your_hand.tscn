@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://d15k25ah1su5c"]
+
+[ext_resource type="PackedScene" uid="uid://b6obljxfl8pah" path="res://Scenes/Board/Hand/enemy_hand.tscn" id="1_pwkhx"]
+[ext_resource type="Script" uid="uid://beofdir8y5l3q" path="res://Scripts/Board/Hand/your_hand.gd" id="2_tb5go"]
+
+[node name="YourHand" unique_id=2133211725 instance=ExtResource("1_pwkhx")]
+mouse_filter = 2
+script = ExtResource("2_tb5go")

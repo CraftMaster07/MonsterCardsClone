@@ -10,7 +10,7 @@ func _ready():
 	update_cards_count_label()
 
 
-func draw_card():
+func draw_card() -> bool:
 	if get_child_count() > 0:
 		remove_card()
 		return true

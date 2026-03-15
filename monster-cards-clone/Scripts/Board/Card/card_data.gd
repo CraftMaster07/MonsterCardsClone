@@ -8,7 +8,9 @@ var old_image_id: int
 # maybe implement starting stats differently
 const STARTING_HEALTH = 2
 const STARTING_ATTACK = 1
-const STARTING_COST = 1
+const STARTING_COST = 2
+
+var uuid: String
 
 var health: int
 var attack: int
@@ -16,28 +18,43 @@ var cost: int
 
 var is_ghost: bool = false
 
-func _init():
-	health = STARTING_HEALTH
-	attack = STARTING_ATTACK
-	cost = STARTING_COST
+
+func _init(serialized_data: Dictionary = {}):
+	if serialized_data:
+		uuid = serialized_data["uuid"]
+		deserialize(serialized_data)
+	else:
+		uuid = UUID.v4()
+		health = STARTING_HEALTH
+		attack = STARTING_ATTACK
+		cost = STARTING_COST
 
 
 func serialize() -> Dictionary:
 	return {
-		"name": card_name,
-		"health": health,
-		"attack": attack,
-		"cost": cost,
-		"image_id": image_id,
+		"uuid": uuid,
+		"data": {
+			"name": card_name,
+			"health": health,
+			"attack": attack,
+			"cost": cost,
+			"image_id": image_id,
+			"is_ghost": is_ghost,
+		}
 	}
 
 
-func deserialize(data):
+func deserialize(serialized: Dictionary):
+	if serialized["uuid"] != uuid:
+		push_error("uuid mismatch: " + serialized["uuid"] + " != " + uuid)
+
+	var data: Dictionary = serialized["data"]
 	card_name = data["name"]
 	health = data["health"]
 	attack = data["attack"]
 	cost = data["cost"]
-	check_death()
+	image_id = data["image_id"]
+	is_ghost = data["is_ghost"]
 
 
 func take_damage(amount : int) -> void:
@@ -67,10 +84,6 @@ func hit(target):
 		target.take_damage(attack)
 	else:
 		push_error("target does not have take_damage method")
-
-
-func get_hash():
-	return hash(str(serialize()))
 
 
 func reset():

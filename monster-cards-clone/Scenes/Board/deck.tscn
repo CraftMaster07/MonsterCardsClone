@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dxt0343x16g61"]
 
 [ext_resource type="Script" uid="uid://bbrpcmbklqpmc" path="res://Scripts/Board/deck.gd" id="1_25u8u"]
-[ext_resource type="PackedScene" uid="uid://cwrvcgm3n85bl" path="res://Scenes/Board/Card/deck_card.tscn" id="1_40wud"]
+[ext_resource type="PackedScene" uid="uid://cwrvcgm3n85bl" path="res://Scenes/Board/Card/dummy_card.tscn" id="1_40wud"]
 [ext_resource type="Theme" uid="uid://f2a4ylwdbwtx" path="res://Assets/Styles/main_theme.tres" id="3_01vfr"]
 
 [node name="Deck" type="MarginContainer" unique_id=1804813508 node_paths=PackedStringArray("cards_container", "card_count_label")]
@@ -14,21 +14,6 @@ card_count_label = NodePath("CardCountLabel")
 
 [node name="CardsContainer" type="Control" parent="." unique_id=1364681380]
 layout_mode = 2
-
-[node name="DeckCard" parent="CardsContainer" unique_id=608550109 instance=ExtResource("1_40wud")]
-layout_mode = 0
-
-[node name="DeckCard2" parent="CardsContainer" unique_id=1221809532 instance=ExtResource("1_40wud")]
-layout_mode = 0
-
-[node name="DeckCard3" parent="CardsContainer" unique_id=894678117 instance=ExtResource("1_40wud")]
-layout_mode = 0
-
-[node name="DeckCard4" parent="CardsContainer" unique_id=1494132398 instance=ExtResource("1_40wud")]
-layout_mode = 0
-
-[node name="DeckCard5" parent="CardsContainer" unique_id=1313200668 instance=ExtResource("1_40wud")]
-layout_mode = 0
 
 [node name="CardCountLabel" type="RichTextLabel" parent="." unique_id=2083648762]
 layout_mode = 2

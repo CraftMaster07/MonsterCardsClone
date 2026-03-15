@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://dtpst7jgrdpqq" path="res://Scenes/Board/Field/enemy_field.tscn" id="1_5s5d8"]
 [ext_resource type="Script" uid="uid://sxpdfiiwyig7" path="res://Scripts/Board/PlayerArea/player_area.gd" id="1_r08ff"]
 [ext_resource type="PackedScene" uid="uid://dxt0343x16g61" path="res://Scenes/Board/deck.tscn" id="2_1a8a0"]
+[ext_resource type="PackedScene" uid="uid://b6obljxfl8pah" path="res://Scenes/Board/Hand/enemy_hand.tscn" id="4_ei5ps"]
 
 [node name="EnemyPlayerArea" type="Control" unique_id=1536100535]
 layout_mode = 3
@@ -25,3 +26,9 @@ offset_left = 176.0
 offset_top = -100.0
 offset_right = 236.0
 offset_bottom = -10.0
+
+[node name="Hand" parent="." unique_id=2133211725 instance=ExtResource("4_ei5ps")]
+layout_mode = 0
+anchors_preset = 0
+offset_top = 120.0
+offset_bottom = 120.0

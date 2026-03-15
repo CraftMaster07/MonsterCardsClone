@@ -16,9 +16,13 @@ signal connection_failure()
 signal server_disconnected()
 
 signal sync_game(game_state: Dictionary)
+signal shadow_sync(serialized_shadow_player_data: Dictionary)
 signal client_placed_card(player_id: int, serialized_card: Dictionary, slot_id: int)
 signal client_ended_turn(player_id: int)
 signal client_attacked(player_id: int, attacked_id: int)
+
+signal received_deck_blueprint(player_id: int, deck_blueprint: Dictionary)
+signal get_deck_blueprint()
 
 @export var server_script: Script
 @export var client_script: Script
@@ -49,6 +53,7 @@ func host_game(player_name) -> void:
 	multiplayer_interface.client_placed_card.connect(_on_multiplayer_interface_client_placed_card)
 	multiplayer_interface.client_ended_turn.connect(_on_multiplayer_interface_client_ended_turn)
 	multiplayer_interface.client_attacked.connect(_on_multiplayer_interface_client_attacked)
+	multiplayer_interface.received_deck_blueprint.connect(_on_multiplayer_interface_received_deck)
 
 	multiplayer_interface.host_game(PORT, player_name)
 	your_id = multiplayer.get_unique_id()
@@ -160,3 +165,26 @@ func send_player_attacked(attacked_id: int) -> void:
 
 func _on_multiplayer_interface_client_attacked(player_id, attacked_id: int) -> void:
 	client_attacked.emit(player_id, attacked_id)
+
+
+func request_deck_blueprints() -> void:
+	multiplayer_interface.request_deck_blueprints()
+
+
+func _on_multiplayer_interface_received_deck(player_id: int, deck_blueprint: Dictionary) -> void:
+	received_deck_blueprint.emit(player_id, deck_blueprint)
+
+
+func _on_multiplayer_interface_get_deck_blueprint() -> void:
+	get_deck_blueprint.emit()
+
+
+func send_deck_blueprint(deck_blueprint: Dictionary):
+	multiplayer_interface.send_deck_blueprint(deck_blueprint)
+
+func send_shadow_sync(player_id: int, serialized_shadow_player_data: Dictionary) -> void:
+	multiplayer_interface.send_shadow_sync(player_id, serialized_shadow_player_data)
+
+
+func _on_multiplayer_interface_shadow_sync(serialized_shadow_player_data: Dictionary) -> void:
+	shadow_sync.emit(serialized_shadow_player_data)

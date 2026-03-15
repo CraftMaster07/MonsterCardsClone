@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" uid="uid://ctku11dgwh5at" path="res://Scripts/Board/board.gd" id="1_xiot5"]
 [ext_resource type="PackedScene" uid="uid://cru4gfksm3rbh" path="res://Scenes/Board/Card/board_card.tscn" id="2_a1ark"]
-[ext_resource type="PackedScene" uid="uid://b6obljxfl8pah" path="res://Scenes/Board/hand.tscn" id="2_shhme"]
 [ext_resource type="PackedScene" uid="uid://dgtx0qw3qwnw3" path="res://Scenes/Players/your_player.tscn" id="3_me64r"]
 [ext_resource type="Script" uid="uid://4wekwqlpwfc0" path="res://Scripts/Board/table.gd" id="3_qlllu"]
 [ext_resource type="Texture2D" uid="uid://cjn63si50nhet" path="res://Assets/icon.svg" id="4_cp8jt"]
@@ -35,7 +34,7 @@ metadata/_custom_type_script = "uid://hvpfm3s0svah"
 font = ExtResource("12_xqaal")
 font_color = Color(0.29998645, 0.71706825, 1.5263317, 1)
 
-[node name="Board" type="Control" unique_id=65642768 node_paths=PackedStringArray("table", "player_area_spawner_pivot", "hand", "next_player_button", "prev_player_button", "current_player_label", "round_manager", "player_manager")]
+[node name="Board" type="Control" unique_id=65642768 node_paths=PackedStringArray("table", "player_area_spawner_pivot", "next_player_button", "prev_player_button", "current_player_label", "round_manager", "player_manager")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -45,7 +44,6 @@ grow_vertical = 2
 script = ExtResource("1_xiot5")
 table = NodePath("Table")
 player_area_spawner_pivot = NodePath("Table/PlayerAreaSpawnerPivot")
-hand = NodePath("UI/Hand")
 next_player_button = NodePath("UI/NextPlayerButton")
 prev_player_button = NodePath("UI/PrevPlayerButton")
 board_card_scene = ExtResource("2_a1ark")
@@ -111,14 +109,6 @@ layout_mode = 0
 offset_top = -3.0
 offset_right = 125.0
 offset_bottom = 59.0
-
-[node name="Hand" parent="UI" unique_id=1698699269 instance=ExtResource("2_shhme")]
-layout_mode = 1
-offset_left = -2.0
-offset_top = -145.0
-offset_right = -2.0
-offset_bottom = -14.0
-theme_override_constants/margin_bottom = 40
 
 [node name="Icon" type="Sprite2D" parent="UI" unique_id=1686537728]
 position = Vector2(85.00018, 561)

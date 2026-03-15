@@ -59,7 +59,7 @@ func remove_player(id: int):
 	players.erase(id)
 
 
-func serialize_players():
+func serialize():
 	var serialized_players := {}
 
 	for player in players.values():
@@ -68,7 +68,7 @@ func serialize_players():
 	return serialized_players
 
 
-func deserialize_players(serialized_players: Dictionary):
+func deserialize(serialized_players: Dictionary):
 	for serialized_player_id in serialized_players:
 		players[serialized_player_id].deserialize(serialized_players[serialized_player_id])
 
@@ -92,6 +92,10 @@ func set_player_field(field: Field, player_id: int):
 
 func set_player_deck(deck: Deck, player_id: int):
 	get_player(player_id).set_deck(deck)
+
+
+func set_player_hand(hand: Hand, player_id: int):
+	get_player(player_id).set_hand(hand)
 
 
 func set_your_id(id: int):
@@ -124,3 +128,23 @@ func reset_attack_history():
 func exorcise():
 	for player in players.values():
 		player.exorcise()
+
+
+func draw_card(player_id: int):
+	get_player(player_id).draw_card()
+
+
+func add_cards_to_deck(player_id: int, cards_count: int):
+	get_player(player_id).add_cards_to_deck(cards_count)
+
+
+func get_your_player():
+	return get_player(your_id)
+
+
+func shadow_deserialize(serialized_shadow_player_data: Dictionary):
+	get_your_player().shadow_deserialize(serialized_shadow_player_data)
+
+
+func place_serialized_card_into_slot(player_id: int, serialized_card: Dictionary, slot_id: int):
+	get_player(player_id).place_serialized_card_into_slot(serialized_card, slot_id)

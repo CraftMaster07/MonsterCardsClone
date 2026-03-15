@@ -3,10 +3,13 @@
 [ext_resource type="PackedScene" uid="uid://7ukrl57uilte" path="res://Scenes/Board/Field/your_field.tscn" id="1_0sjld"]
 [ext_resource type="Script" uid="uid://blqwrjfjawlsc" path="res://Scripts/Board/PlayerArea/your_player_area.gd" id="1_cth6i"]
 [ext_resource type="PackedScene" uid="uid://dxt0343x16g61" path="res://Scenes/Board/deck.tscn" id="2_6lo4n"]
+[ext_resource type="PackedScene" uid="uid://d15k25ah1su5c" path="res://Scenes/Board/Hand/your_hand.tscn" id="4_ejj2a"]
 
 [node name="YourPlayerArea" type="Control" unique_id=1640011511]
 layout_mode = 3
 anchors_preset = 0
+offset_top = 1.0
+offset_bottom = 1.0
 script = ExtResource("1_cth6i")
 
 [node name="Field" parent="." unique_id=497800204 instance=ExtResource("1_0sjld")]
@@ -25,3 +28,8 @@ offset_left = 176.0
 offset_top = -100.0
 offset_right = 236.0
 offset_bottom = -10.0
+
+[node name="Hand" parent="." unique_id=2133211725 instance=ExtResource("4_ejj2a")]
+layout_mode = 1
+offset_top = 250.0
+offset_bottom = 250.0
