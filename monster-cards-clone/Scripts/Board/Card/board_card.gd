@@ -1,7 +1,6 @@
 class_name BoardCard
-extends Control
+extends CardSerializer
 
-var card_data: CardData
 var image: Texture
 
 @export var card_front: CardFront
@@ -14,18 +13,8 @@ func _ready():
 	update_image()
 
 
-func serialize() -> Dictionary:
-	return {
-		"card_data": card_data.serialize(),
-	}
-
-
-static func serialized_card_data_from_serialized(serialized: Dictionary) -> Dictionary:
-	return serialized["card_data"]
-
-
 func deserialize(data: Dictionary):
-	card_data.deserialize(serialized_card_data_from_serialized(data))
+	super.deserialize(data)
 	update_image()
 	update_labels()
 

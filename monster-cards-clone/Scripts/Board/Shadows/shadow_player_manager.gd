@@ -26,14 +26,7 @@ func draw_card(player_id: int) -> bool:
 
 
 func shadow_serialize_player(player_id: int) -> Dictionary:
-    if player_id == 1:
-        delete_me()
     return get_player(player_id).shadow_serialize()
-
-
-func delete_me():
-    for player in players.values():
-        print("player ", player.player_id, ": deck size = ", player.get_deck_card_data_count(), ", hand size = ", player.hand.get_card_data_count())
 
 
 func remove_serialized_card_from_hand(player_id: int, serialized_card: Dictionary):

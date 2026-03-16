@@ -39,7 +39,6 @@ func serialize() -> Dictionary:
 			"attack": attack,
 			"cost": cost,
 			"image_id": image_id,
-			"is_ghost": is_ghost,
 		}
 	}
 
@@ -54,7 +53,7 @@ func deserialize(serialized: Dictionary):
 	attack = data["attack"]
 	cost = data["cost"]
 	image_id = data["image_id"]
-	is_ghost = data["is_ghost"]
+	check_death()
 
 
 func take_damage(amount : int) -> void:

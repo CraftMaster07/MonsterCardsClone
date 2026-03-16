@@ -6,6 +6,7 @@ extends Hand
 
 
 func deserialize(serialized: Dictionary):
+	print("server: " if multiplayer.is_server() else "client: ", serialized['cards_count'], get_cards_count())
 	var card_diff: int = serialized['cards_count'] - get_cards_count()
 
 	if card_diff > 0:

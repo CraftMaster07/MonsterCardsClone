@@ -5,3 +5,13 @@
 
 [node name="Board" unique_id=65642768 instance=ExtResource("1_c3vay")]
 script = ExtResource("2_mv6b3")
+
+[node name="Button" type="Button" parent="." index="10" unique_id=489071821]
+layout_mode = 0
+offset_left = 934.66785
+offset_top = 599.09296
+offset_right = 942.66785
+offset_bottom = 607.09296
+text = "sync game"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

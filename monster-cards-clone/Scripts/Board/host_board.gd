@@ -108,10 +108,8 @@ func client_placed_card(player_id: int, serialized_card: Dictionary, slot_id: in
 	var status := verify_card_placement(player_id, slot_id)
 	match status:
 		ValidationResponses.OK:
-			if player_id != 1:
-				player_manager.place_serialized_card_into_slot(player_id, serialized_card, slot_id)
-			var serialized_card_data = BoardCard.serialized_card_data_from_serialized(serialized_card)
-			shadow_player_manager.remove_serialized_card_from_hand(player_id, serialized_card_data)
+			player_manager.place_serialized_card_into_slot(player_id, serialized_card, slot_id)
+			shadow_player_manager.remove_serialized_card_from_hand(player_id, serialized_card)
 		ValidationResponses.SLOT_TAKEN:
 			print("slot taken: (Player: ", player_id, ", Slot: ", slot_id, ")")
 		ValidationResponses.NOT_YOUR_TURN:
@@ -122,6 +120,11 @@ func client_placed_card(player_id: int, serialized_card: Dictionary, slot_id: in
 			print("unexpected error occured (Player: ", player_id, ", Slot: ", slot_id, ")")
 
 	send_game_state()
+
+
+func _replace_handcard_with_boardcard(card: HandCard, slot: EnemyCardSlot):
+	super._replace_handcard_with_boardcard(card, slot)
+	shadow_player_manager.remove_serialized_card_from_hand(your_id, card.serialize())
 
 
 func init_player_boards():
@@ -152,3 +155,11 @@ func _on_round_manager_round_ended() -> void:
 func remove_player(player_id: int):
 	super.remove_player(player_id)
 	send_game_state()
+
+
+func _on_button_pressed() -> void:
+	send_game_state()
+
+
+# func update_enemy_hands():
+# 	for player_id in shadow_player_manager.get_player_ids():

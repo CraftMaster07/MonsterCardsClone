@@ -1,5 +1,5 @@
 class_name HandCard
-extends Control
+extends CardSerializer
 
 @export var hover_height: float = 20
 @export var animation_length: float = 0.2
@@ -32,8 +32,6 @@ var mouse_in_card: bool = false
 var overlapping_slot_areas: Array[SlotArea]
 var tween: Tween
 
-var card_data: CardData
-
 
 func _ready() -> void:
 	card_front.set_initial_values(card_data)
@@ -55,6 +53,7 @@ func _input(event: InputEvent) -> void:
 		
 		drag_state = DragState.UNDRAGGABLE
 		
+		print("overlapping_slot_areas: ", overlapping_slot_areas)
 		if not overlapping_slot_areas.is_empty():
 			var nearest_area = _find_nearest_overlapping_area()
 			card_placed.emit(self, nearest_area.slot)
@@ -220,7 +219,7 @@ func update_labels():
 
 
 func deserialize(serialized_card_data: Dictionary):
-	card_data.deserialize(serialized_card_data)
+	super.deserialize(serialized_card_data)
 	update_labels()
 
 

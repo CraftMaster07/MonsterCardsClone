@@ -47,20 +47,17 @@ func deserialize(serialized_slot: Dictionary):
 	if serialized_card and card:
 		card.deserialize(serialized_card)
 	elif serialized_card:
-		var serialized_card_data = BoardCard.serialized_card_data_from_serialized(serialized_card)
-		var new_card_data = CardData.new(serialized_card_data)
+		var new_card_data = CardData.new(serialized_card)
 		place_card(BoardCard.create(new_card_data))
 	elif card:
-		remove_child(card)
-		card.queue_free()
+		remove_card()
 
 
 func place_serialized_card(serialized_card: Dictionary):
 	if card:
 		card.deserialize(serialized_card)
 	else:
-		var serialized_card_data = BoardCard.serialized_card_data_from_serialized(serialized_card)
-		var new_card_data = CardData.new(serialized_card_data)
+		var new_card_data = CardData.new(serialized_card)
 		var new_card = BoardCard.create(new_card_data)
 		new_card.deserialize(serialized_card)
 		place_card(new_card)
@@ -80,6 +77,10 @@ func flash_color(flashed_color: Color = error_color):
 
 func exorcise():
 	if card and card.is_ghost():
-		remove_child(card)
-		card.queue_free()
-		card = null
+		remove_card()
+
+
+func remove_card():
+	remove_child(card)
+	card.queue_free()
+	card = null
