@@ -35,3 +35,7 @@ func remove_serialized_card_from_hand(player_id: int, serialized_card: Dictionar
 
 func get_deck_card_data_count(player_id: int) -> int:
     return get_player(player_id).get_deck_card_data_count()
+
+
+func get_hand_card_data_count(player_id: int) -> int:
+    return get_player(player_id).get_hand_card_data_count()

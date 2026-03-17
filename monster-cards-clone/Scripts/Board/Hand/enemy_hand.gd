@@ -6,8 +6,11 @@ extends Hand
 
 
 func deserialize(serialized: Dictionary):
-	print("server: " if multiplayer.is_server() else "client: ", serialized['cards_count'], get_cards_count())
-	var card_diff: int = serialized['cards_count'] - get_cards_count()
+	update_cards(serialized['cards_count'])
+
+
+func update_cards(new_card_count: int):
+	var card_diff: int = new_card_count - get_cards_count()
 
 	if card_diff > 0:
 		add_cards(card_diff)
@@ -36,4 +39,6 @@ func add_card():
 
 func remove_card():
 	if cards_container.get_child_count() == 0: return
-	cards_container.get_child(0).queue_free()
+	var card = cards_container.get_child(0)
+	cards_container.remove_child(card)
+	card.queue_free()

@@ -53,7 +53,6 @@ func _input(event: InputEvent) -> void:
 		
 		drag_state = DragState.UNDRAGGABLE
 		
-		print("overlapping_slot_areas: ", overlapping_slot_areas)
 		if not overlapping_slot_areas.is_empty():
 			var nearest_area = _find_nearest_overlapping_area()
 			card_placed.emit(self, nearest_area.slot)

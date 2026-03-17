@@ -26,7 +26,7 @@ func shadow_deserialize(serialized: Dictionary):
 	
 	if not uuid_to_cards.is_empty():
 		for card in uuid_to_cards.values():
-			card.queue_free()
+			remove_card(card)
 
 
 func get_cards() -> Array[HandCard]:
@@ -56,3 +56,13 @@ func add_card(card: HandCard):
 
 func get_cards_count():
 	return cards_container.get_child_count()
+
+
+func serialize():
+	print("your hand count: ", get_cards_count())
+	return super.serialize()
+
+
+func remove_card(card: HandCard):
+	cards_container.remove_child(card)
+	card.queue_free()

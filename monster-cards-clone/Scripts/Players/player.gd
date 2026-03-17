@@ -107,3 +107,7 @@ func set_hand(new_hand: Hand):
 
 func draw_card() -> bool:
 	return deck.draw_card()
+
+
+func update_hand(hand_card_count: int):
+	hand.update_cards(hand_card_count)
