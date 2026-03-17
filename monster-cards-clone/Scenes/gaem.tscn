@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://cfyktcr6rqnlf" path="res://Scenes/Board/board.tscn" id="2_opxgs"]
 [ext_resource type="PackedScene" uid="uid://cpau40ahtb812" path="res://Scenes/Multiplayer/multiplayer_manager.tscn" id="3_4uhnj"]
 [ext_resource type="PackedScene" uid="uid://bx5pjgqin4rp5" path="res://Scenes/Board/host_board.tscn" id="4_opxgs"]
+[ext_resource type="PackedScene" uid="uid://dh65loc4m8hmo" path="res://Scenes/Main Menu/ui_sounds.tscn" id="7_bbmdl"]
 
 [node name="GAEM" type="Node" unique_id=577313856]
 script = ExtResource("1_11bf4")
@@ -16,6 +17,9 @@ host_board_scene = ExtResource("4_opxgs")
 [node name="MainMenu" parent="." unique_id=842849383 instance=ExtResource("2_4uhnj")]
 
 [node name="MultiplayerManager" parent="." unique_id=1411320644 instance=ExtResource("3_4uhnj")]
+
+[node name="UiSounds" parent="." unique_id=780402468 instance=ExtResource("7_bbmdl")]
+root_path = NodePath("../MainMenu")
 
 [connection signal="host_game" from="MainMenu" to="." method="_on_main_menu_host_game"]
 [connection signal="join_game" from="MainMenu" to="." method="_on_main_menu_join_game"]
