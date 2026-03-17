@@ -59,7 +59,6 @@ func get_cards_count():
 
 
 func serialize():
-	print("your hand count: ", get_cards_count())
 	return super.serialize()
 
 

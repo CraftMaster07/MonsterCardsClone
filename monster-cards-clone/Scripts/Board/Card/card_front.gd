@@ -20,16 +20,22 @@ func set_initial_values(card_data: CardData) -> void:
 func update_health(health: int) -> void:
 	if health != initial_health:
 		health_label.text = ColorConstants.RED_TEXT.format([str(health)])
+	else:
+		health_label.text = str(health)
 
 
 func update_attack(attack: int) -> void:
 	if attack != initial_attack:
 		attack_label.text = ColorConstants.RED_TEXT.format([str(attack)])
+	else:
+		attack_label.text = str(attack)
 
 
 func update_cost(cost: int) -> void:
 	if cost != initial_cost:
 		cost_label.text = ColorConstants.RED_TEXT.format([str(cost)])
+	else:
+		cost_label.text = str(cost)
 
 
 func update_labels(card_data: CardData) -> void:
