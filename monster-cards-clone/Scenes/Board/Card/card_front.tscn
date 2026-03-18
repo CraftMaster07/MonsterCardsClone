@@ -4,31 +4,21 @@
 [ext_resource type="Texture2D" uid="uid://f38y60f1hbws" path="res://Assets/Sprites/icon_sheet.png" id="2_3ak4q"]
 [ext_resource type="Script" uid="uid://dbmogwg2kqhsg" path="res://Scripts/Board/Card/card_front.gd" id="2_uemhk"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_eumee"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_bnspj"]
 atlas = ExtResource("2_3ak4q")
-region = Rect2(32, 0, 16, 16)
+region = Rect2(16, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_e6po8"]
 atlas = ExtResource("2_3ak4q")
 region = Rect2(0, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_bnspj"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_eumee"]
 atlas = ExtResource("2_3ak4q")
-region = Rect2(16, 0, 16, 16)
+region = Rect2(32, 0, 16, 16)
 
-[node name="CardFront" type="TextureButton" unique_id=20270715 node_paths=PackedStringArray("health_label")]
-custom_minimum_size = Vector2(65, 91)
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -32.5
-offset_top = -45.5
-offset_right = 32.5
-offset_bottom = 45.5
-grow_horizontal = 2
-grow_vertical = 2
+[node name="CardFront" type="TextureButton" unique_id=20270715 node_paths=PackedStringArray("health_label", "attack_label", "cost_label")]
+offset_right = 60.0
+offset_bottom = 90.0
 pivot_offset = Vector2(32, 45)
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -37,39 +27,41 @@ mouse_default_cursor_shape = 2
 theme = ExtResource("1_sgpad")
 script = ExtResource("2_uemhk")
 health_label = NodePath("healthTexture/healthDisplay")
+attack_label = NodePath("attackTexture/attackDisplay")
+cost_label = NodePath("costTexture/costDisplay")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=289001140]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+offset_right = 60.0
+offset_bottom = 90.0
 mouse_filter = 2
-color = Color(0.058658905, 0.1516783, 0.30782342, 1)
+color = Color(0.2784314, 0.54901963, 0.7490196, 1)
 
-[node name="costTexture" type="TextureRect" parent="." unique_id=570230339]
+[node name="healthTexture" type="TextureRect" parent="." unique_id=319546632]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -42.0
-offset_top = -5.0
-offset_right = -22.0
-offset_bottom = 15.0
-grow_horizontal = 0
-texture = SubResource("AtlasTexture_eumee")
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.9
+anchor_right = 0.1
+anchor_bottom = 0.9
+offset_left = 38.5
+offset_top = -15.900002
+offset_right = 58.5
+offset_bottom = 4.0999985
+grow_vertical = 0
+texture = SubResource("AtlasTexture_bnspj")
 
-[node name="costDisplay" type="RichTextLabel" parent="costTexture" unique_id=1329518268]
+[node name="healthDisplay" type="RichTextLabel" parent="healthTexture" unique_id=1318816426]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_font_sizes/normal_font_size = 16
 bbcode_enabled = true
-text = "2"
+text = "-1"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -97,34 +89,34 @@ anchor_bottom = 1.0
 offset_bottom = -1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_font_sizes/normal_font_size = 16
 bbcode_enabled = true
-text = "1"
+text = "-1"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="healthTexture" type="TextureRect" parent="." unique_id=319546632]
+[node name="costTexture" type="TextureRect" parent="." unique_id=570230339]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.1
-anchor_top = 0.9
-anchor_right = 0.1
-anchor_bottom = 0.9
-offset_left = 38.5
-offset_top = -15.900002
-offset_right = 58.5
-offset_bottom = 4.0999985
-grow_vertical = 0
-texture = SubResource("AtlasTexture_bnspj")
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -42.0
+offset_top = -5.0
+offset_right = -22.0
+offset_bottom = 15.0
+grow_horizontal = 0
+texture = SubResource("AtlasTexture_eumee")
 
-[node name="healthDisplay" type="RichTextLabel" parent="healthTexture" unique_id=1318816426]
+[node name="costDisplay" type="RichTextLabel" parent="costTexture" unique_id=1329518268]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_font_sizes/normal_font_size = 16
 bbcode_enabled = true
-text = "2"
+text = "-1"
 horizontal_alignment = 1
 vertical_alignment = 1

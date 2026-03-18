@@ -1,0 +1,2 @@
+class_name YourPlayerArea
+extends PlayerArea

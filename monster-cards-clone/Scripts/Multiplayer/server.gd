@@ -6,6 +6,8 @@ signal client_placed_card(player_id: int, serialized_card: Dictionary, slot_id: 
 signal client_ended_turn(player_id: int)
 signal client_attacked(player_id: int, attacked_id: int)
 
+signal received_deck_blueprint(player_id: int, deck: Array)
+
 # Replace this with your own server port number between 1024 and 65535.
 const SERVER_PORT = 59007
 var thread = null
@@ -87,6 +89,7 @@ func send_placed_card(serialized_card: Dictionary, slot_id: int):
 func send_end_turn():
 	receive_end_turn()
 
+
 @rpc("any_peer", "call_remote", "reliable", 0)
 func receive_end_turn():
 	var sender := multiplayer.get_remote_sender_id()
@@ -97,9 +100,24 @@ func receive_end_turn():
 func send_player_attacked(attacked_id: int):
 	receive_player_attacked(attacked_id)
 
+
 @rpc("any_peer", "call_remote", "reliable", 0)
 func receive_player_attacked(attacked_id: int):
 	var sender := multiplayer.get_remote_sender_id()
 	sender = sender if sender else 1
 	print("received attack from ", sender)
 	client_attacked.emit(sender, attacked_id)
+
+
+func request_deck_blueprints():
+	# NOTE: can request from specific player if needed
+	receive_request_deck_blueprint.rpc()
+
+
+@rpc("any_peer", "call_local", "reliable", 0)
+func receive_deck_blueprint(serialized_deck_blueprint: Dictionary):
+	received_deck_blueprint.emit(multiplayer.get_remote_sender_id(), serialized_deck_blueprint)
+
+
+func send_shadow_sync(player_id: int, serialized_shadow_player_data: Dictionary):
+	receive_shadow_sync.rpc_id(player_id, serialized_shadow_player_data)

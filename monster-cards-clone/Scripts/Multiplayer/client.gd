@@ -14,6 +14,8 @@ signal connection_failure()
 signal host_started_game()
 
 signal sync_game(game_state: Dictionary)
+signal shadow_sync(serialized_shadow_player_data: Dictionary)
+signal get_deck_blueprint()
 
 func _ready():
 	multiplayer.peer_connected.connect(_on_peer_connected)
@@ -113,3 +115,22 @@ func send_player_attacked(attacked_id: int):
 func receive_player_attacked(_attacked_id: int):
 	# server side function
 	pass
+
+@rpc("authority", "call_local", "reliable", 0)
+func receive_request_deck_blueprint():
+	get_deck_blueprint.emit()
+
+
+func send_deck_blueprint(deck_blueprint: Dictionary):
+	receive_deck_blueprint.rpc_id(1, deck_blueprint)
+
+
+@rpc("any_peer", "call_local", "reliable", 0)
+func receive_deck_blueprint(_serialized_deck_blueprint: Dictionary):
+	# server side function
+	pass
+
+
+@rpc("authority", "call_local", "reliable", 0)
+func receive_shadow_sync(serialized_shadow_player_data: Dictionary):
+	shadow_sync.emit(serialized_shadow_player_data)

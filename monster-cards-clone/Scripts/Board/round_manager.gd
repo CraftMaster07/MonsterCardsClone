@@ -24,6 +24,7 @@ func client_ended_turn(player_id: int):
 
 	if calculate_next_player_index() == 0:
 		round_ended.emit()
+
 	next_turn()
 
 
@@ -44,10 +45,13 @@ func serialize():
 
 
 func deserialize(data: Dictionary):
+	var old_current_player_id = current_player_id
 	current_player_index = data["current_player_index"]
 	current_player_id = data["current_player_id"]
 	turn_order = data["turn_order"]
-	start_turn(current_player_id)
+
+	if old_current_player_id != current_player_id:
+		start_turn(current_player_id)
 
 
 func remove_player(player_id: int):

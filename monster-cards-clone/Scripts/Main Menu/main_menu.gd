@@ -68,10 +68,12 @@ func _on_join_button_pressed() -> void:
 
 
 func _on_host_start_button_pressed() -> void:
+	print("Hosting game")
 	host_game.emit(name_line_edit.text)
 
 
 func _on_join_start_button_pressed() -> void:
+	print("Joining game")
 	join_game.emit(name_line_edit.text, ip_line_edit.text)
 	join_status_label.visible = true
 	join_status_label.text = "Connecting..."

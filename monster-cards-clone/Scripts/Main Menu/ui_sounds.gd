@@ -1,11 +1,11 @@
 extends Node
 
-@export var root_path : NodePath
+@export var root_path: NodePath
 
 # create audio player instances
-@onready var sounds = {
-	&"sfx_click" : AudioStreamPlayer.new(),
-	&"sfx_unclick" : AudioStreamPlayer.new(),
+@onready var sounds: Dictionary[StringName, AudioStreamPlayer] = {
+	&"sfx_click": AudioStreamPlayer.new(),
+	&"sfx_unclick": AudioStreamPlayer.new(),
 }
 
 func _ready() -> void:
@@ -26,10 +26,9 @@ func _ready() -> void:
 func install_sounds(node: Node) -> void:
 	for i in node.get_children():
 		if i is Button:
-			i.button_down.connect( ui_sfx_play.bind(&"sfx_click") )
-			i.pressed.connect( ui_sfx_play.bind(&"sfx_unclick") )
+			i.button_down.connect(ui_sfx_play.bind(&"sfx_click"))
+			i.pressed.connect(ui_sfx_play.bind(&"sfx_unclick"))
 		install_sounds(i)
 
-func ui_sfx_play(sound : String) -> void:
-#	print("Playing sound:", sound)
+func ui_sfx_play(sound: StringName) -> void:
 	sounds[sound].play()

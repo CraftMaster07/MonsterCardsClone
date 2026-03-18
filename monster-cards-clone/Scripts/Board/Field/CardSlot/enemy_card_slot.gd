@@ -1,7 +1,6 @@
 class_name EnemyCardSlot
 extends Control
 
-@export var board_card_scene: PackedScene
 @export var color_rect: ColorRect
 
 @export var base_color: Color = Color(0.4, 0.4, 0.4, 0.723)
@@ -43,20 +42,23 @@ func serialize():
 
 
 func deserialize(serialized_slot: Dictionary):
-	if serialized_slot['card'] and card:
-		card.deserialize(serialized_slot['card'])
-	elif serialized_slot['card']:
-		place_card(board_card_scene.instantiate())
+	var serialized_card: Dictionary = serialized_slot['card']
+
+	if serialized_card and card:
+		card.deserialize(serialized_card)
+	elif serialized_card:
+		var new_card_data = CardData.new(serialized_card)
+		place_card(BoardCard.create(new_card_data))
 	elif card:
-		remove_child(card)
-		card.queue_free()
+		remove_card()
 
 
 func place_serialized_card(serialized_card: Dictionary):
 	if card:
 		card.deserialize(serialized_card)
 	else:
-		var new_card = board_card_scene.instantiate()
+		var new_card_data = CardData.new(serialized_card)
+		var new_card = BoardCard.create(new_card_data)
 		new_card.deserialize(serialized_card)
 		place_card(new_card)
 
@@ -75,6 +77,10 @@ func flash_color(flashed_color: Color = error_color):
 
 func exorcise():
 	if card and card.is_ghost():
-		remove_child(card)
-		card.queue_free()
-		card = null
+		remove_card()
+
+
+func remove_card():
+	remove_child(card)
+	card.queue_free()
+	card = null

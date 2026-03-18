@@ -4,6 +4,7 @@ extends Node
 @onready var main_menu = $MainMenu
 @export var waiting_room_scene: PackedScene
 @export var board_scene: PackedScene
+@export var host_board_scene: PackedScene
 
 var waiting_room: WaitingRoom = null
 var board: Board = null
@@ -43,9 +44,14 @@ func stop_waiting_room():
 
 
 func start_board():
-	board = board_scene.instantiate()
+	if multiplayer.is_server():
+		board = host_board_scene.instantiate()
+		board.call_sync_game.connect(call_sync_game)
+		board.request_deck_blueprints.connect(_on_board_request_deck_blueprints)
+		board.call_shadow_sync.connect(_on_board_call_shadow_sync)
+	else:
+		board = board_scene.instantiate()
 	
-	board.call_sync_game.connect(call_sync_game)
 	board.set_your_id(multiplayer_manager.your_id)
 	board.init_players(multiplayer_players_to_dicts(multiplayer_manager.players))
 	board.send_placed_card.connect(_on_board_send_placed_card)
@@ -171,3 +177,23 @@ func _on_board_player_attacked(attacked_id: int) -> void:
 
 func _on_multiplayer_manager_client_attacked(player_id: int, attacked_id: int) -> void:
 	board.client_attacked(player_id, attacked_id)
+
+
+func _on_board_request_deck_blueprints() -> void:
+	multiplayer_manager.request_deck_blueprints()
+
+
+func _on_multiplayer_manager_received_deck_blueprint(player_id: int, deck_blueprint: Dictionary) -> void:
+	board.client_deck_blueprint_received(player_id, deck_blueprint)
+
+
+func _on_multiplayer_manager_get_deck_blueprint() -> void:
+	var deck_blueprint := board.get_deck_blueprint()
+	multiplayer_manager.send_deck_blueprint(deck_blueprint)
+
+
+func _on_board_call_shadow_sync(player_id: int, serialized_shadow_player_data: Dictionary) -> void:
+	multiplayer_manager.send_shadow_sync(player_id, serialized_shadow_player_data)
+
+func _on_multiplayer_manager_shadow_sync(serialized_shadow_player_data: Dictionary) -> void:
+	board.shadow_sync(serialized_shadow_player_data)

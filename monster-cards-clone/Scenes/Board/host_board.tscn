@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://bx5pjgqin4rp5"]
+
+[ext_resource type="PackedScene" uid="uid://cfyktcr6rqnlf" path="res://Scenes/Board/board.tscn" id="1_c3vay"]
+[ext_resource type="Script" uid="uid://b2u0484a51wwx" path="res://Scripts/Board/host_board.gd" id="2_mv6b3"]
+
+[node name="Board" unique_id=65642768 instance=ExtResource("1_c3vay")]
+script = ExtResource("2_mv6b3")
+
+[node name="Button" type="Button" parent="." index="10" unique_id=489071821]
+layout_mode = 0
+offset_left = 934.66785
+offset_top = 599.09296
+offset_right = 942.66785
+offset_bottom = 607.09296
+text = "sync game"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

@@ -2,7 +2,6 @@
 
 [ext_resource type="FontFile" uid="uid://b13kiadbfhetg" path="res://Assets/Fonts/VCR_OSD_MONO_1.001.ttf" id="1_28flt"]
 [ext_resource type="Script" uid="uid://bxc7py0b1ykhx" path="res://Scripts/Main Menu/main_menu.gd" id="1_48xlc"]
-[ext_resource type="PackedScene" uid="uid://dh65loc4m8hmo" path="res://Scenes/Main Menu/ui_sounds.tscn" id="2_r7gth"]
 [ext_resource type="AudioStream" uid="uid://dit1tvyol83cj" path="res://Assets/Audio/Music/mus_testing.mp3" id="4_y0aff"]
 [ext_resource type="Theme" uid="uid://f2a4ylwdbwtx" path="res://Assets/Styles/main_theme.tres" id="5_46knf"]
 [ext_resource type="PackedScene" uid="uid://ci6tydy38xeqp" path="res://Scenes/Main Menu/volume_slider.tscn" id="5_r7gth"]
@@ -23,9 +22,6 @@ join_menu = NodePath("UI/PlayMenuContainer/HBoxContainer/HostJoinContainer/JoinM
 name_line_edit = NodePath("UI/PlayMenuContainer/HBoxContainer/HostJoinContainer/NameLineEdit")
 ip_line_edit = NodePath("UI/PlayMenuContainer/HBoxContainer/HostJoinContainer/JoinMenu/IPLineEdit")
 join_status_label = NodePath("UI/PlayMenuContainer/JoinStatusLabel")
-
-[node name="UiSounds" parent="." unique_id=780402468 instance=ExtResource("2_r7gth")]
-root_path = NodePath("../UI")
 
 [node name="UI" type="Control" parent="." unique_id=7129608]
 layout_mode = 1

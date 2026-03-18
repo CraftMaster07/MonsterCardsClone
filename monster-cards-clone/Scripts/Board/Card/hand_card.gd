@@ -1,9 +1,15 @@
 class_name HandCard
-extends Control
+extends CardSerializer
 
 @export var hover_height: float = 20
 @export var animation_length: float = 0.2
 @export var animation_trans: Tween.TransitionType
+
+@export var dragback_time: float = 0.5
+@export var dragback_trans: Tween.TransitionType = Tween.TRANS_ELASTIC
+@export var dragback_ease: Tween.EaseType = Tween.EASE_OUT
+
+
 @onready var card_front := $CardFront
 @onready var base_position: Vector2 = card_front.position
 @onready var area2d := $CardFront/Area2D
@@ -15,16 +21,20 @@ signal card_placed(card, slot)
 signal card_selected(card)
 signal card_deselected()
 
-var touched: bool = false
 enum DragState {RESTING, DRAGGING, UNDRAGGABLE}
+
+const HAND_CARD_SCENE = preload("res://Scenes/Board/Card/hand_card.tscn")
+
+var touched: bool = false
 var drag_state: DragState = DragState.RESTING
 var selected: bool = false
 var mouse_in_card: bool = false
-@export var dragback_time: float = 0.5
-@export var dragback_trans: Tween.TransitionType = Tween.TRANS_ELASTIC
-@export var dragback_ease: Tween.EaseType = Tween.EASE_OUT
 var overlapping_slot_areas: Array[SlotArea]
 var tween: Tween
+
+
+func _ready() -> void:
+	card_front.set_initial_values(card_data)
 
 
 func _process(_delta: float) -> void:
@@ -191,3 +201,26 @@ func _on_area_2d_area_entered(area: Area2D) -> void:
 func _on_area_2d_area_exited(area: Area2D) -> void:
 	if area in overlapping_slot_areas:
 		overlapping_slot_areas.erase(area)
+
+
+static func create(new_card_data: CardData) -> HandCard:
+	var card = HAND_CARD_SCENE.instantiate() as HandCard
+	card.set_card_data(new_card_data)
+	return card
+
+
+func set_card_data(new_card_data: CardData):
+	card_data = new_card_data
+
+
+func update_labels():
+	card_front.update_labels(card_data)
+
+
+func deserialize(serialized_card_data: Dictionary):
+	super.deserialize(serialized_card_data)
+	update_labels()
+
+
+func get_uuid() -> String:
+	return card_data.uuid
