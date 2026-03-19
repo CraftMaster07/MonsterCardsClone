@@ -152,3 +152,19 @@ func place_serialized_card_into_slot(player_id: int, serialized_card: Dictionary
 
 func update_hand(player_id: int, hand_card_count: int):
 	get_player(player_id).update_hand(hand_card_count)
+
+
+func get_slot_id(player_id: int, slot: EnemyCardSlot):
+	return get_player(player_id).get_slot_id(slot)
+
+
+func add_mana(player_id: int, mana: int):
+	get_player(player_id).add_mana(mana)
+
+
+func can_spend_mana(player_id: int, mana: int):
+	return get_player(player_id).can_spend_mana(mana)
+
+
+func spend_mana(player_id: int, mana: int):
+	get_player(player_id).spend_mana(mana)

@@ -12,7 +12,7 @@ offset_left = 3.0
 offset_top = 40.0
 offset_right = 81.0
 offset_bottom = 63.0
-text = "ph"
+text = "E"
 
 [node name="Button" type="Button" parent="." index="1" unique_id=2039981296]
 layout_mode = 0
