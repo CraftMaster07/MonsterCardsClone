@@ -5,6 +5,7 @@ signal join_game(name: String, ip: String)
 
 @export var play_menu_container: Control
 @export var settings_menu_container: Control
+@export var deck_menu_container: Control
 @export var host_menu: Control
 @export var join_menu: Control
 @export var name_line_edit: LineEdit
@@ -15,7 +16,7 @@ var menu_containers: Array[Control] = []
 
 
 func _ready() -> void:
-	menu_containers = [play_menu_container, settings_menu_container]
+	menu_containers = [play_menu_container, settings_menu_container, deck_menu_container]
 
 
 func reinitialize() -> void:
@@ -42,7 +43,7 @@ func _on_idk_button_pressed() -> void:
 
 
 func _on_deck_button_pressed() -> void:
-	pass
+	toggle_menu(deck_menu_container)
 
 
 func _on_play_button_pressed() -> void:

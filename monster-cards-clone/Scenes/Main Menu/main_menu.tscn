@@ -6,7 +6,7 @@
 [ext_resource type="Theme" uid="uid://f2a4ylwdbwtx" path="res://Assets/Styles/main_theme.tres" id="5_46knf"]
 [ext_resource type="PackedScene" uid="uid://ci6tydy38xeqp" path="res://Scenes/Main Menu/volume_slider.tscn" id="5_r7gth"]
 
-[node name="MainMenu" type="Control" unique_id=574280643 node_paths=PackedStringArray("play_menu_container", "settings_menu_container", "host_menu", "join_menu", "name_line_edit", "ip_line_edit", "join_status_label")]
+[node name="MainMenu" type="Control" unique_id=574280643 node_paths=PackedStringArray("play_menu_container", "settings_menu_container", "deck_menu_container", "host_menu", "join_menu", "name_line_edit", "ip_line_edit", "join_status_label")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -17,6 +17,7 @@ theme = ExtResource("5_46knf")
 script = ExtResource("1_48xlc")
 play_menu_container = NodePath("UI/PlayMenuContainer")
 settings_menu_container = NodePath("UI/SettingsMenuContainer")
+deck_menu_container = NodePath("UI/DeckMenuContainer")
 host_menu = NodePath("UI/PlayMenuContainer/HBoxContainer/HostJoinContainer/HostMenu")
 join_menu = NodePath("UI/PlayMenuContainer/HBoxContainer/HostJoinContainer/JoinMenu")
 name_line_edit = NodePath("UI/PlayMenuContainer/HBoxContainer/HostJoinContainer/NameLineEdit")
@@ -146,6 +147,26 @@ bus_name = "Sound"
 [node name="MusicSlider" parent="UI/SettingsMenuContainer/VolumeSettingsContainer" unique_id=750565473 instance=ExtResource("5_r7gth")]
 layout_mode = 2
 bus_name = "Music"
+
+[node name="DeckMenuContainer" type="VBoxContainer" parent="UI" unique_id=1391006333]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.4
+anchor_top = 0.5
+anchor_right = 0.6
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="CardCreatorButton" type="Button" parent="UI/DeckMenuContainer" unique_id=1011992471]
+layout_mode = 2
+text = "Card Creator"
+
+[node name="DeckEditorButton" type="Button" parent="UI/DeckMenuContainer" unique_id=522424648]
+layout_mode = 2
+text = "Deck Editor"
 
 [node name="Menu Buttons" type="HBoxContainer" parent="UI" unique_id=1828789807]
 layout_mode = 1
