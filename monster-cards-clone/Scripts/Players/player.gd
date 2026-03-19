@@ -5,7 +5,7 @@ var player_name: String
 var player_id: int
 
 const STARTING_HEALTH: int = 20
-const STARTING_MANA: int = 0
+const STARTING_MANA: int = 1
 var health: int
 var mana: int
 var deck: Deck
@@ -116,6 +116,7 @@ func update_hand(hand_card_count: int):
 
 func add_mana(mana_count: int):
 	mana += mana_count
+	update_stats_label()
 
 
 func can_spend_mana(mana_count: int) -> bool:
@@ -127,4 +128,9 @@ func spend_mana(mana_count: int):
 		push_error("not enough mana")
 
 	mana -= mana_count
+	update_stats_label()
+
+
+func reset_mana():
+	mana = 0
 	update_stats_label()

@@ -33,7 +33,6 @@ const PLAYER_AREA_SPAWNER_ADDITIONAL_RADIUS: float = -100.0
 
 const INITIAL_HAND_CARD_COUNT: int = 3
 const INITIAL_DECK_CARD_COUNT: int = 5 + INITIAL_HAND_CARD_COUNT
-const INITIAL_MANA_AMOUNT: int = 1
 
 signal send_placed_card(serialized_card: Dictionary, slot_id: int)
 signal send_end_turn()

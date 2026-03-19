@@ -140,17 +140,12 @@ func init_player_boards():
 	for player_id in player_manager.get_player_ids():
 		add_initial_deck_cards(player_id)
 		draw_initial_cards(player_id)
-		add_initial_mana(player_id)
 
 	print("initial cards drawn")
 
 
 func add_initial_deck_cards(player_id: int):
 	player_manager.add_cards_to_deck(player_id, shadow_player_manager.get_deck_card_data_count(player_id))
-
-
-func add_initial_mana(player_id: int):
-	player_manager.add_mana(player_id, INITIAL_MANA_AMOUNT)
 
 
 func draw_initial_cards(player_id: int):
@@ -168,6 +163,7 @@ func _on_round_manager_round_ended() -> void:
 
 	if phase == Phase.PREP:
 		draw_card_for_each_player()
+		reset_players_mana()
 		add_round_mana_for_each_player()
 
 	send_game_state()
@@ -199,3 +195,8 @@ func add_round_mana(player_id: int):
 func add_round_mana_for_each_player():
 	for player_id in player_manager.get_player_ids():
 		add_round_mana(player_id)
+
+
+func reset_players_mana():
+	for player_id in player_manager.get_player_ids():
+		player_manager.reset_mana(player_id)

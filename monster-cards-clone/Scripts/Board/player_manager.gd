@@ -168,3 +168,7 @@ func can_spend_mana(player_id: int, mana: int):
 
 func spend_mana(player_id: int, mana: int):
 	get_player(player_id).spend_mana(mana)
+
+
+func reset_mana(player_id: int):
+	get_player(player_id).reset_mana()
