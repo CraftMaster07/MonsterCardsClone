@@ -2,6 +2,7 @@ extends Control
 
 signal host_game(name: String)
 signal join_game(name: String, ip: String)
+signal goto_card_creator()
 
 @export var play_menu_container: Control
 @export var settings_menu_container: Control
@@ -87,3 +88,6 @@ func _on_name_line_edit_text_changed(new_text: String) -> void:
 func check_gaster(player_name: String) -> void:
 	if player_name.to_lower().find("gaster") != -1:
 		get_tree().quit()
+
+func _on_card_creator_button_pressed() -> void:
+	goto_card_creator.emit()

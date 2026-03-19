@@ -1,0 +1,73 @@
+[gd_scene format=3 uid="uid://be2k7pt5hya2e"]
+
+[ext_resource type="Script" uid="uid://dvlfw6d4f8dyf" path="res://Scripts/Deck Customization/card_creator.gd" id="1_guviw"]
+[ext_resource type="PackedScene" uid="uid://b1rfo4m4p3w8h" path="res://Scenes/Board/Card/card_front.tscn" id="2_qpjfk"]
+
+[node name="CardCreator" type="Control" unique_id=947132057]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_guviw")
+
+[node name="CardFront" parent="." unique_id=20270715 instance=ExtResource("2_qpjfk")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -30.0
+offset_top = -45.0
+offset_right = 30.0
+offset_bottom = 45.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GridContainer" type="GridContainer" parent="." unique_id=477398327]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.3
+anchor_top = 0.5
+anchor_right = 0.4
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/h_separation = 10
+columns = 2
+
+[node name="Label" type="Label" parent="GridContainer" unique_id=2086980221]
+layout_mode = 2
+text = "Health:"
+
+[node name="SpinBox" type="SpinBox" parent="GridContainer" unique_id=1602385534]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="GridContainer" unique_id=1223462233]
+layout_mode = 2
+text = "Attack:"
+
+[node name="SpinBox2" type="SpinBox" parent="GridContainer" unique_id=2059701234]
+layout_mode = 2
+
+[node name="Label3" type="Label" parent="GridContainer" unique_id=645376415]
+layout_mode = 2
+text = "Cost:"
+
+[node name="SpinBox3" type="SpinBox" parent="GridContainer" unique_id=501308452]
+layout_mode = 2
+
+[node name="BackButton" type="Button" parent="." unique_id=31184175]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_right = 100.0
+offset_bottom = -20.0
+grow_vertical = 0
+text = "Back"
+
+[connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]
