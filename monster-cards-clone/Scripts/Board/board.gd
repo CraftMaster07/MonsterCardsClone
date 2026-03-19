@@ -14,6 +14,7 @@ extends Control
 @export var prev_player_button: Button
 
 @export var current_player_label: Label
+@export var round_number_label: Label
 
 @export var round_manager: Node
 @export var player_manager: PlayerManager
@@ -129,8 +130,8 @@ func set_radii(radius: float):
 func _on_end_turn_pressed() -> void:
 	if phase != Phase.PREP:
 		return
+
 	if round_manager.is_player_turn(your_id):
-		print("yo I'm ending turn")
 		send_end_turn.emit()
 
 
@@ -240,6 +241,7 @@ func _on_round_manager_round_ended() -> void:
 		player_manager.reset_attack_history()
 		exorcise()
 		phase = Phase.PREP
+		round_manager.advance_round_number()
 	else:
 		phase = Phase.COMBAT
 
@@ -291,3 +293,7 @@ func get_deck_blueprint() -> Dictionary:
 
 func shadow_sync(serialized_shadow_player_data: Dictionary):
 	player_manager.shadow_deserialize(serialized_shadow_player_data)
+
+
+func _on_round_manager_round_number_changed(new_round_number: int) -> void:
+	round_number_label.text = "Round " + str(new_round_number)

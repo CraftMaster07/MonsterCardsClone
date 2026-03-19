@@ -20,6 +20,7 @@ func _ready():
 	init_player_boards()
 
 	round_manager.next_turn()
+	round_manager.advance_round_number()
 	send_game_state()
 
 
