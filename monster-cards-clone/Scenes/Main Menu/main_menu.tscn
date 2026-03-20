@@ -5,6 +5,9 @@
 [ext_resource type="AudioStream" uid="uid://dit1tvyol83cj" path="res://Assets/Audio/Music/mus_testing.mp3" id="4_y0aff"]
 [ext_resource type="Theme" uid="uid://f2a4ylwdbwtx" path="res://Assets/Styles/main_theme.tres" id="5_46knf"]
 [ext_resource type="PackedScene" uid="uid://ci6tydy38xeqp" path="res://Scenes/Main Menu/volume_slider.tscn" id="5_r7gth"]
+[ext_resource type="Texture2D" uid="uid://bdyi27t2a70bu" path="res://Assets/Sprites/card_editor_button.png" id="5_rghun"]
+[ext_resource type="Texture2D" uid="uid://dcx5502o88s74" path="res://Assets/Sprites/deck_editor_button.png" id="6_46knf"]
+[ext_resource type="Script" uid="uid://clievdbpydyi3" path="res://Scripts/Main Menu/hovered_button.gd" id="7_57ted"]
 
 [node name="MainMenu" type="Control" unique_id=574280643 node_paths=PackedStringArray("play_menu_container", "settings_menu_container", "deck_menu_container", "host_menu", "join_menu", "name_line_edit", "ip_line_edit", "join_status_label")]
 layout_mode = 3
@@ -148,25 +151,32 @@ bus_name = "Sound"
 layout_mode = 2
 bus_name = "Music"
 
-[node name="DeckMenuContainer" type="VBoxContainer" parent="UI" unique_id=1391006333]
+[node name="DeckMenuContainer" type="HBoxContainer" parent="UI" unique_id=1112407547]
 visible = false
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.4
+anchors_preset = 8
+anchor_left = 0.5
 anchor_top = 0.5
-anchor_right = 0.6
+anchor_right = 0.5
 anchor_bottom = 0.5
+offset_left = -238.5
+offset_top = -92.5
+offset_right = 238.5
+offset_bottom = 92.5
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 20
+theme_override_constants/separation = 100
+alignment = 1
 
-[node name="CardCreatorButton" type="Button" parent="UI/DeckMenuContainer" unique_id=1011992471]
+[node name="CardCreatorButton" type="TextureButton" parent="UI/DeckMenuContainer" unique_id=1098671441]
 layout_mode = 2
-text = "Card Creator"
+texture_normal = ExtResource("5_rghun")
+script = ExtResource("7_57ted")
 
-[node name="DeckEditorButton" type="Button" parent="UI/DeckMenuContainer" unique_id=522424648]
+[node name="DeckEditorButton" type="TextureButton" parent="UI/DeckMenuContainer" unique_id=1625949951]
 layout_mode = 2
-text = "Deck Editor"
+texture_normal = ExtResource("6_46knf")
+script = ExtResource("7_57ted")
 
 [node name="Menu Buttons" type="HBoxContainer" parent="UI" unique_id=1828789807]
 layout_mode = 1
