@@ -33,7 +33,7 @@ metadata/_custom_type_script = "uid://hvpfm3s0svah"
 font = ExtResource("12_xqaal")
 font_color = Color(0.29998645, 0.71706825, 1.5263317, 1)
 
-[node name="Board" type="Control" unique_id=65642768 node_paths=PackedStringArray("table", "player_area_spawner_pivot", "next_player_button", "prev_player_button", "current_player_label", "round_manager", "player_manager")]
+[node name="Board" type="Control" unique_id=65642768 node_paths=PackedStringArray("table", "player_area_spawner_pivot", "next_player_button", "prev_player_button", "current_player_label", "round_number_label", "round_manager", "player_manager")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -46,6 +46,7 @@ player_area_spawner_pivot = NodePath("Table/PlayerAreaSpawnerPivot")
 next_player_button = NodePath("UI/NextPlayerButton")
 prev_player_button = NodePath("UI/PrevPlayerButton")
 current_player_label = NodePath("UI/CurrentPlayerLabel")
+round_number_label = NodePath("UI/RoundNumberLabel")
 round_manager = NodePath("RoundManager")
 player_manager = NodePath("PlayerManager")
 
@@ -157,6 +158,17 @@ offset_bottom = 11.5
 grow_vertical = 2
 label_settings = SubResource("LabelSettings_dqnt6")
 
+[node name="RoundNumberLabel" type="Label" parent="UI" unique_id=556768025]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -36.0
+offset_right = 142.0
+offset_bottom = -13.0
+grow_vertical = 2
+label_settings = SubResource("LabelSettings_dqnt6")
+
 [node name="SpinChargeTimer" type="Timer" parent="." unique_id=1559694101]
 
 [node name="sfx_place" type="AudioStreamPlayer" parent="." unique_id=539857139]
@@ -194,5 +206,6 @@ player_container = NodePath("../UI/PlayerContainer")
 [connection signal="pressed" from="UI/PrevPlayerButton" to="." method="_on_prev_player_button_pressed"]
 [connection signal="pressed" from="UI/EndTurn" to="." method="_on_end_turn_pressed"]
 [connection signal="round_ended" from="RoundManager" to="." method="_on_round_manager_round_ended"]
+[connection signal="round_number_changed" from="RoundManager" to="." method="_on_round_manager_round_number_changed"]
 [connection signal="started_turn" from="RoundManager" to="." method="_on_round_manager_started_turn"]
 [connection signal="player_attacked" from="PlayerManager" to="." method="_on_player_manager_player_attacked"]

@@ -5,7 +5,9 @@ var player_name: String
 var player_id: int
 
 const STARTING_HEALTH: int = 20
+const STARTING_MANA: int = 1
 var health: int
+var mana: int
 var deck: Deck
 var field: Field
 var hand: Hand
@@ -16,14 +18,15 @@ var attacked_by_id: int = 0
 @onready var label: Label = $HealthLabel
 
 
-func init(new_player_id: int, new_player_name: String, new_health: int = STARTING_HEALTH):
+func init(new_player_id: int, new_player_name: String):
 	player_id = new_player_id
 	player_name = new_player_name
-	health = new_health
+	health = STARTING_HEALTH
+	mana = STARTING_MANA
 
 
 func _ready():
-	update_health()
+	update_stats_label()
 
 
 func take_damage(amount: int) -> void:
@@ -33,15 +36,11 @@ func take_damage(amount: int) -> void:
 
 func decrease_health(amount: int) -> void:
 	health -= amount
-	update_health()
+	update_stats_label()
 
 
-func update_health() -> void:
-	label.text = player_name + ": " + str(health) + "\\" + str(STARTING_HEALTH)
-
-
-func _on_damage_button_pressed() -> void:
-	take_damage(1)
+func update_stats_label() -> void:
+	label.text = player_name + ": " + str(health) + "\\" + str(STARTING_HEALTH) + ", " + str(mana)
 
 
 func get_field() -> Field:
@@ -65,6 +64,7 @@ func serialize():
 		"player_id": player_id,
 		"player_name": player_name,
 		"health": health,
+		"mana": mana,
 		"field": field.serialize(),
 		"deck": deck.serialize(),
 		"hand": hand.serialize(),
@@ -75,7 +75,8 @@ func deserialize(serialized_player: Dictionary):
 	player_id = serialized_player['player_id']
 	player_name = serialized_player['player_name']
 	health = serialized_player['health']
-	update_health()
+	mana = serialized_player['mana']
+	update_stats_label()
 	field.deserialize(serialized_player['field'])
 	deck.deserialize(serialized_player['deck'])
 	hand.deserialize(serialized_player['hand'])
@@ -111,3 +112,25 @@ func draw_card() -> bool:
 
 func update_hand(hand_card_count: int):
 	hand.update_cards(hand_card_count)
+
+
+func add_mana(mana_count: int):
+	mana += mana_count
+	update_stats_label()
+
+
+func can_spend_mana(mana_count: int) -> bool:
+	return mana - mana_count >= 0
+
+
+func spend_mana(mana_count: int):
+	if mana - mana_count < 0:
+		push_error("not enough mana")
+
+	mana -= mana_count
+	update_stats_label()
+
+
+func reset_mana():
+	mana = 0
+	update_stats_label()

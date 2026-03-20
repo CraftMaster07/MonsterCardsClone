@@ -14,6 +14,7 @@ extends Control
 @export var prev_player_button: Button
 
 @export var current_player_label: Label
+@export var round_number_label: Label
 
 @export var round_manager: Node
 @export var player_manager: PlayerManager
@@ -30,14 +31,21 @@ const MIN_TABLE_RADIUS: float = 400.0
 const CAMERA_ADDITIONAL_RADIUS: float = -100.0
 const PLAYER_AREA_SPAWNER_ADDITIONAL_RADIUS: float = -100.0
 
-const INITIAL_HAND_CARD_COUNT: int = 2
+const INITIAL_HAND_CARD_COUNT: int = 3
 const INITIAL_DECK_CARD_COUNT: int = 5 + INITIAL_HAND_CARD_COUNT
 
 signal send_placed_card(serialized_card: Dictionary, slot_id: int)
 signal send_end_turn()
 signal send_player_attacked(attacked_id: int)
 
-enum ValidationResponses {INVALID = -1, OK = 0, NOT_YOUR_TURN, SLOT_TAKEN, NOT_IN_PREP}
+enum ValidationResponses {
+		INVALID = -1,
+		OK = 0,
+		NOT_YOUR_TURN,
+		SLOT_TAKEN,
+		NOT_IN_PREP,
+		NOT_ENOUGH_MANA
+	}
 enum Phase {PREP, COMBAT}
 
 
@@ -63,7 +71,7 @@ func _place_card_into_slot(card: HandCard, slot: EnemyCardSlot):
 	"""
 	Marks the slot as taken, and starts the animation to move the card into the slot
 	"""
-	var status = verify_card_placement(your_id, player_manager.get_player(your_id).get_slot_id(slot))
+	var status = verify_card_placement(your_id, player_manager.get_slot_id(your_id, slot), card.card_data)
 
 	if status != ValidationResponses.OK:
 		slot.flash_color()
@@ -72,6 +80,7 @@ func _place_card_into_slot(card: HandCard, slot: EnemyCardSlot):
 		print("invalid placement, status code:", status)
 		return
 
+	player_manager.spend_mana(your_id, card.get_cost())
 	slot.take()
 	card.goto_slot(slot)
 	card.tween.tween_callback(_replace_handcard_with_boardcard.bind(card, slot))
@@ -87,7 +96,7 @@ func _replace_handcard_with_boardcard(card: HandCard, slot: EnemyCardSlot):
 	slot.place_card(new_board_card)
 	card.queue_free() # might replace with remove_child
 	sfx_place.play()
-	send_placed_card.emit(new_board_card.serialize(), player_manager.get_player(your_id).get_slot_id(slot))
+	send_placed_card.emit(new_board_card.serialize(), player_manager.get_slot_id(your_id, slot))
 
 
 func select_card(card: HandCard):
@@ -129,8 +138,8 @@ func set_radii(radius: float):
 func _on_end_turn_pressed() -> void:
 	if phase != Phase.PREP:
 		return
+
 	if round_manager.is_player_turn(your_id):
-		print("yo I'm ending turn")
 		send_end_turn.emit()
 
 
@@ -189,7 +198,11 @@ func set_first_player_area(player_area: PlayerArea):
 	unassigned_area_player_ids.remove_at(0)
 
 
-func verify_card_placement(player_id: int, slot_id: int) -> ValidationResponses:
+func verify_card_placement(
+		player_id: int, 
+		slot_id: int, 
+		card_data: CardData
+	) -> ValidationResponses:
 	if not round_manager.is_player_turn(player_id):
 		return ValidationResponses.NOT_YOUR_TURN
 
@@ -198,6 +211,9 @@ func verify_card_placement(player_id: int, slot_id: int) -> ValidationResponses:
 
 	if phase != Phase.PREP:
 		return ValidationResponses.NOT_IN_PREP
+	
+	if not player_manager.can_spend_mana(player_id, card_data.cost):
+		return ValidationResponses.NOT_ENOUGH_MANA
 
 	return ValidationResponses.OK
 
@@ -240,6 +256,7 @@ func _on_round_manager_round_ended() -> void:
 		player_manager.reset_attack_history()
 		exorcise()
 		phase = Phase.PREP
+		round_manager.advance_round_number()
 	else:
 		phase = Phase.COMBAT
 
@@ -291,3 +308,7 @@ func get_deck_blueprint() -> Dictionary:
 
 func shadow_sync(serialized_shadow_player_data: Dictionary):
 	player_manager.shadow_deserialize(serialized_shadow_player_data)
+
+
+func _on_round_manager_round_number_changed(new_round_number: int) -> void:
+	round_number_label.text = "Round " + str(new_round_number)
