@@ -19,7 +19,9 @@ func _ready():
 
 	init_player_boards()
 
+	round_manager.advance_round_number()
 	round_manager.next_turn()
+
 	send_game_state()
 
 
@@ -78,9 +80,6 @@ func client_ended_turn(player_id: int):
 
 func _on_round_manager_started_turn(player_id: int) -> void:
 	super._on_round_manager_started_turn(player_id)
-	
-	if phase == Phase.PREP:
-		draw_card(player_id)
 
 
 func send_game_state():
@@ -106,10 +105,13 @@ func send_shadow_player(player_id: int):
 
 
 func client_placed_card(player_id: int, serialized_card: Dictionary, slot_id: int):
-	var status := verify_card_placement(player_id, slot_id)
+	var temp_card_data: CardData = CardData.new(serialized_card)
+	var status := verify_card_placement(player_id, slot_id, temp_card_data)
+
 	match status:
 		ValidationResponses.OK:
 			player_manager.place_serialized_card_into_slot(player_id, serialized_card, slot_id)
+			player_manager.spend_mana(player_id, temp_card_data.cost)
 			shadow_player_manager.remove_serialized_card_from_hand(player_id, serialized_card)
 		ValidationResponses.SLOT_TAKEN:
 			print("slot taken: (Player: ", player_id, ", Slot: ", slot_id, ")")
@@ -117,6 +119,8 @@ func client_placed_card(player_id: int, serialized_card: Dictionary, slot_id: in
 			print("not his turn (Player: ", player_id, ")")
 		ValidationResponses.NOT_IN_PREP:
 			print("not in prep phase (Player: ", player_id, ")")
+		ValidationResponses.NOT_ENOUGH_MANA:
+			print("not enough mana (Player: ", player_id, ")")
 		ValidationResponses.INVALID:
 			print("unexpected error occured (Player: ", player_id, ", Slot: ", slot_id, ")")
 
@@ -133,24 +137,35 @@ func init_player_boards():
 	"""
 	Initializes things on the board.
 	"""
-	add_initial_deck_cards()
-	draw_initial_cards()
+	for player_id in player_manager.get_player_ids():
+		add_initial_deck_cards(player_id)
+		draw_initial_cards(player_id)
+
 	print("initial cards drawn")
 
 
-func add_initial_deck_cards():
-	for player_id in player_manager.get_player_ids():
-		player_manager.add_cards_to_deck(player_id, shadow_player_manager.get_deck_card_data_count(player_id))
+func add_initial_deck_cards(player_id: int):
+	player_manager.add_cards_to_deck(player_id, shadow_player_manager.get_deck_card_data_count(player_id))
 
 
-func draw_initial_cards():
+func draw_initial_cards(player_id: int):
+	for i in range(INITIAL_HAND_CARD_COUNT):
+		draw_card(player_id)
+
+
+func draw_card_for_each_player():
 	for player_id in player_manager.get_player_ids():
-		for i in range(INITIAL_HAND_CARD_COUNT):
-			draw_card(player_id)
+		draw_card(player_id)
 
 
 func _on_round_manager_round_ended() -> void:
 	super._on_round_manager_round_ended()
+
+	if phase == Phase.PREP:
+		draw_card_for_each_player()
+		reset_players_mana()
+		add_round_mana_for_each_player()
+
 	send_game_state()
 
 
@@ -170,3 +185,18 @@ func update_enemy_hands():
 	for player_id in player_ids:
 		var hand_card_count: int = shadow_player_manager.get_hand_card_data_count(player_id)
 		player_manager.update_hand(player_id, hand_card_count)
+
+
+func add_round_mana(player_id: int):
+	var mana_amount: int = round_manager.get_round_number()
+	player_manager.add_mana(player_id, mana_amount)
+
+
+func add_round_mana_for_each_player():
+	for player_id in player_manager.get_player_ids():
+		add_round_mana(player_id)
+
+
+func reset_players_mana():
+	for player_id in player_manager.get_player_ids():
+		player_manager.reset_mana(player_id)
