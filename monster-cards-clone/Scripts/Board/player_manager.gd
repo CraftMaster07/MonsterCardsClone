@@ -86,6 +86,10 @@ func get_unassigned_area_player_ids():
 	return unassigned_area_player_ids
 
 
+func set_player_area(area: PlayerArea, player_id: int):
+	get_player(player_id).set_area(area)
+
+
 func set_player_field(field: Field, player_id: int):
 	get_player(player_id).set_field(field)
 

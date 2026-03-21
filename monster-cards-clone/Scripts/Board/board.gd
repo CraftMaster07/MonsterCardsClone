@@ -9,6 +9,7 @@ extends Control
 
 @export var table: Table
 @export var player_area_spawner_pivot: ObjectPivot
+@export var turn_pointer: ObjectPivot
 
 @export var next_player_button: Button
 @export var prev_player_button: Button
@@ -142,6 +143,49 @@ func _on_end_turn_pressed() -> void:
 	if round_manager.is_player_turn(your_id):
 		send_end_turn.emit()
 
+func spawn_player_areas(players_count: int):
+	unassigned_area_player_ids = player_manager.get_unassigned_area_player_ids()
+	player_area_spawner_pivot.spawn_player_areas(players_count)
+
+
+func _on_player_area_spawner_pivot_new_area_spawned(new_player_area: PlayerArea) -> void:
+	table.add_child(new_player_area)
+
+	if is_instance_of(new_player_area, YourPlayerArea):
+		print("your area spawned, id: ", your_id)
+		set_your_area(new_player_area)
+	else:
+		set_first_player_area(new_player_area)
+
+
+func _on_player_area_spawner_pivot_spawning_finished() -> void:
+	player_area_spawner_pivot.queue_free()
+
+
+func set_first_player_area(player_area: PlayerArea):
+	var player_id = unassigned_area_player_ids[0]
+	
+	set_player_area(player_area, player_id)
+	set_player_field(player_area.get_field(), player_id)
+	set_player_deck(player_area.get_deck(), player_id)
+	set_player_hand(player_area.get_hand(), player_id)
+
+	unassigned_area_player_ids.remove_at(0)
+
+
+# this function looks USELESS
+func set_first_player_field(field: Field): 
+	"""
+	Sets field to the first player in the list which doesn't have one.
+	"""
+	set_player_field(field, unassigned_area_player_ids[0])
+	unassigned_area_player_ids.remove_at(0)
+
+
+func set_your_id(id: int):
+	player_manager.set_your_id(id)
+	your_id = id
+
 
 func set_your_field(your_field: YourField):
 	set_player_field(your_field, your_id)
@@ -156,46 +200,26 @@ func set_your_hand(your_hand: YourHand):
 
 
 func set_your_area(player_area: PlayerArea):
+	set_player_area(player_area, your_id)
 	set_your_field(player_area.get_field())
 	set_player_deck(player_area.get_deck(), your_id)
 	set_your_hand(player_area.get_hand())
 
 
-func spawn_player_areas(players_count: int):
-	unassigned_area_player_ids = player_manager.get_unassigned_area_player_ids()
-	player_area_spawner_pivot.spawn_player_areas(players_count)
+func set_player_area(area: PlayerArea, player_id: int):
+	player_manager.set_player_area(area, player_id)
 
 
-func _on_player_area_spawner_pivot_spawning_finished() -> void:
-	player_area_spawner_pivot.queue_free()
+func set_player_field(field: Field, player_id: int):
+	player_manager.set_player_field(field, player_id)
 
 
-func set_first_player_field(field: Field):
-	"""
-	Sets field to the first player in the list which doesn't have one.
-	"""
-	set_player_field(field, unassigned_area_player_ids[0])
-	unassigned_area_player_ids.remove_at(0)
+func set_player_deck(deck: Deck, player_id: int):
+	player_manager.set_player_deck(deck, player_id)
 
 
-func _on_player_area_spawner_pivot_new_area_spawned(new_player_area: PlayerArea) -> void:
-	table.add_child(new_player_area)
-
-	if is_instance_of(new_player_area, YourPlayerArea):
-		print("your area spawned, id: ", your_id)
-		set_your_area(new_player_area)
-	else:
-		set_first_player_area(new_player_area)
-
-
-func set_first_player_area(player_area: PlayerArea):
-	var player_id = unassigned_area_player_ids[0]
-
-	set_player_field(player_area.get_field(), player_id)
-	set_player_deck(player_area.get_deck(), player_id)
-	set_player_hand(player_area.get_hand(), player_id)
-
-	unassigned_area_player_ids.remove_at(0)
+func set_player_hand(hand: Hand, player_id: int):
+	player_manager.set_player_hand(hand, player_id)
 
 
 func verify_card_placement(
@@ -227,28 +251,12 @@ func set_game_state(game_state: Dictionary):
 
 func _on_round_manager_started_turn(player_id: int) -> void:
 	current_player_label.text = player_manager.get_player(player_id).player_name + "'s turn"
+	turn_pointer.animate_rotation_to(player_manager.get_player(player_id).get_area().rotation)
 
 
 func init_players(multiplayer_players: Array):
 	player_manager.init_players(multiplayer_players)
 	round_manager.init_turn_order(player_manager.get_player_ids())
-
-
-func set_player_field(field: Field, player_id: int):
-	player_manager.set_player_field(field, player_id)
-
-
-func set_player_deck(deck: Deck, player_id: int):
-	player_manager.set_player_deck(deck, player_id)
-
-
-func set_player_hand(hand: Hand, player_id: int):
-	player_manager.set_player_hand(hand, player_id)
-
-
-func set_your_id(id: int):
-	player_manager.set_your_id(id)
-	your_id = id
 
 
 func _on_round_manager_round_ended() -> void:

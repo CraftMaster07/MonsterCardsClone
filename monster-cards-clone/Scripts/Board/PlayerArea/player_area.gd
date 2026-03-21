@@ -7,12 +7,12 @@ extends Control
 
 
 func get_field() -> Field:
-    return field
+	return field
 
 
 func get_deck() -> Deck:
-    return deck
+	return deck
 
 
 func get_hand() -> Hand:
-    return hand
+	return hand
