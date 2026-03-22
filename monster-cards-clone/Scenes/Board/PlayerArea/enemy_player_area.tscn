@@ -28,7 +28,6 @@ offset_right = 236.0
 offset_bottom = -10.0
 
 [node name="Hand" parent="." unique_id=2133211725 instance=ExtResource("4_ei5ps")]
-layout_mode = 0
-anchors_preset = 0
-offset_top = 120.0
-offset_bottom = 120.0
+layout_mode = 1
+offset_top = 250.0
+offset_bottom = 250.0
