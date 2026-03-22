@@ -89,3 +89,11 @@ func move_first_player_to_last():
 	var first_player_id = turn_order[0]
 	turn_order.remove_at(0)
 	turn_order.append(first_player_id)
+
+
+func is_last_2_players() -> bool:
+	return len(turn_order) - current_player_index == 2
+
+
+func get_last_player_id() -> int:
+	return turn_order[-1]

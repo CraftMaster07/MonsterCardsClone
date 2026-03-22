@@ -111,17 +111,29 @@ func on_enemy_player_attacked(player_id: int):
 
 
 func record_player_attack(attacker_id: int, attacked_id: int) -> Error:
-	var attacker := get_player(attacker_id)
-	var attacked := get_player(attacked_id)
-
-	if attacker.attacking_id != 0 or attacked.attacked_by_id != 0:
+	if check_attacked(attacker_id) or check_was_attacked(attacked_id):
 		print("invalid attack")
 		return FAILED
 
-	print("Player ", attacker_id, " attacks Player ", attacked_id)
-	attacker.attacking_id = attacked_id
-	attacked.attacked_by_id = attacker_id
+	set_attacked(attacker_id, attacked_id)
+	set_was_attacked(attacked_id, attacker_id)
 	return OK
+
+
+func check_attacked(player_id: int) -> bool:
+	return get_player(player_id).attacking_id != 0
+
+
+func set_attacked(attacker_id: int, attacked_id: int):
+	get_player(attacker_id).attacking_id = attacked_id
+
+
+func check_was_attacked(player_id: int) -> bool:
+	return get_player(player_id).attacked_by_id != 0
+
+
+func set_was_attacked(attacked_id: int, attacker_id: int):
+	get_player(attacked_id).attacked_by_id = attacker_id
 
 
 func reset_attack_history():

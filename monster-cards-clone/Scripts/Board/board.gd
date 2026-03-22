@@ -53,7 +53,7 @@ enum CombatValidationResponses {
 		NOT_YOUR_TURN,
 		NOT_IN_COMBAT,
 		ATTACK_FAILED,
-		LAST_PLAYER_WASNT_ATTACKED
+		MUST_ATTACK_LAST_PLAYER
 }
 enum Phase {PREP, COMBAT}
 
@@ -279,12 +279,28 @@ func verify_attack(attacker_id: int, attacked_id: int) -> CombatValidationRespon
 
 	if attacker_id != round_manager.current_player_id:
 		return CombatValidationResponses.NOT_YOUR_TURN
+	
+	var last_player_id: int = round_manager.get_last_player_id()
+
+	if check_must_attack_last_player(last_player_id) and attacked_id != last_player_id:
+		return CombatValidationResponses.MUST_ATTACK_LAST_PLAYER
 
 	var err: Error = player_manager.record_player_attack(attacker_id, attacked_id)
 	if err != Error.OK:
 		return CombatValidationResponses.ATTACK_FAILED
 
 	return CombatValidationResponses.OK
+
+
+func check_must_attack_last_player(last_player_id: int) -> bool:
+	"""
+	Checks that there are only 2 players left and that the last player was not attacked.
+	"""
+	return round_manager.is_last_2_players() and not check_last_player_was_attacked(last_player_id)
+
+
+func check_last_player_was_attacked(last_player_id: int) -> bool:
+	return player_manager.check_was_attacked(last_player_id)
 
 
 func exorcise():
