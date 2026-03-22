@@ -110,9 +110,10 @@ func on_enemy_player_attacked(player_id: int):
 	player_attacked.emit(player_id)
 
 
-func do_player_attack(attacker_id: int, attacked_id: int) -> Error:
+func record_player_attack(attacker_id: int, attacked_id: int) -> Error:
 	var attacker := get_player(attacker_id)
 	var attacked := get_player(attacked_id)
+
 	if attacker.attacking_id != 0 or attacked.attacked_by_id != 0:
 		print("invalid attack")
 		return FAILED

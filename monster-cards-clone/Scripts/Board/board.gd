@@ -47,8 +47,15 @@ enum ValidationResponses {
 		NOT_IN_PREP,
 		NOT_ENOUGH_MANA
 	}
+enum CombatValidationResponses {
+		INVALID = -1,
+		OK = 0,
+		NOT_YOUR_TURN,
+		NOT_IN_COMBAT,
+		ATTACK_FAILED,
+		LAST_PLAYER_WASNT_ATTACKED
+}
 enum Phase {PREP, COMBAT}
-
 
 func _ready():
 	var table_radius: float = calculate_table_radius(player_manager.get_player_count())
@@ -266,23 +273,18 @@ func _on_player_manager_player_attacked(player_id: int) -> void:
 	send_player_attacked.emit(player_id)
 
 
-func combat(attacker_id: int, attacked_id: int):
-	var attacker := player_manager.get_player(attacker_id)
-	var attacked := player_manager.get_player(attacked_id)
+func verify_attack(attacker_id: int, attacked_id: int) -> CombatValidationResponses:
+	if phase != Phase.COMBAT:
+		return CombatValidationResponses.NOT_IN_COMBAT
 
-	var attacker_field := attacker.get_field()
-	var attacked_field := attacked.get_field()
+	if attacker_id != round_manager.current_player_id:
+		return CombatValidationResponses.NOT_YOUR_TURN
 
-	for i in range(attacker_field.get_slot_count()):
-		var attacker_card = attacker_field.get_card(i)
-		var attacked_card = attacked_field.get_card(i)
+	var err: Error = player_manager.record_player_attack(attacker_id, attacked_id)
+	if err != Error.OK:
+		return CombatValidationResponses.ATTACK_FAILED
 
-		if not attacker_card:
-			continue
-		elif not attacked_card:
-			attacker_card.hit(attacked)
-		else:
-			attacker_card.hit(attacked_card)
+	return CombatValidationResponses.OK
 
 
 func exorcise():

@@ -48,14 +48,31 @@ func client_deck_blueprint_received(player_id: int, deck_blueprint: Dictionary):
 		received_all_deck_blueprints.emit()
 
 
-func client_attacked(player_id: int, attacked_id: int):
-	if phase != Phase.COMBAT:
-		return
-	if player_id != round_manager.current_player_id:
-		return
+func combat(attacker_id: int, attacked_id: int):
+	var attacker := player_manager.get_player(attacker_id)
+	var attacked := player_manager.get_player(attacked_id)
 
-	var err: Error = player_manager.do_player_attack(player_id, attacked_id)
-	if err != Error.OK:
+	var attacker_field := attacker.get_field()
+	var attacked_field := attacked.get_field()
+
+	for i in range(attacker_field.get_slot_count()):
+		var attacker_card = attacker_field.get_card(i)
+		var attacked_card = attacked_field.get_card(i)
+
+		if not attacker_card:
+			continue
+		elif not attacked_card:
+			attacker_card.hit(attacked)
+		else:
+			attacker_card.hit(attacked_card)
+
+
+func client_attacked(player_id: int, attacked_id: int):
+	# TODO: add verifications
+	var status: CombatValidationResponses = verify_attack(player_id, attacked_id)
+
+	if status != CombatValidationResponses.OK:
+		print("invalid attack, status: ", status)
 		return
 
 	combat(player_id, attacked_id)
@@ -76,10 +93,6 @@ func draw_card(player_id: int):
 func client_ended_turn(player_id: int):
 	round_manager.client_ended_turn(player_id)
 	send_game_state()
-
-
-func _on_round_manager_started_turn(player_id: int) -> void:
-	super._on_round_manager_started_turn(player_id)
 
 
 func send_game_state():
