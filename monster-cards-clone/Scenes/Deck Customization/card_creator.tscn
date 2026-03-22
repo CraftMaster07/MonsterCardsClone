@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://dvlfw6d4f8dyf" path="res://Scripts/Deck Customization/card_creator.gd" id="1_guviw"]
 [ext_resource type="PackedScene" uid="uid://b1rfo4m4p3w8h" path="res://Scenes/Board/Card/card_front.tscn" id="2_qpjfk"]
 
-[node name="CardCreator" type="Control" unique_id=947132057]
+[node name="CardCreator" type="Control" unique_id=947132057 node_paths=PackedStringArray("name_line_edit")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -11,6 +11,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_guviw")
+name_line_edit = NodePath("NameLineEdit")
 
 [node name="CardFront" parent="." unique_id=20270715 instance=ExtResource("2_qpjfk")]
 layout_mode = 1
@@ -42,21 +43,21 @@ columns = 2
 layout_mode = 2
 text = "Health:"
 
-[node name="SpinBox" type="SpinBox" parent="GridContainer" unique_id=1602385534]
+[node name="HealthSpinBox" type="SpinBox" parent="GridContainer" unique_id=1602385534]
 layout_mode = 2
 
 [node name="Label2" type="Label" parent="GridContainer" unique_id=1223462233]
 layout_mode = 2
 text = "Attack:"
 
-[node name="SpinBox2" type="SpinBox" parent="GridContainer" unique_id=2059701234]
+[node name="AttackSpinBox" type="SpinBox" parent="GridContainer" unique_id=2059701234]
 layout_mode = 2
 
 [node name="Label3" type="Label" parent="GridContainer" unique_id=645376415]
 layout_mode = 2
 text = "Cost:"
 
-[node name="SpinBox3" type="SpinBox" parent="GridContainer" unique_id=501308452]
+[node name="CostSpinBox" type="SpinBox" parent="GridContainer" unique_id=501308452]
 layout_mode = 2
 
 [node name="BackButton" type="Button" parent="." unique_id=31184175]
@@ -70,7 +71,22 @@ offset_bottom = -20.0
 grow_vertical = 0
 text = "Back"
 
-[node name="LineEdit" type="LineEdit" parent="." unique_id=1625714576]
+[node name="SaveButton" type="Button" parent="." unique_id=2022016961]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.65
+anchor_right = 0.5
+anchor_bottom = 0.65
+offset_left = -22.0
+offset_top = -15.5
+offset_right = 22.0
+offset_bottom = 15.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Save"
+
+[node name="NameLineEdit" type="LineEdit" parent="." unique_id=1625714576]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.45
@@ -83,15 +99,9 @@ placeholder_text = "Card Name"
 alignment = 1
 expand_to_text_length = true
 
-[node name="Button" type="Button" parent="." unique_id=2022016961]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.5
-anchor_top = 0.65
-anchor_right = 0.5
-anchor_bottom = 0.65
-grow_horizontal = 2
-grow_vertical = 2
-text = "Save"
-
+[connection signal="value_changed" from="GridContainer/HealthSpinBox" to="." method="_on_health_spin_box_value_changed"]
+[connection signal="value_changed" from="GridContainer/AttackSpinBox" to="." method="_on_attack_spin_box_value_changed"]
+[connection signal="value_changed" from="GridContainer/CostSpinBox" to="." method="_on_cost_spin_box_value_changed"]
 [connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]
+[connection signal="pressed" from="SaveButton" to="." method="_on_save_button_pressed"]
+[connection signal="text_changed" from="NameLineEdit" to="." method="_on_name_line_edit_text_changed"]
