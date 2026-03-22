@@ -28,7 +28,6 @@ func animate_rotation_to(
 	duration - animation length in seconds
 	trans_type, ease_type - animation settings
 	"""
-	#print("rotating to: ", target_rotation)
 	animated_rotation.animate_rotation_to(target_rotation, duration, trans_type, ease_type)
 
 

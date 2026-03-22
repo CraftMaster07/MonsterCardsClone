@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://cfyktcr6rqnlf"]
 
 [ext_resource type="Script" uid="uid://ctku11dgwh5at" path="res://Scripts/Board/board.gd" id="1_xiot5"]
+[ext_resource type="Theme" uid="uid://f2a4ylwdbwtx" path="res://Assets/Styles/main_theme.tres" id="2_63xfs"]
 [ext_resource type="PackedScene" uid="uid://dgtx0qw3qwnw3" path="res://Scenes/Players/your_player.tscn" id="3_me64r"]
 [ext_resource type="Script" uid="uid://4wekwqlpwfc0" path="res://Scripts/Board/table.gd" id="3_qlllu"]
 [ext_resource type="Texture2D" uid="uid://cjn63si50nhet" path="res://Assets/icon.svg" id="4_cp8jt"]
@@ -8,7 +9,9 @@
 [ext_resource type="PackedScene" uid="uid://if4366cpnfs0" path="res://Scenes/Board/PlayerArea/enemy_player_area.tscn" id="6_a1ark"]
 [ext_resource type="Script" uid="uid://hvpfm3s0svah" path="res://Scripts/Board/utils/animated_rotation.gd" id="6_s2gku"]
 [ext_resource type="PackedScene" uid="uid://bmbkajbu0quju" path="res://Scenes/Board/PlayerArea/your_player_area.tscn" id="7_rt3kt"]
-[ext_resource type="Script" uid="uid://7i1gkuidppy1" path="res://Scripts/Board/player_area_spawner_pivot.gd" id="10_brcfe"]
+[ext_resource type="Script" uid="uid://b5m01jmgufvky" path="res://Scripts/Board/utils/object_pivot.gd" id="9_a1ark"]
+[ext_resource type="Script" path="res://Scripts/Board/PlayerArea/player_area_spawner_pivot.gd" id="10_brcfe"]
+[ext_resource type="Texture2D" uid="uid://cp0e5bj18tv0x" path="res://Assets/Sprites/arrow.png" id="10_rt3kt"]
 [ext_resource type="AudioStream" uid="uid://rc71aygfcedk" path="res://Assets/Audio/Sounds/sfx_place.mp3" id="11_gti8d"]
 [ext_resource type="AudioStream" uid="uid://02oc0voj62j3" path="res://Assets/Audio/Sounds/sfx_select.mp3" id="12_brcfe"]
 [ext_resource type="FontFile" uid="uid://b13kiadbfhetg" path="res://Assets/Fonts/VCR_OSD_MONO_1.001.ttf" id="12_xqaal"]
@@ -20,8 +23,8 @@
 
 [sub_resource type="Resource" id="Resource_xqaal"]
 script = ExtResource("6_s2gku")
-default_duration = 0.5
-default_trans_type = 10
+default_duration = 0.3
+default_trans_type = 5
 default_ease_type = 1
 metadata/_custom_type_script = "uid://hvpfm3s0svah"
 
@@ -29,20 +32,29 @@ metadata/_custom_type_script = "uid://hvpfm3s0svah"
 script = ExtResource("6_s2gku")
 metadata/_custom_type_script = "uid://hvpfm3s0svah"
 
+[sub_resource type="Resource" id="Resource_rt3kt"]
+script = ExtResource("6_s2gku")
+default_duration = 0.3
+default_trans_type = 6
+default_ease_type = 1
+metadata/_custom_type_script = "uid://hvpfm3s0svah"
+
 [sub_resource type="LabelSettings" id="LabelSettings_dqnt6"]
 font = ExtResource("12_xqaal")
 font_color = Color(0.29998645, 0.71706825, 1.5263317, 1)
 
-[node name="Board" type="Control" unique_id=65642768 node_paths=PackedStringArray("table", "player_area_spawner_pivot", "next_player_button", "prev_player_button", "current_player_label", "round_number_label", "round_manager", "player_manager")]
+[node name="Board" type="Control" unique_id=65642768 node_paths=PackedStringArray("table", "player_area_spawner_pivot", "turn_pointer", "next_player_button", "prev_player_button", "current_player_label", "round_number_label", "round_manager", "player_manager")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("2_63xfs")
 script = ExtResource("1_xiot5")
 table = NodePath("Table")
 player_area_spawner_pivot = NodePath("Table/PlayerAreaSpawnerPivot")
+turn_pointer = NodePath("Table/TurnPointer")
 next_player_button = NodePath("UI/NextPlayerButton")
 prev_player_button = NodePath("UI/PrevPlayerButton")
 current_player_label = NodePath("UI/CurrentPlayerLabel")
@@ -84,15 +96,30 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Sprite2D" type="Sprite2D" parent="Table/PlayerAreaSpawnerPivot" unique_id=655082248]
 texture = ExtResource("4_cp8jt")
+
+[node name="TurnPointer" type="Control" parent="Table" unique_id=1524924171]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("9_a1ark")
+animated_rotation = SubResource("Resource_rt3kt")
+metadata/_custom_type_script = "uid://b5m01jmgufvky"
+
+[node name="Sprite2D" type="Sprite2D" parent="Table/TurnPointer" unique_id=757760709]
+position = Vector2(0, 100)
+rotation = 3.1415927
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("10_rt3kt")
 
 [node name="UI" type="Control" parent="." unique_id=224199160]
 layout_mode = 1

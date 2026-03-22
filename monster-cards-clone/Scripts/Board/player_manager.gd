@@ -86,6 +86,10 @@ func get_unassigned_area_player_ids():
 	return unassigned_area_player_ids
 
 
+func set_player_area(area: PlayerArea, player_id: int):
+	get_player(player_id).set_area(area)
+
+
 func set_player_field(field: Field, player_id: int):
 	get_player(player_id).set_field(field)
 
@@ -106,17 +110,30 @@ func on_enemy_player_attacked(player_id: int):
 	player_attacked.emit(player_id)
 
 
-func do_player_attack(attacker_id: int, attacked_id: int) -> Error:
-	var attacker := get_player(attacker_id)
-	var attacked := get_player(attacked_id)
-	if attacker.attacking_id != 0 or attacked.attacked_by_id != 0:
+func record_player_attack(attacker_id: int, attacked_id: int) -> Error:
+	if check_attacked(attacker_id) or check_was_attacked(attacked_id):
 		print("invalid attack")
 		return FAILED
 
-	print("Player ", attacker_id, " attacks Player ", attacked_id)
-	attacker.attacking_id = attacked_id
-	attacked.attacked_by_id = attacker_id
+	set_attacked(attacker_id, attacked_id)
+	set_was_attacked(attacked_id, attacker_id)
 	return OK
+
+
+func check_attacked(player_id: int) -> bool:
+	return get_player(player_id).attacking_id != 0
+
+
+func set_attacked(attacker_id: int, attacked_id: int):
+	get_player(attacker_id).attacking_id = attacked_id
+
+
+func check_was_attacked(player_id: int) -> bool:
+	return get_player(player_id).attacked_by_id != 0
+
+
+func set_was_attacked(attacked_id: int, attacker_id: int):
+	get_player(attacked_id).attacked_by_id = attacker_id
 
 
 func reset_attack_history():
@@ -172,3 +189,7 @@ func spend_mana(player_id: int, mana: int):
 
 func reset_mana(player_id: int):
 	get_player(player_id).reset_mana()
+
+
+func get_area_rotation(player_id: int) -> float:
+	return get_player(player_id).get_area_rotation()

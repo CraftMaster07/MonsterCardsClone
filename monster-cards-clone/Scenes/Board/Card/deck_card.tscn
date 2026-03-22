@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://duopjfpegcsvr"]
+
+[ext_resource type="Texture2D" uid="uid://bt8gqgpr8gp5" path="res://Assets/Sprites/cardback.png" id="1_vch02"]
+
+[node name="DeckCard" type="PanelContainer" unique_id=1221809532]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -30.0
+offset_top = -45.0
+offset_right = 30.0
+offset_bottom = 45.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1995087353]
+layout_mode = 2
+texture = ExtResource("1_vch02")

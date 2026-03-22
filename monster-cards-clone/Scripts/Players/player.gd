@@ -8,6 +8,8 @@ const STARTING_HEALTH: int = 20
 const STARTING_MANA: int = 1
 var health: int
 var mana: int
+
+var area: PlayerArea
 var deck: Deck
 var field: Field
 var hand: Hand
@@ -41,6 +43,14 @@ func decrease_health(amount: int) -> void:
 
 func update_stats_label() -> void:
 	label.text = player_name + ": " + str(health) + "\\" + str(STARTING_HEALTH) + ", " + str(mana)
+
+
+func get_area() -> PlayerArea:
+	return area
+
+
+func set_area(new_area: PlayerArea):
+	area = new_area
 
 
 func get_field() -> Field:
@@ -134,3 +144,7 @@ func spend_mana(mana_count: int):
 func reset_mana():
 	mana = 0
 	update_stats_label()
+
+
+func get_area_rotation() -> float:
+	return area.rotation
