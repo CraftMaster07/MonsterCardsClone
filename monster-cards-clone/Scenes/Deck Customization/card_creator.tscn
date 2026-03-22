@@ -70,4 +70,28 @@ offset_bottom = -20.0
 grow_vertical = 0
 text = "Back"
 
+[node name="LineEdit" type="LineEdit" parent="." unique_id=1625714576]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.45
+anchor_top = 0.3
+anchor_right = 0.55
+anchor_bottom = 0.3
+grow_horizontal = 2
+grow_vertical = 2
+placeholder_text = "Card Name"
+alignment = 1
+expand_to_text_length = true
+
+[node name="Button" type="Button" parent="." unique_id=2022016961]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.65
+anchor_right = 0.5
+anchor_bottom = 0.65
+grow_horizontal = 2
+grow_vertical = 2
+text = "Save"
+
 [connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]
