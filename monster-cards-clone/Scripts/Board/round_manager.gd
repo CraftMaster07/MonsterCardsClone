@@ -33,6 +33,12 @@ func client_ended_turn(player_id: int):
 
 func init_turn_order(player_ids: Array[int]):
 	turn_order = player_ids
+	shuffle_turn_order()
+
+
+func shuffle_turn_order():
+	randomize()
+	turn_order.shuffle()
 
 
 func is_player_turn(player_id: int):
@@ -83,3 +89,17 @@ func update_round_number(new_round_number: int):
 
 func get_round_number():
 	return round_number
+
+
+func move_first_player_to_last():
+	var first_player_id = turn_order[0]
+	turn_order.remove_at(0)
+	turn_order.append(first_player_id)
+
+
+func is_last_2_players() -> bool:
+	return len(turn_order) - current_player_index == 2
+
+
+func get_last_player_id() -> int:
+	return turn_order[-1]
