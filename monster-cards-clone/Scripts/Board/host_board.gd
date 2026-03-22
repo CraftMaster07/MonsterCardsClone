@@ -165,6 +165,7 @@ func _on_round_manager_round_ended() -> void:
 		draw_card_for_each_player()
 		reset_players_mana()
 		add_round_mana_for_each_player()
+		round_manager.move_first_player_to_last()
 
 	send_game_state()
 

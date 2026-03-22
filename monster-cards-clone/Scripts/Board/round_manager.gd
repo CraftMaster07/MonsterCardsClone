@@ -83,3 +83,9 @@ func update_round_number(new_round_number: int):
 
 func get_round_number():
 	return round_number
+
+
+func move_first_player_to_last():
+	var first_player_id = turn_order[0]
+	turn_order.remove_at(0)
+	turn_order.append(first_player_id)
