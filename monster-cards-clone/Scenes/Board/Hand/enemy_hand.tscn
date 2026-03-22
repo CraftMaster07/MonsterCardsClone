@@ -4,13 +4,6 @@
 [ext_resource type="PackedScene" uid="uid://cwrvcgm3n85bl" path="res://Scenes/Board/Card/dummy_card.tscn" id="2_ro41i"]
 
 [node name="EnemyHand" type="MarginContainer" unique_id=2133211725]
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -168.0
-grow_horizontal = 2
-grow_vertical = 0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 script = ExtResource("1_u7o8q")

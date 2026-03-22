@@ -1,4 +1,4 @@
-class_name EnemyCardSlot
+class_name CardSlot
 extends Control
 
 @export var color_rect: ColorRect

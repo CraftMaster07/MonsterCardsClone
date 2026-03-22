@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://dtpst7jgrdpqq"]
+
+[ext_resource type="Script" uid="uid://brdia574yytmk" path="res://Scripts/Board/Field/field.gd" id="1_b3ykb"]
+[ext_resource type="PackedScene" uid="uid://ct317gmjddic1" path="res://Scenes/Board/Field/CardSlot/card_slot.tscn" id="2_jygpy"]
+
+[node name="Field" type="MarginContainer" unique_id=43736776]
+offset_right = 210.0
+offset_bottom = 90.0
+script = ExtResource("1_b3ykb")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=508165927]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="EnemyCardSlot" parent="HBoxContainer" unique_id=1937960157 instance=ExtResource("2_jygpy")]
+custom_minimum_size = Vector2(60, 90)
+layout_mode = 2
+
+[node name="EnemyCardSlot2" parent="HBoxContainer" unique_id=1241227526 instance=ExtResource("2_jygpy")]
+custom_minimum_size = Vector2(60, 90)
+layout_mode = 2
+
+[node name="EnemyCardSlot3" parent="HBoxContainer" unique_id=1602617293 instance=ExtResource("2_jygpy")]
+custom_minimum_size = Vector2(60, 90)
+layout_mode = 2

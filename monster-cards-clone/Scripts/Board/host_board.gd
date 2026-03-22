@@ -141,7 +141,7 @@ func client_placed_card(player_id: int, serialized_card: Dictionary, slot_id: in
 	send_game_state()
 
 
-func _replace_handcard_with_boardcard(card: HandCard, slot: EnemyCardSlot):
+func _replace_handcard_with_boardcard(card: HandCard, slot: CardSlot):
 	shadow_player_manager.remove_serialized_card_from_hand(your_id, card.serialize())
 	super._replace_handcard_with_boardcard(card, slot)
 

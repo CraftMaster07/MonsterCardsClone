@@ -28,7 +28,7 @@ var phase: Phase = Phase.PREP
 var player_ids_without_deck_blueprint: Array
 var unassigned_area_player_ids: Array
 
-const MIN_TABLE_RADIUS: float = 400.0
+const MIN_TABLE_RADIUS: float = 250.0
 const CAMERA_ADDITIONAL_RADIUS: float = -100.0
 const PLAYER_AREA_SPAWNER_ADDITIONAL_RADIUS: float = -100.0
 
@@ -69,13 +69,13 @@ func connect_card(card: HandCard):
 	card.card_deselected.connect(deselect_card)
 
 
-func slot_clicked(slot: EnemyCardSlot):
+func slot_clicked(slot: CardSlot):
 	if selected_card != null:
 		print("placing card")
 		_place_card_into_slot(selected_card, slot)
 
 
-func _place_card_into_slot(card: HandCard, slot: EnemyCardSlot):
+func _place_card_into_slot(card: HandCard, slot: CardSlot):
 	"""
 	Marks the slot as taken, and starts the animation to move the card into the slot
 	"""
@@ -95,7 +95,7 @@ func _place_card_into_slot(card: HandCard, slot: EnemyCardSlot):
 	print("card placed")
 
 
-func _replace_handcard_with_boardcard(card: HandCard, slot: EnemyCardSlot):
+func _replace_handcard_with_boardcard(card: HandCard, slot: CardSlot):
 	"""
 	Replaces the HandCard with a BoardCard object
 	This should be done after the card is moved into a slot

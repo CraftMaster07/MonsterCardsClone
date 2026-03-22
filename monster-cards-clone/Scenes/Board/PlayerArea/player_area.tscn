@@ -1,0 +1,43 @@
+[gd_scene format=3 uid="uid://if4366cpnfs0"]
+
+[ext_resource type="Script" uid="uid://sxpdfiiwyig7" path="res://Scripts/Board/PlayerArea/player_area.gd" id="1_cf821"]
+[ext_resource type="PackedScene" uid="uid://dtpst7jgrdpqq" path="res://Scenes/Board/Field/field.tscn" id="2_2agih"]
+[ext_resource type="PackedScene" uid="uid://dxt0343x16g61" path="res://Scenes/Board/deck.tscn" id="3_3ha3x"]
+[ext_resource type="PackedScene" uid="uid://b6obljxfl8pah" path="res://Scenes/Board/Hand/enemy_hand.tscn" id="4_jkf4s"]
+
+[node name="PlayerArea" type="Control" unique_id=1536100535]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_cf821")
+
+[node name="Field" parent="." unique_id=43736776 instance=ExtResource("2_2agih")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -105.0
+offset_top = -45.0
+offset_right = 105.0
+offset_bottom = 45.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Deck" parent="." unique_id=1804813508 instance=ExtResource("3_3ha3x")]
+layout_mode = 1
+offset_left = 135.0
+offset_right = 195.0
+metadata/_edit_use_anchors_ = true
+
+[node name="Hand" parent="." unique_id=2133211725 instance=ExtResource("4_jkf4s")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_top = 160.0
+offset_bottom = 160.0
+grow_horizontal = 2
+grow_vertical = 2

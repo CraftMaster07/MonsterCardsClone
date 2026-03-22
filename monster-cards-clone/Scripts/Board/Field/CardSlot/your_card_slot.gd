@@ -1,5 +1,5 @@
 class_name YourCardSlot
-extends EnemyCardSlot
+extends CardSlot
 
 
 @onready var slot_area = $SlotArea

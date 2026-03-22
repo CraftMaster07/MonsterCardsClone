@@ -171,7 +171,7 @@ func update_hand(player_id: int, hand_card_count: int):
 	get_player(player_id).update_hand(hand_card_count)
 
 
-func get_slot_id(player_id: int, slot: EnemyCardSlot):
+func get_slot_id(player_id: int, slot: CardSlot):
 	return get_player(player_id).get_slot_id(slot)
 
 

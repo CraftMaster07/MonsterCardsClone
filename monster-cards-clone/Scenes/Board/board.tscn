@@ -6,11 +6,11 @@
 [ext_resource type="Script" uid="uid://4wekwqlpwfc0" path="res://Scripts/Board/table.gd" id="3_qlllu"]
 [ext_resource type="Texture2D" uid="uid://cjn63si50nhet" path="res://Assets/icon.svg" id="4_cp8jt"]
 [ext_resource type="PackedScene" uid="uid://c1qkabu180wpv" path="res://Scenes/Players/enemy_player.tscn" id="4_gti8d"]
-[ext_resource type="PackedScene" uid="uid://if4366cpnfs0" path="res://Scenes/Board/PlayerArea/enemy_player_area.tscn" id="6_a1ark"]
+[ext_resource type="PackedScene" uid="uid://if4366cpnfs0" path="res://Scenes/Board/PlayerArea/player_area.tscn" id="6_a1ark"]
 [ext_resource type="Script" uid="uid://hvpfm3s0svah" path="res://Scripts/Board/utils/animated_rotation.gd" id="6_s2gku"]
 [ext_resource type="PackedScene" uid="uid://bmbkajbu0quju" path="res://Scenes/Board/PlayerArea/your_player_area.tscn" id="7_rt3kt"]
 [ext_resource type="Script" uid="uid://b5m01jmgufvky" path="res://Scripts/Board/utils/object_pivot.gd" id="9_a1ark"]
-[ext_resource type="Script" path="res://Scripts/Board/PlayerArea/player_area_spawner_pivot.gd" id="10_brcfe"]
+[ext_resource type="Script" uid="uid://7i1gkuidppy1" path="res://Scripts/Board/PlayerArea/player_area_spawner_pivot.gd" id="10_brcfe"]
 [ext_resource type="Texture2D" uid="uid://cp0e5bj18tv0x" path="res://Assets/Sprites/arrow.png" id="10_rt3kt"]
 [ext_resource type="AudioStream" uid="uid://rc71aygfcedk" path="res://Assets/Audio/Sounds/sfx_place.mp3" id="11_gti8d"]
 [ext_resource type="AudioStream" uid="uid://02oc0voj62j3" path="res://Assets/Audio/Sounds/sfx_select.mp3" id="12_brcfe"]
@@ -64,11 +64,10 @@ player_manager = NodePath("PlayerManager")
 
 [node name="Table" type="Control" parent="." unique_id=915297040]
 layout_mode = 1
-anchors_preset = 8
 anchor_left = 0.5
-anchor_top = 0.5
+anchor_top = 0.7
 anchor_right = 0.5
-anchor_bottom = 0.5
+anchor_bottom = 0.7
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("3_qlllu")
@@ -115,10 +114,10 @@ script = ExtResource("9_a1ark")
 animated_rotation = SubResource("Resource_rt3kt")
 metadata/_custom_type_script = "uid://b5m01jmgufvky"
 
-[node name="Sprite2D" type="Sprite2D" parent="Table/TurnPointer" unique_id=757760709]
-position = Vector2(0, 100)
+[node name="Sprite2D" type="Sprite2D" parent="Table/TurnPointer" unique_id=445702385]
+position = Vector2(0, 50)
 rotation = 3.1415927
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.735, 0.2)
 texture = ExtResource("10_rt3kt")
 
 [node name="UI" type="Control" parent="." unique_id=224199160]
@@ -195,8 +194,6 @@ offset_right = 142.0
 offset_bottom = -13.0
 grow_vertical = 2
 label_settings = SubResource("LabelSettings_dqnt6")
-
-[node name="SpinChargeTimer" type="Timer" parent="." unique_id=1559694101]
 
 [node name="sfx_place" type="AudioStreamPlayer" parent="." unique_id=539857139]
 stream = ExtResource("11_gti8d")

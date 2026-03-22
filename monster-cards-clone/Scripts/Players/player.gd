@@ -65,7 +65,7 @@ func is_slot_taken(slot_id: int) -> bool:
 	return field.is_slot_taken(slot_id)
 
 
-func get_slot_id(slot: EnemyCardSlot) -> int:
+func get_slot_id(slot: CardSlot) -> int:
 	return field.get_slot_id(slot)
 
 

@@ -2,7 +2,7 @@ class_name Field
 extends MarginContainer
 
 @onready var slot_container = $HBoxContainer
-@onready var slots: Array[EnemyCardSlot]
+@onready var slots: Array[CardSlot]
 
 
 func _ready():
@@ -10,10 +10,10 @@ func _ready():
 	slots = []
 
 	for slot in node_slots:
-		slots.append(slot as EnemyCardSlot)
+		slots.append(slot as CardSlot)
 
 
-func get_slots() -> Array[EnemyCardSlot]:
+func get_slots() -> Array[CardSlot]:
 	return slots
 
 
@@ -29,7 +29,7 @@ func get_card(slot_index: int) -> BoardCard:
 	return slots[slot_index].get_card()
 
 
-func get_slot_id(slot: EnemyCardSlot) -> int:
+func get_slot_id(slot: CardSlot) -> int:
 	return slots.find(slot)
 
 

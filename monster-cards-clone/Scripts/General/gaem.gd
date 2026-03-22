@@ -158,8 +158,7 @@ func _on_board_send_placed_card(serialized_card: Dictionary, slot_id: int) -> vo
 
 
 func _on_multiplayer_manager_client_placed_card(
-	player_id: int, serialized_card: Dictionary, slot_id: int
-) -> void:
+	player_id: int, serialized_card: Dictionary, slot_id: int) -> void:
 	board.client_placed_card(player_id, serialized_card, slot_id)
 
 
