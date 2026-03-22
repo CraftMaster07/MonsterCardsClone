@@ -33,6 +33,12 @@ func client_ended_turn(player_id: int):
 
 func init_turn_order(player_ids: Array[int]):
 	turn_order = player_ids
+	shuffle_turn_order()
+
+
+func shuffle_turn_order():
+	randomize()
+	turn_order.shuffle()
 
 
 func is_player_turn(player_id: int):
