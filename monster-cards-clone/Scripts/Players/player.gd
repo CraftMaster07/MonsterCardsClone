@@ -144,3 +144,7 @@ func spend_mana(mana_count: int):
 func reset_mana():
 	mana = 0
 	update_stats_label()
+
+
+func get_area_rotation() -> float:
+	return area.rotation

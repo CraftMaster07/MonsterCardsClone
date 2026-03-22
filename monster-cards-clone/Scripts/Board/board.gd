@@ -173,15 +173,6 @@ func set_first_player_area(player_area: PlayerArea):
 	unassigned_area_player_ids.remove_at(0)
 
 
-# this function looks USELESS
-func set_first_player_field(field: Field): 
-	"""
-	Sets field to the first player in the list which doesn't have one.
-	"""
-	set_player_field(field, unassigned_area_player_ids[0])
-	unassigned_area_player_ids.remove_at(0)
-
-
 func set_your_id(id: int):
 	player_manager.set_your_id(id)
 	your_id = id
@@ -251,7 +242,7 @@ func set_game_state(game_state: Dictionary):
 
 func _on_round_manager_started_turn(player_id: int) -> void:
 	current_player_label.text = player_manager.get_player(player_id).player_name + "'s turn"
-	turn_pointer.animate_rotation_to(player_manager.get_player(player_id).get_area().rotation)
+	turn_pointer.animate_rotation_to(player_manager.get_area_rotation(player_id))
 
 
 func init_players(multiplayer_players: Array):

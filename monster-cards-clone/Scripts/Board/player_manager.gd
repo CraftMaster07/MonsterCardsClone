@@ -176,3 +176,7 @@ func spend_mana(player_id: int, mana: int):
 
 func reset_mana(player_id: int):
 	get_player(player_id).reset_mana()
+
+
+func get_area_rotation(player_id: int) -> float:
+	return get_player(player_id).get_area_rotation()
