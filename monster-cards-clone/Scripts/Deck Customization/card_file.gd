@@ -9,9 +9,8 @@ var cost: int = 0
 
 
 func save():
-	if not DirAccess.dir_exists_absolute(PathConstants.CARD_SAVE_PATH):
-		DirAccess.make_dir_absolute(PathConstants.CARD_SAVE_PATH)
-	
+	ensure_folder_exists()
+
 	var file_name := card_name.replace(" ", "_")
 	var file := FileAccess.open(PathConstants.CARD_SAVE_PATH + file_name + ".json", FileAccess.WRITE)
 	var data := serialize()
@@ -41,3 +40,8 @@ func deserialize(data: Dictionary):
 	health = data["health"]
 	attack = data["attack"]
 	cost = data["cost"]
+
+
+static func ensure_folder_exists():
+	if not DirAccess.dir_exists_absolute(PathConstants.CARD_SAVE_PATH):
+		DirAccess.make_dir_absolute(PathConstants.CARD_SAVE_PATH)

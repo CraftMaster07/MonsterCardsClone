@@ -15,6 +15,7 @@ func _ready() -> void:
 	set_display_health(int(health_spin_box.value))
 	set_display_attack(int(attack_spin_box.value))
 	set_display_cost(int(cost_spin_box.value))
+	CardFile.ensure_folder_exists()
 
 
 func _on_back_button_pressed() -> void:
