@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://bm4q1q2pl8fl5" path="res://Scripts/Deck Customization/editor_card.gd" id="1_upp01"]
 
 [node name="EditorCard" type="Control" unique_id=235285323 node_paths=PackedStringArray("card_front")]
+custom_minimum_size = Vector2(60, 90)
 layout_mode = 3
 anchors_preset = 0
 size_flags_horizontal = 4
@@ -20,3 +21,5 @@ offset_right = 0.0
 offset_bottom = 0.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[connection signal="pressed" from="CardFront" to="." method="_on_card_front_pressed"]

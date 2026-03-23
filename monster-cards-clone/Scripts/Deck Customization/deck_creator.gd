@@ -3,11 +3,13 @@ extends Control
 
 @export var collection_container: CollectionContainer
 
+@export var editor_card_scene: PackedScene
+
 signal leave()
 
 
 func _ready():
-	pass
+	load_cards()
 
 
 func _on_back_button_pressed() -> void:
@@ -41,10 +43,10 @@ static func get_all_json_from_path(folder_path: String) -> Array:
 	return all_paths
 
 
-func load_card(card_path: String) -> CardFile:
-	var card = EditorCard.new()
+func load_card(card_path: String) -> EditorCard:
+	var card = editor_card_scene.instantiate()
 	card.load(card_path)
-	print("Loaded Card: ", card.card_name)
+	print("Loaded Card: ", card.get_card_name())
 	return card
 
 
@@ -52,5 +54,5 @@ func add_card_to_collection(card: EditorCard) -> void:
 	collection_container.add_card(card)
 
 
-func _on_collection_container_card_selected(card: CardFront) -> void:
+func _on_collection_container_card_selected(card: EditorCard) -> void:
 	pass # Replace with function body.

@@ -5,6 +5,13 @@ var card_file: CardFile = CardFile.new()
 @export var card_front: CardFront
 
 
+signal card_selected(card: EditorCard)
+
+
+func _ready():
+	update_display()
+
+
 func get_health() -> int:
 	return card_file.health
 
@@ -50,6 +57,9 @@ func load(card_path: String) -> void:
 
 
 func update_display():
+	if not is_node_ready():
+		return
+
 	set_display_health(card_file.health)
 	set_display_attack(card_file.attack)
 	set_display_cost(card_file.cost)
@@ -65,3 +75,7 @@ func set_display_attack(attack: int) -> void:
 
 func set_display_cost(cost: int) -> void:
 	card_front.set_initial_cost(cost)
+
+
+func _on_card_front_pressed() -> void:
+	card_selected.emit(self)

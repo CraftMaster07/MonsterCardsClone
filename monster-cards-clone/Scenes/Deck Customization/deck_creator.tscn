@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://cvexiydhupg0p"]
 
 [ext_resource type="Script" uid="uid://bwh364nt7ba1y" path="res://Scripts/Deck Customization/deck_creator.gd" id="1_elmlv"]
+[ext_resource type="PackedScene" uid="uid://ca5l6o5hh7sgi" path="res://Scenes/Deck Customization/editor_card.tscn" id="2_64y0t"]
 [ext_resource type="Script" uid="uid://b5h3sju2l8lcm" path="res://Scripts/Deck Customization/collection_container.gd" id="2_seenq"]
 [ext_resource type="PackedScene" uid="uid://b1rfo4m4p3w8h" path="res://Scenes/Board/Card/card_front.tscn" id="2_w4u1l"]
 
@@ -16,6 +17,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_elmlv")
 collection_container = NodePath("PanelContainer/ScrollContainer/MarginContainer/CollectionContainer")
+editor_card_scene = ExtResource("2_64y0t")
 
 [node name="BackButton" type="Button" parent="." unique_id=257411656]
 layout_mode = 1
@@ -60,60 +62,6 @@ size_flags_vertical = 3
 theme_override_constants/separation = 9
 alignment = 1
 script = ExtResource("2_seenq")
-
-[node name="CardFront" parent="PanelContainer/ScrollContainer/MarginContainer/CollectionContainer" unique_id=425424366 instance=ExtResource("2_w4u1l")]
-layout_mode = 2
-
-[node name="CardFront2" parent="PanelContainer/ScrollContainer/MarginContainer/CollectionContainer" unique_id=521921912 instance=ExtResource("2_w4u1l")]
-layout_mode = 2
-
-[node name="CardFront3" parent="PanelContainer/ScrollContainer/MarginContainer/CollectionContainer" unique_id=1490851370 instance=ExtResource("2_w4u1l")]
-layout_mode = 2
-
-[node name="CardFront4" parent="PanelContainer/ScrollContainer/MarginContainer/CollectionContainer" unique_id=1737706776 instance=ExtResource("2_w4u1l")]
-layout_mode = 2
-
-[node name="CardFront5" parent="PanelContainer/ScrollContainer/MarginContainer/CollectionContainer" unique_id=466318290 instance=ExtResource("2_w4u1l")]
-layout_mode = 2
-
-[node name="CardFront6" parent="PanelContainer/ScrollContainer/MarginContainer/CollectionContainer" unique_id=417364638 instance=ExtResource("2_w4u1l")]
-layout_mode = 2
-
-[node name="CardFront7" parent="PanelContainer/ScrollContainer/MarginContainer/CollectionContainer" unique_id=1793774378 instance=ExtResource("2_w4u1l")]
-layout_mode = 2
-
-[node name="CardFront8" parent="PanelContainer/ScrollContainer/MarginContainer/CollectionContainer" unique_id=547266701 instance=ExtResource("2_w4u1l")]
-layout_mode = 2
-
-[node name="CardFront9" parent="PanelContainer/ScrollContainer/MarginContainer/CollectionContainer" unique_id=1218291863 instance=ExtResource("2_w4u1l")]
-layout_mode = 2
-
-[node name="CardFront10" parent="PanelContainer/ScrollContainer/MarginContainer/CollectionContainer" unique_id=1131873448 instance=ExtResource("2_w4u1l")]
-layout_mode = 2
-
-[node name="CardFront11" parent="PanelContainer/ScrollContainer/MarginContainer/CollectionContainer" unique_id=174570013 instance=ExtResource("2_w4u1l")]
-layout_mode = 2
-
-[node name="CardFront12" parent="PanelContainer/ScrollContainer/MarginContainer/CollectionContainer" unique_id=1542373701 instance=ExtResource("2_w4u1l")]
-layout_mode = 2
-
-[node name="CardFront13" parent="PanelContainer/ScrollContainer/MarginContainer/CollectionContainer" unique_id=656363246 instance=ExtResource("2_w4u1l")]
-layout_mode = 2
-
-[node name="CardFront14" parent="PanelContainer/ScrollContainer/MarginContainer/CollectionContainer" unique_id=339093781 instance=ExtResource("2_w4u1l")]
-layout_mode = 2
-
-[node name="CardFront15" parent="PanelContainer/ScrollContainer/MarginContainer/CollectionContainer" unique_id=420758503 instance=ExtResource("2_w4u1l")]
-layout_mode = 2
-
-[node name="CardFront16" parent="PanelContainer/ScrollContainer/MarginContainer/CollectionContainer" unique_id=1433804715 instance=ExtResource("2_w4u1l")]
-layout_mode = 2
-
-[node name="CardFront17" parent="PanelContainer/ScrollContainer/MarginContainer/CollectionContainer" unique_id=1357815722 instance=ExtResource("2_w4u1l")]
-layout_mode = 2
-
-[node name="CardFront18" parent="PanelContainer/ScrollContainer/MarginContainer/CollectionContainer" unique_id=871006119 instance=ExtResource("2_w4u1l")]
-layout_mode = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=258522998]
 layout_mode = 1
@@ -183,7 +131,7 @@ size_flags_vertical = 3
 theme_override_constants/separation = 9
 alignment = 1
 
-[node name="CardFront" parent="VBoxContainer2/DeckContainer/ScrollContainer/MarginContainer/HBoxContainer" unique_id=20270715 instance=ExtResource("2_w4u1l")]
+[node name="CardFront" parent="VBoxContainer2/DeckContainer/ScrollContainer/MarginContainer/HBoxContainer" unique_id=1447527241 instance=ExtResource("2_w4u1l")]
 layout_mode = 2
 
 [node name="CardFront2" parent="VBoxContainer2/DeckContainer/ScrollContainer/MarginContainer/HBoxContainer" unique_id=615264876 instance=ExtResource("2_w4u1l")]
