@@ -9,7 +9,7 @@ extends Node
 
 var waiting_room: WaitingRoom = null
 var board: Board = null
-var card_creator = null
+var card_creator: CardCreator = null
 
 
 func transition_board_to_main_menu():

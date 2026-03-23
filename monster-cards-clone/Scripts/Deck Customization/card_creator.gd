@@ -1,3 +1,4 @@
+class_name CardCreator
 extends Control
 
 signal leave()
