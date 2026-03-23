@@ -3,6 +3,7 @@ extends Control
 signal host_game(name: String)
 signal join_game(name: String, ip: String)
 signal goto_card_creator()
+signal goto_deck_creator()
 
 @export var play_menu_container: Control
 @export var settings_menu_container: Control
@@ -91,3 +92,7 @@ func check_gaster(player_name: String) -> void:
 
 func _on_card_creator_button_pressed() -> void:
 	goto_card_creator.emit()
+
+
+func _on_deck_creator_button_pressed() -> void:
+	goto_deck_creator.emit()

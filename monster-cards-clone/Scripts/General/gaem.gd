@@ -6,10 +6,12 @@ extends Node
 @export var board_scene: PackedScene
 @export var host_board_scene: PackedScene
 @export var card_creator_scene: PackedScene
+@export var deck_creator_scene: PackedScene
 
 var waiting_room: WaitingRoom = null
 var board: Board = null
 var card_creator: CardCreator = null
+var deck_creator: DeckCreator = null
 
 
 func transition_board_to_main_menu():
@@ -40,6 +42,27 @@ func transition_main_menu_to_card_creator():
 func transition_card_creator_to_main_menu():
 	stop_card_creator()
 	start_main_menu()
+
+
+func transition_main_menu_to_deck_creator():
+	stop_main_menu()
+	start_deck_creator()
+
+
+func transition_deck_creator_to_main_menu():
+	stop_deck_creator()
+	start_main_menu()
+
+
+func start_deck_creator():
+	deck_creator = deck_creator_scene.instantiate()
+	deck_creator.leave.connect(transition_deck_creator_to_main_menu)
+	add_child(deck_creator)
+
+
+func stop_deck_creator():
+	remove_child(deck_creator)
+	deck_creator.queue_free()
 
 
 func start_card_creator():
