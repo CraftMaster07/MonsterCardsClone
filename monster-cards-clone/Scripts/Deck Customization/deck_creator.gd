@@ -2,6 +2,7 @@ class_name DeckCreator
 extends Control
 
 @export var collection_container: CollectionContainer
+@export var deck_container: DeckContainer
 
 @export var editor_card_scene: PackedScene
 
@@ -55,4 +56,6 @@ func add_card_to_collection(card: EditorCard) -> void:
 
 
 func _on_collection_container_card_selected(card: EditorCard) -> void:
-	pass # Replace with function body.
+	var new_card = editor_card_scene.instantiate()
+	new_card.deserialize(card.serialize())
+	deck_container.add_card(new_card)

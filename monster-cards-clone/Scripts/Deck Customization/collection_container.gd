@@ -1,10 +1,6 @@
 class_name CollectionContainer
 extends HBoxContainer
 
-
-@export var card_fron_scene: PackedScene
-
-
 signal card_selected(card: EditorCard)
 
 

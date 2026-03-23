@@ -79,3 +79,14 @@ func set_display_cost(cost: int) -> void:
 
 func _on_card_front_pressed() -> void:
 	card_selected.emit(self)
+
+
+func serialize() -> Dictionary:
+	return {
+		"card_file": card_file.serialize()
+	}
+
+
+func deserialize(data: Dictionary) -> void:
+	card_file.deserialize(data["card_file"])
+	update_display()
