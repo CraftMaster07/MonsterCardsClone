@@ -5,9 +5,11 @@ extends Node
 @export var waiting_room_scene: PackedScene
 @export var board_scene: PackedScene
 @export var host_board_scene: PackedScene
+@export var card_creator_scene: PackedScene
 
 var waiting_room: WaitingRoom = null
 var board: Board = null
+var card_creator: CardCreator = null
 
 
 func transition_board_to_main_menu():
@@ -28,6 +30,27 @@ func transition_waiting_room_to_board():
 func transition_waiting_room_to_main_menu():
 	stop_waiting_room()
 	start_main_menu()
+
+
+func transition_main_menu_to_card_creator():
+	stop_main_menu()
+	start_card_creator()
+
+
+func transition_card_creator_to_main_menu():
+	stop_card_creator()
+	start_main_menu()
+
+
+func start_card_creator():
+	card_creator = card_creator_scene.instantiate()
+	card_creator.leave.connect(transition_card_creator_to_main_menu)
+	add_child(card_creator)
+
+
+func stop_card_creator():
+	remove_child(card_creator)
+	card_creator.queue_free()
 
 
 func start_waiting_room():
@@ -197,3 +220,7 @@ func _on_board_call_shadow_sync(player_id: int, serialized_shadow_player_data: D
 
 func _on_multiplayer_manager_shadow_sync(serialized_shadow_player_data: Dictionary) -> void:
 	board.shadow_sync(serialized_shadow_player_data)
+
+
+func _on_main_menu_goto_card_creator() -> void:
+	transition_main_menu_to_card_creator()

@@ -11,10 +11,25 @@ var initial_cost: int = -1
 
 
 func set_initial_values(card_data: CardData) -> void:
-	initial_health = card_data.health
-	initial_attack = card_data.attack
-	initial_cost = card_data.cost
+	set_initial_health(card_data.health)
+	set_initial_attack(card_data.attack)
+	set_initial_cost(card_data.cost)
 	update_labels(card_data)
+
+
+func set_initial_health(health: int) -> void:
+	initial_health = health
+	update_health(health)
+
+
+func set_initial_attack(attack: int) -> void:
+	initial_attack = attack
+	update_attack(attack)
+
+
+func set_initial_cost(cost: int) -> void:
+	initial_cost = cost
+	update_cost(cost)
 
 
 func update_health(health: int) -> void:
