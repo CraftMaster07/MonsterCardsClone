@@ -3,9 +3,8 @@ extends Control
 
 signal leave()
 
-var card_file = CardFile.new()
 @export var name_line_edit: LineEdit
-@export var card_front: CardFront
+@export var editor_card: EditorCard
 
 @export var health_spin_box: SpinBox
 @export var attack_spin_box: SpinBox
@@ -13,9 +12,9 @@ var card_file = CardFile.new()
 
 
 func _ready() -> void:
-	set_display_health(int(health_spin_box.value))
-	set_display_attack(int(attack_spin_box.value))
-	set_display_cost(int(cost_spin_box.value))
+	editor_card.set_health(int(health_spin_box.value))
+	editor_card.set_attack(int(attack_spin_box.value))
+	editor_card.set_cost(int(cost_spin_box.value))
 	CardFile.ensure_folder_exists()
 
 
@@ -24,38 +23,23 @@ func _on_back_button_pressed() -> void:
 
 
 func _on_health_spin_box_value_changed(value: int) -> void:
-	card_file.health = value
-	set_display_health(value)
+	editor_card.set_health(value)
 
 
 func _on_attack_spin_box_value_changed(value: int) -> void:
-	card_file.attack = value
-	set_display_attack(value)
+	editor_card.set_attack(value)
 
 
 func _on_cost_spin_box_value_changed(value: int) -> void:
-	card_file.cost = value
-	set_display_cost(value)
+	editor_card.set_cost(value)
 
 
 func _on_save_button_pressed() -> void:
-	card_file.save()
+	editor_card.save()
 
 
 func _on_name_line_edit_text_changed(_new_text: String) -> void:
-	card_file.card_name = name_line_edit.text
-
-
-func set_display_health(health: int) -> void:
-	card_front.set_initial_health(health)
-
-
-func set_display_attack(attack: int) -> void:
-	card_front.set_initial_attack(attack)
-
-
-func set_display_cost(cost: int) -> void:
-	card_front.set_initial_cost(cost)
+	editor_card.set_card_name(name_line_edit.text)
 
 
 func _on_open_folder_button_pressed() -> void:
@@ -93,19 +77,12 @@ func _on_card_file_selected(status: bool, selected_paths: PackedStringArray, _se
 
 
 func load_card(path: String):
-	card_file.load(path)
+	editor_card.load(path)
 	update_values_from_loaded_card()
 
 
 func update_values_from_loaded_card():
-	name_line_edit.text = card_file.card_name
-	health_spin_box.value = card_file.health
-	attack_spin_box.value = card_file.attack
-	cost_spin_box.value = card_file.cost
-	update_display()
-
-
-func update_display():
-	set_display_health(card_file.health)
-	set_display_attack(card_file.attack)
-	set_display_cost(card_file.cost)
+	name_line_edit.text = editor_card.get_card_name()
+	health_spin_box.value = editor_card.get_health()
+	attack_spin_box.value = editor_card.get_attack()
+	cost_spin_box.value = editor_card.get_cost()

@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://ca5l6o5hh7sgi"]
+
+[ext_resource type="PackedScene" uid="uid://b1rfo4m4p3w8h" path="res://Scenes/Board/Card/card_front.tscn" id="1_75hri"]
+[ext_resource type="Script" uid="uid://bm4q1q2pl8fl5" path="res://Scripts/Deck Customization/editor_card.gd" id="1_upp01"]
+
+[node name="EditorCard" type="Control" unique_id=235285323 node_paths=PackedStringArray("card_front")]
+layout_mode = 3
+anchors_preset = 0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("1_upp01")
+card_front = NodePath("CardFront")
+
+[node name="CardFront" parent="." unique_id=20270715 instance=ExtResource("1_75hri")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 2
