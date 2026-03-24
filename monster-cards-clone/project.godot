@@ -28,6 +28,7 @@ buses/default_bus_layout="res://Assets/default_bus_layout.tres"
 
 AudioManager="*res://Scripts/General/audio_manager.gd"
 ColorConstants="*uid://b0ko58tuvatcs"
+PathConstants="*uid://dljmq1o3u8314"
 
 [display]
 
