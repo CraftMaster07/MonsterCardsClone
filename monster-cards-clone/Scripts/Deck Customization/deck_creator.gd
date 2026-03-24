@@ -8,11 +8,13 @@ extends Control
 @export var editor_card_container_scene: PackedScene
 
 var cards_in_deck: Dictionary[String, int] = {}
+var deck_name: String
 
 signal leave()
 
 
 func _ready():
+	ensure_folder_exists()
 	load_cards()
 
 
@@ -79,3 +81,23 @@ func _on_deck_container_card_decremented(card_name: String) -> void:
 	if cards_in_deck[card_name] == 0:
 		deck_container.remove_card_container_by_name(card_name)
 		cards_in_deck.erase(card_name)
+
+
+func _on_save_button_pressed() -> void:
+	var file_name := deck_name.replace(" ", "_")
+	var file := FileAccess.open(PathConstants.DECK_SAVE_PATH + file_name + ".json", FileAccess.WRITE)
+	var data := {
+		"name": deck_name,
+		"cards": cards_in_deck
+	}
+	var stringified_data := JSON.stringify(data)
+	file.store_string(stringified_data)
+	file.close()
+
+static func ensure_folder_exists():
+	if not DirAccess.dir_exists_absolute(PathConstants.DECK_SAVE_PATH):
+		DirAccess.make_dir_absolute(PathConstants.DECK_SAVE_PATH)
+
+
+func _on_deck_line_edit_text_changed(new_text: String) -> void:
+	deck_name = new_text

@@ -11,3 +11,5 @@ func add_card(card: EditorCard) -> void:
 
 func send_card_to_deck(card):
 	card_selected.emit(card)
+
+

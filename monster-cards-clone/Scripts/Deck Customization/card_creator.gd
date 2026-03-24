@@ -38,8 +38,8 @@ func _on_save_button_pressed() -> void:
 	editor_card.save()
 
 
-func _on_name_line_edit_text_changed(_new_text: String) -> void:
-	editor_card.set_card_name(name_line_edit.text)
+func _on_name_line_edit_text_changed(new_text: String) -> void:
+	editor_card.set_card_name(new_text)
 
 
 func _on_open_folder_button_pressed() -> void:
