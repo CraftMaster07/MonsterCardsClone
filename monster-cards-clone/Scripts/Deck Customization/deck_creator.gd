@@ -5,6 +5,9 @@ extends Control
 @export var deck_container: DeckContainer
 
 @export var editor_card_scene: PackedScene
+@export var editor_card_container_scene: PackedScene
+
+var cards_in_deck: Dictionary[String, int] = {}
 
 signal leave()
 
@@ -37,7 +40,7 @@ static func get_all_json_from_path(folder_path: String) -> Array:
 			# Check if the file has a .json extension
 			if file_name.get_extension().to_lower() == "json":
 				var full_path = folder_path.path_join(file_name)
-				all_paths.append(full_path)    
+				all_paths.append(full_path)
 	else:
 		print("An error occurred when trying to access the path: ", folder_path)
 		
@@ -56,6 +59,23 @@ func add_card_to_collection(card: EditorCard) -> void:
 
 
 func _on_collection_container_card_selected(card: EditorCard) -> void:
+	if cards_in_deck.has(card.get_card_name()):
+		cards_in_deck[card.get_card_name()] += 1
+		deck_container.increment_card_amount(card.get_card_name())
+		return
+	
+	var card_name = card.get_card_name()
 	var new_card = editor_card_scene.instantiate()
 	new_card.deserialize(card.serialize())
-	deck_container.add_card(new_card)
+	var card_container = editor_card_container_scene.instantiate()
+	card_container.add_card(new_card)
+	deck_container.add_card_container(card_name, card_container)
+	cards_in_deck[card_name] = 1
+
+
+func _on_deck_container_card_decremented(card_name: String) -> void:
+	cards_in_deck[card_name] -= 1
+
+	if cards_in_deck[card_name] == 0:
+		deck_container.remove_card_container_by_name(card_name)
+		cards_in_deck.erase(card_name)

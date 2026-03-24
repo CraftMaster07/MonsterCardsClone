@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://bwh364nt7ba1y" path="res://Scripts/Deck Customization/deck_creator.gd" id="1_elmlv"]
 [ext_resource type="PackedScene" uid="uid://ca5l6o5hh7sgi" path="res://Scenes/Deck Customization/editor_card.tscn" id="2_64y0t"]
 [ext_resource type="Script" uid="uid://b5h3sju2l8lcm" path="res://Scripts/Deck Customization/collection_container.gd" id="2_seenq"]
+[ext_resource type="PackedScene" uid="uid://bmc0b8c5180lj" path="res://Scenes/Deck Customization/editor_card_container.tscn" id="3_pb3bh"]
 [ext_resource type="Script" uid="uid://bc3eoaptsgsub" path="res://Scripts/Deck Customization/deck_container.gd" id="4_64y0t"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w4u1l"]
@@ -19,6 +20,7 @@ script = ExtResource("1_elmlv")
 collection_container = NodePath("PanelContainer/ScrollContainer/MarginContainer/CollectionContainer")
 deck_container = NodePath("VBoxContainer/PanelContainer/ScrollContainer/MarginContainer/DeckContainer")
 editor_card_scene = ExtResource("2_64y0t")
+editor_card_container_scene = ExtResource("3_pb3bh")
 
 [node name="BackButton" type="Button" parent="." unique_id=257411656]
 layout_mode = 1
@@ -101,13 +103,6 @@ offset_bottom = 75.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="NameLineEdit" type="LineEdit" parent="VBoxContainer" unique_id=942264160]
-layout_mode = 2
-size_flags_horizontal = 0
-placeholder_text = "Card Name"
-alignment = 1
-expand_to_text_length = true
-
 [node name="PanelContainer" type="PanelContainer" parent="VBoxContainer" unique_id=2118511287]
 layout_mode = 2
 size_flags_vertical = 3
@@ -135,3 +130,4 @@ script = ExtResource("4_64y0t")
 
 [connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]
 [connection signal="card_selected" from="PanelContainer/ScrollContainer/MarginContainer/CollectionContainer" to="." method="_on_collection_container_card_selected"]
+[connection signal="card_decremented" from="VBoxContainer/PanelContainer/ScrollContainer/MarginContainer/DeckContainer" to="." method="_on_deck_container_card_decremented"]
