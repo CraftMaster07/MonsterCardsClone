@@ -43,8 +43,12 @@ func get_card_name() -> String:
 	return card_file.card_name
 
 
+func get_file_name() -> String:
+	return card_file.file_name
+
+
 func set_card_name(card_name: String) -> void:
-	card_file.card_name = card_name
+	card_file.set_name(card_name)
 
 
 func save():

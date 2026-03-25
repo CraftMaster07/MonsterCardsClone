@@ -23,5 +23,13 @@ func increment_card_amount(card_name: String) -> void:
 	card_containers[card_name].increase_amount()
 
 
+func decrement_card_amount(card_name: String) -> void:
+	card_containers[card_name].reduce_amount()
+
+
 func card_amount_decremented(card_name: String) -> void:
 	card_decremented.emit(card_name)
+
+
+func update_card_amount(card_name: String, amount: int) -> void:
+	card_containers[card_name].set_amount(amount)

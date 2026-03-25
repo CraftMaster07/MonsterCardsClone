@@ -9,7 +9,7 @@
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w4u1l"]
 bg_color = Color(0.23851621, 0.22978191, 0.27170652, 1)
 
-[node name="DeckCreator" type="Control" unique_id=273491332 node_paths=PackedStringArray("collection_container", "deck_container")]
+[node name="DeckCreator" type="Control" unique_id=273491332 node_paths=PackedStringArray("collection_container", "deck_container", "deck_name_line_edit")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -19,6 +19,7 @@ grow_vertical = 2
 script = ExtResource("1_elmlv")
 collection_container = NodePath("PanelContainer/ScrollContainer/MarginContainer/CollectionContainer")
 deck_container = NodePath("VBoxContainer/PanelContainer/ScrollContainer/MarginContainer/DeckContainer")
+deck_name_line_edit = NodePath("DeckLineEdit")
 editor_card_scene = ExtResource("2_64y0t")
 editor_card_container_scene = ExtResource("3_pb3bh")
 
@@ -142,6 +143,7 @@ expand_to_text_length = true
 
 [connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]
 [connection signal="card_selected" from="PanelContainer/ScrollContainer/MarginContainer/CollectionContainer" to="." method="_on_collection_container_card_selected"]
+[connection signal="pressed" from="HBoxContainer/LoadButton" to="." method="_on_load_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/SaveButton" to="." method="_on_save_button_pressed"]
 [connection signal="card_decremented" from="VBoxContainer/PanelContainer/ScrollContainer/MarginContainer/DeckContainer" to="." method="_on_deck_container_card_decremented"]
 [connection signal="text_changed" from="DeckLineEdit" to="." method="_on_deck_line_edit_text_changed"]
