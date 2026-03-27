@@ -6,16 +6,15 @@ extends Control
 @export var deck_name_line_edit: LineEdit
 
 @export var editor_card_scene: PackedScene
-@export var editor_card_container_scene: PackedScene
 
-var cards_in_deck: Dictionary = {}
-var deck_name: String
+var deck_file = DeckFile.new()
 
 signal leave()
 
 
 func _ready():
-	ensure_folder_exists()
+	CardFile.ensure_folder_exists()
+	DeckFile.ensure_folder_exists()
 	load_cards()
 
 
@@ -63,82 +62,61 @@ func add_card_to_collection(card: EditorCard) -> void:
 
 func _on_collection_container_card_selected(card: EditorCard) -> void:
 	var card_name = card.get_file_name()
-	if cards_in_deck.has(card_name):
-		cards_in_deck[card_name] += 1
+	if card_name in deck_file.cards:
+		deck_file.cards[card_name] += 1
 		deck_container.increment_card_amount(card_name)
 		return
 
 	var new_card = editor_card_scene.instantiate()
 	new_card.deserialize(card.serialize())
-	var card_container = editor_card_container_scene.instantiate()
-	card_container.add_card(new_card)
-	deck_container.add_card_container(card_name, card_container)
-	cards_in_deck[card_name] = 1
+	deck_container.add_card_container(card_name, new_card)
+	deck_file.cards[card_name] = 1
 
 
 func _on_deck_container_card_decremented(card_name: String) -> void:
-	cards_in_deck[card_name] -= 1
+	deck_file.cards[card_name] -= 1
 
-	if cards_in_deck[card_name] == 0:
-		deck_container.remove_card_container_by_name(card_name)
-		cards_in_deck.erase(card_name)
-
-	deck_container.decrement_card_amount(card_name)
+	if deck_file.cards[card_name] == 0:
+		deck_container.remove_card_container(card_name)
+		deck_file.cards.erase(card_name)
+	else:
+		deck_container.decrement_card_amount(card_name)
 
 
 func _on_save_button_pressed() -> void:
 	save_deck()
 
-static func ensure_folder_exists():
-	if not DirAccess.dir_exists_absolute(PathConstants.DECK_SAVE_PATH):
-		DirAccess.make_dir_absolute(PathConstants.DECK_SAVE_PATH)
-
 
 func _on_deck_line_edit_text_changed(new_text: String) -> void:
-	deck_name = new_text
+	deck_file.name = new_text
 
 
-func update_deck_name(new_name: String) -> void:
-	deck_name = new_name
-	deck_name_line_edit.text = deck_name
+func update_deck_line_edit() -> void:
+	deck_name_line_edit.text = deck_file.name
 
 
 func save_deck() -> void:
-	var file_name := deck_name.replace(" ", "_")
-	var file := FileAccess.open(PathConstants.DECK_SAVE_PATH + file_name + ".json", FileAccess.WRITE)
-	var data := {
-		"name": deck_name,
-		"cards": cards_in_deck
-	}
-	var stringified_data := JSON.stringify(data)
-	file.store_string(stringified_data)
-	file.close()
+	deck_file.save()
 
 
 func load_deck(file_path: String) -> void:
-	var file := FileAccess.open(file_path, FileAccess.READ)
-	var data: Dictionary = JSON.parse_string(file.get_as_text())
-	file.close()
-	print(data["cards"])
-	cards_in_deck = data["cards"]
-	update_deck_name(data["name"])
+	deck_file.load(file_path)
+	update_deck_line_edit()
 	update_deck_container()
 
 
 func update_deck_container():
-	for file_name in cards_in_deck:
+	for file_name in deck_file.cards:
 		if file_name in deck_container.card_containers:
-			deck_container.update_card_amount(file_name, cards_in_deck[file_name])
+			deck_container.update_card_amount(file_name, deck_file.cards[file_name])
 		else:
 			var card = load_card(PathConstants.CARD_SAVE_PATH + file_name + ".json")
-			var card_container = editor_card_container_scene.instantiate()
-			card_container.add_card(card)
-			deck_container.add_card_container(file_name, card_container)
-			deck_container.update_card_amount(file_name, cards_in_deck[file_name])
+			deck_container.add_card_container(file_name, card)
+			deck_container.update_card_amount(file_name, deck_file.cards[file_name])
 
 	for card_name in deck_container.card_containers:
-		if card_name not in cards_in_deck:
-			deck_container.remove_card_container_by_name(card_name)
+		if card_name not in deck_file.cards:
+			deck_container.remove_card_container(card_name)
 
 func _on_load_button_pressed() -> void:
 	# Define the filters (Extension, then Description)

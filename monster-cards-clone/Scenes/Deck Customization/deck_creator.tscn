@@ -21,7 +21,6 @@ collection_container = NodePath("PanelContainer/ScrollContainer/MarginContainer/
 deck_container = NodePath("VBoxContainer/PanelContainer/ScrollContainer/MarginContainer/DeckContainer")
 deck_name_line_edit = NodePath("DeckLineEdit")
 editor_card_scene = ExtResource("2_64y0t")
-editor_card_container_scene = ExtResource("3_pb3bh")
 
 [node name="BackButton" type="Button" parent="." unique_id=257411656]
 layout_mode = 1
@@ -128,6 +127,7 @@ size_flags_vertical = 3
 theme_override_constants/separation = 9
 alignment = 1
 script = ExtResource("4_64y0t")
+card_container_scene = ExtResource("3_pb3bh")
 
 [node name="DeckLineEdit" type="LineEdit" parent="." unique_id=224592477]
 layout_mode = 1

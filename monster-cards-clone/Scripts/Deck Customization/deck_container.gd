@@ -1,22 +1,22 @@
 class_name DeckContainer
 extends HBoxContainer
 
+@export var card_container_scene: PackedScene
 var card_containers: Dictionary[String, EditorCardContainer] = {}
 
 signal card_decremented(card_name: String)
 
-func add_card_container(card_name: String, card_container: EditorCardContainer) -> void:
+func add_card_container(card_name: String, card: EditorCard) -> void:
+	var card_container = card_container_scene.instantiate()
+	card_container.add_card(card)
 	add_child(card_container)
 	card_container.card_decremented.connect(card_amount_decremented)
 	card_containers[card_name] = card_container
 
 
-func remove_card_container(card_container: EditorCardContainer) -> void:
-	card_container.queue_free()
-
-
-func remove_card_container_by_name(card_name: String) -> void:
+func remove_card_container(card_name: String) -> void:
 	card_containers[card_name].queue_free()
+	card_containers.erase(card_name)
 
 
 func increment_card_amount(card_name: String) -> void:
