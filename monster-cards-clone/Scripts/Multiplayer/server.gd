@@ -8,8 +8,6 @@ signal client_attacked(player_id: int, attacked_id: int)
 
 signal received_deck_blueprint(player_id: int, deck: Array)
 
-# Replace this with your own server port number between 1024 and 65535.
-const SERVER_PORT = 59007
 var thread = null
 
 
@@ -48,7 +46,7 @@ func start_server(port: int):
 	if thread:
 		thread.wait_to_finish()
 	thread = Thread.new()
-	thread.start(_upnp_setup.bind(SERVER_PORT))
+	thread.start(_upnp_setup.bind(port))
 
 	peer = ENetMultiplayerPeer.new()
 	peer.create_server(port)
