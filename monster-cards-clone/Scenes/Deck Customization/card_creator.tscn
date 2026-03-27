@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://dvlfw6d4f8dyf" path="res://Scripts/Deck Customization/card_creator.gd" id="1_guviw"]
 [ext_resource type="PackedScene" uid="uid://ca5l6o5hh7sgi" path="res://Scenes/Deck Customization/editor_card.tscn" id="3_qpjfk"]
 
-[node name="CardCreator" type="Control" unique_id=947132057 node_paths=PackedStringArray("name_line_edit", "editor_card", "health_spin_box", "attack_spin_box", "cost_spin_box")]
+[node name="CardCreator" type="Control" unique_id=947132057 node_paths=PackedStringArray("name_line_edit", "editor_card", "health_spin_box", "attack_spin_box", "cost_label")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -15,7 +15,7 @@ name_line_edit = NodePath("NameLineEdit")
 editor_card = NodePath("EditorCard")
 health_spin_box = NodePath("GridContainer/HealthSpinBox")
 attack_spin_box = NodePath("GridContainer/AttackSpinBox")
-cost_spin_box = NodePath("GridContainer/CostSpinBox")
+cost_label = NodePath("GridContainer/CostLabel")
 
 [node name="EditorCard" parent="." unique_id=235285323 instance=ExtResource("3_qpjfk")]
 layout_mode = 1
@@ -24,6 +24,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
+offset_left = -30.0
+offset_top = -45.0
+offset_right = 30.0
+offset_bottom = 45.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -43,8 +47,9 @@ columns = 2
 layout_mode = 2
 text = "Cost:"
 
-[node name="CostSpinBox" type="SpinBox" parent="GridContainer" unique_id=501308452]
+[node name="CostLabel" type="Label" parent="GridContainer" unique_id=180313902]
 layout_mode = 2
+text = " 0"
 
 [node name="Label2" type="Label" parent="GridContainer" unique_id=1223462233]
 layout_mode = 2
@@ -120,7 +125,6 @@ text = "Load
 layout_mode = 2
 text = "Save"
 
-[connection signal="value_changed" from="GridContainer/CostSpinBox" to="." method="_on_cost_spin_box_value_changed"]
 [connection signal="value_changed" from="GridContainer/AttackSpinBox" to="." method="_on_attack_spin_box_value_changed"]
 [connection signal="value_changed" from="GridContainer/HealthSpinBox" to="." method="_on_health_spin_box_value_changed"]
 [connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]

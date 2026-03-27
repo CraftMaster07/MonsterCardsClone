@@ -8,14 +8,22 @@ signal leave()
 
 @export var health_spin_box: SpinBox
 @export var attack_spin_box: SpinBox
-@export var cost_spin_box: SpinBox
+@export var cost_label: Label
 
 
 func _ready() -> void:
 	editor_card.set_health(int(health_spin_box.value))
 	editor_card.set_attack(int(attack_spin_box.value))
-	editor_card.set_cost(int(cost_spin_box.value))
+	editor_card.set_cost(int(cost_label.text))
 	CardFile.ensure_folder_exists()
+
+
+static func calculate_cost(health, attack) -> int:
+	var attack_component = pow(attack, 1.2) * 0.7
+	var health_component = pow(health, 0.9) * 0.5
+	
+	var total = attack_component + health_component
+	return int(round(total))
 
 
 func _on_back_button_pressed() -> void:
@@ -24,14 +32,12 @@ func _on_back_button_pressed() -> void:
 
 func _on_health_spin_box_value_changed(value: int) -> void:
 	editor_card.set_health(value)
+	update_cost()
 
 
 func _on_attack_spin_box_value_changed(value: int) -> void:
 	editor_card.set_attack(value)
-
-
-func _on_cost_spin_box_value_changed(value: int) -> void:
-	editor_card.set_cost(value)
+	update_cost()
 
 
 func _on_save_button_pressed() -> void:
@@ -85,4 +91,8 @@ func update_values_from_loaded_card():
 	name_line_edit.text = editor_card.get_card_name()
 	health_spin_box.value = editor_card.get_health()
 	attack_spin_box.value = editor_card.get_attack()
-	cost_spin_box.value = editor_card.get_cost()
+	update_cost()
+
+
+func update_cost():
+	cost_label.text = " " + str(calculate_cost(health_spin_box.value, attack_spin_box.value))
