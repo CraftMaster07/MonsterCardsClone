@@ -7,7 +7,7 @@ extends Control
 
 @export var editor_card_scene: PackedScene
 
-var deck_file = DeckFile.new()
+var deck_file: DeckFile = DeckFile.new()
 
 signal leave()
 
