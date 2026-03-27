@@ -64,6 +64,10 @@ func deserialize(serialized: Dictionary):
 	check_death()
 
 
+func recalculate_cost():
+	cost = CardCreator.calculate_cost(health, attack)
+
+
 func take_damage(amount : int) -> void:
 	health -= amount
 	check_death()

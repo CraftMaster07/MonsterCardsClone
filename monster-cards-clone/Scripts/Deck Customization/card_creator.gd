@@ -95,4 +95,6 @@ func update_values_from_loaded_card():
 
 
 func update_cost():
-	cost_label.text = " " + str(calculate_cost(health_spin_box.value, attack_spin_box.value))
+	var new_cost: int = calculate_cost(health_spin_box.value, attack_spin_box.value)
+	cost_label.text = " " + str(new_cost)
+	editor_card.set_cost(new_cost)
