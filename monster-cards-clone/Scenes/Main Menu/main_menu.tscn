@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://ci6tydy38xeqp" path="res://Scenes/Main Menu/volume_slider.tscn" id="5_r7gth"]
 [ext_resource type="Texture2D" uid="uid://bdyi27t2a70bu" path="res://Assets/Sprites/card_editor_button.png" id="5_rghun"]
 [ext_resource type="Texture2D" uid="uid://dcx5502o88s74" path="res://Assets/Sprites/deck_editor_button.png" id="6_46knf"]
-[ext_resource type="Script" uid="uid://clievdbpydyi3" path="res://Scripts/Main Menu/hovered_button.gd" id="7_57ted"]
+[ext_resource type="Script" path="res://Scripts/Main Menu/hovered_button.gd" id="7_57ted"]
 
 [node name="MainMenu" type="Control" unique_id=574280643 node_paths=PackedStringArray("play_menu_container", "settings_menu_container", "deck_menu_container", "host_menu", "join_menu", "name_line_edit", "ip_line_edit", "join_status_label", "select_deck_label")]
 layout_mode = 3

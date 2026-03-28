@@ -73,22 +73,25 @@ func _on_join_button_pressed() -> void:
 
 
 func _on_host_start_button_pressed() -> void:
-	if not deck:
-		print("No deck selected")
-		return
+	if not check_deck_selected(): return
 	print("Hosting game")
 	host_game.emit(name_line_edit.text, deck)
 
 
 func _on_join_start_button_pressed() -> void:
-	if not deck:
-		print("No deck selected")
-		return
+	if not check_deck_selected(): return
 	print("Joining game")
 	join_game.emit(name_line_edit.text, ip_line_edit.text, deck)
 	join_status_label.visible = true
 	join_status_label.text = "Connecting..."
 
+
+func check_deck_selected() -> bool:
+	if not deck:
+		print("No deck selected")
+		select_deck_label.text = "No deck selected"
+
+	return deck != null
 
 func _on_name_line_edit_text_changed(new_text: String) -> void:
 	check_gaster(new_text)
@@ -108,6 +111,8 @@ func _on_deck_creator_button_pressed() -> void:
 
 
 func _on_select_deck_button_pressed() -> void:
+	select_deck_label.text = ""
+
 	# Define the filters (Extension, then Description)
 	var filters = PackedStringArray(["*.json ; Save Data"])
 
