@@ -17,6 +17,7 @@ atlas = ExtResource("2_3ak4q")
 region = Rect2(32, 0, 16, 16)
 
 [node name="CardFront" type="TextureButton" unique_id=20270715 node_paths=PackedStringArray("health_label", "attack_label", "cost_label")]
+custom_minimum_size = Vector2(60, 90)
 offset_right = 60.0
 offset_bottom = 90.0
 pivot_offset = Vector2(32, 45)

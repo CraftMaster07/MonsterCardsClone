@@ -18,6 +18,14 @@ var cost: int
 
 var is_ghost: bool = false
 
+static func create_from_card_file(card_file: CardFile):
+	var card_data = CardData.new()
+	card_data.card_name = card_file.card_name
+	card_data.health = card_file.health
+	card_data.attack = card_file.attack
+	card_data.cost = card_file.cost
+	return card_data
+
 
 func _init(serialized_data: Dictionary = {}):
 	if serialized_data:
@@ -54,6 +62,10 @@ func deserialize(serialized: Dictionary):
 	cost = data["cost"]
 	image_id = data["image_id"]
 	check_death()
+
+
+func recalculate_cost():
+	cost = CardCreator.calculate_cost(health, attack)
 
 
 func take_damage(amount : int) -> void:

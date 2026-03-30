@@ -6,10 +6,14 @@ extends Node
 @export var board_scene: PackedScene
 @export var host_board_scene: PackedScene
 @export var card_creator_scene: PackedScene
+@export var deck_creator_scene: PackedScene
 
 var waiting_room: WaitingRoom = null
 var board: Board = null
 var card_creator: CardCreator = null
+var deck_creator: DeckCreator = null
+
+var deck: DeckFile = DeckFile.new()
 
 
 func transition_board_to_main_menu():
@@ -40,6 +44,27 @@ func transition_main_menu_to_card_creator():
 func transition_card_creator_to_main_menu():
 	stop_card_creator()
 	start_main_menu()
+
+
+func transition_main_menu_to_deck_creator():
+	stop_main_menu()
+	start_deck_creator()
+
+
+func transition_deck_creator_to_main_menu():
+	stop_deck_creator()
+	start_main_menu()
+
+
+func start_deck_creator():
+	deck_creator = deck_creator_scene.instantiate()
+	deck_creator.leave.connect(transition_deck_creator_to_main_menu)
+	add_child(deck_creator)
+
+
+func stop_deck_creator():
+	remove_child(deck_creator)
+	deck_creator.queue_free()
 
 
 func start_card_creator():
@@ -77,6 +102,7 @@ func start_board():
 	
 	board.set_your_id(multiplayer_manager.your_id)
 	board.init_players(multiplayer_players_to_dicts(multiplayer_manager.players))
+	board.set_deck_file(deck)
 	board.send_placed_card.connect(_on_board_send_placed_card)
 	board.send_end_turn.connect(_on_end_turn_pressed)
 	board.send_player_attacked.connect(_on_board_player_attacked)
@@ -97,14 +123,16 @@ func stop_main_menu():
 	remove_child(main_menu)
 
 
-func _on_main_menu_join_game(player_name: String, ip: String) -> void:
+func _on_main_menu_join_game(player_name: String, ip: String, selcted_deck: DeckFile) -> void:
 	multiplayer_manager.join_game(player_name, ip)
+	deck = selcted_deck
 
 
-func _on_main_menu_host_game(player_name: String) -> void:
+func _on_main_menu_host_game(player_name: String, selected_deck: DeckFile) -> void:
 	transition_main_menu_to_waiting_room()
 	waiting_room.allow_starting_game()
 	multiplayer_manager.host_game(player_name)
+	deck = selected_deck
 
 
 func _on_multiplayer_manager_new_player(id: int, player_name: String) -> void:

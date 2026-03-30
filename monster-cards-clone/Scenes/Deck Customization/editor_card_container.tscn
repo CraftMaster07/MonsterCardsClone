@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://bmc0b8c5180lj"]
+
+[ext_resource type="Script" uid="uid://bv4in04s4c1lv" path="res://Scripts/Deck Customization/editor_card_container.gd" id="1_ubd8p"]
+
+[node name="EditorCardContainer" type="VBoxContainer" unique_id=906104109 node_paths=PackedStringArray("label")]
+offset_right = 1.0
+offset_bottom = 23.0
+alignment = 1
+script = ExtResource("1_ubd8p")
+label = NodePath("Label")
+
+[node name="Label" type="Label" parent="." unique_id=41454281]
+layout_mode = 2
+text = "1"
+horizontal_alignment = 1
