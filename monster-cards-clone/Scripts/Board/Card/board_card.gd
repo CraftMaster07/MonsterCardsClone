@@ -52,3 +52,7 @@ static func create(new_card_data: CardData) -> BoardCard:
 
 func set_card_data(new_card_data: CardData):
 	card_data = new_card_data
+
+
+func run_ability():
+	card_data.run_ability()

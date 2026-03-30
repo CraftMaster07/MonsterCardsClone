@@ -338,3 +338,8 @@ func _on_round_manager_round_number_changed(new_round_number: int) -> void:
 
 func set_deck_file(deck: DeckFile):
 	deck_file = deck
+
+
+func subscribe_card(card: BoardCard):
+	if 0 > card.get_trigger > Ability.PLAYER_TRIGGER_THRESHOLD:
+		card.subscribe(self)

@@ -18,6 +18,8 @@ var cost: int
 
 var is_ghost: bool = false
 
+var ability: Ability
+
 static func create_from_card_file(card_file: CardFile):
 	var card_data = CardData.new()
 	card_data.card_name = card_file.card_name
@@ -101,3 +103,7 @@ func reset():
 	health = STARTING_HEALTH
 	attack = STARTING_ATTACK
 	cost = STARTING_COST
+
+
+func run_ability():
+	ability.run()

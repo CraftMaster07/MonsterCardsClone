@@ -17,7 +17,15 @@ var hand: Hand
 var attacking_id: int = 0
 var attacked_by_id: int = 0
 
+
+const TRIGGERS = Ability.TRIGGERS
+const TRIGGERS_TO_SIGNALS: Dictionary = {
+	TRIGGERS.DRAW_CARD: drawn_card
+}
+
 @onready var label: Label = $HealthLabel
+
+signal drawn_card
 
 
 func init(new_player_id: int, new_player_name: String):
