@@ -1,6 +1,7 @@
 class_name CardFront
 extends TextureButton
 
+@export var name_label: RichTextLabel
 @export var health_label: RichTextLabel
 @export var attack_label: RichTextLabel
 @export var cost_label: RichTextLabel
@@ -11,10 +12,15 @@ var initial_cost: int = -1
 
 
 func set_initial_values(card_data: CardData) -> void:
+	set_card_name(card_data.card_name)
 	set_initial_health(card_data.health)
 	set_initial_attack(card_data.attack)
 	set_initial_cost(card_data.cost)
 	update_labels(card_data)
+
+
+func set_card_name(card_name: String) -> void:
+	name_label.text = card_name
 
 
 func set_initial_health(health: int) -> void:

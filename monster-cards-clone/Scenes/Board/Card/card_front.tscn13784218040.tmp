@@ -41,25 +41,31 @@ color = Color(0.2784314, 0.54901963, 0.7490196, 1)
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=1672797238]
 layout_mode = 1
 anchors_preset = -1
-anchor_top = 0.1
+anchor_top = 0.8
 anchor_right = 1.0
-anchor_bottom = 0.3
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 0
 
 [node name="nameDisplay" type="RichTextLabel" parent="MarginContainer" unique_id=1597203621]
 layout_mode = 2
-theme_override_font_sizes/normal_font_size = 16
-autowrap_mode = 0
+theme_override_font_sizes/normal_font_size = 14
+fit_content = true
 horizontal_alignment = 1
 
 [node name="healthTexture" type="TextureRect" parent="." unique_id=319546632]
 custom_minimum_size = Vector2(20, 20)
-layout_mode = 0
-offset_left = 45.0
-offset_top = 74.0
-offset_right = 65.000015
-offset_bottom = 94.000015
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.9
+anchor_right = 0.1
+anchor_bottom = 0.9
+offset_left = 38.5
+offset_top = -15.900002
+offset_right = 58.5
+offset_bottom = 4.0999985
+grow_vertical = 0
 texture = SubResource("AtlasTexture_bnspj")
 
 [node name="healthDisplay" type="RichTextLabel" parent="healthTexture" unique_id=1318816426]
@@ -73,17 +79,23 @@ theme_override_font_sizes/normal_font_size = 16
 bbcode_enabled = true
 text = "-1"
 fit_content = true
-autowrap_mode = 0
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="attackTexture" type="TextureRect" parent="." unique_id=553737098]
 custom_minimum_size = Vector2(20, 20)
-layout_mode = 0
-offset_left = -5.0
-offset_top = 74.0
-offset_right = 15.0
-offset_bottom = 94.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.9
+anchor_top = 0.9
+anchor_right = 0.9
+anchor_bottom = 0.9
+offset_left = -54.5
+offset_top = -15.900002
+offset_right = -34.5
+offset_bottom = 5.0999985
+grow_horizontal = 0
+grow_vertical = 0
 texture = SubResource("AtlasTexture_e6po8")
 
 [node name="attackDisplay" type="RichTextLabel" parent="attackTexture" unique_id=1901505823]
@@ -98,17 +110,20 @@ theme_override_font_sizes/normal_font_size = 16
 bbcode_enabled = true
 text = "-1"
 fit_content = true
-autowrap_mode = 0
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="costTexture" type="TextureRect" parent="." unique_id=570230339]
 custom_minimum_size = Vector2(20, 20)
-layout_mode = 0
-offset_left = 21.0
-offset_top = -8.645
-offset_right = 41.000046
-offset_bottom = 11.355
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -42.0
+offset_top = -5.0
+offset_right = -22.0
+offset_bottom = 15.0
+grow_horizontal = 0
 texture = SubResource("AtlasTexture_eumee")
 
 [node name="costDisplay" type="RichTextLabel" parent="costTexture" unique_id=1329518268]
@@ -122,6 +137,5 @@ theme_override_font_sizes/normal_font_size = 16
 bbcode_enabled = true
 text = "-1"
 fit_content = true
-autowrap_mode = 0
 horizontal_alignment = 1
 vertical_alignment = 1

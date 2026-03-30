@@ -49,6 +49,7 @@ func get_file_name() -> String:
 
 func set_card_name(card_name: String) -> void:
 	card_file.set_name(card_name)
+	set_display_name(card_name)
 
 
 func save():
@@ -63,10 +64,15 @@ func load(card_path: String) -> void:
 func update_display():
 	if not is_node_ready():
 		return
-
+	
+	set_display_name(card_file.card_name)
 	set_display_health(card_file.health)
 	set_display_attack(card_file.attack)
 	set_display_cost(card_file.cost)
+
+
+func set_display_name(card_name: String) -> void:
+	card_front.set_card_name(card_name)
 
 
 func set_display_health(health: int) -> void:
