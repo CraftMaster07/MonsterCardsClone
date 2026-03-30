@@ -25,5 +25,8 @@ func create_deck(serialized_deck_blueprint: Dictionary):
 
 	for serialized_card_data in serialized_deck_blueprint["card_datas"]:
 		var new_card_data = CardData.new(serialized_card_data)
+		new_card_data.recalculate_cost()
 		add_card_data(new_card_data)
- 
+	
+	shuffle()
+

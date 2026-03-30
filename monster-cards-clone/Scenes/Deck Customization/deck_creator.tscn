@@ -1,0 +1,149 @@
+[gd_scene format=3 uid="uid://cvexiydhupg0p"]
+
+[ext_resource type="Script" uid="uid://bwh364nt7ba1y" path="res://Scripts/Deck Customization/deck_creator.gd" id="1_elmlv"]
+[ext_resource type="PackedScene" uid="uid://ca5l6o5hh7sgi" path="res://Scenes/Deck Customization/editor_card.tscn" id="2_64y0t"]
+[ext_resource type="Script" uid="uid://b5h3sju2l8lcm" path="res://Scripts/Deck Customization/collection_container.gd" id="2_seenq"]
+[ext_resource type="PackedScene" uid="uid://bmc0b8c5180lj" path="res://Scenes/Deck Customization/editor_card_container.tscn" id="3_pb3bh"]
+[ext_resource type="Script" uid="uid://bc3eoaptsgsub" path="res://Scripts/Deck Customization/deck_container.gd" id="4_64y0t"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w4u1l"]
+bg_color = Color(0.23851621, 0.22978191, 0.27170652, 1)
+
+[node name="DeckCreator" type="Control" unique_id=273491332 node_paths=PackedStringArray("collection_container", "deck_container", "deck_name_line_edit")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_elmlv")
+collection_container = NodePath("PanelContainer/ScrollContainer/MarginContainer/CollectionContainer")
+deck_container = NodePath("VBoxContainer/PanelContainer/ScrollContainer/MarginContainer/DeckContainer")
+deck_name_line_edit = NodePath("DeckLineEdit")
+editor_card_scene = ExtResource("2_64y0t")
+
+[node name="BackButton" type="Button" parent="." unique_id=257411656]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_right = 100.0
+offset_bottom = -20.0
+grow_vertical = 0
+text = "Back"
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1910147678]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.2
+anchor_top = 0.5
+anchor_right = 0.8
+anchor_bottom = 0.5
+offset_top = -50.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_w4u1l")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer" unique_id=1990003158]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/ScrollContainer" unique_id=1942976853]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="CollectionContainer" type="HBoxContainer" parent="PanelContainer/ScrollContainer/MarginContainer" unique_id=66596552]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 9
+alignment = 1
+script = ExtResource("2_seenq")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=258522998]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.7
+anchor_right = 0.5
+anchor_bottom = 0.7
+offset_left = -60.5
+offset_top = -15.5
+offset_right = 60.5
+offset_bottom = 15.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 31
+alignment = 1
+
+[node name="LoadButton" type="Button" parent="HBoxContainer" unique_id=1975327875]
+layout_mode = 2
+text = "Load
+"
+
+[node name="SaveButton" type="Button" parent="HBoxContainer" unique_id=451075052]
+layout_mode = 2
+text = "Save"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=2087189739]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.2
+anchor_top = 0.25
+anchor_right = 0.8
+anchor_bottom = 0.25
+offset_top = -75.0
+offset_bottom = 75.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer" unique_id=2118511287]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_w4u1l")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/PanelContainer" unique_id=1312471967]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/PanelContainer/ScrollContainer" unique_id=2060401654]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="DeckContainer" type="HBoxContainer" parent="VBoxContainer/PanelContainer/ScrollContainer/MarginContainer" unique_id=2079760716]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 9
+alignment = 1
+script = ExtResource("4_64y0t")
+card_container_scene = ExtResource("3_pb3bh")
+
+[node name="DeckLineEdit" type="LineEdit" parent="." unique_id=224592477]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.05
+anchor_right = 0.5
+anchor_bottom = 0.05
+grow_horizontal = 2
+placeholder_text = "Deck Name"
+alignment = 1
+expand_to_text_length = true
+
+[connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]
+[connection signal="card_selected" from="PanelContainer/ScrollContainer/MarginContainer/CollectionContainer" to="." method="_on_collection_container_card_selected"]
+[connection signal="pressed" from="HBoxContainer/LoadButton" to="." method="_on_load_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/SaveButton" to="." method="_on_save_button_pressed"]
+[connection signal="card_decremented" from="VBoxContainer/PanelContainer/ScrollContainer/MarginContainer/DeckContainer" to="." method="_on_deck_container_card_decremented"]
+[connection signal="text_changed" from="DeckLineEdit" to="." method="_on_deck_line_edit_text_changed"]

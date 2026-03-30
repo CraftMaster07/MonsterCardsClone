@@ -1,8 +1,9 @@
 extends Control
 
-signal host_game(name: String)
-signal join_game(name: String, ip: String)
+signal host_game(name: String, deck: DeckFile)
+signal join_game(name: String, ip: String, deck: DeckFile)
 signal goto_card_creator()
+signal goto_deck_creator()
 
 @export var play_menu_container: Control
 @export var settings_menu_container: Control
@@ -12,8 +13,10 @@ signal goto_card_creator()
 @export var name_line_edit: LineEdit
 @export var ip_line_edit: LineEdit
 @export var join_status_label: Label
+@export var select_deck_label: Label
 
 var menu_containers: Array[Control] = []
+var deck: DeckFile
 
 
 func _ready() -> void:
@@ -70,16 +73,25 @@ func _on_join_button_pressed() -> void:
 
 
 func _on_host_start_button_pressed() -> void:
+	if not check_deck_selected(): return
 	print("Hosting game")
-	host_game.emit(name_line_edit.text)
+	host_game.emit(name_line_edit.text, deck)
 
 
 func _on_join_start_button_pressed() -> void:
+	if not check_deck_selected(): return
 	print("Joining game")
-	join_game.emit(name_line_edit.text, ip_line_edit.text)
+	join_game.emit(name_line_edit.text, ip_line_edit.text, deck)
 	join_status_label.visible = true
 	join_status_label.text = "Connecting..."
 
+
+func check_deck_selected() -> bool:
+	if not deck:
+		print("No deck selected")
+		select_deck_label.text = "No deck selected"
+
+	return deck != null
 
 func _on_name_line_edit_text_changed(new_text: String) -> void:
 	check_gaster(new_text)
@@ -89,5 +101,44 @@ func check_gaster(player_name: String) -> void:
 	if player_name.to_lower().find("gaster") != -1:
 		get_tree().quit()
 
+
 func _on_card_creator_button_pressed() -> void:
 	goto_card_creator.emit()
+
+
+func _on_deck_creator_button_pressed() -> void:
+	goto_deck_creator.emit()
+
+
+func _on_select_deck_button_pressed() -> void:
+	select_deck_label.text = ""
+
+	# Define the filters (Extension, then Description)
+	var filters = PackedStringArray(["*.json ; Save Data"])
+
+	# Open the native dialog
+	DisplayServer.file_dialog_show(
+		"Select a Deck", # Title of the window
+		ProjectSettings.globalize_path(PathConstants.DECK_SAVE_PATH), # Initial directory
+		"", # Default filename (leave empty for opening)
+		false, # Boolean: Show hidden files?
+		DisplayServer.FILE_DIALOG_MODE_OPEN_FILE, # Mode (Open File, Save, etc)
+		filters, # The filters we defined above
+		_on_deck_file_selected # The function to call when they pick something
+	)
+
+
+func _on_deck_file_selected(status: bool, selected_paths: PackedStringArray, _selected_filter_index: int):
+	if status:
+		# status is true if they clicked 'Open', false if they clicked 'Cancel'
+		var chosen_path = selected_paths[0]
+		print("Load Deck selected: ", chosen_path)
+		select_deck(chosen_path)
+	else:
+		print("User cancelled the selection.")
+
+
+func select_deck(file_path) -> void:
+	deck = DeckFile.new()
+	deck.load(file_path)
+	select_deck_label.text = "Selected deck: " + deck.name

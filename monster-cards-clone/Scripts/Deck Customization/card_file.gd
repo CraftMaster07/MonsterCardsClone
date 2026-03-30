@@ -3,6 +3,7 @@ class_name CardFile
 
 
 var card_name: String = ""
+var file_name: String = ""
 var health: int = 0
 var attack: int = 0
 var cost: int = 0
@@ -11,7 +12,6 @@ var cost: int = 0
 func save():
 	ensure_folder_exists()
 
-	var file_name := card_name.replace(" ", "_")
 	var file := FileAccess.open(PathConstants.CARD_SAVE_PATH + file_name + ".json", FileAccess.WRITE)
 	var data := serialize()
 	var stringified_data := JSON.stringify(data)
@@ -36,10 +36,15 @@ func load(file_path: String):
 
 
 func deserialize(data: Dictionary):
-	card_name = data["card_name"]
+	set_name(data["card_name"])
 	health = data["health"]
 	attack = data["attack"]
 	cost = data["cost"]
+
+
+func set_name(name: String) -> void:
+	card_name = name
+	file_name = name.replace(" ", "_")
 
 
 static func ensure_folder_exists():

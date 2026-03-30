@@ -28,6 +28,8 @@ var phase: Phase = Phase.PREP
 var player_ids_without_deck_blueprint: Array
 var unassigned_area_player_ids: Array
 
+var deck_file: DeckFile
+
 const MIN_TABLE_RADIUS: float = 250.0
 const CAMERA_ADDITIONAL_RADIUS: float = -100.0
 const PLAYER_AREA_SPAWNER_ADDITIONAL_RADIUS: float = -100.0
@@ -221,8 +223,8 @@ func set_player_hand(hand: Hand, player_id: int):
 
 
 func verify_card_placement(
-		player_id: int, 
-		slot_id: int, 
+		player_id: int,
+		slot_id: int,
 		card_data: CardData
 	) -> ValidationResponses:
 	if not round_manager.is_player_turn(player_id):
@@ -313,12 +315,15 @@ func remove_player(player_id: int):
 
 
 func get_deck_blueprint() -> Dictionary:
-	# replace with actual deck blueprint from DeckBuilder or sth like it
 	var serialized_card_datas = []
 
-	for i in range(8):
-		var card_data = CardData.new()
-		serialized_card_datas.append(card_data.serialize())
+	for file_name in deck_file.cards:
+		var path = PathConstants.CARD_SAVE_PATH + file_name + ".json"
+		var card_file = CardFile.new()
+		card_file.load(path)
+		for i in range(deck_file.cards[file_name]):
+			var card_data = CardData.create_from_card_file(card_file)
+			serialized_card_datas.append(card_data.serialize())
 
 	return {"card_datas": serialized_card_datas}
 
@@ -329,3 +334,7 @@ func shadow_sync(serialized_shadow_player_data: Dictionary):
 
 func _on_round_manager_round_number_changed(new_round_number: int) -> void:
 	round_number_label.text = "Round " + str(new_round_number)
+
+
+func set_deck_file(deck: DeckFile):
+	deck_file = deck
