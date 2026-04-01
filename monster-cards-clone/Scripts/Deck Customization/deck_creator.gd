@@ -118,6 +118,7 @@ func update_deck_container():
 		if card_name not in deck_file.cards:
 			deck_container.remove_card_container(card_name)
 
+
 func _on_load_button_pressed() -> void:
 	# Define the filters (Extension, then Description)
 	var filters = PackedStringArray(["*.json ; Save Data"])
@@ -133,6 +134,7 @@ func _on_load_button_pressed() -> void:
 		_on_deck_file_selected # The function to call when they pick something
 	)
 
+
 func _on_deck_file_selected(status: bool, selected_paths: PackedStringArray, _selected_filter_index: int):
 	if status:
 		# status is true if they clicked 'Open', false if they clicked 'Cancel'
@@ -141,3 +143,11 @@ func _on_deck_file_selected(status: bool, selected_paths: PackedStringArray, _se
 		load_deck(chosen_path)
 	else:
 		print("User cancelled the selection.")
+
+
+func _on_open_folder_button_pressed() -> void:
+	# 1. Convert "user://" to a real system path (e.g., C:/Users/Name/AppData...)
+	var absolute_path = ProjectSettings.globalize_path(PathConstants.DECK_SAVE_PATH)
+	
+	# 2. Tell the OS to open that path in the default file explorer
+	OS.shell_open(absolute_path)

@@ -141,9 +141,25 @@ placeholder_text = "Deck Name"
 alignment = 1
 expand_to_text_length = true
 
+[node name="OpenFolderButton" type="Button" parent="." unique_id=417613056]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -141.0
+offset_top = -52.0
+offset_right = -38.0
+offset_bottom = -21.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "Open Folder"
+
 [connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]
 [connection signal="card_selected" from="PanelContainer/ScrollContainer/MarginContainer/CollectionContainer" to="." method="_on_collection_container_card_selected"]
 [connection signal="pressed" from="HBoxContainer/LoadButton" to="." method="_on_load_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/SaveButton" to="." method="_on_save_button_pressed"]
 [connection signal="card_decremented" from="VBoxContainer/PanelContainer/ScrollContainer/MarginContainer/DeckContainer" to="." method="_on_deck_container_card_decremented"]
 [connection signal="text_changed" from="DeckLineEdit" to="." method="_on_deck_line_edit_text_changed"]
+[connection signal="pressed" from="OpenFolderButton" to="." method="_on_open_folder_button_pressed"]
