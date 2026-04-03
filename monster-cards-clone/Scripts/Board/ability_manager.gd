@@ -4,7 +4,7 @@ extends Node
 const TRIGGERS = Ability.TRIGGERS
 
 
-const TRIGGERS_TO_SIGNALS := {
+var TRIGGERS_TO_SIGNALS := {
     TRIGGERS.ROUND_START: start_turn,
 }
 
@@ -22,4 +22,3 @@ func subscribe_card(card: BoardCard, player: Player):
     elif Ability.PLAYER_TRIGGER_THRESHOLD <= trigger:
         player.TRIGGERS_TO_SIGNALS[trigger].connect(card.run_ability)
         # TRIGGERS_TO_SIGNALS[trigger].connect(card.run.bind(player_id))
-    

@@ -19,7 +19,7 @@ var attacked_by_id: int = 0
 
 
 const TRIGGERS = Ability.TRIGGERS
-const TRIGGERS_TO_SIGNALS: Dictionary = {
+var TRIGGERS_TO_SIGNALS: Dictionary = {
 	TRIGGERS.DRAW_CARD: drawn_card
 }
 

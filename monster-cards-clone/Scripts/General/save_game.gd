@@ -9,7 +9,7 @@ const SAVE_GAME_PATH := "user://save.tres"
 
 
 func write_savegame() -> void:
-	var err = ResourceSaver.save(self, SAVE_GAME_PATH)
+	var err = ResourceSaver.save(self , SAVE_GAME_PATH)
 	if err != OK:
 		push_error("Failed to save game: " + error_string(err))
 	else:
