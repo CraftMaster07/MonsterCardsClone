@@ -29,12 +29,13 @@ func _ready():
 
 func create_shadow_players():
 	shadow_player_manager = ShadowPlayerManager.new()
+	add_child(shadow_player_manager)
 
 	for player_id in player_manager.get_player_ids():
 		var shadow_player = ShadowPlayer.new(player_id)
 		shadow_player_manager.add_player(shadow_player)
-
-
+	
+	
 func get_remote_decks():
 	player_ids_without_deck_blueprint = shadow_player_manager.get_player_ids()
 	request_deck_blueprints.emit()
@@ -216,3 +217,7 @@ func add_round_mana_for_each_player():
 func reset_players_mana():
 	for player_id in player_manager.get_player_ids():
 		player_manager.reset_mana(player_id)
+
+
+func subscribe_card(card: CardData, player: Player):
+	ability_manager.subscribe_card(card, player)

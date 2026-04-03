@@ -18,9 +18,9 @@ var attacking_id: int = 0
 var attacked_by_id: int = 0
 
 
-const TRIGGERS = Ability.TRIGGERS
+const TRIGGER = Ability.TRIGGER
 var TRIGGERS_TO_SIGNALS: Dictionary = {
-	TRIGGERS.DRAW_CARD: drawn_card
+	TRIGGER.DRAW_CARD: drawn_card
 }
 
 @onready var label: Label = $HealthLabel

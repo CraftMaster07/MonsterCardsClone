@@ -1,11 +1,11 @@
 extends Node
 
 
-const TRIGGERS = Ability.TRIGGERS
+const TRIGGER = Ability.TRIGGER
 
 
 var TRIGGERS_TO_SIGNALS := {
-    TRIGGERS.ROUND_START: start_turn,
+    TRIGGER.ROUND_START: start_turn,
 }
 
 
