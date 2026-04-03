@@ -70,7 +70,7 @@ func recalculate_cost():
 	cost = CardCreator.calculate_cost(health, attack)
 
 
-func take_damage(amount : int) -> void:
+func take_damage(amount: int) -> void:
 	health -= amount
 	check_death()
 
@@ -103,6 +103,10 @@ func reset():
 	health = STARTING_HEALTH
 	attack = STARTING_ATTACK
 	cost = STARTING_COST
+
+
+func get_trigger():
+	return ability.get_trigger()
 
 
 func run_ability():

@@ -14,7 +14,7 @@ var TRIGGERS_TO_SIGNALS := {
 signal start_turn
 
 
-func subscribe_card(card: BoardCard, player: Player):
+func subscribe_card(card: CardData, player: Player):
     var trigger = card.get_trigger()
 
     if 0 < trigger < Ability.PLAYER_TRIGGER_THRESHOLD:

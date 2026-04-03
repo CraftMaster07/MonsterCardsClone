@@ -3,6 +3,8 @@ extends Board
 
 var shadow_player_manager: ShadowPlayerManager
 
+@export var ability_manager: Node
+
 signal call_sync_game(game_state: Dictionary)
 signal call_shadow_sync(player_id: int, serialized_shadow_player_data: Dictionary)
 signal request_deck_blueprints()
