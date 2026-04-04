@@ -61,6 +61,8 @@ func place_serialized_card(serialized_card: Dictionary):
 		var new_card = BoardCard.create(new_card_data)
 		new_card.deserialize(serialized_card)
 		place_card(new_card)
+	
+	return card
 
 
 func flash_color(flashed_color: Color = error_color):

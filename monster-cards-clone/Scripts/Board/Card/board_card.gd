@@ -56,3 +56,7 @@ func set_card_data(new_card_data: CardData):
 
 func run_ability():
 	card_data.run_ability()
+
+
+func get_card_data():
+	return card_data

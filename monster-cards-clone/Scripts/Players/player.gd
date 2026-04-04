@@ -101,7 +101,7 @@ func deserialize(serialized_player: Dictionary):
 
 
 func place_serialized_card_into_slot(serialized_card: Dictionary, slot_id: int):
-	field.place_serialized_card_into_slot(serialized_card, slot_id)
+	return field.place_serialized_card_into_slot(serialized_card, slot_id)
 
 
 func get_id():

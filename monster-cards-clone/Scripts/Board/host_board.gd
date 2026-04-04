@@ -126,7 +126,8 @@ func client_placed_card(player_id: int, serialized_card: Dictionary, slot_id: in
 
 	match status:
 		ValidationResponses.OK:
-			player_manager.place_serialized_card_into_slot(player_id, serialized_card, slot_id)
+			var card = player_manager.place_serialized_card_into_slot(player_id, serialized_card, slot_id)
+			subscribe_card(card.get_card_data(), player_manager.get_player(player_id))
 			player_manager.spend_mana(player_id, temp_card_data.cost)
 			shadow_player_manager.remove_serialized_card_from_hand(player_id, serialized_card)
 		ValidationResponses.SLOT_TAKEN:
