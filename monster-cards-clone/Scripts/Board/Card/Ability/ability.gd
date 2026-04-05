@@ -18,11 +18,6 @@ func _init(new_trigger: TRIGGER, new_effect: Effect):
     effect = new_effect
 
 
-func _init(new_trigger: TRIGGER, new_effect: Effect):
-    trigger = new_trigger
-    effect = new_effect
-
-
 func run():
     effect.run()
 
