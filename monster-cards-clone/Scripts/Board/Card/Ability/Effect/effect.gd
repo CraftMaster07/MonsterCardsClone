@@ -1,6 +1,7 @@
 class_name Effect
 extends RefCounted
 
+var display_name: String
 var amount: int
 
 

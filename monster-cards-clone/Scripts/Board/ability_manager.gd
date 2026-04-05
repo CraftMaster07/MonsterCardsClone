@@ -29,10 +29,6 @@ func board_trigger(trigger):
 	TRIGGERS_TO_SIGNALS[trigger].emit()
 
 
-func trigger_round_start_abilities():
-	board_trigger(TRIGGER.ROUND_START)
-
-
 static func is_between(minimum, n, maximum):
 	return minimum < n and n < maximum
 	

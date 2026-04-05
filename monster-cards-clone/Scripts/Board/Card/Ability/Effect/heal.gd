@@ -8,4 +8,3 @@ signal healed(amount: int)
 func run():
 	healed.emit(amount)
 	print("healed ", amount)
-
