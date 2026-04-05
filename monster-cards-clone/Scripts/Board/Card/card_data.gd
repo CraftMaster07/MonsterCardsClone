@@ -18,7 +18,7 @@ var cost: int
 
 var is_ghost: bool = false
 
-var ability: Ability
+var ability: Ability = Ability.new(Ability.TRIGGER.ROUND_START, Heal.new())
 
 static func create_from_card_file(card_file: CardFile):
 	var card_data = CardData.new()
@@ -105,7 +105,7 @@ func reset():
 	cost = STARTING_COST
 
 
-func get_trigger():
+func get_trigger() -> Ability.TRIGGER:
 	return ability.get_trigger()
 
 

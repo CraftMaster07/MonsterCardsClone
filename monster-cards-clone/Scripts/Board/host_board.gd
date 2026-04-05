@@ -3,7 +3,7 @@ extends Board
 
 var shadow_player_manager: ShadowPlayerManager
 
-@export var ability_manager: Node
+@export var ability_manager: AbilityManager
 
 signal call_sync_game(game_state: Dictionary)
 signal call_shadow_sync(player_id: int, serialized_shadow_player_data: Dictionary)
@@ -126,7 +126,7 @@ func client_placed_card(player_id: int, serialized_card: Dictionary, slot_id: in
 
 	match status:
 		ValidationResponses.OK:
-			var card = player_manager.place_serialized_card_into_slot(player_id, serialized_card, slot_id)
+			var card: BoardCard = player_manager.place_serialized_card_into_slot(player_id, serialized_card, slot_id)
 			subscribe_card(card.get_card_data(), player_manager.get_player(player_id))
 			player_manager.spend_mana(player_id, temp_card_data.cost)
 			shadow_player_manager.remove_serialized_card_from_hand(player_id, serialized_card)
@@ -179,20 +179,17 @@ func _on_round_manager_round_ended() -> void:
 	super._on_round_manager_round_ended()
 
 	if phase == Phase.PREP:
-		draw_card_for_each_player()
 		reset_players_mana()
 		add_round_mana_for_each_player()
+		draw_card_for_each_player()
 		round_manager.move_first_player_to_last()
+		trigger_round_start_abilities()
 
 	send_game_state()
 
 
 func remove_player(player_id: int):
 	super.remove_player(player_id)
-	send_game_state()
-
-
-func _on_button_pressed() -> void:
 	send_game_state()
 
 
@@ -222,3 +219,7 @@ func reset_players_mana():
 
 func subscribe_card(card: CardData, player: Player):
 	ability_manager.subscribe_card(card, player)
+
+
+func trigger_round_start_abilities():
+	ability_manager.trigger_round_start_abilities()

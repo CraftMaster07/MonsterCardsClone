@@ -51,7 +51,7 @@ func deserialize_slot(slot_data: Dictionary, slot_index: int):
 	slots[slot_index].deserialize(slot_data)
 
 
-func place_serialized_card_into_slot(serialized_card: Dictionary, slot_index: int):
+func place_serialized_card_into_slot(serialized_card: Dictionary, slot_index: int) -> BoardCard:
 	return slots[slot_index].place_serialized_card(serialized_card)
 
 

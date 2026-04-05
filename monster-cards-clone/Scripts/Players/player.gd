@@ -100,7 +100,7 @@ func deserialize(serialized_player: Dictionary):
 	hand.deserialize(serialized_player['hand'])
 
 
-func place_serialized_card_into_slot(serialized_card: Dictionary, slot_id: int):
+func place_serialized_card_into_slot(serialized_card: Dictionary, slot_id: int) -> BoardCard:
 	return field.place_serialized_card_into_slot(serialized_card, slot_id)
 
 

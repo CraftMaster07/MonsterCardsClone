@@ -53,7 +53,7 @@ func deserialize(serialized_slot: Dictionary):
 		remove_card()
 
 
-func place_serialized_card(serialized_card: Dictionary):
+func place_serialized_card(serialized_card: Dictionary) -> BoardCard:
 	if card:
 		card.deserialize(serialized_card)
 	else:

@@ -8,15 +8,5 @@
 script = ExtResource("2_mv6b3")
 ability_manager = NodePath("AbilityManager")
 
-[node name="Button" type="Button" parent="." index="10" unique_id=489071821]
-layout_mode = 0
-offset_left = 934.66785
-offset_top = 599.09296
-offset_right = 942.66785
-offset_bottom = 607.09296
-text = "sync game"
-
-[node name="AbilityManager" type="Node" parent="." index="11" unique_id=2019893849]
+[node name="AbilityManager" type="Node" parent="." index="10" unique_id=1742089551]
 script = ExtResource("3_6adc2")
-
-[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

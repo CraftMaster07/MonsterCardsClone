@@ -1,6 +1,12 @@
 class_name Effect
-extends Node
+extends RefCounted
+
+var amount: int
+
+
+func _init(new_amount: int = 1):
+    amount = new_amount
+
 
 func run():
-    print("I ran :D")
-    pass
+    push_error("not implemented")

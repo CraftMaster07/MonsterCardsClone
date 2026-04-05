@@ -10,9 +10,13 @@ enum TRIGGER {
 }
 
 
-var active_in_hand: bool = false
-var trigger: TRIGGER = TRIGGER.ROUND_START
+var trigger: TRIGGER
 var effect: Effect
+
+func _init(new_trigger: TRIGGER, new_effect: Effect):
+    trigger = new_trigger
+    effect = new_effect
+
 
 func _init(new_trigger: TRIGGER, new_effect: Effect):
     trigger = new_trigger
@@ -23,5 +27,5 @@ func run():
     effect.run()
 
 
-func get_trigger():
+func get_trigger() -> TRIGGER:
     return trigger
