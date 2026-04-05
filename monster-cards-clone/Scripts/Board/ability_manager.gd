@@ -22,7 +22,8 @@ func subscribe_card(card: CardData, player: Player):
 		TRIGGERS_TO_SIGNALS[trigger].connect(card.run_ability)
 	elif Ability.PLAYER_TRIGGER_THRESHOLD <= trigger:
 		player.TRIGGERS_TO_SIGNALS[trigger].connect(card.run_ability)
-		# TRIGGERS_TO_SIGNALS[trigger].connect(card.run.bind(player_id))
+
+	card.activated.connect(activate_effect.bind(card, player))
 
 
 func board_trigger(trigger):
@@ -31,4 +32,6 @@ func board_trigger(trigger):
 
 static func is_between(minimum, n, maximum):
 	return minimum < n and n < maximum
-	
+
+func activate_effect(effect: Effect, card: CardData, player: Player):
+	pass
