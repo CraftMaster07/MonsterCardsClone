@@ -7,6 +7,7 @@ var player_id: int
 const STARTING_HEALTH: int = 20
 const STARTING_MANA: int = 1
 var health: int
+var max_health: int
 var mana: int
 
 var area: PlayerArea
@@ -32,6 +33,7 @@ func init(new_player_id: int, new_player_name: String):
 	player_id = new_player_id
 	player_name = new_player_name
 	health = STARTING_HEALTH
+	max_health = STARTING_HEALTH
 	mana = STARTING_MANA
 
 
@@ -82,6 +84,7 @@ func serialize():
 		"player_id": player_id,
 		"player_name": player_name,
 		"health": health,
+		"max_health": max_health,
 		"mana": mana,
 		"field": field.serialize(),
 		"deck": deck.serialize(),
@@ -93,6 +96,7 @@ func deserialize(serialized_player: Dictionary):
 	player_id = serialized_player['player_id']
 	player_name = serialized_player['player_name']
 	health = serialized_player['health']
+	max_health = serialized_player['max_health']
 	mana = serialized_player['mana']
 	update_stats_label()
 	field.deserialize(serialized_player['field'])
@@ -156,3 +160,9 @@ func reset_mana():
 
 func get_area_rotation() -> float:
 	return area.rotation
+
+
+func heal(amount: int):
+	health += amount
+	health = min(health, max_health)
+	update_stats_label()

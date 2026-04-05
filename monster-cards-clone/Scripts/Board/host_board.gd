@@ -11,6 +11,9 @@ signal call_shadow_sync(player_id: int, serialized_shadow_player_data: Dictionar
 signal request_deck_blueprints()
 signal received_all_deck_blueprints()
 
+var effect_to_funcs: Dictionary = {
+	Heal: heal
+}
 
 func _ready():
 	create_shadow_players()
@@ -35,8 +38,8 @@ func create_shadow_players():
 	for player_id in player_manager.get_player_ids():
 		var shadow_player = ShadowPlayer.new(player_id)
 		shadow_player_manager.add_player(shadow_player)
-	
-	
+
+
 func get_remote_decks():
 	player_ids_without_deck_blueprint = shadow_player_manager.get_player_ids()
 	request_deck_blueprints.emit()
@@ -87,7 +90,7 @@ func client_attacked(player_id: int, attacked_id: int):
 
 func draw_card(player_id: int):
 	var success: bool = shadow_player_manager.draw_card(player_id)
-	
+
 	if success:
 		player_manager.draw_card(player_id)
 	else:
@@ -185,6 +188,7 @@ func _on_round_manager_round_ended() -> void:
 		draw_card_for_each_player()
 		round_manager.move_first_player_to_last()
 		trigger_round_start_abilities()
+		ability_manager.round_start.emit() # Activate round start abilities
 
 	send_game_state()
 
@@ -224,3 +228,18 @@ func subscribe_card(card: CardData, player: Player):
 
 func trigger_round_start_abilities():
 	ability_manager.board_trigger(TRIGGER.ROUND_START)
+
+
+func _on_ability_manager_activate(effect: Effect, card: CardData, player: Player) -> void:
+	effect_to_funcs[effect].call(effect, card, player)
+
+
+func heal(effect: Heal, card: CardData, player: Player):
+	var target: Effect.TARGET = effect.get_target()
+	var amount: int = effect.get_amount()
+
+	if target == Effect.TARGET.SELF:
+		card.heal(amount)
+	elif target == Effect.TARGET.FACE:
+		player.heal(amount)
+

@@ -12,6 +12,7 @@ const STARTING_COST = 2
 
 var uuid: String
 
+var max_health: int
 var health: int
 var attack: int
 var cost: int
@@ -24,6 +25,7 @@ static func create_from_card_file(card_file: CardFile):
 	var card_data = CardData.new()
 	card_data.card_name = card_file.card_name
 	card_data.health = card_file.health
+	card_data.max_health = card_file.health
 	card_data.attack = card_file.attack
 	card_data.cost = card_file.cost
 	return card_data
@@ -36,6 +38,7 @@ func _init(serialized_data: Dictionary = {}):
 	else:
 		uuid = UUID.v4()
 		health = STARTING_HEALTH
+		max_health = STARTING_HEALTH
 		attack = STARTING_ATTACK
 		cost = STARTING_COST
 
@@ -46,6 +49,7 @@ func serialize() -> Dictionary:
 		"data": {
 			"name": card_name,
 			"health": health,
+			"max_health": max_health,
 			"attack": attack,
 			"cost": cost,
 			"image_id": image_id,
@@ -60,6 +64,7 @@ func deserialize(serialized: Dictionary):
 	var data: Dictionary = serialized["data"]
 	card_name = data["name"]
 	health = data["health"]
+	max_health = data["max_health"]
 	attack = data["attack"]
 	cost = data["cost"]
 	image_id = data["image_id"]
@@ -111,3 +116,8 @@ func get_trigger() -> Ability.TRIGGER:
 
 func run_ability():
 	ability.run()
+
+
+func heal(amount: int):
+	health += amount
+	health = min(health, max_health)

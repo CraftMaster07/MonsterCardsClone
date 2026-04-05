@@ -6,14 +6,14 @@ const TRIGGER = Ability.TRIGGER
 
 
 var triggers_to_signals: Dictionary = {
-	TRIGGER.ROUND_START: start_turn,
+	TRIGGER.ROUND_START: round_start,
 }
 
 
 @export var board: Board
 
-signal start_turn
-
+signal round_start
+signal activate(effect: Effect, card: CardData, player: Player)
 
 func subscribe_card(card: CardData, player: Player):
 	var trigger: Ability.TRIGGER = card.get_trigger()
@@ -34,4 +34,4 @@ static func is_between(minimum, n, maximum):
 	return minimum < n and n < maximum
 
 func activate_effect(effect: Effect, card: CardData, player: Player):
-	pass
+	activate.emit(effect, card, player)

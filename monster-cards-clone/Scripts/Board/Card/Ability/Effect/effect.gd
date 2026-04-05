@@ -13,3 +13,11 @@ var target: TARGET
 
 func _init(new_amount: int = 1):
     amount = new_amount
+
+
+func get_target():
+    return target
+
+
+func get_amount():
+    return amount
