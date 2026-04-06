@@ -21,6 +21,8 @@ var is_ghost: bool = false
 
 var ability: Ability = Ability.new(Ability.TRIGGER.ROUND_START, Heal.new())
 
+signal updated_stats()
+
 static func create_from_card_file(card_file: CardFile):
 	var card_data = CardData.new()
 	card_data.card_name = card_file.card_name
@@ -41,6 +43,7 @@ func _init(serialized_data: Dictionary = {}):
 		max_health = STARTING_HEALTH
 		attack = STARTING_ATTACK
 		cost = STARTING_COST
+	updated_stats.emit()
 
 
 func serialize() -> Dictionary:
@@ -69,6 +72,7 @@ func deserialize(serialized: Dictionary):
 	cost = data["cost"]
 	image_id = data["image_id"]
 	check_death()
+	updated_stats.emit()
 
 
 func recalculate_cost():
@@ -78,6 +82,7 @@ func recalculate_cost():
 func take_damage(amount: int) -> void:
 	health -= amount
 	check_death()
+	updated_stats.emit()
 
 
 func check_death():
@@ -119,5 +124,9 @@ func run_ability():
 
 
 func heal(amount: int):
-	health += amount
-	health = min(health, max_health)
+	health = min(health + amount, max_health)
+	updated_stats.emit()
+
+
+func get_ability_signal() -> Signal:
+	return ability.activated

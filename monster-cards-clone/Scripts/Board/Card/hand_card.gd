@@ -1,5 +1,5 @@
 class_name HandCard
-extends CardSerializer
+extends CardObject
 
 @export var hover_height: float = 20
 @export var animation_length: float = 0.2
@@ -10,7 +10,6 @@ extends CardSerializer
 @export var dragback_ease: Tween.EaseType = Tween.EASE_OUT
 
 
-@onready var card_front := $CardFront
 @onready var base_position: Vector2 = card_front.position
 @onready var area2d := $CardFront/Area2D
 @onready var select_timer := $SelectTimer
@@ -209,17 +208,8 @@ static func create(new_card_data: CardData) -> HandCard:
 	return card
 
 
-func set_card_data(new_card_data: CardData):
-	card_data = new_card_data
-
-
-func update_labels():
-	card_front.update_labels(card_data)
-
-
 func deserialize(serialized_card_data: Dictionary):
 	super.deserialize(serialized_card_data)
-	update_labels()
 
 
 func get_uuid() -> String:

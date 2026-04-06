@@ -1,9 +1,7 @@
 class_name BoardCard
-extends CardSerializer
+extends CardObject
 
 var image: Texture
-
-@export var card_front: CardFront
 
 const BOARD_CARD_SCENE = preload("res://Scenes/Board/Card/board_card.tscn")
 
@@ -16,7 +14,6 @@ func _ready():
 func deserialize(data: Dictionary):
 	super.deserialize(data)
 	update_image()
-	update_labels()
 
 
 func update_image():
@@ -33,11 +30,6 @@ func hit(target):
 
 func take_damage(amount: int):
 	card_data.take_damage(amount)
-	update_labels()
-
-
-func update_labels():
-	card_front.update_labels(card_data)
 
 
 func is_ghost():
@@ -48,10 +40,6 @@ static func create(new_card_data: CardData) -> BoardCard:
 	var card = BOARD_CARD_SCENE.instantiate() as BoardCard
 	card.set_card_data(new_card_data)
 	return card
-
-
-func set_card_data(new_card_data: CardData):
-	card_data = new_card_data
 
 
 func run_ability():
