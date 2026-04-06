@@ -12,11 +12,9 @@ enum TRIGGER {
 
 var trigger: TRIGGER
 var effect: Effect
-var card: CardData
-var player: Player
 var active_in_hand: bool = false
 
-signal activated(effect: Effect, card: CardData, player: Player)
+signal activated(effect: Effect)
 
 func _init(new_trigger: TRIGGER, new_effect: Effect):
     trigger = new_trigger
@@ -24,7 +22,7 @@ func _init(new_trigger: TRIGGER, new_effect: Effect):
 
 
 func run():
-    activated.emit(effect, card, player)
+    activated.emit(effect)
 
 
 func get_trigger() -> TRIGGER:

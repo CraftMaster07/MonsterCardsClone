@@ -188,7 +188,6 @@ func _on_round_manager_round_ended() -> void:
 		draw_card_for_each_player()
 		round_manager.move_first_player_to_last()
 		trigger_round_start_abilities()
-		ability_manager.round_start.emit() # Activate round start abilities
 
 	send_game_state()
 

@@ -23,7 +23,7 @@ func subscribe_card(card: CardData, player: Player):
 	elif Ability.PLAYER_TRIGGER_THRESHOLD <= trigger:
 		player.triggers_to_signals[trigger].connect(card.run_ability)
 
-	card.activated.connect(activate_effect.bind(card, player))
+	card.ability.activated.connect(activate_effect.bind(card, player))
 
 
 func board_trigger(trigger):
