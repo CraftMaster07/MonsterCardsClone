@@ -14,6 +14,7 @@ var trigger: TRIGGER
 var effect: Effect
 var card: CardData
 var player: Player
+var active_in_hand: bool = false
 
 signal activated(effect: Effect, card: CardData, player: Player)
 

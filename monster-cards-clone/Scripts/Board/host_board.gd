@@ -238,8 +238,13 @@ func heal(effect: Heal, card: CardData, player: Player):
 	var target: Effect.TARGET = effect.get_target()
 	var amount: int = effect.get_amount()
 
+	fetch_target(target, card, player).heal(amount)
+
+
+func fetch_target(target: Effect.TARGET, card: CardData, player: Player):
+	# Placeholder until we add more target types
 	if target == Effect.TARGET.SELF:
-		card.heal(amount)
-	elif target == Effect.TARGET.FACE:
-		player.heal(amount)
+		return card
+	if target == Effect.TARGET.FACE:
+		return player
 
