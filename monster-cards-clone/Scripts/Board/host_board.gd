@@ -230,7 +230,7 @@ func trigger_round_start_abilities():
 
 
 func _on_ability_manager_activate(effect: Effect, card: CardData, player: Player) -> void:
-	effect_to_funcs[effect].call(effect, card, player)
+	effect_to_funcs[effect.get_script()].call(effect, card, player)
 
 
 func heal(effect: Heal, card: CardData, player: Player):
@@ -246,4 +246,3 @@ func fetch_target(target: Effect.TARGET, card: CardData, player: Player):
 		return card
 	if target == Effect.TARGET.FACE:
 		return player
-

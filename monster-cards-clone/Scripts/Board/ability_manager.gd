@@ -18,7 +18,7 @@ signal activate(effect: Effect, card: CardData, player: Player)
 func subscribe_card(card: CardData, player: Player):
 	var trigger: Ability.TRIGGER = card.get_trigger()
 
-	if is_between(0, trigger, Ability.PLAYER_TRIGGER_THRESHOLD):
+	if is_between(-1, trigger, Ability.PLAYER_TRIGGER_THRESHOLD):
 		triggers_to_signals[trigger].connect(card.run_ability)
 	elif Ability.PLAYER_TRIGGER_THRESHOLD <= trigger:
 		player.triggers_to_signals[trigger].connect(card.run_ability)
@@ -27,6 +27,7 @@ func subscribe_card(card: CardData, player: Player):
 
 
 func board_trigger(trigger):
+	print("triggering board trigger: ", trigger)
 	triggers_to_signals[trigger].emit()
 
 
