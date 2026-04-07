@@ -6,6 +6,7 @@ var players: Dictionary[int, ShadowPlayer] = {}
 
 
 func add_player(player: ShadowPlayer):
+	add_child(player)
 	players[player.player_id] = player
 
 

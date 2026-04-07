@@ -326,6 +326,7 @@ func get_deck_blueprint() -> Dictionary:
 		for i in range(deck_file.cards[file_name]):
 			var card_data = CardData.create_from_card_file(card_file)
 			serialized_card_datas.append(card_data.serialize())
+			card_data.free()
 
 	return {"card_datas": serialized_card_datas}
 

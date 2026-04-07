@@ -19,3 +19,4 @@ func remove_serialized_card_data(serialized_card_data: Dictionary):
 		return
 
 	remove_card_data(temp_card_data.uuid, true)
+	temp_card_data.free()

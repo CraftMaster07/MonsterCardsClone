@@ -84,5 +84,5 @@ func exorcise():
 
 func remove_card():
 	remove_child(card)
-	card.queue_free()
+	card.free()
 	card = null

@@ -147,6 +147,7 @@ func client_placed_card(player_id: int, serialized_card: Dictionary, slot_id: in
 		ValidationResponses.INVALID:
 			print("unexpected error occured (Player: ", player_id, ", Slot: ", slot_id, ")")
 
+	temp_card_data.free()
 	update_enemy_hands()
 	send_game_state()
 
