@@ -20,6 +20,7 @@ func deserialize(data: Dictionary):
 func set_card_data(new_card_data: CardData):
 	card_data = new_card_data
 	card_data.updated_stats.connect(update_labels)
+	add_child(card_data)
 
 
 func get_card_data() -> CardData:
@@ -28,3 +29,8 @@ func get_card_data() -> CardData:
 
 func update_labels():
 	card_front.update_labels(card_data)
+
+
+func release_card_data():
+	remove_child(card_data)
+	card_data.updated_stats.disconnect(update_labels)

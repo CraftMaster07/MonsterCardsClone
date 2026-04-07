@@ -34,5 +34,6 @@ func board_trigger(trigger):
 static func is_between(minimum, n, maximum):
 	return minimum < n and n < maximum
 
+
 func activate_effect(effect: Effect, card: CardData, player: Player):
 	activate.emit(effect, card, player)

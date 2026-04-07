@@ -102,6 +102,8 @@ func _replace_handcard_with_boardcard(card: HandCard, slot: EnemyCardSlot):
 	Replaces the HandCard with a BoardCard object
 	This should be done after the card is moved into a slot
 	"""
+	card.release_card_data()
+	print("car data ", card.card_data)
 	var new_board_card := BoardCard.create(card.card_data)
 	slot.place_card(new_board_card)
 	card.queue_free() # might replace with remove_child
@@ -173,7 +175,7 @@ func _on_player_area_spawner_pivot_spawning_finished() -> void:
 
 func set_first_player_area(player_area: PlayerArea):
 	var player_id = unassigned_area_player_ids[0]
-	
+
 	set_player_area(player_area, player_id)
 	set_player_field(player_area.get_field(), player_id)
 	set_player_deck(player_area.get_deck(), player_id)
@@ -235,7 +237,7 @@ func verify_card_placement(
 
 	if phase != Phase.PREP:
 		return ValidationResponses.NOT_IN_PREP
-	
+
 	if not player_manager.can_spend_mana(player_id, card_data.cost):
 		return ValidationResponses.NOT_ENOUGH_MANA
 
@@ -281,7 +283,7 @@ func verify_attack(attacker_id: int, attacked_id: int) -> CombatValidationRespon
 
 	if attacker_id != round_manager.current_player_id:
 		return CombatValidationResponses.NOT_YOUR_TURN
-	
+
 	var last_player_id: int = round_manager.get_last_player_id()
 
 	if check_must_attack_last_player(last_player_id) and attacked_id != last_player_id:
@@ -338,4 +340,3 @@ func _on_round_manager_round_number_changed(new_round_number: int) -> void:
 
 func set_deck_file(deck: DeckFile):
 	deck_file = deck
-	

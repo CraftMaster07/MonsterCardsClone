@@ -99,7 +99,7 @@ func start_board():
 		board.call_shadow_sync.connect(_on_board_call_shadow_sync)
 	else:
 		board = board_scene.instantiate()
-	
+
 	board.set_your_id(multiplayer_manager.your_id)
 	board.init_players(multiplayer_players_to_dicts(multiplayer_manager.players))
 	board.set_deck_file(deck)
@@ -107,7 +107,7 @@ func start_board():
 	board.send_end_turn.connect(_on_end_turn_pressed)
 	board.send_player_attacked.connect(_on_board_player_attacked)
 	add_child(board)
-	
+
 
 func stop_board():
 	remove_child(board)
@@ -245,6 +245,7 @@ func _on_multiplayer_manager_get_deck_blueprint() -> void:
 
 func _on_board_call_shadow_sync(player_id: int, serialized_shadow_player_data: Dictionary) -> void:
 	multiplayer_manager.send_shadow_sync(player_id, serialized_shadow_player_data)
+
 
 func _on_multiplayer_manager_shadow_sync(serialized_shadow_player_data: Dictionary) -> void:
 	board.shadow_sync(serialized_shadow_player_data)

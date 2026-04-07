@@ -1,5 +1,5 @@
 class_name CardData
-extends Resource
+extends Node
 
 @export var card_name: String
 @export var image_id: int
