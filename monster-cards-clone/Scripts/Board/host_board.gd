@@ -15,6 +15,7 @@ var effect_to_funcs: Dictionary = {
 	Heal: heal
 }
 
+
 func _ready():
 	create_shadow_players()
 	get_remote_decks()
@@ -130,6 +131,7 @@ func client_placed_card(player_id: int, serialized_card: Dictionary, slot_id: in
 
 	match status:
 		ValidationResponses.OK:
+			# This doesnt happen when the host places a card
 			var card: BoardCard = player_manager.place_serialized_card_into_slot(player_id, serialized_card, slot_id)
 			subscribe_card(card.get_card_data(), player_manager.get_player(player_id))
 			player_manager.spend_mana(player_id, temp_card_data.cost)
@@ -151,6 +153,7 @@ func client_placed_card(player_id: int, serialized_card: Dictionary, slot_id: in
 
 func _replace_handcard_with_boardcard(card: HandCard, slot: EnemyCardSlot):
 	shadow_player_manager.remove_serialized_card_from_hand(your_id, card.serialize())
+	subscribe_card(card.get_card_data(), player_manager.get_player(your_id))
 	super._replace_handcard_with_boardcard(card, slot)
 
 

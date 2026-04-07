@@ -22,5 +22,9 @@ func set_card_data(new_card_data: CardData):
 	card_data.updated_stats.connect(update_labels)
 
 
+func get_card_data() -> CardData:
+	return card_data
+
+
 func update_labels():
 	card_front.update_labels(card_data)

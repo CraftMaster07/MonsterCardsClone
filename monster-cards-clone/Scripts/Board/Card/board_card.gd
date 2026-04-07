@@ -44,7 +44,3 @@ static func create(new_card_data: CardData) -> BoardCard:
 
 func run_ability():
 	card_data.run_ability()
-
-
-func get_card_data() -> CardData:
-	return card_data

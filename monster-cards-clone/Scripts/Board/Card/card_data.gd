@@ -120,6 +120,7 @@ func get_trigger() -> Ability.TRIGGER:
 
 
 func run_ability():
+	print("Ability ran")
 	ability.run()
 
 
