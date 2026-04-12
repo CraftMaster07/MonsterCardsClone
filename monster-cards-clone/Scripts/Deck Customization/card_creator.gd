@@ -11,8 +11,10 @@ signal leave()
 @export var cost_label: Label
 
 @export var effect_label: Label
+@export var target_label: Label
 @export var trigger_label: Label
 @export var effect_dropdown: OptionButton
+@export var target_dropdown: OptionButton
 @export var trigger_dropdown: OptionButton
 
 
@@ -138,8 +140,24 @@ func format_text(text: String) -> String:
 func _on_ability_toggle_button_toggled(toggled_on: bool) -> void:
 	effect_label.visible = toggled_on
 	effect_dropdown.visible = toggled_on
+
+	target_label.visible = toggled_on
+	target_dropdown.visible = toggled_on
 	
 	trigger_label.visible = toggled_on
 	trigger_dropdown.visible = toggled_on
 
 
+func _on_effect_option_button_item_selected(index: int) -> void:
+	var effect_name = effect_dropdown.get_item_text(index)
+	var effect = EffectFactory.get_effect(effect_name)
+	#editor_card.set_ability(effect, Ability.TRIGGER.INVALID)
+	update_targets_from_effect(effect)
+
+
+func update_targets_from_effect(effect: Effect):
+	var valid_targets = effect.target_whitelist.keys()
+	target_dropdown.clear()
+	
+	for target in valid_targets:
+		target_dropdown.add_item(format_text(Effect.get_target_name(target)))

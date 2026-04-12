@@ -1,6 +1,7 @@
 extends Board
 
 const TRIGGER = Ability.TRIGGER
+const EFFECT_ID =  Effect.EffectID
 
 var shadow_player_manager: ShadowPlayerManager
 
@@ -12,7 +13,7 @@ signal request_deck_blueprints()
 signal received_all_deck_blueprints()
 
 var effect_to_funcs: Dictionary = {
-	Heal: heal
+	EFFECT_ID.HEAL: heal
 }
 
 
@@ -237,7 +238,7 @@ func _on_ability_manager_activate(effect: Effect, card: CardData, player: Player
 	effect_to_funcs[effect.get_script()].call(effect, card, player)
 
 
-func heal(effect: Heal, card: CardData, player: Player):
+func heal(effect: Effect, card: CardData, player: Player):
 	var target: Effect.TARGET = effect.get_target()
 	var amount: int = effect.get_amount()
 

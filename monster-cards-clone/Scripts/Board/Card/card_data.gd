@@ -19,7 +19,7 @@ var cost: int
 
 var is_ghost: bool = false
 
-var ability: Ability = Ability.new(Ability.TRIGGER.ROUND_START, Heal.new())
+var ability: Ability
 
 signal updated_stats()
 
@@ -56,6 +56,7 @@ func serialize() -> Dictionary:
 			"attack": attack,
 			"cost": cost,
 			"image_id": image_id,
+			"ability": ability.serialize()
 		}
 	}
 
@@ -71,6 +72,7 @@ func deserialize(serialized: Dictionary):
 	attack = data["attack"]
 	cost = data["cost"]
 	image_id = data["image_id"]
+	ability.deserialize(data["ability"])
 	check_death()
 	updated_stats.emit()
 

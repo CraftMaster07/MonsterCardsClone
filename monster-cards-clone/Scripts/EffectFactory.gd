@@ -2,39 +2,34 @@ extends Node
 
 
 const EFFECT_PLUGINS_DIR = PathConstants.EFFECT_PLUGINS_PATH
-
-# This stays empty; the script fills it automatically
-var _effect_paths: Dictionary = {}
-
+var _effect_cache: Dictionary = {} # { "Heal": "res://effects/heal_base.tres" }
 
 func _ready() -> void:
-	_auto_scan_directory()
+	_index_effects()
 
 
-func _auto_scan_directory() -> void:
+func _index_effects() -> void:
 	if not DirAccess.dir_exists_absolute(EFFECT_PLUGINS_DIR):
-		push_error("Directory not found: " + EFFECT_PLUGINS_DIR)
 		return
 
-	# get_files_at is a Godot 4+ shortcut that returns an array of strings
 	for file_name in DirAccess.get_files_at(EFFECT_PLUGINS_DIR):
-		# The 'Export Trap': in build, .gd files become .gd.remap or .gdc
-		if file_name.ends_with(".gd") or file_name.ends_with(".gdc") or file_name.ends_with(".remap"):
-			# Clean the path so Godot's load() can understand it
-			var clean_name = file_name.replace(".remap", "").replace(".gdc", "").replace(".gd", "")
-			var full_path = EFFECT_PLUGINS_DIR.path_join(clean_name + ".gd")
+		# Resource files in Godot 4.x
+		if file_name.ends_with(".tres"):
+			var full_path = EFFECT_PLUGINS_DIR.path_join(file_name)
+			var res = load(full_path) as Effect
 			
-			# Map "Fireball" -> "res://effects/Fireball.gd"
-			_effect_paths[clean_name] = full_path
+			if res:
+				# Use the 'display_name' from the Resource instead of the filename!
+				_effect_cache[res.display_name] = full_path
 
 
 func get_effect_names() -> Array:
-	return _effect_paths.keys()
+	return _effect_cache.keys()
 
 
-## Logic calls this to get the actual script/object
-func load_effect(effect_name: String) -> Effect:
-	if _effect_paths.has(effect_name):
-		var script = load(_effect_paths[effect_name])
-		return script.new()
+## Returns a duplicate of the resource so you don't overwrite the original file data
+func get_effect(display_name: String) -> Effect:
+	if _effect_cache.has(display_name):
+		# .duplicate() is vital so each instance has its own 'amount' or 'target'
+		return ResourceLoader.load(_effect_cache[display_name], "", ResourceLoader.CACHE_MODE_IGNORE) as Effect
 	return null

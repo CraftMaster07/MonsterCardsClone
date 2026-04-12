@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://dvlfw6d4f8dyf" path="res://Scripts/Deck Customization/card_creator.gd" id="1_guviw"]
 [ext_resource type="PackedScene" uid="uid://ca5l6o5hh7sgi" path="res://Scenes/Deck Customization/editor_card.tscn" id="3_qpjfk"]
 
-[node name="CardCreator" type="Control" unique_id=947132057 node_paths=PackedStringArray("name_line_edit", "editor_card", "health_spin_box", "attack_spin_box", "cost_label", "effect_label", "trigger_label", "effect_dropdown", "trigger_dropdown")]
+[node name="CardCreator" type="Control" unique_id=947132057 node_paths=PackedStringArray("name_line_edit", "editor_card", "health_spin_box", "attack_spin_box", "cost_label", "effect_label", "target_label", "trigger_label", "effect_dropdown", "target_dropdown", "trigger_dropdown")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -17,8 +17,10 @@ health_spin_box = NodePath("GridContainer/HealthSpinBox")
 attack_spin_box = NodePath("GridContainer/AttackSpinBox")
 cost_label = NodePath("GridContainer/CostValueLabel")
 effect_label = NodePath("GridContainer/EffectLabel")
+target_label = NodePath("GridContainer/TargetLabel")
 trigger_label = NodePath("GridContainer/TriggerLabel")
 effect_dropdown = NodePath("GridContainer/EffectOptionButton")
+target_dropdown = NodePath("GridContainer/TargetOptionButton")
 trigger_dropdown = NodePath("GridContainer/TriggerOptionButton")
 
 [node name="EditorCard" parent="." unique_id=235285323 instance=ExtResource("3_qpjfk")]
@@ -87,6 +89,15 @@ layout_mode = 2
 text = "Effect:"
 
 [node name="EffectOptionButton" type="OptionButton" parent="GridContainer" unique_id=1115640035]
+visible = false
+layout_mode = 2
+
+[node name="TargetLabel" type="Label" parent="GridContainer" unique_id=1215151272]
+visible = false
+layout_mode = 2
+text = "Target:"
+
+[node name="TargetOptionButton" type="OptionButton" parent="GridContainer" unique_id=666650814]
 visible = false
 layout_mode = 2
 

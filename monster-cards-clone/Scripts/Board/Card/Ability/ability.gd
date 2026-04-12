@@ -30,3 +30,13 @@ func get_trigger() -> TRIGGER:
 	return trigger
 
 
+func serialize() -> Dictionary:
+	return {
+		"trigger": trigger,
+		"effect": effect.serialize()
+	}
+
+
+func deserialize(serialized: Dictionary):
+	trigger = serialized["trigger"]
+	effect.deserialize(serialized["effect"])
