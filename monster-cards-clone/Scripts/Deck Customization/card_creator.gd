@@ -10,12 +10,18 @@ signal leave()
 @export var attack_spin_box: SpinBox
 @export var cost_label: Label
 
+@export var effect_label: Label
+@export var trigger_label: Label
+@export var effect_dropdown: OptionButton
+@export var trigger_dropdown: OptionButton
+
 
 func _ready() -> void:
 	editor_card.set_health(int(health_spin_box.value))
 	editor_card.set_attack(int(attack_spin_box.value))
 	editor_card.set_cost(int(cost_label.text))
 	CardFile.ensure_folder_exists()
+	fill_options()
 
 
 static func calculate_cost(health, attack) -> int:
@@ -98,3 +104,42 @@ func update_cost():
 	var new_cost: int = calculate_cost(health_spin_box.value, attack_spin_box.value)
 	cost_label.text = " " + str(new_cost)
 	editor_card.set_cost(new_cost)
+
+
+func fill_options():
+	fill_effect_options()
+	fill_trigger_options()
+
+
+func fill_effect_options():
+	for effect in EffectFactory.get_effect_names():
+		effect_dropdown.add_item(effect)
+
+
+func fill_trigger_options():
+	var valid_triggers = Ability.TRIGGER.keys()
+	print(valid_triggers)
+	valid_triggers.erase("INVALID")
+
+	for trigger in valid_triggers:
+		trigger_dropdown.add_item(format_text(trigger))
+
+
+func format_text(text: String) -> String:
+	var word_list = text.split("_")
+
+	for i in len(word_list):
+		var word = word_list[i]
+		word_list[i] = word[0].to_upper() + word.substr(1).to_lower()
+	
+	return " ".join(word_list)
+
+
+func _on_ability_toggle_button_toggled(toggled_on: bool) -> void:
+	effect_label.visible = toggled_on
+	effect_dropdown.visible = toggled_on
+	
+	trigger_label.visible = toggled_on
+	trigger_dropdown.visible = toggled_on
+
+
