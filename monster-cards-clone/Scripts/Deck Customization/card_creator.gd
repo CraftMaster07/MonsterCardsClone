@@ -119,9 +119,10 @@ func fill_effect_options():
 		effect_dropdown.add_item(effect)
 
 
-func fill_trigger_options():
-	for trigger in TriggerFactory.get_trigger_names():
-		trigger_dropdown.add_item(trigger)
+func fill_trigger_options(effect: Effect = null):
+	for trigger in TriggerFactory.get_triggers():
+		if effect and effect.check_trigger_compatibility(trigger.get_id()):
+			trigger_dropdown.add_item(trigger.get_display_name())
 
 
 func format_text(text: String) -> String:
@@ -150,6 +151,7 @@ func _on_effect_option_button_item_selected(index: int) -> void:
 	var effect = EffectFactory.get_effect(effect_name)
 	#editor_card.set_ability()
 	update_targets_from_effect(effect)
+	update_triggers_from_effect(effect)
 
 
 func update_targets_from_effect(effect: Effect):
@@ -158,3 +160,8 @@ func update_targets_from_effect(effect: Effect):
 	
 	for target in valid_targets:
 		target_dropdown.add_item(format_text(Effect.get_target_name(target)))
+
+
+func update_triggers_from_effect(effect: Effect):
+	trigger_dropdown.clear()
+	fill_trigger_options(effect)

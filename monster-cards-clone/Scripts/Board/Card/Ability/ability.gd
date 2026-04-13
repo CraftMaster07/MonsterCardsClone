@@ -31,3 +31,13 @@ func serialize() -> Dictionary:
 func deserialize(serialized: Dictionary):
 	trigger = serialized["trigger"]
 	effect.deserialize(serialized["effect"])
+
+
+func check_compatibility() -> bool:
+	if trigger and effect:
+		return effect.check_trigger_compatibility(trigger.id)
+	return false
+
+
+func set_trigger(new_trigger: Trigger):
+	trigger = new_trigger

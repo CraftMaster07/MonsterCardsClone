@@ -9,16 +9,16 @@ enum TriggerID {
 	DRAW_CARD = PLAYER_TRIGGER_THRESHOLD,
 }
 
-enum Null{
-	NULL,
-}
-
 
 @export var id: TriggerID = TriggerID.INVALID
 @export var display_name: String
 
-@export var effect_blacklist: Dictionary[Effect.EffectID, Null]
+@export var cost_multiplier: float = 1
 
 
 func get_id() -> TriggerID:
-    return id
+	return id
+
+
+func get_display_name() -> String:
+	return display_name

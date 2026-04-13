@@ -10,6 +10,7 @@ enum EffectID {
 	INVALID = -1,
 	HEAL,
 	ATTACK_BUFF,
+	DRAW_CARD
 }
 
 enum Null{
@@ -45,3 +46,7 @@ func serialize():
 
 static func get_target_name(target_value: TARGET):
 	return TARGET.keys()[target_value]
+
+
+func check_trigger_compatibility(trigger_id: Trigger.TriggerID):
+	return not trigger_blacklist.has(trigger_id)
