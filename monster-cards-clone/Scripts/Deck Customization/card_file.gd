@@ -1,16 +1,13 @@
 extends RefCounted
 class_name CardFile
 
-
-const TRIGGER = Ability.TRIGGER
-
 var card_name: String = ""
 var file_name: String = ""
 var health: int = 0
 var attack: int = 0
 var cost: int = 0
 
-var ability: Ability = Ability.new(TRIGGER.INVALID, null)
+var ability: Ability = Ability.new(null, null)
 
 
 func save():
@@ -58,7 +55,7 @@ static func ensure_folder_exists():
 		DirAccess.make_dir_absolute(PathConstants.CARD_SAVE_PATH)
 
 
-func set_trigger(trigger: Ability.TRIGGER):
+func set_trigger(trigger: Trigger):
 	ability.trigger = trigger
 
 

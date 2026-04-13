@@ -1,6 +1,6 @@
 extends Board
 
-const TRIGGER = Ability.TRIGGER
+const TRIGGER_ID = Trigger.TriggerID
 const EFFECT_ID =  Effect.EffectID
 
 var shadow_player_manager: ShadowPlayerManager
@@ -231,7 +231,7 @@ func subscribe_card(card: CardData, player: Player):
 
 
 func trigger_round_start_abilities():
-	ability_manager.board_trigger(TRIGGER.ROUND_START)
+	ability_manager.board_trigger(TRIGGER_ID.ROUND_START)
 
 
 func _on_ability_manager_activate(effect: Effect, card: CardData, player: Player) -> void:

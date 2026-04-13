@@ -117,8 +117,12 @@ func reset():
 	cost = STARTING_COST
 
 
-func get_trigger() -> Ability.TRIGGER:
+func get_trigger() -> Trigger:
 	return ability.get_trigger()
+
+
+func get_trigger_id() -> Trigger.TriggerID:
+	return ability.get_trigger().get_id()
 
 
 func run_ability():

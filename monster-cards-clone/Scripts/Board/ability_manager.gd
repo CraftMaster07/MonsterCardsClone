@@ -2,11 +2,11 @@ class_name AbilityManager
 extends Node
 
 
-const TRIGGER = Ability.TRIGGER
+const TRIGGER_ID = Trigger.TriggerID
 
 
 var triggers_to_signals: Dictionary = {
-	TRIGGER.ROUND_START: round_start,
+	TRIGGER_ID.ROUND_START: round_start,
 }
 
 
@@ -16,19 +16,19 @@ signal round_start
 signal activate(effect: Effect, card: CardData, player: Player)
 
 func subscribe_card(card: CardData, player: Player):
-	var trigger: Ability.TRIGGER = card.get_trigger()
+	var trigger_id: Trigger.TriggerID = card.get_trigger_id()
 
-	if is_between(-1, trigger, Ability.PLAYER_TRIGGER_THRESHOLD):
-		triggers_to_signals[trigger].connect(card.run_ability)
-	elif Ability.PLAYER_TRIGGER_THRESHOLD <= trigger:
-		player.triggers_to_signals[trigger].connect(card.run_ability)
+	if is_between(-1, trigger_id, Trigger.PLAYER_TRIGGER_THRESHOLD):
+		triggers_to_signals[trigger_id].connect(card.run_ability)
+	elif Trigger.PLAYER_TRIGGER_THRESHOLD <= trigger_id:
+		player.triggers_to_signals[trigger_id].connect(card.run_ability)
 
 	card.get_ability_signal().connect(activate_effect.bind(card, player))
 
 
-func board_trigger(trigger):
-	print("triggering board trigger: ", trigger)
-	triggers_to_signals[trigger].emit()
+func board_trigger(trigger_id):
+	print("triggering board trigger: ", trigger_id)
+	triggers_to_signals[trigger_id].emit()
 
 
 static func is_between(minimum, n, maximum):

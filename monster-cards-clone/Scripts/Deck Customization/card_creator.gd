@@ -111,6 +111,7 @@ func update_cost():
 func fill_options():
 	fill_effect_options()
 	fill_trigger_options()
+	_on_effect_option_button_item_selected(effect_dropdown.get_selected_id())
 
 
 func fill_effect_options():
@@ -119,12 +120,8 @@ func fill_effect_options():
 
 
 func fill_trigger_options():
-	var valid_triggers = Ability.TRIGGER.keys()
-	print(valid_triggers)
-	valid_triggers.erase("INVALID")
-
-	for trigger in valid_triggers:
-		trigger_dropdown.add_item(format_text(trigger))
+	for trigger in TriggerFactory.get_trigger_names():
+		trigger_dropdown.add_item(trigger)
 
 
 func format_text(text: String) -> String:
@@ -151,7 +148,7 @@ func _on_ability_toggle_button_toggled(toggled_on: bool) -> void:
 func _on_effect_option_button_item_selected(index: int) -> void:
 	var effect_name = effect_dropdown.get_item_text(index)
 	var effect = EffectFactory.get_effect(effect_name)
-	#editor_card.set_ability(effect, Ability.TRIGGER.INVALID)
+	#editor_card.set_ability()
 	update_targets_from_effect(effect)
 
 

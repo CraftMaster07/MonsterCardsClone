@@ -16,32 +16,29 @@ enum Null{
 	NULL,
 }
 
-@export var id: EffectID
+@export var id: EffectID = EffectID.INVALID
 @export var display_name: String
 # we are using Dictionary as a Set here
 @export var target_whitelist: Dictionary[TARGET, Null]
+@export var trigger_blacklist: Dictionary[Trigger.TriggerID, Null]
 
 @export var cost_multiplier: float = 1
+@export var extra_properties: Dictionary[String, Variant] = {}
 
-var amount: int
 var target: TARGET
-
-
-func _init(new_amount: int = 1):
-	amount = new_amount
 
 
 func get_target():
 	return target
 
 
-func get_amount():
-	return amount
+func get_properties():
+	return extra_properties
 
 
 func serialize():
 	return {
-		"amount": amount,
+		"extra_properties": extra_properties,
 		"target": target
 	}
 

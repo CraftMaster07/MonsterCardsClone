@@ -1,12 +1,16 @@
 [gd_resource type="Resource" script_class="Effect" format=3 uid="uid://o7rchr6rcqpk"]
 
-[ext_resource type="Script" uid="uid://bwjlbmyyw1lb2" path="res://Scripts/Board/Card/Ability/Effect/effect.gd" id="1_hfcnq"]
+[ext_resource type="Script" uid="uid://bwjlbmyyw1lb2" path="res://Scripts/Board/Card/Ability/effect.gd" id="1_wyxtd"]
 
 [resource]
-script = ExtResource("1_hfcnq")
+script = ExtResource("1_wyxtd")
+id = 0
 display_name = "Heal"
 target_whitelist = Dictionary[int, int]({
 0: 0,
 1: 0
+})
+extra_properties = Dictionary[String, Variant]({
+"amount": 1
 })
 metadata/_custom_type_script = "uid://bwjlbmyyw1lb2"

@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="Trigger" format=3 uid="uid://bffhjimil5tlr"]
+
+[ext_resource type="Script" uid="uid://eksx7s2hjxdl" path="res://Scripts/Board/Card/Ability/trigger.gd" id="1_2h4tx"]
+
+[resource]
+script = ExtResource("1_2h4tx")
+id = 0
+display_name = "On Round Start"
+metadata/_custom_type_script = "uid://eksx7s2hjxdl"

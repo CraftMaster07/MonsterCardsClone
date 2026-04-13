@@ -40,9 +40,9 @@ grow_vertical = 2
 [node name="GridContainer" type="GridContainer" parent="." unique_id=477398327]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.23
+anchor_left = 0.2
 anchor_top = 0.4
-anchor_right = 0.4
+anchor_right = 0.37
 anchor_bottom = 0.4
 offset_right = -8.840027
 offset_bottom = 121.0
@@ -91,6 +91,8 @@ text = "Effect:"
 [node name="EffectOptionButton" type="OptionButton" parent="GridContainer" unique_id=1115640035]
 visible = false
 layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
 
 [node name="TargetLabel" type="Label" parent="GridContainer" unique_id=1215151272]
 visible = false
@@ -100,6 +102,8 @@ text = "Target:"
 [node name="TargetOptionButton" type="OptionButton" parent="GridContainer" unique_id=666650814]
 visible = false
 layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
 
 [node name="TriggerLabel" type="Label" parent="GridContainer" unique_id=526329695]
 visible = false
@@ -109,6 +113,8 @@ text = "Trigger:"
 [node name="TriggerOptionButton" type="OptionButton" parent="GridContainer" unique_id=1575934862]
 visible = false
 layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
 
 [node name="BackButton" type="Button" parent="." unique_id=31184175]
 layout_mode = 1
