@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://if4366cpnfs0"]
 
 [ext_resource type="Script" uid="uid://sxpdfiiwyig7" path="res://Scripts/Board/PlayerArea/player_area.gd" id="1_cf821"]
-[ext_resource type="PackedScene" uid="uid://dtpst7jgrdpqq" path="res://Scenes/Board/Field/field.tscn" id="2_2agih"]
+[ext_resource type="PackedScene" uid="uid://dtpst7jgrdpqq" path="res://Scenes/Board/PlayerArea/Field/field.tscn" id="2_2agih"]
 [ext_resource type="PackedScene" uid="uid://dxt0343x16g61" path="res://Scenes/Board/deck.tscn" id="3_3ha3x"]
-[ext_resource type="PackedScene" uid="uid://b6obljxfl8pah" path="res://Scenes/Board/Hand/enemy_hand.tscn" id="4_jkf4s"]
+[ext_resource type="PackedScene" uid="uid://b6obljxfl8pah" path="res://Scenes/Board/PlayerArea/Hand/enemy_hand.tscn" id="4_jkf4s"]
 
 [node name="PlayerArea" type="Control" unique_id=1536100535]
 layout_mode = 3

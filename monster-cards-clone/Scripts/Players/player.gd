@@ -13,11 +13,10 @@ var area: PlayerArea
 var deck: Deck
 var field: Field
 var hand: Hand
+var stats_label: Label
 
 var attacking_id: int = 0
 var attacked_by_id: int = 0
-
-@onready var label: Label = $HealthLabel
 
 
 func init(new_player_id: int, new_player_name: String):
@@ -42,7 +41,7 @@ func decrease_health(amount: int) -> void:
 
 
 func update_stats_label() -> void:
-	label.text = player_name + ": " + str(health) + "\\" + str(STARTING_HEALTH) + ", " + str(mana)
+	stats_label.text = str(health) + "\\" + str(STARTING_HEALTH) + ", " + str(mana)
 
 
 func get_area() -> PlayerArea:

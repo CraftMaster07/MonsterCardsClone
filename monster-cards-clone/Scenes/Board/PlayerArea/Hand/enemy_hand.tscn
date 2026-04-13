@@ -1,7 +1,8 @@
 [gd_scene format=3 uid="uid://b6obljxfl8pah"]
 
-[ext_resource type="Script" uid="uid://bma3dob710djm" path="res://Scripts/Board/Hand/enemy_hand.gd" id="1_u7o8q"]
+[ext_resource type="Script" uid="uid://bma3dob710djm" path="res://Scripts/Board/PlayerArea/Hand/enemy_hand.gd" id="1_u7o8q"]
 [ext_resource type="PackedScene" uid="uid://cwrvcgm3n85bl" path="res://Scenes/Board/Card/dummy_card.tscn" id="2_ro41i"]
+
 
 [node name="EnemyHand" type="MarginContainer" unique_id=2133211725]
 size_flags_horizontal = 4

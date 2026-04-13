@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://c1qkabu180wpv" path="res://Scenes/Players/enemy_player.tscn" id="4_gti8d"]
 [ext_resource type="PackedScene" uid="uid://if4366cpnfs0" path="res://Scenes/Board/PlayerArea/player_area.tscn" id="6_a1ark"]
 [ext_resource type="Script" uid="uid://hvpfm3s0svah" path="res://Scripts/Board/utils/animated_rotation.gd" id="6_s2gku"]
-[ext_resource type="PackedScene" uid="uid://bmbkajbu0quju" path="res://Scenes/Board/PlayerArea/your_player_area.tscn" id="7_rt3kt"]
+[ext_resource type="PackedScene" uid="uid://cjc18seeidj6x" path="res://Scenes/Board/PlayerArea/your_player_area.tscn" id="7_rt3kt"]
 [ext_resource type="Script" uid="uid://b5m01jmgufvky" path="res://Scripts/Board/utils/object_pivot.gd" id="9_a1ark"]
 [ext_resource type="Script" uid="uid://7i1gkuidppy1" path="res://Scripts/Board/PlayerArea/player_area_spawner_pivot.gd" id="10_brcfe"]
 [ext_resource type="Texture2D" uid="uid://cp0e5bj18tv0x" path="res://Assets/Sprites/arrow.png" id="10_rt3kt"]

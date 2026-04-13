@@ -1,7 +1,8 @@
 [gd_scene format=3 uid="uid://7ukrl57uilte"]
 
-[ext_resource type="Script" uid="uid://pel84vvq26ns" path="res://Scripts/Board/Field/your_field.gd" id="1_cucen"]
-[ext_resource type="PackedScene" uid="uid://dt4wxwmhsr5fe" path="res://Scenes/Board/Field/CardSlot/your_card_slot.tscn" id="2_cucen"]
+[ext_resource type="Script" uid="uid://pel84vvq26ns" path="res://Scripts/Board/PlayerArea/Field/your_field.gd" id="1_cucen"]
+[ext_resource type="PackedScene" uid="uid://dt4wxwmhsr5fe" path="res://Scenes/Board/PlayerArea/Field/CardSlot/your_card_slot.tscn" id="2_cucen"]
+
 
 [node name="YourField" type="MarginContainer" unique_id=497800204]
 anchors_preset = 8
