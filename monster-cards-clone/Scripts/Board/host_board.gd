@@ -227,6 +227,9 @@ func reset_players_mana():
 
 
 func subscribe_card(card: CardData, player: Player):
+	if not card.has_ability():
+		return
+
 	ability_manager.subscribe_card(card, player)
 
 

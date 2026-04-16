@@ -29,6 +29,10 @@ enum Null{
 var target: TARGET
 
 
+func get_id():
+	return id
+
+
 func get_target():
 	return target
 
@@ -37,11 +41,20 @@ func get_properties():
 	return extra_properties
 
 
+func get_display_name():
+	return display_name
+
+
 func serialize():
 	return {
 		"extra_properties": extra_properties,
 		"target": target
 	}
+
+
+func deserialize(data):
+	extra_properties = {} as Dictionary[String, Variant]#data["extra_properties"] as Dictionary[String, Variant]
+	target = data["target"]
 
 
 static func get_target_name(target_value: TARGET):

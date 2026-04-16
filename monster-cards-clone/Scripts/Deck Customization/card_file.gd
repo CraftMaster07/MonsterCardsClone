@@ -7,7 +7,7 @@ var health: int = 0
 var attack: int = 0
 var cost: int = 0
 
-var ability: Ability = Ability.new(null, null)
+var ability: Ability
 
 
 func save():
@@ -21,13 +21,17 @@ func save():
 
 
 func serialize() -> Dictionary:
-	return {
+	var data: Dictionary = {
 		"card_name": card_name,
 		"health": health,
 		"attack": attack,
 		"cost": cost,
-		"ability": ability.serialize()
 	}
+
+	if has_ability():
+		data["ability"] = ability.serialize()
+
+	return data
 
 
 func load(file_path: String):
@@ -42,7 +46,12 @@ func deserialize(data: Dictionary):
 	health = data["health"]
 	attack = data["attack"]
 	cost = data["cost"]
-	ability.deserialize(data["ability"])
+
+	if data.has("ability"):
+		ensure_ability_exists()
+		ability.deserialize(data["ability"])
+	else:
+		remove_ability()
 
 
 func set_name(name: String) -> void:
@@ -56,8 +65,33 @@ static func ensure_folder_exists():
 
 
 func set_trigger(trigger: Trigger):
+	ensure_ability_exists()
 	ability.trigger = trigger
 
 
 func set_effect(effect: Effect):
+	ensure_ability_exists()
 	ability.effect = effect
+
+
+func get_effect() -> Effect:
+	ensure_ability_exists()
+	return ability.effect
+
+
+func get_trigger() -> Trigger:
+	ensure_ability_exists()
+	return ability.trigger
+
+
+func has_ability() -> bool:
+	return ability != null
+
+
+func remove_ability():
+	ability = null
+
+
+func ensure_ability_exists():
+	if not has_ability():
+		ability = Ability.new(null, null)

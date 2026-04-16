@@ -94,3 +94,27 @@ func serialize() -> Dictionary:
 func deserialize(data: Dictionary) -> void:
 	card_file.deserialize(data["card_file"])
 	update_display()
+
+
+func set_effect(effect: Effect) -> void:
+	card_file.set_effect(effect)
+
+
+func set_trigger(trigger: Trigger) -> void:
+	card_file.set_trigger(trigger)
+
+
+func get_effect() -> Effect:
+	return card_file.get_effect()
+
+
+func get_trigger() -> Trigger:
+	return card_file.get_trigger()
+
+
+func has_ability() -> bool:
+	return card_file.has_ability()
+
+
+func remove_ability():
+	card_file.remove_ability()

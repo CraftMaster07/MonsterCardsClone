@@ -1,9 +1,10 @@
 extends Node
 
 const TRIGGER_PLUGINS_DIR = PathConstants.TRIGGER_PLUGINS_PATH
+const TRIGGER_ID = Trigger.TriggerID
 
-# Now stores { "Display Name": TriggerResourceObject }
-var _trigger_cache: Dictionary = {} 
+# Now stores { TRIGGER_ID.ROUND_START : TriggerResourceObject }
+var _trigger_cache: Dictionary[TRIGGER_ID, Trigger] = {} 
 
 
 func _ready() -> void:
@@ -22,7 +23,7 @@ func _index_triggers() -> void:
 			
 			if res:
 				# Store the actual object, not the path
-				_trigger_cache[res.display_name] = res
+				_trigger_cache[res.id] = res
 
 
 func get_trigger_names() -> Array:
@@ -34,13 +35,13 @@ func get_triggers() -> Array:
 
 
 ## Returns a unique copy for game logic use
-func get_trigger_instance(display_name: String) -> Trigger:
-	if _trigger_cache.has(display_name):
+func get_trigger_instance(trigger_id: TRIGGER_ID) -> Trigger:
+	if _trigger_cache.has(trigger_id):
 		# We duplicate the cached version to get a unique instance
-		return _trigger_cache[display_name].duplicate() as Trigger
+		return _trigger_cache[trigger_id].duplicate() as Trigger
 	return null
 
 
 ## Returns the shared 'read-only' version (useful for UI/tooltips)
-func get_trigger_data(display_name: String) -> Trigger:
-	return _trigger_cache.get(display_name)
+func get_trigger_data(trigger_id: TRIGGER_ID) -> Trigger:
+	return _trigger_cache.get(trigger_id)

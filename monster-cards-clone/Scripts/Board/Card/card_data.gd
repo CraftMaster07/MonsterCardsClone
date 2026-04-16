@@ -47,17 +47,21 @@ func _init(serialized_data: Dictionary = {}):
 
 
 func serialize() -> Dictionary:
+	var data: Dictionary = {
+		"name": card_name,
+		"health": health,
+		"max_health": max_health,
+		"attack": attack,
+		"cost": cost,
+		"image_id": image_id,
+	}
+
+	if ability:
+		data["ability"] = ability.serialize()
+
 	return {
 		"uuid": uuid,
-		"data": {
-			"name": card_name,
-			"health": health,
-			"max_health": max_health,
-			"attack": attack,
-			"cost": cost,
-			"image_id": image_id,
-			"ability": ability.serialize()
-		}
+		"data": data
 	}
 
 
@@ -72,7 +76,12 @@ func deserialize(serialized: Dictionary):
 	attack = data["attack"]
 	cost = data["cost"]
 	image_id = data["image_id"]
-	ability.deserialize(data["ability"])
+
+	if data.has("ability"):
+		ability.deserialize(data["ability"])
+	else:
+		ability = null
+
 	check_death()
 	updated_stats.emit()
 
@@ -137,3 +146,7 @@ func heal(amount: int):
 
 func get_ability_signal() -> Signal:
 	return ability.activated
+
+
+func has_ability() -> bool:
+	return ability != null

@@ -22,3 +22,12 @@ func get_id() -> TriggerID:
 
 func get_display_name() -> String:
 	return display_name
+
+
+func serialize() -> Dictionary:
+	return {
+	}
+
+
+func deserialize(_data: Dictionary):
+	pass

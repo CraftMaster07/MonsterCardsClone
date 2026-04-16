@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://dvlfw6d4f8dyf" path="res://Scripts/Deck Customization/card_creator.gd" id="1_guviw"]
 [ext_resource type="PackedScene" uid="uid://ca5l6o5hh7sgi" path="res://Scenes/Deck Customization/editor_card.tscn" id="3_qpjfk"]
 
-[node name="CardCreator" type="Control" unique_id=947132057 node_paths=PackedStringArray("name_line_edit", "editor_card", "health_spin_box", "attack_spin_box", "cost_label", "effect_label", "target_label", "trigger_label", "effect_dropdown", "target_dropdown", "trigger_dropdown")]
+[node name="CardCreator" type="Control" unique_id=947132057 node_paths=PackedStringArray("name_line_edit", "editor_card", "health_spin_box", "attack_spin_box", "cost_label", "ability_toggle_button", "effect_label", "target_label", "trigger_label", "effect_dropdown", "target_dropdown", "trigger_dropdown")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -16,6 +16,7 @@ editor_card = NodePath("EditorCard")
 health_spin_box = NodePath("GridContainer/HealthSpinBox")
 attack_spin_box = NodePath("GridContainer/AttackSpinBox")
 cost_label = NodePath("GridContainer/CostValueLabel")
+ability_toggle_button = NodePath("GridContainer/AbilityToggleButton")
 effect_label = NodePath("GridContainer/EffectLabel")
 target_label = NodePath("GridContainer/TargetLabel")
 trigger_label = NodePath("GridContainer/TriggerLabel")
@@ -176,12 +177,42 @@ text = "Load
 layout_mode = 2
 text = "Save"
 
+[node name="SerializeButton" type="Button" parent="." unique_id=1838081016]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -298.0
+offset_top = -194.0
+offset_right = -195.0
+offset_bottom = -163.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "Serialize"
+
+[node name="Label" type="Label" parent="SerializeButton" unique_id=319213798]
+layout_mode = 0
+offset_left = -17.0
+offset_top = -87.0
+offset_right = 118.0
+offset_bottom = -12.0
+text = "TESTING BUTTON
+||
+V"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [connection signal="value_changed" from="GridContainer/AttackSpinBox" to="." method="_on_attack_spin_box_value_changed"]
 [connection signal="value_changed" from="GridContainer/HealthSpinBox" to="." method="_on_health_spin_box_value_changed"]
 [connection signal="toggled" from="GridContainer/AbilityToggleButton" to="." method="_on_ability_toggle_button_toggled"]
 [connection signal="item_selected" from="GridContainer/EffectOptionButton" to="." method="_on_effect_option_button_item_selected"]
+[connection signal="item_selected" from="GridContainer/TargetOptionButton" to="." method="_on_target_option_button_item_selected"]
+[connection signal="item_selected" from="GridContainer/TriggerOptionButton" to="." method="_on_trigger_option_button_item_selected"]
 [connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]
 [connection signal="text_changed" from="NameLineEdit" to="." method="_on_name_line_edit_text_changed"]
 [connection signal="pressed" from="OpenFolderButton" to="." method="_on_open_folder_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/LoadButton" to="." method="_on_load_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/SaveButton" to="." method="_on_save_button_pressed"]
+[connection signal="pressed" from="SerializeButton" to="." method="_on_serialize_button_pressed"]

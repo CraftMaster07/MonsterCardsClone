@@ -23,19 +23,29 @@ func get_trigger() -> Trigger:
 
 func serialize() -> Dictionary:
 	return {
-		"trigger": trigger,
+		"trigger_id" : trigger.get_id(),
+		"trigger": trigger.serialize(),
+		"effect_id": effect.get_id(),
 		"effect": effect.serialize()
 	}
 
 
 func deserialize(serialized: Dictionary):
-	trigger = serialized["trigger"]
+	if not trigger or serialized["trigger_id"] != trigger.get_id():
+		# free the old trigger?
+		trigger = TriggerFactory.get_trigger_instance(serialized["trigger_id"])
+
+	trigger.deserialize(serialized["trigger"])
+
+	if not effect or serialized["effect_id"] != effect.get_id():
+		effect = EffectFactory.get_effect_instance(serialized["effect_id"])
+
 	effect.deserialize(serialized["effect"])
 
 
 func check_compatibility() -> bool:
 	if trigger and effect:
-		return effect.check_trigger_compatibility(trigger.id)
+		return effect.check_trigger_compatibility(trigger.get_id())
 	return false
 
 

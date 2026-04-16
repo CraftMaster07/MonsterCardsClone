@@ -10,12 +10,18 @@ signal leave()
 @export var attack_spin_box: SpinBox
 @export var cost_label: Label
 
+@export var ability_toggle_button: Button
+
 @export var effect_label: Label
 @export var target_label: Label
 @export var trigger_label: Label
 @export var effect_dropdown: OptionButton
 @export var target_dropdown: OptionButton
 @export var trigger_dropdown: OptionButton
+
+var _current_effects: Array = []
+var _current_targets: Array = []
+var _current_triggers: Array = []
 
 
 func _ready() -> void:
@@ -24,6 +30,8 @@ func _ready() -> void:
 	editor_card.set_cost(int(cost_label.text))
 	CardFile.ensure_folder_exists()
 	fill_options()
+
+	_on_ability_toggle_button_toggled(false)
 
 
 static func calculate_cost(health, attack) -> int:
@@ -101,6 +109,11 @@ func update_values_from_loaded_card():
 	attack_spin_box.value = editor_card.get_attack()
 	update_cost()
 
+	ability_toggle_button.button_pressed = editor_card.has_ability()
+	if editor_card.has_ability():
+		update_effect_from_loaded_card()
+		update_trigger_from_loaded_card()
+
 
 func update_cost():
 	var new_cost: int = calculate_cost(health_spin_box.value, attack_spin_box.value)
@@ -115,14 +128,20 @@ func fill_options():
 
 
 func fill_effect_options():
-	for effect in EffectFactory.get_effect_names():
-		effect_dropdown.add_item(effect)
+	_current_effects = []
+
+	for effect in EffectFactory.get_effects():
+		effect_dropdown.add_item(effect.get_display_name())
+		_current_effects.append(effect)
 
 
 func fill_trigger_options(effect: Effect = null):
+	_current_triggers = []
+
 	for trigger in TriggerFactory.get_triggers():
 		if effect and effect.check_trigger_compatibility(trigger.get_id()):
 			trigger_dropdown.add_item(trigger.get_display_name())
+			_current_triggers.append(trigger)
 
 
 func format_text(text: String) -> String:
@@ -136,6 +155,7 @@ func format_text(text: String) -> String:
 
 
 func _on_ability_toggle_button_toggled(toggled_on: bool) -> void:
+	print("hi: ", toggled_on)
 	effect_label.visible = toggled_on
 	effect_dropdown.visible = toggled_on
 
@@ -145,23 +165,88 @@ func _on_ability_toggle_button_toggled(toggled_on: bool) -> void:
 	trigger_label.visible = toggled_on
 	trigger_dropdown.visible = toggled_on
 
+	if toggled_on:
+		_on_effect_option_button_item_selected(0)
+	else:
+		editor_card.remove_ability()
+
 
 func _on_effect_option_button_item_selected(index: int) -> void:
-	var effect_name = effect_dropdown.get_item_text(index)
-	var effect = EffectFactory.get_effect(effect_name)
-	#editor_card.set_ability()
+	var effect = _current_effects[index]
 	update_targets_from_effect(effect)
+	_on_target_option_button_item_selected(target_dropdown.get_selected_id())
 	update_triggers_from_effect(effect)
+	update_editor_card_ability()
 
 
 func update_targets_from_effect(effect: Effect):
 	var valid_targets = effect.target_whitelist.keys()
 	target_dropdown.clear()
+	_current_targets = []
 	
 	for target in valid_targets:
 		target_dropdown.add_item(format_text(Effect.get_target_name(target)))
+		_current_targets.append(target)
 
 
 func update_triggers_from_effect(effect: Effect):
 	trigger_dropdown.clear()
 	fill_trigger_options(effect)
+
+
+func update_editor_card_ability():
+	editor_card.set_effect(_current_effects[effect_dropdown.get_selected_id()])
+	editor_card.set_trigger(_current_triggers[trigger_dropdown.get_selected_id()])
+
+
+func _on_target_option_button_item_selected(index: int) -> void:
+	print("target selected: ", _current_targets[index])
+	_current_effects[effect_dropdown.get_selected_id()].target = _current_targets[index]
+
+
+func _on_trigger_option_button_item_selected(_index: int) -> void:
+	update_editor_card_ability()
+
+
+func update_effect_from_loaded_card():
+	var effect = editor_card.get_effect()
+	effect_dropdown.select(get_index_from_effect(effect))
+
+	update_targets_from_effect(effect)
+	target_dropdown.select(get_index_from_target(effect.target))
+	#_on_target_option_button_item_selected(get_index_from_target(effect.target))
+
+func update_trigger_from_loaded_card():
+	trigger_dropdown.select(get_index_from_trigger(editor_card.get_trigger()))
+
+
+# This is an expensive function, try to avoid calling it too often
+func get_index_from_effect(effect: Effect) -> int:
+	return get_index_from_value(effect, _current_effects, true)
+
+
+func get_index_from_target(target: int) -> int:
+	return get_index_from_value(target, _current_targets, false)
+
+
+func get_index_from_trigger(trigger: Trigger) -> int:
+	return get_index_from_value(trigger, _current_triggers, true)
+
+
+func get_index_from_value(value: Variant, array: Array, should_compare_ids: bool = false) -> int:
+	for i in len(array):
+		if should_compare_ids:
+			if array[i].get_id() == value.get_id():
+				return i
+		else:
+			if array[i] == value:
+				return i
+
+	return -1
+
+
+func _on_serialize_button_pressed() -> void:
+	#continue testing with this
+	#should check that saving and loading works
+	var serialized = editor_card.serialize()
+	print(serialized)
