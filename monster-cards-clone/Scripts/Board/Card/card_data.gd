@@ -144,6 +144,11 @@ func heal(amount: int):
 	updated_stats.emit()
 
 
+func buff_attack(amount: int):
+	attack += amount
+	updated_stats.emit()
+
+
 func get_ability_signal() -> Signal:
 	return ability.activated
 

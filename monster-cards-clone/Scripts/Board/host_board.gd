@@ -13,7 +13,8 @@ signal request_deck_blueprints()
 signal received_all_deck_blueprints()
 
 var effect_to_funcs: Dictionary = {
-	EFFECT_ID.HEAL: heal
+	EFFECT_ID.HEAL: heal,
+	EFFECT_ID.ATTACK_BUFF: buff_attack
 }
 
 
@@ -246,6 +247,13 @@ func heal(effect: Effect, card: CardData, player: Player):
 	var amount: int = effect.get_amount()
 
 	fetch_target(target, card, player).heal(amount)
+
+
+func buff_attack(effect: Effect, card: CardData, player: Player):
+	var target: Effect.TARGET = effect.get_target()
+	var amount: int = effect.get_amount()
+
+	fetch_target(target, card, player).buff_attack(amount)
 
 
 func fetch_target(target: Effect.TARGET, card: CardData, player: Player):

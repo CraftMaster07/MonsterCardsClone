@@ -155,7 +155,6 @@ func format_text(text: String) -> String:
 
 
 func _on_ability_toggle_button_toggled(toggled_on: bool) -> void:
-	print("hi: ", toggled_on)
 	effect_label.visible = toggled_on
 	effect_dropdown.visible = toggled_on
 
@@ -200,7 +199,6 @@ func update_editor_card_ability():
 
 
 func _on_target_option_button_item_selected(index: int) -> void:
-	print("target selected: ", _current_targets[index])
 	_current_effects[effect_dropdown.get_selected_id()].target = _current_targets[index]
 
 

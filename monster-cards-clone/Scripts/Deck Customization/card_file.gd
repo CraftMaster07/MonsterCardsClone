@@ -34,11 +34,17 @@ func serialize() -> Dictionary:
 	return data
 
 
-func load(file_path: String):
+func load(file_path: String) -> bool:
 	var file := FileAccess.open(file_path, FileAccess.READ)
-	var data: Dictionary = JSON.parse_string(file.get_as_text())
+	var data = JSON.parse_string(file.get_as_text())
+
+	if not data:
+		return false
+
 	deserialize(data)
 	file.close()
+
+	return true
 
 
 func deserialize(data: Dictionary):

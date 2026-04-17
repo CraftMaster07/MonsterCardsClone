@@ -5,6 +5,8 @@ extends TextureButton
 @export var attack_label: RichTextLabel
 @export var cost_label: RichTextLabel
 
+@export var ability_signature_label: RichTextLabel
+
 var initial_health: int = -1
 var initial_attack: int = -1
 var initial_cost: int = -1
@@ -57,3 +59,9 @@ func update_labels(card_data: CardData) -> void:
 	update_health(card_data.health)
 	update_attack(card_data.attack)
 	update_cost(card_data.cost)
+
+	show_ability_signature(card_data.has_ability())
+
+
+func show_ability_signature(has_ability: bool) -> void:
+	ability_signature_label.visible = has_ability

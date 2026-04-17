@@ -26,8 +26,10 @@ func load_cards():
 	var card_paths = get_all_json_from_path(PathConstants.CARD_SAVE_PATH)
 
 	for card_path in card_paths:
-		var card = load_card(card_path)
-		add_card_to_collection(card)
+		var card: EditorCard = load_card(card_path)
+
+		if card:
+			add_card_to_collection(card)
 
 
 static func get_all_json_from_path(folder_path: String) -> Array:
@@ -51,7 +53,11 @@ static func get_all_json_from_path(folder_path: String) -> Array:
 
 func load_card(card_path: String) -> EditorCard:
 	var card = editor_card_scene.instantiate()
-	card.load(card_path)
+
+	if not card.load(card_path):
+		print("Failed to load card: ", card_path)
+		return null
+
 	print("Loaded Card: ", card.get_card_name())
 	return card
 

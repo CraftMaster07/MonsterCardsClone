@@ -129,6 +129,7 @@ func set_hand(new_hand: Hand):
 
 
 func draw_card() -> bool:
+	player_trigger(TRIGGER_ID.DRAW_CARD)
 	return deck.draw_card()
 
 
@@ -166,3 +167,8 @@ func heal(amount: int):
 	health += amount
 	health = min(health, max_health)
 	update_stats_label()
+
+
+func player_trigger(trigger_id):
+	print("triggering player trigger: ", trigger_id)
+	triggers_to_signals[trigger_id].emit()

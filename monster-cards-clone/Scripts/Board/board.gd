@@ -322,7 +322,10 @@ func get_deck_blueprint() -> Dictionary:
 	for file_name in deck_file.cards:
 		var path = PathConstants.CARD_SAVE_PATH + file_name + ".json"
 		var card_file = CardFile.new()
-		card_file.load(path)
+
+		if not card_file.load(path):
+			continue
+		
 		for i in range(deck_file.cards[file_name]):
 			var card_data = CardData.create_from_card_file(card_file)
 			serialized_card_datas.append(card_data.serialize())
