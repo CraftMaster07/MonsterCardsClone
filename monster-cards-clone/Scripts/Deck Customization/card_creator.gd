@@ -244,7 +244,5 @@ func get_index_from_value(value: Variant, array: Array, should_compare_ids: bool
 
 
 func _on_serialize_button_pressed() -> void:
-	#continue testing with this
-	#should check that saving and loading works
 	var serialized = editor_card.serialize()
 	print(serialized)

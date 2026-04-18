@@ -137,7 +137,6 @@ func get_trigger_id() -> Trigger.TriggerID:
 
 
 func run_ability():
-	print("Ability ran: ", ability.serialize())
 	ability.run()
 
 

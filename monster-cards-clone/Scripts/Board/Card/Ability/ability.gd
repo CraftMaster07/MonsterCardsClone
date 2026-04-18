@@ -22,7 +22,6 @@ func _init(new_trigger: Trigger, new_effect: Effect):
 
 func run():
 	print("running ability: ", effect.get_id())
-	print(activated.get_connections())
 	activated.emit(effect)
 
 
@@ -48,7 +47,6 @@ func deserialize(serialized: Dictionary):
 
 	if not effect or serialized["effect_id"] != effect.get_id():
 		effect = EffectFactory.get_effect_instance(serialized["effect_id"])
-		print("created effect: ", effect.get_properties())
 
 	effect.deserialize(serialized["effect"])
 

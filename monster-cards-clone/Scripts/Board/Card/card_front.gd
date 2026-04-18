@@ -35,22 +35,26 @@ func set_initial_cost(cost: int) -> void:
 
 
 func update_health(health: int) -> void:
-	if health != initial_health:
+	if health < initial_health:
 		health_label.text = ColorConstants.RED_TEXT.format([str(health)])
+	elif health > initial_health:
+		health_label.text = ColorConstants.GREEN_TEXT.format([str(health)])
 	else:
 		health_label.text = str(health)
 
 
 func update_attack(attack: int) -> void:
-	if attack != initial_attack:
+	if attack < initial_attack:
 		attack_label.text = ColorConstants.RED_TEXT.format([str(attack)])
+	elif attack > initial_attack:
+		attack_label.text = ColorConstants.GREEN_TEXT.format([str(attack)])
 	else:
 		attack_label.text = str(attack)
 
 
 func update_cost(cost: int) -> void:
 	if cost != initial_cost:
-		cost_label.text = ColorConstants.RED_TEXT.format([str(cost)])
+		cost_label.text = ColorConstants.BLUE_TEXT.format([str(cost)])
 	else:
 		cost_label.text = str(cost)
 

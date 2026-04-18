@@ -38,7 +38,6 @@ func get_target():
 
 
 func get_property(property_name: String) -> Variant:
-	print(extra_properties)
 	return extra_properties[property_name]
 
 

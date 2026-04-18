@@ -103,7 +103,6 @@ func _replace_handcard_with_boardcard(card: HandCard, slot: EnemyCardSlot):
 	This should be done after the card is moved into a slot
 	"""
 	card.release_card_data()
-	print("car data ", card.card_data)
 	var new_board_card := BoardCard.create(card.card_data)
 	slot.place_card(new_board_card)
 	card.queue_free() # might replace with remove_child
