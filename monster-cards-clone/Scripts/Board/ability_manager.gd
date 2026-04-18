@@ -36,4 +36,5 @@ static func is_between(minimum, n, maximum):
 
 
 func activate_effect(effect: Effect, card: CardData, player: Player):
+	print("activating effect: ", effect)
 	activate.emit(effect, card, player)

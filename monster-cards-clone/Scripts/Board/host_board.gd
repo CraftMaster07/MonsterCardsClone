@@ -239,20 +239,21 @@ func trigger_round_start_abilities():
 
 
 func _on_ability_manager_activate(effect: Effect, card: CardData, player: Player) -> void:
-	effect_to_funcs[effect.get_script()].call(effect, card, player)
+	effect_to_funcs[effect.get_id()].call(effect, card, player)
 
 
 func heal(effect: Effect, card: CardData, player: Player):
 	var target: Effect.TARGET = effect.get_target()
-	var amount: int = effect.get_amount()
+	var amount: int = effect.get_property("amount")
 
 	fetch_target(target, card, player).heal(amount)
 
 
 func buff_attack(effect: Effect, card: CardData, player: Player):
 	var target: Effect.TARGET = effect.get_target()
-	var amount: int = effect.get_amount()
+	var amount: int = effect.get_property("amount")
 
+	print("buffing attack: ", target)
 	fetch_target(target, card, player).buff_attack(amount)
 
 

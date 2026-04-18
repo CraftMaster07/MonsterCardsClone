@@ -43,5 +43,5 @@ func get_effect_instance(effect_id: EFFECT_ID) -> Effect:
 	if _effect_cache.has(effect_id):
 		# Use duplicate(true) if your Effect contains other sub-resources 
 		# that need to be unique (like a custom Behavior script/resource)
-		return _effect_cache[effect_id].duplicate() as Effect
+		return _effect_cache[effect_id].duplicate(true) as Effect
 	return null

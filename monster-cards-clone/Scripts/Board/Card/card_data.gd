@@ -30,6 +30,7 @@ static func create_from_card_file(card_file: CardFile):
 	card_data.max_health = card_file.health
 	card_data.attack = card_file.attack
 	card_data.cost = card_file.cost
+	card_data.ability = card_file.ability
 	return card_data
 
 
@@ -78,6 +79,7 @@ func deserialize(serialized: Dictionary):
 	image_id = data["image_id"]
 
 	if data.has("ability"):
+		ensure_ability_exists()
 		ability.deserialize(data["ability"])
 	else:
 		ability = null
@@ -135,7 +137,7 @@ func get_trigger_id() -> Trigger.TriggerID:
 
 
 func run_ability():
-	print("Ability ran")
+	print("Ability ran: ", ability.serialize())
 	ability.run()
 
 
@@ -155,3 +157,8 @@ func get_ability_signal() -> Signal:
 
 func has_ability() -> bool:
 	return ability != null
+
+
+func ensure_ability_exists():
+	if not has_ability():
+		ability = Ability.new(null, null)

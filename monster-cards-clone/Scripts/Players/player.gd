@@ -170,5 +170,5 @@ func heal(amount: int):
 
 
 func player_trigger(trigger_id):
-	print("triggering player trigger: ", trigger_id)
+	print(player_id, ": triggering player trigger: ", trigger_id)
 	triggers_to_signals[trigger_id].emit()

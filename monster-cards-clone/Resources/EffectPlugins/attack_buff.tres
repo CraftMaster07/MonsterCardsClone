@@ -10,4 +10,7 @@ target_whitelist = Dictionary[int, int]({
 0: 0
 })
 cost_multiplier = 1.7
+extra_properties = Dictionary[String, Variant]({
+"amount": 1
+})
 metadata/_custom_type_script = "uid://bwjlbmyyw1lb2"
