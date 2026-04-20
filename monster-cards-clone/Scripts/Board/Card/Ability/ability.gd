@@ -6,6 +6,9 @@ var trigger: Trigger
 var effect: Effect
 var active_in_hand: bool = false
 
+const TRIGGER_ID = Trigger.TriggerID
+const EFFECT_ID = Effect.EffectID
+
 signal activated(effect: Effect)
 
 
@@ -59,3 +62,13 @@ func check_compatibility() -> bool:
 
 func set_trigger(new_trigger: Trigger):
 	trigger = new_trigger
+
+
+func get_trigger_multiplier() -> float:
+	if not trigger: return 0
+	return trigger.get_multiplier(effect.get_id() if effect else EFFECT_ID.INVALID)
+
+
+func get_effect_multiplier() -> float:
+	if not effect: return 0
+	return effect.get_multiplier(trigger.get_id() if trigger else TRIGGER_ID.INVALID)

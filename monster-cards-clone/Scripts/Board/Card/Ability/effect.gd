@@ -69,3 +69,7 @@ static func get_target_name(target_value: TARGET):
 
 func check_trigger_compatibility(trigger_id: Trigger.TriggerID):
 	return not trigger_blacklist.has(trigger_id)
+
+
+func get_multiplier(_trigger_id: Trigger.TriggerID):
+	return cost_multiplier

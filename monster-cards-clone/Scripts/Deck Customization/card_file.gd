@@ -101,3 +101,13 @@ func remove_ability():
 func ensure_ability_exists():
 	if not has_ability():
 		ability = Ability.new(null, null)
+
+
+func get_trigger_multiplier() -> float:
+	ensure_ability_exists()
+	return ability.get_trigger_multiplier()
+
+
+func get_effect_multiplier() -> float:
+	ensure_ability_exists()
+	return ability.get_effect_multiplier()

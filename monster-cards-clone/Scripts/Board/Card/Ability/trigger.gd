@@ -31,3 +31,7 @@ func serialize() -> Dictionary:
 
 func deserialize(_data: Dictionary):
 	pass
+
+
+func get_multiplier(_effect_id: Effect.EffectID) -> float:
+	return cost_multiplier

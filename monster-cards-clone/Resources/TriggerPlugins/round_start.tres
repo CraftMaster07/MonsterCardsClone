@@ -6,4 +6,5 @@
 script = ExtResource("1_2h4tx")
 id = 0
 display_name = "On Round Start"
+cost_multiplier = 1.2
 metadata/_custom_type_script = "uid://eksx7s2hjxdl"

@@ -10,6 +10,7 @@ target_whitelist = Dictionary[int, int]({
 0: 0,
 1: 0
 })
+cost_multiplier = 1.4
 extra_properties = Dictionary[String, Variant]({
 "amount": 1
 })

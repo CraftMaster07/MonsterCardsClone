@@ -127,3 +127,11 @@ func has_ability() -> bool:
 func remove_ability():
 	card_file.remove_ability()
 	update_display()
+
+
+func get_effect_multiplier() -> float:
+	return card_file.get_effect_multiplier()
+
+
+func get_trigger_multiplier() -> float:
+	return card_file.get_trigger_multiplier()

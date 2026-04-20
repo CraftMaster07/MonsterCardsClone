@@ -9,7 +9,7 @@ display_name = "Buff Attack"
 target_whitelist = Dictionary[int, int]({
 0: 0
 })
-cost_multiplier = 1.7
+cost_multiplier = 1.5
 extra_properties = Dictionary[String, Variant]({
 "amount": 1
 })

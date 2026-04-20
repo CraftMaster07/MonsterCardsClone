@@ -12,5 +12,5 @@ target_whitelist = Dictionary[int, int]({
 trigger_blacklist = Dictionary[int, int]({
 50: 0
 })
-cost_multiplier = 2.0
+cost_multiplier = 1.7
 metadata/_custom_type_script = "uid://bwjlbmyyw1lb2"
