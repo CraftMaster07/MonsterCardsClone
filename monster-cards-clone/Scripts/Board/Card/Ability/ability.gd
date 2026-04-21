@@ -33,12 +33,17 @@ func get_trigger() -> Trigger:
 
 
 func serialize() -> Dictionary:
-	return {
-		"trigger_id" : trigger.get_id(),
-		"trigger": trigger.serialize(),
-		"effect_id": effect.get_id(),
-		"effect": effect.serialize()
-	}
+	var data = {}
+
+	if trigger:
+		data["trigger_id"] = trigger.get_id()
+		data["trigger"] = trigger.serialize()
+	
+	if effect:
+		data["effect_id"] = effect.get_id()
+		data["effect"] = effect.serialize()
+	
+	return data
 
 
 func deserialize(serialized: Dictionary):
