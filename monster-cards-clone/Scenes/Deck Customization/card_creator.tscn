@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://dvlfw6d4f8dyf" path="res://Scripts/Deck Customization/card_creator.gd" id="1_guviw"]
 [ext_resource type="PackedScene" uid="uid://ca5l6o5hh7sgi" path="res://Scenes/Deck Customization/editor_card.tscn" id="3_qpjfk"]
 
-[node name="CardCreator" type="Control" unique_id=947132057 node_paths=PackedStringArray("name_line_edit", "editor_card", "health_spin_box", "attack_spin_box", "cost_label")]
+[node name="CardCreator" type="Control" unique_id=947132057 node_paths=PackedStringArray("name_line_edit", "editor_card", "health_spin_box", "attack_spin_box", "cost_label", "ability_toggle_button", "effect_label", "target_label", "trigger_label", "effect_dropdown", "target_dropdown", "trigger_dropdown")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -15,7 +15,14 @@ name_line_edit = NodePath("NameLineEdit")
 editor_card = NodePath("EditorCard")
 health_spin_box = NodePath("GridContainer/HealthSpinBox")
 attack_spin_box = NodePath("GridContainer/AttackSpinBox")
-cost_label = NodePath("GridContainer/CostLabel")
+cost_label = NodePath("GridContainer/CostValueLabel")
+ability_toggle_button = NodePath("GridContainer/AbilityToggleButton")
+effect_label = NodePath("GridContainer/EffectLabel")
+target_label = NodePath("GridContainer/TargetLabel")
+trigger_label = NodePath("GridContainer/TriggerLabel")
+effect_dropdown = NodePath("GridContainer/EffectOptionButton")
+target_dropdown = NodePath("GridContainer/TargetOptionButton")
+trigger_dropdown = NodePath("GridContainer/TriggerOptionButton")
 
 [node name="EditorCard" parent="." unique_id=235285323 instance=ExtResource("3_qpjfk")]
 layout_mode = 1
@@ -34,36 +41,81 @@ grow_vertical = 2
 [node name="GridContainer" type="GridContainer" parent="." unique_id=477398327]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.3
-anchor_top = 0.5
-anchor_right = 0.4
-anchor_bottom = 0.5
-grow_horizontal = 2
-grow_vertical = 2
+anchor_left = 0.2
+anchor_top = 0.4
+anchor_right = 0.37
+anchor_bottom = 0.4
+offset_right = -8.840027
+offset_bottom = 121.0
 theme_override_constants/h_separation = 10
 columns = 2
 
-[node name="Label3" type="Label" parent="GridContainer" unique_id=645376415]
+[node name="CostLabel" type="Label" parent="GridContainer" unique_id=645376415]
 layout_mode = 2
 text = "Cost:"
 
-[node name="CostLabel" type="Label" parent="GridContainer" unique_id=180313902]
+[node name="CostValueLabel" type="Label" parent="GridContainer" unique_id=180313902]
 layout_mode = 2
 text = " 0"
 
-[node name="Label2" type="Label" parent="GridContainer" unique_id=1223462233]
+[node name="AttackLabel" type="Label" parent="GridContainer" unique_id=1223462233]
 layout_mode = 2
 text = "Attack:"
 
 [node name="AttackSpinBox" type="SpinBox" parent="GridContainer" unique_id=2059701234]
 layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
 
-[node name="Label" type="Label" parent="GridContainer" unique_id=2086980221]
+[node name="HealthLabel" type="Label" parent="GridContainer" unique_id=2086980221]
 layout_mode = 2
 text = "Health:"
 
 [node name="HealthSpinBox" type="SpinBox" parent="GridContainer" unique_id=1602385534]
 layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+
+[node name="AbilityToggleLabel" type="Label" parent="GridContainer" unique_id=1071958759]
+layout_mode = 2
+text = "Add Ability?"
+
+[node name="AbilityToggleButton" type="CheckButton" parent="GridContainer" unique_id=772136009]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="EffectLabel" type="Label" parent="GridContainer" unique_id=1983396756]
+visible = false
+layout_mode = 2
+text = "Effect:"
+
+[node name="EffectOptionButton" type="OptionButton" parent="GridContainer" unique_id=1115640035]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+
+[node name="TargetLabel" type="Label" parent="GridContainer" unique_id=1215151272]
+visible = false
+layout_mode = 2
+text = "Target:"
+
+[node name="TargetOptionButton" type="OptionButton" parent="GridContainer" unique_id=666650814]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+
+[node name="TriggerLabel" type="Label" parent="GridContainer" unique_id=526329695]
+visible = false
+layout_mode = 2
+text = "Trigger:"
+
+[node name="TriggerOptionButton" type="OptionButton" parent="GridContainer" unique_id=1575934862]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
 
 [node name="BackButton" type="Button" parent="." unique_id=31184175]
 layout_mode = 1
@@ -125,10 +177,42 @@ text = "Load
 layout_mode = 2
 text = "Save"
 
+[node name="SerializeButton" type="Button" parent="." unique_id=1838081016]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -298.0
+offset_top = -194.0
+offset_right = -195.0
+offset_bottom = -163.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "Serialize"
+
+[node name="Label" type="Label" parent="SerializeButton" unique_id=319213798]
+layout_mode = 0
+offset_left = -17.0
+offset_top = -87.0
+offset_right = 118.0
+offset_bottom = -12.0
+text = "TESTING BUTTON
+||
+V"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [connection signal="value_changed" from="GridContainer/AttackSpinBox" to="." method="_on_attack_spin_box_value_changed"]
 [connection signal="value_changed" from="GridContainer/HealthSpinBox" to="." method="_on_health_spin_box_value_changed"]
+[connection signal="toggled" from="GridContainer/AbilityToggleButton" to="." method="_on_ability_toggle_button_toggled"]
+[connection signal="item_selected" from="GridContainer/EffectOptionButton" to="." method="_on_effect_option_button_item_selected"]
+[connection signal="item_selected" from="GridContainer/TargetOptionButton" to="." method="_on_target_option_button_item_selected"]
+[connection signal="item_selected" from="GridContainer/TriggerOptionButton" to="." method="_on_trigger_option_button_item_selected"]
 [connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]
 [connection signal="text_changed" from="NameLineEdit" to="." method="_on_name_line_edit_text_changed"]
 [connection signal="pressed" from="OpenFolderButton" to="." method="_on_open_folder_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/LoadButton" to="." method="_on_load_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/SaveButton" to="." method="_on_save_button_pressed"]
+[connection signal="pressed" from="SerializeButton" to="." method="_on_serialize_button_pressed"]

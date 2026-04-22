@@ -163,8 +163,8 @@ func shadow_deserialize(serialized_shadow_player_data: Dictionary):
 	get_your_player().shadow_deserialize(serialized_shadow_player_data)
 
 
-func place_serialized_card_into_slot(player_id: int, serialized_card: Dictionary, slot_id: int):
-	get_player(player_id).place_serialized_card_into_slot(serialized_card, slot_id)
+func place_serialized_card_into_slot(player_id: int, serialized_card: Dictionary, slot_id: int) -> BoardCard:
+	return get_player(player_id).place_serialized_card_into_slot(serialized_card, slot_id)
 
 
 func update_hand(player_id: int, hand_card_count: int):

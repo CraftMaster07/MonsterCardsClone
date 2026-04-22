@@ -29,6 +29,8 @@ buses/default_bus_layout="res://Assets/default_bus_layout.tres"
 AudioManager="*res://Scripts/General/audio_manager.gd"
 ColorConstants="*uid://b0ko58tuvatcs"
 PathConstants="*uid://dljmq1o3u8314"
+EffectFactory="*uid://du1tmjulngbem"
+TriggerFactory="*uid://drb7hhoqg1gx2"
 
 [display]
 
@@ -39,6 +41,7 @@ window/stretch/aspect="expand"
 
 folder_colors={
 "res://Assets/": "green",
+"res://Resources/": "yellow",
 "res://Scenes/": "blue",
 "res://Scripts/": "orange",
 "res://addons/": "gray"

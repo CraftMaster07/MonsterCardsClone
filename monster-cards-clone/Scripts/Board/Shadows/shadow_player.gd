@@ -11,6 +11,8 @@ func _init(new_player_id):
 	player_id = new_player_id
 	deck = ShadowDeck.new()
 	hand = ShadowHand.new()
+	add_child(deck)
+	add_child(hand)
 
 
 func create_player_deck(serialized_deck_blueprint: Dictionary):

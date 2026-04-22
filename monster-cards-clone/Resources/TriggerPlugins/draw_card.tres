@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Trigger" format=3 uid="uid://dvwgjiygqymgk"]
+
+[ext_resource type="Script" uid="uid://eksx7s2hjxdl" path="res://Scripts/Board/Card/Ability/trigger.gd" id="1_sfqek"]
+
+[resource]
+script = ExtResource("1_sfqek")
+id = 50
+display_name = "On Draw Card"
+cost_multiplier = 1.4
+metadata/_custom_type_script = "uid://eksx7s2hjxdl"

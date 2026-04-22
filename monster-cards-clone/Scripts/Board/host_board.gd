@@ -1,12 +1,21 @@
 extends Board
 
+const TRIGGER_ID = Trigger.TriggerID
+const EFFECT_ID =  Effect.EffectID
 
 var shadow_player_manager: ShadowPlayerManager
+
+@export var ability_manager: AbilityManager
 
 signal call_sync_game(game_state: Dictionary)
 signal call_shadow_sync(player_id: int, serialized_shadow_player_data: Dictionary)
 signal request_deck_blueprints()
 signal received_all_deck_blueprints()
+
+var effect_to_funcs: Dictionary = {
+	EFFECT_ID.HEAL: heal,
+	EFFECT_ID.ATTACK_BUFF: buff_attack
+}
 
 
 func _ready():
@@ -27,6 +36,7 @@ func _ready():
 
 func create_shadow_players():
 	shadow_player_manager = ShadowPlayerManager.new()
+	add_child(shadow_player_manager)
 
 	for player_id in player_manager.get_player_ids():
 		var shadow_player = ShadowPlayer.new(player_id)
@@ -83,7 +93,7 @@ func client_attacked(player_id: int, attacked_id: int):
 
 func draw_card(player_id: int):
 	var success: bool = shadow_player_manager.draw_card(player_id)
-	
+
 	if success:
 		player_manager.draw_card(player_id)
 	else:
@@ -123,7 +133,9 @@ func client_placed_card(player_id: int, serialized_card: Dictionary, slot_id: in
 
 	match status:
 		ValidationResponses.OK:
-			player_manager.place_serialized_card_into_slot(player_id, serialized_card, slot_id)
+			# This doesnt happen when the host places a card
+			var card: BoardCard = player_manager.place_serialized_card_into_slot(player_id, serialized_card, slot_id)
+			subscribe_card(card.get_card_data(), player_manager.get_player(player_id))
 			player_manager.spend_mana(player_id, temp_card_data.cost)
 			shadow_player_manager.remove_serialized_card_from_hand(player_id, serialized_card)
 		ValidationResponses.SLOT_TAKEN:
@@ -137,12 +149,14 @@ func client_placed_card(player_id: int, serialized_card: Dictionary, slot_id: in
 		ValidationResponses.INVALID:
 			print("unexpected error occured (Player: ", player_id, ", Slot: ", slot_id, ")")
 
+	temp_card_data.free()
 	update_enemy_hands()
 	send_game_state()
 
 
 func _replace_handcard_with_boardcard(card: HandCard, slot: EnemyCardSlot):
 	shadow_player_manager.remove_serialized_card_from_hand(your_id, card.serialize())
+	subscribe_card(card.get_card_data(), player_manager.get_player(your_id))
 	super._replace_handcard_with_boardcard(card, slot)
 
 
@@ -175,20 +189,17 @@ func _on_round_manager_round_ended() -> void:
 	super._on_round_manager_round_ended()
 
 	if phase == Phase.PREP:
-		draw_card_for_each_player()
 		reset_players_mana()
 		add_round_mana_for_each_player()
+		draw_card_for_each_player()
 		round_manager.move_first_player_to_last()
+		trigger_round_start_abilities()
 
 	send_game_state()
 
 
 func remove_player(player_id: int):
 	super.remove_player(player_id)
-	send_game_state()
-
-
-func _on_button_pressed() -> void:
 	send_game_state()
 
 
@@ -214,3 +225,41 @@ func add_round_mana_for_each_player():
 func reset_players_mana():
 	for player_id in player_manager.get_player_ids():
 		player_manager.reset_mana(player_id)
+
+
+func subscribe_card(card: CardData, player: Player):
+	if not card.has_ability():
+		return
+
+	ability_manager.subscribe_card(card, player)
+
+
+func trigger_round_start_abilities():
+	ability_manager.board_trigger(TRIGGER_ID.ROUND_START)
+
+
+func _on_ability_manager_activate(effect: Effect, card: CardData, player: Player) -> void:
+	effect_to_funcs[effect.get_id()].call(effect, card, player)
+
+
+func heal(effect: Effect, card: CardData, player: Player):
+	var target: Effect.TARGET = effect.get_target()
+	var amount: int = effect.get_property("amount")
+
+	fetch_target(target, card, player).heal(amount)
+
+
+func buff_attack(effect: Effect, card: CardData, player: Player):
+	var target: Effect.TARGET = effect.get_target()
+	var amount: int = effect.get_property("amount")
+
+	print("buffing attack: ", target)
+	fetch_target(target, card, player).buff_attack(amount)
+
+
+func fetch_target(target: Effect.TARGET, card: CardData, player: Player):
+	# Placeholder until we add more target types
+	if target == Effect.TARGET.SELF:
+		return card
+	if target == Effect.TARGET.FACE:
+		return player
