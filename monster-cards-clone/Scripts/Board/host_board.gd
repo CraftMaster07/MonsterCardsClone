@@ -2,6 +2,7 @@ extends Board
 
 const TRIGGER_ID = Trigger.TriggerID
 const EFFECT_ID =  Effect.EffectID
+const TARGET_ID = Effect.TARGET
 
 var shadow_player_manager: ShadowPlayerManager
 
@@ -16,6 +17,13 @@ var effect_to_funcs: Dictionary = {
 	EFFECT_ID.HEAL: heal,
 	EFFECT_ID.ATTACK_BUFF: buff_attack,
 	EFFECT_ID.DRAW_CARD: draw_card
+}
+
+var target_to_funcs: Dictionary = {
+	TARGET_ID.SELF: fetch_target_self,
+	TARGET_ID.FACE: fetch_target_face,
+	TARGET_ID.RANDOM_ENEMY_CARD: fetch_target_random_enemy_card,
+	TARGET_ID.RANDOM_ENEMY_FACE: fetch_target_random_enemy_face
 }
 
 
@@ -244,27 +252,41 @@ func _on_ability_manager_activate(effect: Effect, card: CardData, player: Player
 
 
 func heal(effect: Effect, card: CardData, player: Player):
-	var target: Effect.TARGET = effect.get_target()
-	var amount: int = effect.get_property("amount")
-
-	fetch_target(target, card, player).heal(amount)
+	apply_numbered_effect("heal", effect, card, player)
 
 
 func buff_attack(effect: Effect, card: CardData, player: Player):
-	var target: Effect.TARGET = effect.get_target()
-	var amount: int = effect.get_property("amount")
-
-	print("buffing attack: ", target)
-	fetch_target(target, card, player).buff_attack(amount)
+	apply_numbered_effect("buff_attack", effect, card, player)
 
 
 func draw_card(_effect: Effect, _card: CardData, player: Player):
 	draw_card_to_player(player.get_id())
 
 
-func fetch_target(target: Effect.TARGET, card: CardData, player: Player):
-	# Placeholder until we add more target types
-	if target == Effect.TARGET.SELF:
-		return card
-	if target == Effect.TARGET.FACE:
-		return player
+func fetch_target(target: Effect.TARGET, effect: Effect, card: CardData, player: Player):
+	return target_to_funcs[target].call(effect, card, player)
+
+
+func fetch_target_self(_effect: Effect, card: CardData, _player: Player):
+	return card
+
+
+func fetch_target_face(_effect: Effect, _card: CardData, player: Player):
+	return player
+
+
+func fetch_target_random_enemy_face(_effect: Effect, _card: CardData, player: Player):
+	return player_manager.get_random_enemy_player(player.get_id())
+
+
+func fetch_target_random_enemy_card(effect: Effect, card: CardData, player: Player):
+	return fetch_target_random_enemy_face(effect, card, player).get_random_board_card_data()
+
+
+func apply_numbered_effect(method: String, effect: Effect, card: CardData, player: Player):
+	var target: Effect.TARGET = effect.get_target()
+	var amount: int = effect.get_property("amount")
+
+	var chosen_target = fetch_target(target, effect, card, player)
+	if not chosen_target: return
+	chosen_target.callv(method, [amount])

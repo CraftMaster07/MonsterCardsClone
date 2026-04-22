@@ -58,3 +58,12 @@ func place_serialized_card_into_slot(serialized_card: Dictionary, slot_index: in
 func exorcise():
 	for slot in slots:
 		slot.exorcise()
+
+
+func get_random_card() -> CardData:
+	var card_datas: Array[CardData] = []
+	for slot in slots:
+		if slot.is_taken():
+			card_datas.append(slot.get_card().get_card_data())
+
+	return card_datas[randi() % len(card_datas)] if len(card_datas) > 0 else null

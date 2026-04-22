@@ -172,3 +172,7 @@ func heal(amount: int):
 func player_trigger(trigger_id):
 	print(player_id, ": triggering player trigger: ", trigger_id)
 	triggers_to_signals[trigger_id].emit()
+
+
+func get_random_board_card_data() -> CardData:
+	return field.get_random_card_data()

@@ -20,7 +20,7 @@ func get_original_player_count():
 	return original_player_count
 
 
-func get_player_ids():
+func get_player_ids() -> Array:
 	return players.keys()
 
 
@@ -193,3 +193,9 @@ func reset_mana(player_id: int):
 
 func get_area_rotation(player_id: int) -> float:
 	return get_player(player_id).get_area_rotation()
+
+
+func get_random_enemy_player(player_id: int) -> Player:
+	var player_ids := get_player_ids()
+	player_ids.erase(player_id)
+	return get_player(player_ids[randi() % player_ids.size()])

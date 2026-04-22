@@ -3,7 +3,9 @@ extends Resource
 
 enum TARGET {
 	SELF,
-	FACE
+	FACE,
+	RANDOM_ENEMY_CARD,
+	RANDOM_ENEMY_FACE,
 }
 
 enum EffectID {
