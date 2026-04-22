@@ -14,7 +14,8 @@ signal received_all_deck_blueprints()
 
 var effect_to_funcs: Dictionary = {
 	EFFECT_ID.HEAL: heal,
-	EFFECT_ID.ATTACK_BUFF: buff_attack
+	EFFECT_ID.ATTACK_BUFF: buff_attack,
+	EFFECT_ID.DRAW_CARD: draw_card
 }
 
 
@@ -91,7 +92,7 @@ func client_attacked(player_id: int, attacked_id: int):
 	send_game_state()
 
 
-func draw_card(player_id: int):
+func draw_card_to_player(player_id: int):
 	var success: bool = shadow_player_manager.draw_card(player_id)
 
 	if success:
@@ -177,12 +178,12 @@ func add_initial_deck_cards(player_id: int):
 
 func draw_initial_cards(player_id: int):
 	for i in range(INITIAL_HAND_CARD_COUNT):
-		draw_card(player_id)
+		draw_card_to_player(player_id)
 
 
 func draw_card_for_each_player():
 	for player_id in player_manager.get_player_ids():
-		draw_card(player_id)
+		draw_card_to_player(player_id)
 
 
 func _on_round_manager_round_ended() -> void:
@@ -255,6 +256,10 @@ func buff_attack(effect: Effect, card: CardData, player: Player):
 
 	print("buffing attack: ", target)
 	fetch_target(target, card, player).buff_attack(amount)
+
+
+func draw_card(_effect: Effect, _card: CardData, player: Player):
+	draw_card_to_player(player.get_id())
 
 
 func fetch_target(target: Effect.TARGET, card: CardData, player: Player):
