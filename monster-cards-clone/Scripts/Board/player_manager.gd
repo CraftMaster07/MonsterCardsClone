@@ -49,7 +49,7 @@ func init_enemy_player(player_data: Dictionary):
 func init_your_player(player_data: Dictionary):
 	var new_player: Player = your_player_scene.instantiate()
 	new_player.init(player_data['id'], player_data['name'])
-	add_child(new_player)
+	player_container.add_child(new_player)
 	players[player_data['id']] = new_player
 
 

@@ -5,3 +5,6 @@
 
 [node name="YourPlayer" unique_id=788032998 instance=ExtResource("1_xttrx")]
 script = ExtResource("2_077fb")
+
+[node name="HealthLabel" parent="." index="0" unique_id=1082498548]
+text = "E"
