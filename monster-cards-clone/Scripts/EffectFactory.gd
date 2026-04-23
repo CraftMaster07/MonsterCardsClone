@@ -6,6 +6,7 @@ const EFFECT_ID = Effect.EffectID
 # Now stores { EFFECT_ID.HEAL : EffectResourceObject }
 var _effect_cache: Dictionary[EFFECT_ID, Effect] = {} 
 
+
 func _ready() -> void:
 	_index_effects()
 
@@ -33,11 +34,6 @@ func get_effects() -> Array:
 	return _effect_cache.values()
 
 
-## Returns a shared reference for read-only data (UI, Tooltips, Inspectors)
-func get_effect_data(effect_id: EFFECT_ID) -> Effect:
-	return _effect_cache.get(effect_id)
-
-
 ## Returns a unique instance for gameplay (modifying stats, timers, etc.)
 func get_effect_instance(effect_id: EFFECT_ID) -> Effect:
 	if _effect_cache.has(effect_id):
@@ -45,3 +41,8 @@ func get_effect_instance(effect_id: EFFECT_ID) -> Effect:
 		# that need to be unique (like a custom Behavior script/resource)
 		return _effect_cache[effect_id].duplicate(true) as Effect
 	return null
+
+
+## Returns a shared reference for read-only data (UI, Tooltips, Inspectors)
+func get_effect_data(effect_id: EFFECT_ID) -> Effect:
+	return _effect_cache.get(effect_id)

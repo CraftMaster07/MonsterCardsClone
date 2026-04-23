@@ -77,3 +77,9 @@ func get_trigger_multiplier() -> float:
 func get_effect_multiplier() -> float:
 	if not effect: return 0
 	return effect.get_multiplier(trigger.get_id() if trigger else TRIGGER_ID.INVALID)
+
+
+func get_target_multiplier() -> float:
+	if not effect: return 0
+	print("target multiplier: ", effect.get_target_multiplier())
+	return effect.get_target_multiplier()

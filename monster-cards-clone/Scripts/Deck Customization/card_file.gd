@@ -111,3 +111,8 @@ func get_trigger_multiplier() -> float:
 func get_effect_multiplier() -> float:
 	ensure_ability_exists()
 	return ability.get_effect_multiplier()
+
+
+func get_target_multiplier() -> float:
+	ensure_ability_exists()
+	return ability.get_target_multiplier()

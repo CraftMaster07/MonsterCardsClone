@@ -2,8 +2,10 @@ class_name Effect
 extends Resource
 
 enum TARGET {
+	INVALID = -1,
 	SELF,
 	FACE,
+	RANDOM_FRIENDLY_CARD,
 	RANDOM_ENEMY_CARD,
 	RANDOM_ENEMY_FACE,
 }
@@ -29,6 +31,14 @@ enum Null{
 @export var extra_properties: Dictionary[String, Variant] = {}
 
 var target: TARGET
+
+const TARGET_MULTIPLIERS = {
+	TARGET.SELF: 1,
+	TARGET.FACE: 1,
+	TARGET.RANDOM_FRIENDLY_CARD: 1,
+	TARGET.RANDOM_ENEMY_CARD: 1,
+	TARGET.RANDOM_ENEMY_FACE: 1,
+}
 
 
 func get_id():
@@ -75,3 +85,8 @@ func check_trigger_compatibility(trigger_id: Trigger.TriggerID):
 
 func get_multiplier(_trigger_id: Trigger.TriggerID):
 	return cost_multiplier
+
+
+func get_target_multiplier():
+	# can add some overrides here using 'self' as the effect.
+	return TARGET_MULTIPLIERS[target]

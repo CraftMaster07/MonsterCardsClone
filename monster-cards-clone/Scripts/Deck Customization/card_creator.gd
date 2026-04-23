@@ -34,7 +34,7 @@ func _ready() -> void:
 	_on_ability_toggle_button_toggled(false)
 
 
-static func calculate_cost(health: float, attack: float, trigger_mult: float = 0.0, effect_mult: float = 0.0) -> int:
+static func calculate_cost(health: float, attack: float, trigger_mult: float = 0.0, effect_mult: float = 0.0, target_mult: float = 0.0) -> int:
 	const BASE_ATK_MULT = 1.2
 	const BASE_HEALTH_MULT = 0.7
 	const BASE_COMBINED_MULT = 0.2
@@ -53,7 +53,7 @@ static func calculate_cost(health: float, attack: float, trigger_mult: float = 0
 	# 2. Calculate Ability Value
 	# Synergy: Abilities are more expensive on high-attack cards
 	# We use max(attack, 1.0) so abilities still cost something on 0-attack walls
-	var ability_power = trigger_mult * effect_mult
+	var ability_power = trigger_mult * effect_mult * target_mult
 	var ability_value = (max(attack, MAX_ATTACK) * ability_power * ABILITY_VALUE_MULT)
 
 	# 3. Sum and Final Adjustments
@@ -138,7 +138,7 @@ func update_values_from_loaded_card():
 
 
 func update_cost():
-	var new_cost: int = calculate_cost(health_spin_box.value, attack_spin_box.value, editor_card.get_trigger_multiplier(), editor_card.get_effect_multiplier())
+	var new_cost: int = calculate_cost(health_spin_box.value, attack_spin_box.value, editor_card.get_trigger_multiplier(), editor_card.get_effect_multiplier(), editor_card.get_target_multiplier())
 	cost_label.text = " " + str(new_cost)
 	editor_card.set_cost(new_cost)
 
@@ -225,6 +225,7 @@ func update_editor_card_ability():
 
 func _on_target_option_button_item_selected(index: int) -> void:
 	_current_effects[effect_dropdown.get_selected_id()].target = _current_targets[index]
+	update_cost()
 
 
 func _on_trigger_option_button_item_selected(_index: int) -> void:
