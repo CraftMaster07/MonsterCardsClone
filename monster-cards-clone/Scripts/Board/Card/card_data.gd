@@ -22,6 +22,7 @@ var is_ghost: bool = false
 var ability: Ability
 
 signal updated_stats()
+signal died()
 
 static func create_from_card_file(card_file: CardFile):
 	var card_data = CardData.new()
@@ -109,6 +110,7 @@ func check_death():
 
 func die():
 	is_ghost = true
+	died.emit()
 
 
 func query_updated_image_id():
@@ -164,3 +166,7 @@ func has_ability() -> bool:
 func ensure_ability_exists():
 	if not has_ability():
 		ability = Ability.new(null, null)
+
+
+func is_dead() -> bool:
+	return is_ghost

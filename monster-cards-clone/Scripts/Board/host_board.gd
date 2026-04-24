@@ -16,7 +16,8 @@ signal received_all_deck_blueprints()
 var effect_to_funcs: Dictionary = {
 	EFFECT_ID.HEAL: heal,
 	EFFECT_ID.ATTACK_BUFF: buff_attack,
-	EFFECT_ID.DRAW_CARD: draw_card
+	EFFECT_ID.DRAW_CARD: draw_card,
+	EFFECT_ID.DAMAGE: damage,
 }
 
 var target_to_funcs: Dictionary = {
@@ -261,6 +262,10 @@ func buff_attack(effect: Effect, card: CardData, player: Player):
 
 func draw_card(_effect: Effect, _card: CardData, player: Player):
 	draw_card_to_player(player.get_id())
+
+
+func damage(effect: Effect, card: CardData, player: Player):
+	apply_numbered_effect("take_damage", effect, card, player)
 
 
 func fetch_target(target: Effect.TARGET, effect: Effect, card: CardData, player: Player):

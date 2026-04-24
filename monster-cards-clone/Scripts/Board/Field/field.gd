@@ -60,10 +60,21 @@ func exorcise():
 		slot.exorcise()
 
 
-func get_random_card() -> CardData:
+func get_random_card_data() -> CardData:
 	var card_datas: Array[CardData] = []
+
 	for slot in slots:
-		if slot.is_taken():
-			card_datas.append(slot.get_card().get_card_data())
+		if not slot.is_taken(): continue
+		var card_data: CardData = slot.get_card().get_card_data()
+
+		if is_card_valid_target(card_data):
+			card_datas.append(card_data)
 
 	return card_datas[randi() % len(card_datas)] if len(card_datas) > 0 else null
+
+
+func is_card_valid_target(card_data: CardData) -> bool:
+	if card_data.is_dead():
+		return false
+
+	return true

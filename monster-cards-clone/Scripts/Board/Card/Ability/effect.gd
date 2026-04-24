@@ -1,6 +1,7 @@
 class_name Effect
 extends Resource
 
+# add new targets ONLY IN THE END!
 enum TARGET {
 	INVALID = -1,
 	SELF,
@@ -10,11 +11,13 @@ enum TARGET {
 	RANDOM_ENEMY_FACE,
 }
 
+# add new effects ONLY IN THE END!
 enum EffectID {
 	INVALID = -1,
 	HEAL,
 	ATTACK_BUFF,
-	DRAW_CARD
+	DRAW_CARD,
+	DAMAGE,
 }
 
 enum Null{
@@ -36,8 +39,8 @@ const TARGET_MULTIPLIERS = {
 	TARGET.SELF: 1,
 	TARGET.FACE: 1,
 	TARGET.RANDOM_FRIENDLY_CARD: 1,
-	TARGET.RANDOM_ENEMY_CARD: 1,
-	TARGET.RANDOM_ENEMY_FACE: 1,
+	TARGET.RANDOM_ENEMY_CARD: 0.6,
+	TARGET.RANDOM_ENEMY_FACE: 0.6,
 }
 
 
@@ -76,7 +79,8 @@ func deserialize(data):
 
 
 static func get_target_name(target_value: TARGET):
-	return TARGET.keys()[target_value]
+	var targets: Array = TARGET.keys().slice(1)
+	return targets[target_value]
 
 
 func check_trigger_compatibility(trigger_id: Trigger.TriggerID):

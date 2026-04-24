@@ -187,7 +187,7 @@ func _on_ability_toggle_button_toggled(toggled_on: bool) -> void:
 	trigger_dropdown.visible = toggled_on
 
 	if toggled_on:
-		_on_effect_option_button_item_selected(0)
+		_on_effect_option_button_item_selected(effect_dropdown.get_selected_id())
 	else:
 		editor_card.remove_ability()
 	
@@ -204,6 +204,7 @@ func _on_effect_option_button_item_selected(index: int) -> void:
 
 func update_targets_from_effect(effect: Effect):
 	var valid_targets = effect.target_whitelist.keys()
+	print("valid targets: ", valid_targets)
 	target_dropdown.clear()
 	_current_targets = []
 	

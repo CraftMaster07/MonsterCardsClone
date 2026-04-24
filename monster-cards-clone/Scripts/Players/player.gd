@@ -21,12 +21,14 @@ var attacked_by_id: int = 0
 
 const TRIGGER_ID = Trigger.TriggerID
 var triggers_to_signals: Dictionary = {
-	TRIGGER_ID.DRAW_CARD: drawn_card
+	TRIGGER_ID.DRAW_CARD: drawn_card,
+	TRIGGER_ID.ON_FACE_DAMAGED: on_face_damaged,
 }
 
 @onready var label: Label = $HealthLabel
 
 signal drawn_card
+signal on_face_damaged
 
 
 func init(new_player_id: int, new_player_name: String):
@@ -42,8 +44,10 @@ func _ready():
 
 
 func take_damage(amount: int) -> void:
-	print("ouch!")
 	decrease_health(amount)
+
+	if amount > 0:
+		player_trigger(TRIGGER_ID.ON_FACE_DAMAGED)
 
 
 func decrease_health(amount: int) -> void:
