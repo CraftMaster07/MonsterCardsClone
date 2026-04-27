@@ -182,6 +182,7 @@ func _on_multiplayer_interface_get_deck_blueprint() -> void:
 func send_deck_blueprint(deck_blueprint: Dictionary):
 	multiplayer_interface.send_deck_blueprint(deck_blueprint)
 
+
 func send_shadow_sync(player_id: int, serialized_shadow_player_data: Dictionary) -> void:
 	multiplayer_interface.send_shadow_sync(player_id, serialized_shadow_player_data)
 

@@ -18,4 +18,5 @@ func remove_serialized_card_data(serialized_card_data: Dictionary):
 		push_error(("server: " if multiplayer.is_server() else "client: "), "card not in hand")
 		return
 
-	remove_card_data(temp_card_data.uuid)
+	remove_card_data(temp_card_data.uuid, true)
+	temp_card_data.free()

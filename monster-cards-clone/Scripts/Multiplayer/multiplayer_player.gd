@@ -1,5 +1,5 @@
 class_name MultiplayerPlayer
-extends Node
+extends Resource
 
 
 var player_id: int

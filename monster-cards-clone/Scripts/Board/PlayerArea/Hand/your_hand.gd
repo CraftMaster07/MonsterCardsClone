@@ -23,7 +23,7 @@ func shadow_deserialize(serialized: Dictionary):
 			var new_card_data = CardData.new(serialized_card_data)
 			var new_card = HandCard.create(new_card_data)
 			add_card(new_card)
-	
+
 	if not uuid_to_cards.is_empty():
 		for card in uuid_to_cards.values():
 			remove_card(card)

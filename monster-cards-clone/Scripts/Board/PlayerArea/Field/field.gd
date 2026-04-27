@@ -51,10 +51,30 @@ func deserialize_slot(slot_data: Dictionary, slot_index: int):
 	slots[slot_index].deserialize(slot_data)
 
 
-func place_serialized_card_into_slot(serialized_card: Dictionary, slot_index: int):
-	slots[slot_index].place_serialized_card(serialized_card)
+func place_serialized_card_into_slot(serialized_card: Dictionary, slot_index: int) -> BoardCard:
+	return slots[slot_index].place_serialized_card(serialized_card)
 
 
 func exorcise():
 	for slot in slots:
 		slot.exorcise()
+
+
+func get_random_card_data() -> CardData:
+	var card_datas: Array[CardData] = []
+
+	for slot in slots:
+		if not slot.is_taken(): continue
+		var card_data: CardData = slot.get_card().get_card_data()
+
+		if is_card_valid_target(card_data):
+			card_datas.append(card_data)
+
+	return card_datas[randi() % len(card_datas)] if len(card_datas) > 0 else null
+
+
+func is_card_valid_target(card_data: CardData) -> bool:
+	if card_data.is_dead():
+		return false
+
+	return true

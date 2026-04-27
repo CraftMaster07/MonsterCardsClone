@@ -4,4 +4,9 @@
 [ext_resource type="Script" uid="uid://dgvx2cxa106nd" path="res://Scripts/Players/your_player.gd" id="2_077fb"]
 
 [node name="YourPlayer" unique_id=788032998 instance=ExtResource("1_xttrx")]
+offset_left = -1.0
+offset_right = -1.0
 script = ExtResource("2_077fb")
+
+[node name="HealthLabel" parent="." index="0" unique_id=1082498548]
+text = "E"

@@ -102,7 +102,9 @@ func _replace_handcard_with_boardcard(card: HandCard, slot: CardSlot):
 	Replaces the HandCard with a BoardCard object
 	This should be done after the card is moved into a slot
 	"""
+	card.release_card_data()
 	var new_board_card := BoardCard.create(card.card_data)
+	new_board_card.died.connect(_on_board_card_died)
 	slot.place_card(new_board_card)
 	card.queue_free() # might replace with remove_child
 	sfx_place.play()
@@ -173,7 +175,7 @@ func _on_player_area_spawner_pivot_spawning_finished() -> void:
 
 func set_first_player_area(player_area: PlayerArea):
 	var player_id = unassigned_area_player_ids[0]
-	
+
 	set_player_area(player_area, player_id)
 	set_player_field(player_area.get_field(), player_id)
 	set_player_deck(player_area.get_deck(), player_id)
@@ -235,7 +237,7 @@ func verify_card_placement(
 
 	if phase != Phase.PREP:
 		return ValidationResponses.NOT_IN_PREP
-	
+
 	if not player_manager.can_spend_mana(player_id, card_data.cost):
 		return ValidationResponses.NOT_ENOUGH_MANA
 
@@ -281,7 +283,7 @@ func verify_attack(attacker_id: int, attacked_id: int) -> CombatValidationRespon
 
 	if attacker_id != round_manager.current_player_id:
 		return CombatValidationResponses.NOT_YOUR_TURN
-	
+
 	var last_player_id: int = round_manager.get_last_player_id()
 
 	if check_must_attack_last_player(last_player_id) and attacked_id != last_player_id:
@@ -320,10 +322,14 @@ func get_deck_blueprint() -> Dictionary:
 	for file_name in deck_file.cards:
 		var path = PathConstants.CARD_SAVE_PATH + file_name + ".json"
 		var card_file = CardFile.new()
-		card_file.load(path)
+
+		if not card_file.load(path):
+			continue
+		
 		for i in range(deck_file.cards[file_name]):
 			var card_data = CardData.create_from_card_file(card_file)
 			serialized_card_datas.append(card_data.serialize())
+			card_data.free()
 
 	return {"card_datas": serialized_card_datas}
 
@@ -338,3 +344,10 @@ func _on_round_manager_round_number_changed(new_round_number: int) -> void:
 
 func set_deck_file(deck: DeckFile):
 	deck_file = deck
+
+
+func _on_board_card_died():
+	print(str(multiplayer.is_server()) + ": phase: " + str(phase))
+	if phase == Phase.COMBAT: return
+	push_error("should flag the card_data to kill himself")
+

@@ -7,6 +7,7 @@ var player_id: int
 const STARTING_HEALTH: int = 20
 const STARTING_MANA: int = 1
 var health: int
+var max_health: int
 var mana: int
 
 var area: PlayerArea
@@ -19,10 +20,23 @@ var attacking_id: int = 0
 var attacked_by_id: int = 0
 
 
+const TRIGGER_ID = Trigger.TriggerID
+var triggers_to_signals: Dictionary = {
+	TRIGGER_ID.DRAW_CARD: drawn_card,
+	TRIGGER_ID.ON_FACE_DAMAGED: on_face_damaged,
+}
+
+@onready var label: Label = $HealthLabel
+
+signal drawn_card
+signal on_face_damaged
+
+
 func init(new_player_id: int, new_player_name: String):
 	player_id = new_player_id
 	player_name = new_player_name
 	health = STARTING_HEALTH
+	max_health = STARTING_HEALTH
 	mana = STARTING_MANA
 
 
@@ -31,8 +45,10 @@ func _ready():
 
 
 func take_damage(amount: int) -> void:
-	print("ouch!")
 	decrease_health(amount)
+
+	if amount > 0:
+		player_trigger(TRIGGER_ID.ON_FACE_DAMAGED)
 
 
 func decrease_health(amount: int) -> void:
@@ -73,6 +89,7 @@ func serialize():
 		"player_id": player_id,
 		"player_name": player_name,
 		"health": health,
+		"max_health": max_health,
 		"mana": mana,
 		"field": field.serialize(),
 		"deck": deck.serialize(),
@@ -84,6 +101,7 @@ func deserialize(serialized_player: Dictionary):
 	player_id = serialized_player['player_id']
 	player_name = serialized_player['player_name']
 	health = serialized_player['health']
+	max_health = serialized_player['max_health']
 	mana = serialized_player['mana']
 	update_stats_label()
 	field.deserialize(serialized_player['field'])
@@ -91,8 +109,8 @@ func deserialize(serialized_player: Dictionary):
 	hand.deserialize(serialized_player['hand'])
 
 
-func place_serialized_card_into_slot(serialized_card: Dictionary, slot_id: int):
-	field.place_serialized_card_into_slot(serialized_card, slot_id)
+func place_serialized_card_into_slot(serialized_card: Dictionary, slot_id: int) -> BoardCard:
+	return field.place_serialized_card_into_slot(serialized_card, slot_id)
 
 
 func get_id():
@@ -116,6 +134,7 @@ func set_hand(new_hand: Hand):
 
 
 func draw_card() -> bool:
+	player_trigger(TRIGGER_ID.DRAW_CARD)
 	return deck.draw_card()
 
 
@@ -147,3 +166,19 @@ func reset_mana():
 
 func get_area_rotation() -> float:
 	return area.rotation
+
+
+func heal(amount: int):
+	health += amount
+	health = min(health, max_health)
+	update_stats_label()
+
+
+func player_trigger(trigger_id):
+	print(player_id, ": triggering player trigger: ", trigger_id)
+	triggers_to_signals[trigger_id].emit()
+
+
+func get_random_board_card_data() -> CardData:
+	return field.get_random_card_data()
+

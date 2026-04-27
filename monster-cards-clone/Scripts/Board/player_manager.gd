@@ -20,7 +20,7 @@ func get_original_player_count():
 	return original_player_count
 
 
-func get_player_ids():
+func get_player_ids() -> Array:
 	return players.keys()
 
 
@@ -49,7 +49,7 @@ func init_enemy_player(player_data: Dictionary):
 func init_your_player(player_data: Dictionary):
 	var new_player: Player = your_player_scene.instantiate()
 	new_player.init(player_data['id'], player_data['name'])
-	add_child(new_player)
+	player_container.add_child(new_player)
 	players[player_data['id']] = new_player
 
 
@@ -163,8 +163,8 @@ func shadow_deserialize(serialized_shadow_player_data: Dictionary):
 	get_your_player().shadow_deserialize(serialized_shadow_player_data)
 
 
-func place_serialized_card_into_slot(player_id: int, serialized_card: Dictionary, slot_id: int):
-	get_player(player_id).place_serialized_card_into_slot(serialized_card, slot_id)
+func place_serialized_card_into_slot(player_id: int, serialized_card: Dictionary, slot_id: int) -> BoardCard:
+	return get_player(player_id).place_serialized_card_into_slot(serialized_card, slot_id)
 
 
 func update_hand(player_id: int, hand_card_count: int):
@@ -193,3 +193,9 @@ func reset_mana(player_id: int):
 
 func get_area_rotation(player_id: int) -> float:
 	return get_player(player_id).get_area_rotation()
+
+
+func get_random_enemy_player(player_id: int) -> Player:
+	var player_ids := get_player_ids()
+	player_ids.erase(player_id)
+	return get_player(player_ids[randi() % player_ids.size()])

@@ -16,7 +16,8 @@ region = Rect2(0, 0, 16, 16)
 atlas = ExtResource("2_3ak4q")
 region = Rect2(32, 0, 16, 16)
 
-[node name="CardFront" type="TextureButton" unique_id=20270715 node_paths=PackedStringArray("name_label", "health_label", "attack_label", "cost_label")]
+[node name="CardFront" type="TextureButton" unique_id=20270715 node_paths=PackedStringArray("name_label", "health_label", "attack_label", "cost_label", "ability_signature_label")]
+custom_minimum_size = Vector2(60, 90)
 offset_right = 60.0
 offset_bottom = 90.0
 pivot_offset = Vector2(32, 45)
@@ -30,6 +31,7 @@ name_label = NodePath("MarginContainer/nameDisplay")
 health_label = NodePath("healthTexture/healthDisplay")
 attack_label = NodePath("attackTexture/attackDisplay")
 cost_label = NodePath("costTexture/costDisplay")
+ability_signature_label = NodePath("abilitySignature")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=289001140]
 layout_mode = 1
@@ -41,6 +43,7 @@ color = Color(0.2784314, 0.54901963, 0.7490196, 1)
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=1672797238]
 layout_mode = 1
 anchors_preset = -1
+
 anchor_top = 0.1
 anchor_right = 1.0
 anchor_bottom = 0.3
@@ -123,5 +126,24 @@ bbcode_enabled = true
 text = "-1"
 fit_content = true
 autowrap_mode = 0
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="abilitySignature" type="RichTextLabel" parent="." unique_id=2031986730]
+visible = false
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -8.0
+offset_top = -9.0
+offset_right = 8.0
+offset_bottom = 7.0
+grow_horizontal = 0
+theme_override_colors/default_color = Color(1.4249349, 1.6466781, 8.821754e-06, 1)
+theme_override_font_sizes/normal_font_size = 16
+bbcode_enabled = true
+text = "@"
 horizontal_alignment = 1
 vertical_alignment = 1

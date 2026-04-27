@@ -9,5 +9,5 @@ func _on_button_pressed() -> void:
 
 
 func draw_card():
-	if deck.draw_card():
+	if super.draw_card():
 		hand.add_card()
