@@ -16,7 +16,7 @@ func _init(new_player_id):
 
 
 func create_player_deck(serialized_deck_blueprint: Dictionary):
-	deck.create_deck(serialized_deck_blueprint)
+	deck.create_deck(serialized_deck_blueprint, player_id)
 
 
 func draw_card() -> bool:

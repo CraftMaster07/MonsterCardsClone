@@ -6,8 +6,9 @@ extends Control
 @export var card_front: CardFront
 
 var card_data: CardData
+var should_free = false
 
-signal died()
+signal died(card_object: CardObject)
 
 
 func serialize() -> Dictionary:
@@ -40,4 +41,10 @@ func release_card_data():
 
 
 func die():
-	died.emit()
+	died.emit(self)
+	if should_free:
+		free()
+
+
+func mark_to_free():
+	should_free = true

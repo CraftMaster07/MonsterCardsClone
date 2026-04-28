@@ -327,7 +327,7 @@ func get_deck_blueprint() -> Dictionary:
 			continue
 		
 		for i in range(deck_file.cards[file_name]):
-			var card_data = CardData.create_from_card_file(card_file)
+			var card_data = CardData.create_from_card_file(card_file, your_id)
 			serialized_card_datas.append(card_data.serialize())
 			card_data.free()
 
@@ -346,7 +346,6 @@ func set_deck_file(deck: DeckFile):
 	deck_file = deck
 
 
-func _on_board_card_died():
-	print(str(multiplayer.is_server()) + ": phase: " + str(phase))
+func _on_board_card_died(card_object: CardObject):
 	if phase == Phase.COMBAT: return
-	push_error("should flag the card_data to kill himself")
+	card_object.mark_to_free()

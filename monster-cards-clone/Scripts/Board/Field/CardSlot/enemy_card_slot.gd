@@ -17,10 +17,6 @@ func _ready():
 	color_rect.color = base_color
 
 
-func take():
-	push_error("take() not implemented")
-
-
 func is_taken():
 	return card != null
 
@@ -47,8 +43,7 @@ func deserialize(serialized_slot: Dictionary):
 	if serialized_card and card:
 		card.deserialize(serialized_card)
 	elif serialized_card:
-		var new_card_data = CardData.new(serialized_card)
-		place_card(BoardCard.create(new_card_data))
+		place_serialized_card(serialized_card)
 	elif card:
 		remove_card()
 
@@ -83,6 +78,7 @@ func exorcise():
 
 
 func remove_card():
+	if not card: return
 	remove_child(card)
 	card.free()
 	card = null

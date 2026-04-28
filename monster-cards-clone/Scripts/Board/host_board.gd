@@ -138,7 +138,7 @@ func send_shadow_player(player_id: int):
 
 
 func client_placed_card(player_id: int, serialized_card: Dictionary, slot_id: int):
-	var temp_card_data: CardData = CardData.new(serialized_card)
+	var temp_card_data: CardData = CardData.new(serialized_card, player_id)
 	var status := verify_card_placement(player_id, slot_id, temp_card_data)
 
 	match status:

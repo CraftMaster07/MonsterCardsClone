@@ -35,13 +35,13 @@ func get_trigger() -> Trigger:
 func serialize() -> Dictionary:
 	var data = {}
 
-	if trigger:
-		data["trigger_id"] = trigger.get_id()
-		data["trigger"] = trigger.serialize()
-	
-	if effect:
-		data["effect_id"] = effect.get_id()
-		data["effect"] = effect.serialize()
+	if trigger and effect:
+		data = {
+			"trigger_id": trigger.get_id(),
+			"trigger": trigger.serialize(),
+			"effect_id": effect.get_id(),
+			"effect": effect.serialize(),
+		}
 	
 	return data
 
@@ -83,3 +83,7 @@ func get_target_multiplier() -> float:
 	if not effect: return 0
 	print("target multiplier: ", effect.get_target_multiplier())
 	return effect.get_target_multiplier()
+
+
+func is_valid() -> bool:
+	return trigger and effect

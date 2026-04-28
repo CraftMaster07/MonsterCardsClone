@@ -110,6 +110,7 @@ func set_effect(effect: Effect) -> void:
 
 func set_trigger(trigger: Trigger) -> void:
 	card_file.set_trigger(trigger)
+	update_display()
 
 
 func get_effect() -> Effect:
