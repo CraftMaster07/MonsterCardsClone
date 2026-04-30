@@ -119,3 +119,15 @@ func receive_deck_blueprint(serialized_deck_blueprint: Dictionary):
 
 func send_shadow_sync(player_id: int, serialized_shadow_player_data: Dictionary):
 	receive_shadow_sync.rpc_id(player_id, serialized_shadow_player_data)
+
+
+func request_card_selection(player_id: int):
+	if player_id == 1:
+		get_card_selection()
+	else:
+		get_card_selection.rpc_id(player_id)
+
+
+@rpc("any_peer", "call_local", "reliable", 0)
+func get_card_selection():
+	select_card.emit()

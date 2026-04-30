@@ -24,6 +24,8 @@ signal client_attacked(player_id: int, attacked_id: int)
 signal received_deck_blueprint(player_id: int, deck_blueprint: Dictionary)
 signal get_deck_blueprint()
 
+signal select_card()
+
 @export var server_script: Script
 @export var client_script: Script
 
@@ -39,10 +41,6 @@ so I'm not making a new one yet.
 """
 var players: Dictionary = {}
 var your_id: int
-
-
-func _ready() -> void:
-	multiplayer_interface.host_started_game.connect(signal_start_game)
 
 
 func host_game(player_name) -> void:
@@ -189,3 +187,10 @@ func send_shadow_sync(player_id: int, serialized_shadow_player_data: Dictionary)
 
 func _on_multiplayer_interface_shadow_sync(serialized_shadow_player_data: Dictionary) -> void:
 	shadow_sync.emit(serialized_shadow_player_data)
+
+
+func request_card_selection(player_id: int) -> void:
+	multiplayer_interface.request_card_selection(player_id)
+
+func _on_multiplayer_interface_select_card() -> void:
+	select_card.emit()

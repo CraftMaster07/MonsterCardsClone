@@ -343,3 +343,8 @@ func _on_round_manager_round_number_changed(new_round_number: int) -> void:
 
 func set_deck_file(deck: DeckFile):
 	deck_file = deck
+
+
+func get_card_selection():
+	# TODO: let the player select a card, send that card ID to server
+	pass
