@@ -266,6 +266,8 @@ func draw_card(_effect: Effect, _card: CardData, player: Player):
 
 func damage(effect: Effect, card: CardData, player: Player):
 	apply_numbered_effect("take_damage", effect, card, player)
+	if phase != Phase.COMBAT:
+		exorcise()
 
 
 func fetch_target(target: Effect.TARGET, effect: Effect, card: CardData, player: Player):

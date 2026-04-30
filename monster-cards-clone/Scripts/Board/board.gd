@@ -104,7 +104,6 @@ func _replace_handcard_with_boardcard(card: HandCard, slot: EnemyCardSlot):
 	"""
 	card.release_card_data()
 	var new_board_card := BoardCard.create(card.card_data)
-	new_board_card.died.connect(_on_board_card_died)
 	slot.place_card(new_board_card)
 	card.queue_free() # might replace with remove_child
 	sfx_place.play()
@@ -344,8 +343,3 @@ func _on_round_manager_round_number_changed(new_round_number: int) -> void:
 
 func set_deck_file(deck: DeckFile):
 	deck_file = deck
-
-
-func _on_board_card_died(card_object: CardObject):
-	if phase == Phase.COMBAT: return
-	card_object.mark_to_free()

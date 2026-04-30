@@ -8,8 +8,6 @@ extends Control
 var card_data: CardData
 var should_free = false
 
-signal died(card_object: CardObject)
-
 
 func serialize() -> Dictionary:
 	# If we ever need to change that, mind the shadow_deserialize too.
@@ -23,7 +21,6 @@ func deserialize(data: Dictionary):
 func set_card_data(new_card_data: CardData):
 	card_data = new_card_data
 	card_data.updated_stats.connect(update_labels)
-	card_data.died.connect(die)
 	add_child(card_data)
 
 
@@ -40,11 +37,9 @@ func release_card_data():
 	card_data.updated_stats.disconnect(update_labels)
 
 
-func die():
-	died.emit(self)
-	if should_free:
-		free()
+func set_owner_id(new_owner_id: int):
+	card_data.owner_id = new_owner_id
 
 
-func mark_to_free():
-	should_free = true
+func get_owner_id() -> int:
+	return card_data.owner_id
