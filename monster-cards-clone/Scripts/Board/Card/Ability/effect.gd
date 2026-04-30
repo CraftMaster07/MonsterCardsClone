@@ -9,6 +9,7 @@ enum TARGET {
 	RANDOM_FRIENDLY_CARD,
 	RANDOM_ENEMY_CARD,
 	RANDOM_ENEMY_FACE,
+	SELECTED_CARD,
 }
 
 # add new effects ONLY IN THE END!
@@ -20,7 +21,7 @@ enum EffectID {
 	DAMAGE,
 }
 
-enum Null{
+enum Null {
 	NULL,
 }
 
@@ -34,6 +35,7 @@ enum Null{
 @export var extra_properties: Dictionary[String, Variant] = {}
 
 var target: TARGET
+var last_target
 
 const TARGET_MULTIPLIERS = {
 	TARGET.SELF: 1,

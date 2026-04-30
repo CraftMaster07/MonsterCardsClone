@@ -1,7 +1,7 @@
 extends Board
 
 const TRIGGER_ID = Trigger.TriggerID
-const EFFECT_ID =  Effect.EffectID
+const EFFECT_ID = Effect.EffectID
 const TARGET_ID = Effect.TARGET
 
 var shadow_player_manager: ShadowPlayerManager
@@ -24,7 +24,8 @@ var target_to_funcs: Dictionary = {
 	TARGET_ID.SELF: fetch_target_self,
 	TARGET_ID.FACE: fetch_target_face,
 	TARGET_ID.RANDOM_ENEMY_CARD: fetch_target_random_enemy_card,
-	TARGET_ID.RANDOM_ENEMY_FACE: fetch_target_random_enemy_face
+	TARGET_ID.RANDOM_ENEMY_FACE: fetch_target_random_enemy_face,
+	TARGET_ID.SELECTED_CARD: fetch_target_selected_card,
 }
 
 
@@ -289,6 +290,12 @@ func fetch_target_random_enemy_face(_effect: Effect, _card: CardData, player: Pl
 func fetch_target_random_enemy_card(effect: Effect, card: CardData, player: Player):
 	return fetch_target_random_enemy_face(effect, card, player).get_random_board_card_data()
 
+
+func fetch_target_selected_card(_effect: Effect, card: CardData, _player: Player):
+	if card.get_ability().last_target:
+		return card.get_ability().last_target
+	# Request card selection from the player
+	return null
 
 func apply_numbered_effect(method: String, effect: Effect, card: CardData, player: Player):
 	var target: Effect.TARGET = effect.get_target()
