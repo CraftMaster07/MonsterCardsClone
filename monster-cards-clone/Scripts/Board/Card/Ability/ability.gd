@@ -81,7 +81,6 @@ func get_effect_multiplier() -> float:
 
 func get_target_multiplier() -> float:
 	if not effect: return 0
-	print("target multiplier: ", effect.get_target_multiplier())
 	return effect.get_target_multiplier()
 
 

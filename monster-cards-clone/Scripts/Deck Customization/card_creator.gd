@@ -236,10 +236,10 @@ func _on_trigger_option_button_item_selected(_index: int) -> void:
 func update_effect_from_loaded_card():
 	var effect = editor_card.get_effect()
 	effect_dropdown.select(get_index_from_effect(effect))
+	_on_effect_option_button_item_selected(get_index_from_effect(effect))
 
-	update_targets_from_effect(effect)
 	target_dropdown.select(get_index_from_target(effect.target))
-	#_on_target_option_button_item_selected(get_index_from_target(effect.target))
+	_on_target_option_button_item_selected(get_index_from_target(effect.target))
 
 func update_trigger_from_loaded_card():
 	trigger_dropdown.select(get_index_from_trigger(editor_card.get_trigger()))
