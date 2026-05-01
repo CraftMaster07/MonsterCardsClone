@@ -12,7 +12,7 @@ signal call_sync_game(game_state: Dictionary)
 signal call_shadow_sync(player_id: int, serialized_shadow_player_data: Dictionary)
 signal request_deck_blueprints()
 signal received_all_deck_blueprints()
-signal request_enemy_card_selection(player_id: int)
+signal request_card_selection(player_id: int)
 signal card_selected(card: CardData)
 
 var effect_to_funcs: Dictionary = {
@@ -27,7 +27,7 @@ var target_to_funcs: Dictionary = {
 	TARGET_ID.FACE: fetch_target_face,
 	TARGET_ID.RANDOM_ENEMY_CARD: fetch_target_random_enemy_card,
 	TARGET_ID.RANDOM_ENEMY_FACE: fetch_target_random_enemy_face,
-	TARGET_ID.SELECTED_ENEMY_CARD: fetch_target_selected_enemy_card,
+	TARGET_ID.SELECTED_CARD: fetch_target_selected_card,
 }
 
 
@@ -293,10 +293,10 @@ func fetch_target_random_enemy_card(effect: Effect, card: CardData, player: Play
 	return fetch_target_random_enemy_face(effect, card, player).get_random_board_card_data()
 
 
-func fetch_target_selected_enemy_card(_effect: Effect, card: CardData, player: Player):
+func fetch_target_selected_card(_effect: Effect, card: CardData, player: Player):
 	if card.get_ability().last_target:
 		return card.get_ability().last_target
-	request_enemy_card_selection.emit(player.get_id())
+	request_card_selection.emit(player.get_id())
 	selected_card = await card_selected
 	return selected_card
 

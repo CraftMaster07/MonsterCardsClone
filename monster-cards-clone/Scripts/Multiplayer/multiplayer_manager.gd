@@ -24,7 +24,7 @@ signal client_attacked(player_id: int, attacked_id: int)
 signal received_deck_blueprint(player_id: int, deck_blueprint: Dictionary)
 signal get_deck_blueprint()
 
-signal select_enemy_card()
+signal select_card()
 
 @export var server_script: Script
 @export var client_script: Script
@@ -189,9 +189,8 @@ func _on_multiplayer_interface_shadow_sync(serialized_shadow_player_data: Dictio
 	shadow_sync.emit(serialized_shadow_player_data)
 
 
-func request_enemy_card_selection(player_id: int) -> void:
-	multiplayer_interface.request_enemy_card_selection(player_id)
+func request_card_selection(player_id: int) -> void:
+	multiplayer_interface.request_card_selection(player_id)
 
-
-func _on_multiplayer_interface_select_enemy_card() -> void:
-	select_enemy_card.emit()
+func _on_multiplayer_interface_select_card() -> void:
+	select_card.emit()

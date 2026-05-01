@@ -97,7 +97,7 @@ func start_board():
 		board.call_sync_game.connect(call_sync_game)
 		board.request_deck_blueprints.connect(_on_board_request_deck_blueprints)
 		board.call_shadow_sync.connect(_on_board_call_shadow_sync)
-		board.request_enemy_card_selection.connect(_on_board_request_enemy_card_selection)
+		board.request_card_selection.connect(_on_board_request_card_selection)
 	else:
 		board = board_scene.instantiate()
 
@@ -256,9 +256,9 @@ func _on_main_menu_goto_card_creator() -> void:
 	transition_main_menu_to_card_creator()
 
 
-func _on_board_request_enemy_card_selection(player_id: int) -> void:
-	multiplayer_manager.request_enemy_card_selection(player_id)
+func _on_board_request_card_selection(player_id: int) -> void:
+	multiplayer_manager.request_card_selection(player_id)
 
 
-func _on_multiplayer_manager_select_enemy_card() -> void:
-	board.get_enemy_card_selection()
+func _on_multiplayer_manager_select_card() -> void:
+	board.get_card_selection()
