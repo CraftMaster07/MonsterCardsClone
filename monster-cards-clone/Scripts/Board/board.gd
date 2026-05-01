@@ -25,10 +25,14 @@ extends Control
 var selected_card: HandCard = null
 var phase: Phase = Phase.PREP
 
+var selection_mode: SelectionMode = SelectionMode.NONE
+var mandatory_selection: bool = false
+
 var player_ids_without_deck_blueprint: Array
 var unassigned_area_player_ids: Array
 
 var deck_file: DeckFile
+
 
 const MIN_TABLE_RADIUS: float = 400.0
 const CAMERA_ADDITIONAL_RADIUS: float = -100.0
@@ -58,6 +62,7 @@ enum CombatValidationResponses {
 		MUST_ATTACK_LAST_PLAYER
 }
 enum Phase {PREP, COMBAT}
+enum SelectionMode {NONE, ENEMY_CARD, FRIENDLY_CARD, PLAYER}
 
 func _ready():
 	var table_radius: float = calculate_table_radius(player_manager.get_player_count())
@@ -345,6 +350,7 @@ func set_deck_file(deck: DeckFile):
 	deck_file = deck
 
 
-func get_card_selection():
+func get_enemy_card_selection():
 	# TODO: let the player select a card, send that card ID to server
-	pass
+	selection_mode = SelectionMode.ENEMY_CARD
+	mandatory_selection = true
