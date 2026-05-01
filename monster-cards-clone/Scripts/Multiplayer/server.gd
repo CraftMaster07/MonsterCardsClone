@@ -126,8 +126,3 @@ func request_card_selection(player_id: int):
 		get_card_selection()
 	else:
 		get_card_selection.rpc_id(player_id)
-
-
-@rpc("any_peer", "call_local", "reliable", 0)
-func get_card_selection():
-	select_card.emit()

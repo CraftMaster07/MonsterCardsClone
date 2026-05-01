@@ -141,3 +141,7 @@ func receive_shadow_sync(serialized_shadow_player_data: Dictionary):
 func request_card_selection(_player_id: int):
 	# server side function
 	pass
+
+@rpc("any_peer", "call_local", "reliable", 0)
+func get_card_selection():
+	select_card.emit()
