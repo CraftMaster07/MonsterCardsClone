@@ -17,7 +17,7 @@ signal sync_game(game_state: Dictionary)
 signal shadow_sync(serialized_shadow_player_data: Dictionary)
 signal get_deck_blueprint()
 
-signal select_card()
+signal select_target(target: Effect.TARGET, card_uuid: String)
 
 func _ready():
 	multiplayer.peer_connected.connect(_on_peer_connected)
@@ -138,10 +138,10 @@ func receive_shadow_sync(serialized_shadow_player_data: Dictionary):
 	shadow_sync.emit(serialized_shadow_player_data)
 
 
-func request_card_selection(_player_id: int):
+func request_target_selection(_player_id: int, _card_uuid: String, _target: Effect.TARGET):
 	# server side function
 	pass
 
 @rpc("any_peer", "call_local", "reliable", 0)
-func get_card_selection():
-	select_card.emit()
+func get_target_selection(target: Effect.TARGET, card_uuid: String):
+	select_target.emit(target, card_uuid)

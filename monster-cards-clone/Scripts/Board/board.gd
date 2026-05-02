@@ -345,6 +345,6 @@ func set_deck_file(deck: DeckFile):
 	deck_file = deck
 
 
-func get_card_selection():
+func get_target_selection(target: Effect.TARGET, card_uuid: String):
 	# TODO: let the player select a card, send that card ID to server
 	pass

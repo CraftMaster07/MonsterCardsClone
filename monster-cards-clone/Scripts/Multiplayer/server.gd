@@ -121,8 +121,8 @@ func send_shadow_sync(player_id: int, serialized_shadow_player_data: Dictionary)
 	receive_shadow_sync.rpc_id(player_id, serialized_shadow_player_data)
 
 
-func request_card_selection(player_id: int):
+func request_target_selection(player_id: int, card_uuid: String, target: Effect.TARGET):
 	if player_id == 1:
-		get_card_selection()
+		get_target_selection(target, card_uuid)
 	else:
-		get_card_selection.rpc_id(player_id)
+		get_target_selection.rpc_id(target, card_uuid)
