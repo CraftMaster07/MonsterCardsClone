@@ -241,6 +241,7 @@ func update_effect_from_loaded_card():
 	target_dropdown.select(get_index_from_target(effect.target))
 	_on_target_option_button_item_selected(get_index_from_target(effect.target))
 
+
 func update_trigger_from_loaded_card():
 	trigger_dropdown.select(get_index_from_trigger(editor_card.get_trigger()))
 

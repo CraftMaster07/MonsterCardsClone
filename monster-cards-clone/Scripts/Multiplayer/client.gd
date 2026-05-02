@@ -91,12 +91,12 @@ func receive_sync_game(game_state: Dictionary):
 	sync_game.emit(game_state)
 
 
-func send_placed_card(serialized_card: Dictionary, slot_id: int):
-	receive_client_placed_card.rpc_id(1, serialized_card, slot_id)
+func send_placed_card(card_uuid: String, slot_id: int):
+	receive_client_placed_card.rpc_id(1, card_uuid, slot_id)
 
 
 @rpc("any_peer", "call_remote", "reliable", 0)
-func receive_client_placed_card(_serialized_cardcard: Dictionary, _slot_id: int):
+func receive_client_placed_card(_card_uuid: String, _slot_id: int):
 	# server side function
 	pass
 
