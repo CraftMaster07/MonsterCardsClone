@@ -142,9 +142,14 @@ func reset_attack_history():
 		player.attacked_by_id = 0
 
 
-func exorcise():
+func exorcise() -> bool:
+	var was_ability_activated: bool = false
+
 	for player in players.values():
-		player.exorcise()
+		if player.exorcise():
+			was_ability_activated = true
+
+	return was_ability_activated
 
 
 func draw_card(player_id: int):

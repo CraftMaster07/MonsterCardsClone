@@ -56,8 +56,14 @@ func place_card_into_slot(card: BoardCard, slot_index: int) -> BoardCard:
 
 
 func exorcise():
+	var was_ability_activated: bool = false
+
 	for slot in slots:
-		slot.exorcise()
+		if slot.exorcise():
+			was_ability_activated = true
+
+	return was_ability_activated
+	
 
 
 func get_random_card_data() -> CardData:

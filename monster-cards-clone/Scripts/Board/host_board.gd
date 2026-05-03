@@ -107,7 +107,7 @@ func draw_card_to_player(player_id: int):
 	if success:
 		player_manager.draw_card(player_id)
 	else:
-		push_error("draw card failed")
+		print(str(player_id),": draw card failed")
 
 
 func client_ended_turn(player_id: int):
@@ -155,6 +155,9 @@ func client_placed_card(player_id: int, card_uuid: String, slot_id: int):
 			player_manager.place_card_into_slot(player_id, card, slot_id)
 			subscribe_card(card.get_card_data(), player_manager.get_player(player_id))
 			player_manager.spend_mana(player_id, card_data.cost)
+			
+			if card_data.get_trigger_id() == TRIGGER_ID.WHEN_PLAYED:
+				card_data.run_ability()
 		ValidationResponses.SLOT_TAKEN:
 			print("slot taken: (Player: ", player_id, ", Slot: ", slot_id, ")")
 		ValidationResponses.NOT_YOUR_TURN:

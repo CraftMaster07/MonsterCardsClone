@@ -46,3 +46,11 @@ func get_owner_id() -> int:
 
 func get_uuid() -> String:
 	return card_data.uuid
+
+
+func get_trigger_id() -> Trigger.TriggerID:
+	return card_data.get_trigger_id()
+
+
+func run_ability():
+	card_data.run_ability()

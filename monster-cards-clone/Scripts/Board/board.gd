@@ -307,7 +307,10 @@ func check_last_player_was_attacked(last_player_id: int) -> bool:
 
 
 func exorcise():
-	player_manager.exorcise()
+	var run_again: bool = player_manager.exorcise()
+
+	if run_again:
+		exorcise()
 
 
 func remove_player(player_id: int):

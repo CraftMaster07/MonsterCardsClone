@@ -144,6 +144,7 @@ func get_trigger() -> Trigger:
 
 
 func get_trigger_id() -> Trigger.TriggerID:
+	if not ability: return Trigger.TriggerID.INVALID
 	return ability.get_trigger().get_id()
 
 

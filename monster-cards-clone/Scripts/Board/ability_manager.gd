@@ -9,9 +9,6 @@ var triggers_to_signals: Dictionary = {
 	TRIGGER_ID.ROUND_START: round_start,
 }
 
-
-@export var board: Board
-
 signal round_start
 signal activate(effect: Effect, card: CardData, player: Player)
 
@@ -20,8 +17,9 @@ func subscribe_card(card: CardData, player: Player):
 
 	if is_between(-1, trigger_id, Trigger.PLAYER_TRIGGER_THRESHOLD):
 		triggers_to_signals[trigger_id].connect(card.run_ability)
-	elif Trigger.PLAYER_TRIGGER_THRESHOLD <= trigger_id:
+	elif is_between(Trigger.PLAYER_TRIGGER_THRESHOLD, trigger_id, Trigger.SINGLE_TIME_TRIGGER_THRESHOLD):
 		player.triggers_to_signals[trigger_id].connect(card.run_ability)
+	# if the trigger is a single time trigger, it's handled differently.
 
 	card.get_ability_signal().connect(activate_effect.bind(card, player))
 

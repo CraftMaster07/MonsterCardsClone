@@ -116,8 +116,8 @@ func get_id():
 	return player_id
 
 
-func exorcise():
-	field.exorcise()
+func exorcise() -> bool:
+	return field.exorcise()
 
 
 func set_deck(new_deck: Deck):
