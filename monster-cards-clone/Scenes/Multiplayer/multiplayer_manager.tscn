@@ -19,7 +19,7 @@ script = ExtResource("2_yxw74")
 [connection signal="host_started_game" from="MultiplayerInterface" to="." method="signal_start_game"]
 [connection signal="new_player" from="MultiplayerInterface" to="." method="add_new_player"]
 [connection signal="player_left" from="MultiplayerInterface" to="." method="_on_multiplayer_interface_player_left"]
-[connection signal="select_card" from="MultiplayerInterface" to="." method="_on_multiplayer_interface_select_card"]
+[connection signal="select_target" from="MultiplayerInterface" to="." method="_on_multiplayer_interface_select_target"]
 [connection signal="server_disconnected" from="MultiplayerInterface" to="." method="_on_multiplayer_interface_server_disconnected"]
 [connection signal="shadow_sync" from="MultiplayerInterface" to="." method="_on_multiplayer_interface_shadow_sync"]
 [connection signal="sync_game" from="MultiplayerInterface" to="." method="_on_multiplayer_interface_sync_game"]

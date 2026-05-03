@@ -5,6 +5,7 @@ var image: Texture
 
 const BOARD_CARD_SCENE = preload("res://Scenes/Board/Card/board_card.tscn")
 
+signal pressed(card: BoardCard)
 
 func _ready():
 	card_front.set_initial_values(card_data)
@@ -50,3 +51,7 @@ func _on_card_front_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
 			print(card_data.serialize())
+
+
+func _on_card_front_pressed() -> void:
+	pressed.emit(self)

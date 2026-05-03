@@ -12,6 +12,8 @@ extends Control
 var card: BoardCard
 var tween: Tween
 
+signal card_placed(card: BoardCard)
+
 
 func _ready():
 	color_rect.color = base_color
@@ -25,6 +27,7 @@ func place_card(new_card: BoardCard):
 	card = new_card
 	add_child(card)
 	card.position = Vector2.ZERO
+	card_placed.emit(card)
 
 
 func get_card():

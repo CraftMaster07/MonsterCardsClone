@@ -42,7 +42,6 @@ func init_enemy_player(player_data: Dictionary):
 	new_player.init(player_data['id'], player_data['name'])
 	player_container.add_child(new_player)
 	players[player_data['id']] = new_player
-
 	new_player.attacked.connect(on_enemy_player_attacked)
 
 

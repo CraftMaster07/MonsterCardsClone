@@ -43,3 +43,7 @@ func set_owner_id(new_owner_id: int):
 
 func get_owner_id() -> int:
 	return card_data.owner_id
+
+
+func get_uuid() -> String:
+	return card_data.uuid

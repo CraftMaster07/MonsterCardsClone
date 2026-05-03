@@ -166,6 +166,8 @@ func _on_player_area_spawner_pivot_new_area_spawned(new_player_area: PlayerArea)
 		set_your_area(new_player_area)
 	else:
 		set_first_player_area(new_player_area)
+	
+	new_player_area.get_field().card_placed.connect(on_boardcard_placed)
 
 
 func _on_player_area_spawner_pivot_spawning_finished() -> void:
@@ -347,4 +349,12 @@ func set_deck_file(deck: DeckFile):
 
 func get_target_selection(target: Effect.TARGET, card_uuid: String):
 	# TODO: let the player select a card, send that card ID to server
+	pass
+
+
+func on_boardcard_placed(card: BoardCard):
+	card.pressed.connect(boardcard_pressed)
+
+
+func boardcard_pressed(card: BoardCard):
 	pass

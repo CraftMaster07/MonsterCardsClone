@@ -1,6 +1,8 @@
 class_name Field
 extends MarginContainer
 
+signal card_placed(card: BoardCard)
+
 @onready var slot_container = $HBoxContainer
 @onready var slots: Array[EnemyCardSlot]
 
@@ -11,6 +13,7 @@ func _ready():
 
 	for slot in node_slots:
 		slots.append(slot as EnemyCardSlot)
+		slot.card_placed.connect(card_placed.emit)
 
 
 func get_slots() -> Array[EnemyCardSlot]:
