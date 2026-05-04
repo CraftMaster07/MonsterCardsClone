@@ -22,7 +22,13 @@ var is_ghost: bool = false
 
 var ability: Ability
 
+const TRIGGER_ID = Trigger.TriggerID
+var triggers_to_signals: Dictionary = {
+	TRIGGER_ID.WHEN_HURT: ouch,
+}
+
 signal updated_stats()
+signal ouch()
 
 static func create_from_card_file(card_file: CardFile, new_owner_id: int = -1) -> CardData:
 	var card_data = CardData.new()
@@ -104,7 +110,9 @@ func recalculate_cost():
 
 
 func take_damage(amount: int) -> void:
+	if health <= 0: return
 	health -= amount
+	card_trigger(TRIGGER_ID.WHEN_HURT)
 	check_death()
 	updated_stats.emit()
 
@@ -185,3 +193,8 @@ func set_owner_id(new_owner_id: int):
 
 func get_owner_id() -> int:
 	return owner_id
+
+
+func card_trigger(trigger_id):
+	print("card ", uuid, ": triggering card trigger: ", trigger_id)
+	triggers_to_signals[trigger_id].emit()

@@ -150,14 +150,7 @@ func client_placed_card(player_id: int, card_uuid: String, slot_id: int):
 	match status:
 		ValidationResponses.OK:
 			# This doesnt happen when the host places a card
-			shadow_player_manager.remove_hand_card_by_uuid(player_id, card_uuid)
-			var card := BoardCard.create(card_data)
-			player_manager.place_card_into_slot(player_id, card, slot_id)
-			subscribe_card(card.get_card_data(), player_manager.get_player(player_id))
-			player_manager.spend_mana(player_id, card_data.cost)
-			
-			if card_data.get_trigger_id() == TRIGGER_ID.WHEN_PLAYED:
-				card_data.run_ability()
+			place_client_card(player_id, card_data, slot_id)
 		ValidationResponses.SLOT_TAKEN:
 			print("slot taken: (Player: ", player_id, ", Slot: ", slot_id, ")")
 		ValidationResponses.NOT_YOUR_TURN:
@@ -173,10 +166,25 @@ func client_placed_card(player_id: int, card_uuid: String, slot_id: int):
 	send_game_state()
 
 
+func place_client_card(player_id: int, card_data: CardData, slot_id: int):
+	shadow_player_manager.remove_hand_card_by_uuid(player_id, card_data.uuid)
+	var card := BoardCard.create(card_data)
+	player_manager.place_card_into_slot(player_id, card, slot_id)
+	player_manager.spend_mana(player_id, card_data.cost)
+	integrate_client_card(player_id, card_data)
+
+
+func integrate_client_card(player_id: int, card_data: CardData):
+	subscribe_card(card_data, player_manager.get_player(player_id))
+	
+	if card_data.get_trigger_id() == TRIGGER_ID.WHEN_PLAYED:
+		card_data.run_ability()
+
+
 func _replace_handcard_with_boardcard(card: HandCard, slot: EnemyCardSlot):
-	shadow_player_manager.remove_hand_card_by_uuid(your_id, card.get_uuid())
-	subscribe_card(card.get_card_data(), player_manager.get_player(your_id))
 	super._replace_handcard_with_boardcard(card, slot)
+	shadow_player_manager.remove_hand_card_by_uuid(your_id, card.get_card_data().uuid)
+	integrate_client_card(your_id, card.get_card_data())
 
 
 func init_player_boards():
@@ -259,6 +267,7 @@ func trigger_round_start_abilities():
 
 func _on_ability_manager_activate(effect: Effect, card: CardData, player: Player) -> void:
 	effect_to_funcs[effect.get_id()].call(effect, card, player)
+	send_game_state()
 
 
 func heal(effect: Effect, card: CardData, player: Player):
