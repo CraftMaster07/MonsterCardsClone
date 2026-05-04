@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_p065n")
-id = 101
+id = 151
 display_name = "When Destroyed"
 cost_multiplier = 0.5
 metadata/_custom_type_script = "uid://eksx7s2hjxdl"

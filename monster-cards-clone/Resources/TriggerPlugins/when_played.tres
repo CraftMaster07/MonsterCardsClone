@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_ne6la")
-id = 100
+id = 150
 display_name = "When Played"
 cost_multiplier = 0.7
 metadata/_custom_type_script = "uid://eksx7s2hjxdl"
