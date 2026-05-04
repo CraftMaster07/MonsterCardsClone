@@ -2,7 +2,8 @@ class_name Trigger
 extends Resource
 
 const PLAYER_TRIGGER_THRESHOLD = 50
-const SINGLE_TIME_TRIGGER_THRESHOLD = 100
+const CARD_TRIGGER_THRESHOLD = 100
+const SINGLE_TIME_TRIGGER_THRESHOLD = 150
 
 enum TriggerID {
 	INVALID = -1,
