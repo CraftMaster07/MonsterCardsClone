@@ -49,7 +49,7 @@ func serialize() -> Dictionary:
 func deserialize(serialized: Dictionary):
 	if not trigger or serialized["trigger_id"] != trigger.get_id():
 		# free the old trigger?
-		trigger = TriggerFactory.get_trigger_instance(serialized["trigger_id"])
+		set_trigger(TriggerFactory.get_trigger_instance(serialized["trigger_id"]))
 
 	trigger.deserialize(serialized["trigger"])
 
