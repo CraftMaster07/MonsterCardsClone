@@ -212,10 +212,6 @@ func deserialize(serialized_card_data: Dictionary):
 	super.deserialize(serialized_card_data)
 
 
-func get_uuid() -> String:
-	return card_data.uuid
-
-
 func get_cost() -> int:
 	return card_data.cost
 

@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Trigger" format=3 uid="uid://b8qojotq51awn"]
+
+[ext_resource type="Script" uid="uid://eksx7s2hjxdl" path="res://Scripts/Board/Card/Ability/trigger.gd" id="1_p065n"]
+
+[resource]
+script = ExtResource("1_p065n")
+id = 151
+display_name = "When Destroyed"
+cost_multiplier = 0.5
+metadata/_custom_type_script = "uid://eksx7s2hjxdl"

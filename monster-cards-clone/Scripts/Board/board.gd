@@ -37,7 +37,7 @@ const PLAYER_AREA_SPAWNER_ADDITIONAL_RADIUS: float = -100.0
 const INITIAL_HAND_CARD_COUNT: int = 3
 const INITIAL_DECK_CARD_COUNT: int = 5 + INITIAL_HAND_CARD_COUNT
 
-signal send_placed_card(serialized_card: Dictionary, slot_id: int)
+signal send_placed_card(card_uuid: String, slot_id: int)
 signal send_end_turn()
 signal send_player_attacked(attacked_id: int)
 
@@ -107,7 +107,7 @@ func _replace_handcard_with_boardcard(card: HandCard, slot: EnemyCardSlot):
 	slot.place_card(new_board_card)
 	card.queue_free() # might replace with remove_child
 	sfx_place.play()
-	send_placed_card.emit(new_board_card.serialize(), player_manager.get_slot_id(your_id, slot))
+	send_placed_card.emit(new_board_card.get_uuid(), player_manager.get_slot_id(your_id, slot))
 
 
 func select_card(card: HandCard):
@@ -309,7 +309,10 @@ func check_last_player_was_attacked(last_player_id: int) -> bool:
 
 
 func exorcise():
-	player_manager.exorcise()
+	var run_again: bool = player_manager.exorcise()
+
+	if run_again:
+		exorcise()
 
 
 func remove_player(player_id: int):

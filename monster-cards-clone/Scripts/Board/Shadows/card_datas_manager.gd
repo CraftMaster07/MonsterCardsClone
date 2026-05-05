@@ -12,10 +12,16 @@ func add_card_data(card_data: CardData) -> void:
 
 func remove_card_data(uuid: String, free = false) -> void:
 	remove_child(card_datas[uuid])
+
 	if free:
 		card_datas[uuid].queue_free()
+
 	card_datas.erase(uuid)
 
 
 func get_card_data_count() -> int:
 	return card_datas.size()
+
+
+func get_card_data_by_uuid(uuid: String) -> CardData:
+	return card_datas[uuid] if uuid in card_datas else null

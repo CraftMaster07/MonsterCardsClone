@@ -141,9 +141,14 @@ func reset_attack_history():
 		player.attacked_by_id = 0
 
 
-func exorcise():
+func exorcise() -> bool:
+	var was_ability_activated: bool = false
+
 	for player in players.values():
-		player.exorcise()
+		if player.exorcise():
+			was_ability_activated = true
+
+	return was_ability_activated
 
 
 func draw_card(player_id: int):
@@ -162,8 +167,8 @@ func shadow_deserialize(serialized_shadow_player_data: Dictionary):
 	get_your_player().shadow_deserialize(serialized_shadow_player_data)
 
 
-func place_serialized_card_into_slot(player_id: int, serialized_card: Dictionary, slot_id: int) -> BoardCard:
-	return get_player(player_id).place_serialized_card_into_slot(serialized_card, slot_id)
+func place_card_into_slot(player_id: int, card: BoardCard, slot_id: int) -> BoardCard:
+	return get_player(player_id).place_card_into_slot(card, slot_id)
 
 
 func update_hand(player_id: int, hand_card_count: int):

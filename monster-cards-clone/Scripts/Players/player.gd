@@ -107,16 +107,16 @@ func deserialize(serialized_player: Dictionary):
 	hand.deserialize(serialized_player['hand'])
 
 
-func place_serialized_card_into_slot(serialized_card: Dictionary, slot_id: int) -> BoardCard:
-	return field.place_serialized_card_into_slot(serialized_card, slot_id)
+func place_card_into_slot(card: BoardCard, slot_id: int) -> BoardCard:
+	return field.place_card_into_slot(card, slot_id)
 
 
 func get_id():
 	return player_id
 
 
-func exorcise():
-	field.exorcise()
+func exorcise() -> bool:
+	return field.exorcise()
 
 
 func set_deck(new_deck: Deck):

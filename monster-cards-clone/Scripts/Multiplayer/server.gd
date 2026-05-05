@@ -75,14 +75,16 @@ func send_sync_game(game_state: Dictionary):
 
 
 @rpc("any_peer", "call_remote", "reliable", 0)
-func receive_client_placed_card(serialized_cardcard: Dictionary, slot_id: int):
+func receive_client_placed_card(card_uuid: String, slot_id: int):
 	var sender := multiplayer.get_remote_sender_id()
 	sender = sender if sender else 1
 	print("received card from ", sender)
-	client_placed_card.emit(sender, serialized_cardcard, slot_id)
+	client_placed_card.emit(sender, card_uuid, slot_id)
 
-func send_placed_card(serialized_card: Dictionary, slot_id: int):
-	receive_client_placed_card(serialized_card, slot_id)
+
+func send_placed_card(card_uuid: String, slot_id: int):
+	receive_client_placed_card(card_uuid, slot_id)
+
 
 func send_end_turn():
 	receive_end_turn()

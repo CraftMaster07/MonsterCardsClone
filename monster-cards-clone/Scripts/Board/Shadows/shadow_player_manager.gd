@@ -30,8 +30,8 @@ func shadow_serialize_player(player_id: int) -> Dictionary:
 	return get_player(player_id).shadow_serialize()
 
 
-func remove_serialized_card_from_hand(player_id: int, serialized_card: Dictionary):
-	get_player(player_id).remove_serialized_card_from_hand(serialized_card)
+func remove_hand_card_by_uuid(player_id: int, card_uuid: String):
+	get_player(player_id).remove_hand_card_by_uuid(card_uuid)
 
 
 func get_deck_card_data_count(player_id: int) -> int:
@@ -40,3 +40,7 @@ func get_deck_card_data_count(player_id: int) -> int:
 
 func get_hand_card_data_count(player_id: int) -> int:
 	return get_player(player_id).get_hand_card_data_count()
+
+
+func get_hand_card_data_by_uuid(player_id: int, card_uuid: String) -> CardData:
+	return get_player(player_id).get_hand_card_data_by_uuid(card_uuid)

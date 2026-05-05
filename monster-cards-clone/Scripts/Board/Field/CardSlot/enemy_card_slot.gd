@@ -75,9 +75,17 @@ func flash_color(flashed_color: Color = error_color):
 	).set_trans(flash_trans_type).set_ease(flash_ease_type)
 
 
-func exorcise():
+func exorcise() -> bool:
+	var was_ability_activated: bool = false
+
 	if card and card.is_ghost():
+		if card.get_trigger_id() == Trigger.TriggerID.WHEN_DESTROYED:
+			card.run_ability()
+			was_ability_activated = true
+
 		remove_card()
+
+	return was_ability_activated
 
 
 func remove_card():

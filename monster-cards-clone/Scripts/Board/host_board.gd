@@ -110,7 +110,7 @@ func draw_card_to_player(player_id: int):
 	if success:
 		player_manager.draw_card(player_id)
 	else:
-		push_error("draw card failed")
+		print(str(player_id),": draw card failed")
 
 
 func client_ended_turn(player_id: int):
@@ -140,17 +140,20 @@ func send_shadow_player(player_id: int):
 	call_shadow_sync.emit(player_id, shadow_player_manager.shadow_serialize_player(player_id))
 
 
-func client_placed_card(player_id: int, serialized_card: Dictionary, slot_id: int):
-	var temp_card_data: CardData = CardData.new(serialized_card, player_id)
-	var status := verify_card_placement(player_id, slot_id, temp_card_data)
+func client_placed_card(player_id: int, card_uuid: String, slot_id: int):
+	var card_data: CardData = shadow_player_manager.get_hand_card_data_by_uuid(player_id, card_uuid)
+
+	if not card_data:
+		print("card not in hand (Player: ", player_id, ", Card: ", card_uuid, ")")
+		send_game_state()
+		return
+	
+	var status := verify_card_placement(player_id, slot_id, card_data)
 
 	match status:
 		ValidationResponses.OK:
 			# This doesnt happen when the host places a card
-			var card: BoardCard = player_manager.place_serialized_card_into_slot(player_id, serialized_card, slot_id)
-			subscribe_card(card.get_card_data(), player_manager.get_player(player_id))
-			player_manager.spend_mana(player_id, temp_card_data.cost)
-			shadow_player_manager.remove_serialized_card_from_hand(player_id, serialized_card)
+			place_client_card(player_id, card_data, slot_id)
 		ValidationResponses.SLOT_TAKEN:
 			print("slot taken: (Player: ", player_id, ", Slot: ", slot_id, ")")
 		ValidationResponses.NOT_YOUR_TURN:
@@ -162,15 +165,29 @@ func client_placed_card(player_id: int, serialized_card: Dictionary, slot_id: in
 		ValidationResponses.INVALID:
 			print("unexpected error occured (Player: ", player_id, ", Slot: ", slot_id, ")")
 
-	temp_card_data.free()
 	update_enemy_hands()
 	send_game_state()
 
 
+func place_client_card(player_id: int, card_data: CardData, slot_id: int):
+	shadow_player_manager.remove_hand_card_by_uuid(player_id, card_data.uuid)
+	var card := BoardCard.create(card_data)
+	player_manager.place_card_into_slot(player_id, card, slot_id)
+	player_manager.spend_mana(player_id, card_data.cost)
+	integrate_client_card(player_id, card_data)
+
+
+func integrate_client_card(player_id: int, card_data: CardData):
+	subscribe_card(card_data, player_manager.get_player(player_id))
+	
+	if card_data.get_trigger_id() == TRIGGER_ID.WHEN_PLAYED:
+		card_data.run_ability()
+
+
 func _replace_handcard_with_boardcard(card: HandCard, slot: EnemyCardSlot):
-	shadow_player_manager.remove_serialized_card_from_hand(your_id, card.serialize())
-	subscribe_card(card.get_card_data(), player_manager.get_player(your_id))
 	super._replace_handcard_with_boardcard(card, slot)
+	shadow_player_manager.remove_hand_card_by_uuid(your_id, card.get_card_data().uuid)
+	integrate_client_card(your_id, card.get_card_data())
 
 
 func init_player_boards():
@@ -253,6 +270,7 @@ func trigger_round_start_abilities():
 
 func _on_ability_manager_activate(effect: Effect, card: CardData, player: Player) -> void:
 	effect_to_funcs[effect.get_id()].call(effect, card, player)
+	send_game_state()
 
 
 func heal(effect: Effect, card: CardData, player: Player):
