@@ -38,7 +38,7 @@ func get_triggers() -> Array:
 func get_trigger_instance(trigger_id: TRIGGER_ID) -> Trigger:
 	if _trigger_cache.has(trigger_id):
 		# We duplicate the cached version to get a unique instance
-		return _trigger_cache[trigger_id].duplicate() as Trigger
+		return _trigger_cache[trigger_id].duplicate(true) as Trigger
 	return null
 
 

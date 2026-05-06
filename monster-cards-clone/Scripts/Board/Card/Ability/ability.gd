@@ -35,13 +35,13 @@ func get_trigger() -> Trigger:
 func serialize() -> Dictionary:
 	var data = {}
 
-	if trigger:
-		data["trigger_id"] = trigger.get_id()
-		data["trigger"] = trigger.serialize()
-	
-	if effect:
-		data["effect_id"] = effect.get_id()
-		data["effect"] = effect.serialize()
+	if trigger and effect:
+		data = {
+			"trigger_id": trigger.get_id(),
+			"trigger": trigger.serialize(),
+			"effect_id": effect.get_id(),
+			"effect": effect.serialize(),
+		}
 	
 	return data
 
@@ -49,7 +49,7 @@ func serialize() -> Dictionary:
 func deserialize(serialized: Dictionary):
 	if not trigger or serialized["trigger_id"] != trigger.get_id():
 		# free the old trigger?
-		trigger = TriggerFactory.get_trigger_instance(serialized["trigger_id"])
+		set_trigger(TriggerFactory.get_trigger_instance(serialized["trigger_id"]))
 
 	trigger.deserialize(serialized["trigger"])
 
@@ -77,3 +77,12 @@ func get_trigger_multiplier() -> float:
 func get_effect_multiplier() -> float:
 	if not effect: return 0
 	return effect.get_multiplier(trigger.get_id() if trigger else TRIGGER_ID.INVALID)
+
+
+func get_target_multiplier() -> float:
+	if not effect: return 0
+	return effect.get_target_multiplier()
+
+
+func is_valid() -> bool:
+	return trigger and effect

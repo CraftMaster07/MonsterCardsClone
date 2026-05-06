@@ -2,6 +2,7 @@ extends Board
 
 const TRIGGER_ID = Trigger.TriggerID
 const EFFECT_ID =  Effect.EffectID
+const TARGET_ID = Effect.TARGET
 
 var shadow_player_manager: ShadowPlayerManager
 
@@ -14,7 +15,16 @@ signal received_all_deck_blueprints()
 
 var effect_to_funcs: Dictionary = {
 	EFFECT_ID.HEAL: heal,
-	EFFECT_ID.ATTACK_BUFF: buff_attack
+	EFFECT_ID.ATTACK_BUFF: buff_attack,
+	EFFECT_ID.DRAW_CARD: draw_card,
+	EFFECT_ID.DAMAGE: damage,
+}
+
+var target_to_funcs: Dictionary = {
+	TARGET_ID.SELF: fetch_target_self,
+	TARGET_ID.FACE: fetch_target_face,
+	TARGET_ID.RANDOM_ENEMY_CARD: fetch_target_random_enemy_card,
+	TARGET_ID.RANDOM_ENEMY_FACE: fetch_target_random_enemy_face
 }
 
 
@@ -91,13 +101,13 @@ func client_attacked(player_id: int, attacked_id: int):
 	send_game_state()
 
 
-func draw_card(player_id: int):
+func draw_card_to_player(player_id: int):
 	var success: bool = shadow_player_manager.draw_card(player_id)
 
 	if success:
 		player_manager.draw_card(player_id)
 	else:
-		push_error("draw card failed")
+		print(str(player_id),": draw card failed")
 
 
 func client_ended_turn(player_id: int):
@@ -127,17 +137,20 @@ func send_shadow_player(player_id: int):
 	call_shadow_sync.emit(player_id, shadow_player_manager.shadow_serialize_player(player_id))
 
 
-func client_placed_card(player_id: int, serialized_card: Dictionary, slot_id: int):
-	var temp_card_data: CardData = CardData.new(serialized_card)
-	var status := verify_card_placement(player_id, slot_id, temp_card_data)
+func client_placed_card(player_id: int, card_uuid: String, slot_id: int):
+	var card_data: CardData = shadow_player_manager.get_hand_card_data_by_uuid(player_id, card_uuid)
+
+	if not card_data:
+		print("card not in hand (Player: ", player_id, ", Card: ", card_uuid, ")")
+		send_game_state()
+		return
+	
+	var status := verify_card_placement(player_id, slot_id, card_data)
 
 	match status:
 		ValidationResponses.OK:
 			# This doesnt happen when the host places a card
-			var card: BoardCard = player_manager.place_serialized_card_into_slot(player_id, serialized_card, slot_id)
-			subscribe_card(card.get_card_data(), player_manager.get_player(player_id))
-			player_manager.spend_mana(player_id, temp_card_data.cost)
-			shadow_player_manager.remove_serialized_card_from_hand(player_id, serialized_card)
+			place_client_card(player_id, card_data, slot_id)
 		ValidationResponses.SLOT_TAKEN:
 			print("slot taken: (Player: ", player_id, ", Slot: ", slot_id, ")")
 		ValidationResponses.NOT_YOUR_TURN:
@@ -149,15 +162,29 @@ func client_placed_card(player_id: int, serialized_card: Dictionary, slot_id: in
 		ValidationResponses.INVALID:
 			print("unexpected error occured (Player: ", player_id, ", Slot: ", slot_id, ")")
 
-	temp_card_data.free()
 	update_enemy_hands()
 	send_game_state()
 
 
+func place_client_card(player_id: int, card_data: CardData, slot_id: int):
+	shadow_player_manager.remove_hand_card_by_uuid(player_id, card_data.uuid)
+	var card := BoardCard.create(card_data)
+	player_manager.place_card_into_slot(player_id, card, slot_id)
+	player_manager.spend_mana(player_id, card_data.cost)
+	integrate_client_card(player_id, card_data)
+
+
+func integrate_client_card(player_id: int, card_data: CardData):
+	subscribe_card(card_data, player_manager.get_player(player_id))
+	
+	if card_data.get_trigger_id() == TRIGGER_ID.WHEN_PLAYED:
+		card_data.run_ability()
+
+
 func _replace_handcard_with_boardcard(card: HandCard, slot: EnemyCardSlot):
-	shadow_player_manager.remove_serialized_card_from_hand(your_id, card.serialize())
-	subscribe_card(card.get_card_data(), player_manager.get_player(your_id))
 	super._replace_handcard_with_boardcard(card, slot)
+	shadow_player_manager.remove_hand_card_by_uuid(your_id, card.get_card_data().uuid)
+	integrate_client_card(your_id, card.get_card_data())
 
 
 func init_player_boards():
@@ -177,12 +204,12 @@ func add_initial_deck_cards(player_id: int):
 
 func draw_initial_cards(player_id: int):
 	for i in range(INITIAL_HAND_CARD_COUNT):
-		draw_card(player_id)
+		draw_card_to_player(player_id)
 
 
 func draw_card_for_each_player():
 	for player_id in player_manager.get_player_ids():
-		draw_card(player_id)
+		draw_card_to_player(player_id)
 
 
 func _on_round_manager_round_ended() -> void:
@@ -240,26 +267,51 @@ func trigger_round_start_abilities():
 
 func _on_ability_manager_activate(effect: Effect, card: CardData, player: Player) -> void:
 	effect_to_funcs[effect.get_id()].call(effect, card, player)
+	send_game_state()
 
 
 func heal(effect: Effect, card: CardData, player: Player):
-	var target: Effect.TARGET = effect.get_target()
-	var amount: int = effect.get_property("amount")
-
-	fetch_target(target, card, player).heal(amount)
+	apply_numbered_effect("heal", effect, card, player)
 
 
 func buff_attack(effect: Effect, card: CardData, player: Player):
+	apply_numbered_effect("buff_attack", effect, card, player)
+
+
+func draw_card(_effect: Effect, _card: CardData, player: Player):
+	draw_card_to_player(player.get_id())
+
+
+func damage(effect: Effect, card: CardData, player: Player):
+	apply_numbered_effect("take_damage", effect, card, player)
+	if phase != Phase.COMBAT:
+		exorcise()
+
+
+func fetch_target(target: Effect.TARGET, effect: Effect, card: CardData, player: Player):
+	return target_to_funcs[target].call(effect, card, player)
+
+
+func fetch_target_self(_effect: Effect, card: CardData, _player: Player):
+	return card
+
+
+func fetch_target_face(_effect: Effect, _card: CardData, player: Player):
+	return player
+
+
+func fetch_target_random_enemy_face(_effect: Effect, _card: CardData, player: Player):
+	return player_manager.get_random_enemy_player(player.get_id())
+
+
+func fetch_target_random_enemy_card(effect: Effect, card: CardData, player: Player):
+	return fetch_target_random_enemy_face(effect, card, player).get_random_board_card_data()
+
+
+func apply_numbered_effect(method: String, effect: Effect, card: CardData, player: Player):
 	var target: Effect.TARGET = effect.get_target()
 	var amount: int = effect.get_property("amount")
 
-	print("buffing attack: ", target)
-	fetch_target(target, card, player).buff_attack(amount)
-
-
-func fetch_target(target: Effect.TARGET, card: CardData, player: Player):
-	# Placeholder until we add more target types
-	if target == Effect.TARGET.SELF:
-		return card
-	if target == Effect.TARGET.FACE:
-		return player
+	var chosen_target = fetch_target(target, effect, card, player)
+	if not chosen_target: return
+	chosen_target.callv(method, [amount])

@@ -1,16 +1,23 @@
 class_name Effect
 extends Resource
 
+# add new targets ONLY IN THE END!
 enum TARGET {
+	INVALID = -1,
 	SELF,
-	FACE
+	FACE,
+	RANDOM_FRIENDLY_CARD,
+	RANDOM_ENEMY_CARD,
+	RANDOM_ENEMY_FACE,
 }
 
+# add new effects ONLY IN THE END!
 enum EffectID {
 	INVALID = -1,
 	HEAL,
 	ATTACK_BUFF,
-	DRAW_CARD
+	DRAW_CARD,
+	DAMAGE,
 }
 
 enum Null{
@@ -27,6 +34,14 @@ enum Null{
 @export var extra_properties: Dictionary[String, Variant] = {}
 
 var target: TARGET
+
+const TARGET_MULTIPLIERS = {
+	TARGET.SELF: 1,
+	TARGET.FACE: 1,
+	TARGET.RANDOM_FRIENDLY_CARD: 1,
+	TARGET.RANDOM_ENEMY_CARD: 0.6,
+	TARGET.RANDOM_ENEMY_FACE: 0.6,
+}
 
 
 func get_id():
@@ -64,7 +79,8 @@ func deserialize(data):
 
 
 static func get_target_name(target_value: TARGET):
-	return TARGET.keys()[target_value]
+	var targets: Array = TARGET.keys().slice(1)
+	return targets[target_value]
 
 
 func check_trigger_compatibility(trigger_id: Trigger.TriggerID):
@@ -73,3 +89,8 @@ func check_trigger_compatibility(trigger_id: Trigger.TriggerID):
 
 func get_multiplier(_trigger_id: Trigger.TriggerID):
 	return cost_multiplier
+
+
+func get_target_multiplier():
+	# can add some overrides here using 'self' as the effect.
+	return TARGET_MULTIPLIERS[target]

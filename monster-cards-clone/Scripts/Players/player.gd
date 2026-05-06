@@ -21,12 +21,14 @@ var attacked_by_id: int = 0
 
 const TRIGGER_ID = Trigger.TriggerID
 var triggers_to_signals: Dictionary = {
-	TRIGGER_ID.DRAW_CARD: drawn_card
+	TRIGGER_ID.DRAW_CARD: drawn_card,
+	TRIGGER_ID.ON_FACE_DAMAGED: on_face_damaged,
 }
 
 @onready var label: Label = $HealthLabel
 
 signal drawn_card
+signal on_face_damaged
 
 
 func init(new_player_id: int, new_player_name: String):
@@ -42,8 +44,10 @@ func _ready():
 
 
 func take_damage(amount: int) -> void:
-	print("ouch!")
 	decrease_health(amount)
+
+	if amount > 0:
+		player_trigger(TRIGGER_ID.ON_FACE_DAMAGED)
 
 
 func decrease_health(amount: int) -> void:
@@ -104,16 +108,16 @@ func deserialize(serialized_player: Dictionary):
 	hand.deserialize(serialized_player['hand'])
 
 
-func place_serialized_card_into_slot(serialized_card: Dictionary, slot_id: int) -> BoardCard:
-	return field.place_serialized_card_into_slot(serialized_card, slot_id)
+func place_card_into_slot(card: BoardCard, slot_id: int) -> BoardCard:
+	return field.place_card_into_slot(card, slot_id)
 
 
 func get_id():
 	return player_id
 
 
-func exorcise():
-	field.exorcise()
+func exorcise() -> bool:
+	return field.exorcise()
 
 
 func set_deck(new_deck: Deck):
@@ -172,3 +176,7 @@ func heal(amount: int):
 func player_trigger(trigger_id):
 	print(player_id, ": triggering player trigger: ", trigger_id)
 	triggers_to_signals[trigger_id].emit()
+
+
+func get_random_board_card_data() -> CardData:
+	return field.get_random_card_data()

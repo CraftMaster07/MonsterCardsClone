@@ -6,5 +6,5 @@
 script = ExtResource("1_sfqek")
 id = 50
 display_name = "On Draw Card"
-cost_multiplier = 1.4
+cost_multiplier = 1.6
 metadata/_custom_type_script = "uid://eksx7s2hjxdl"

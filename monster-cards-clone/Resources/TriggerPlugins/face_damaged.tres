@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Trigger" format=3 uid="uid://br5bvw61erpwd"]
+
+[ext_resource type="Script" uid="uid://eksx7s2hjxdl" path="res://Scripts/Board/Card/Ability/trigger.gd" id="1_cjs5q"]
+
+[resource]
+script = ExtResource("1_cjs5q")
+id = 51
+display_name = "On Face Damaged"
+cost_multiplier = 1.3
+metadata/_custom_type_script = "uid://eksx7s2hjxdl"

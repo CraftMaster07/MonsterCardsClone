@@ -110,6 +110,7 @@ func set_effect(effect: Effect) -> void:
 
 func set_trigger(trigger: Trigger) -> void:
 	card_file.set_trigger(trigger)
+	update_display()
 
 
 func get_effect() -> Effect:
@@ -135,6 +136,11 @@ func get_effect_multiplier() -> float:
 
 func get_trigger_multiplier() -> float:
 	return card_file.get_trigger_multiplier()
+
+
+func get_target_multiplier() -> float:
+	return card_file.get_target_multiplier()
+
 
 func _on_card_front_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:

@@ -53,7 +53,7 @@ func deserialize(data: Dictionary):
 	attack = data["attack"]
 	cost = data["cost"]
 
-	if data.has("ability"):
+	if data.has("ability") and data["ability"] != {}:
 		ensure_ability_exists()
 		ability.deserialize(data["ability"])
 	else:
@@ -91,6 +91,10 @@ func get_trigger() -> Trigger:
 
 
 func has_ability() -> bool:
+	return ability != null and ability.is_valid()
+
+
+func has_any_ability() -> bool:
 	return ability != null
 
 
@@ -99,7 +103,7 @@ func remove_ability():
 
 
 func ensure_ability_exists():
-	if not has_ability():
+	if not has_any_ability():
 		ability = Ability.new(null, null)
 
 
@@ -111,3 +115,8 @@ func get_trigger_multiplier() -> float:
 func get_effect_multiplier() -> float:
 	ensure_ability_exists()
 	return ability.get_effect_multiplier()
+
+
+func get_target_multiplier() -> float:
+	ensure_ability_exists()
+	return ability.get_target_multiplier()

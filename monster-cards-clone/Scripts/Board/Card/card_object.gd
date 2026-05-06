@@ -34,3 +34,23 @@ func update_labels():
 func release_card_data():
 	remove_child(card_data)
 	card_data.updated_stats.disconnect(update_labels)
+
+
+func set_owner_id(new_owner_id: int):
+	card_data.owner_id = new_owner_id
+
+
+func get_owner_id() -> int:
+	return card_data.owner_id
+
+
+func get_uuid() -> String:
+	return card_data.uuid
+
+
+func get_trigger_id() -> Trigger.TriggerID:
+	return card_data.get_trigger_id()
+
+
+func run_ability():
+	card_data.run_ability()
