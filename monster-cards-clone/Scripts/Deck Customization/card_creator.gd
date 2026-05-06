@@ -23,6 +23,9 @@ var _current_effects: Array = []
 var _current_targets: Array = []
 var _current_triggers: Array = []
 
+var last_target: int = -1
+var last_trigger: Trigger = null
+
 
 func _ready() -> void:
 	editor_card.set_card_name(name_line_edit.text)
@@ -132,10 +135,11 @@ func update_values_from_loaded_card():
 	attack_spin_box.value = editor_card.get_attack()
 	update_cost()
 
-	ability_toggle_button.button_pressed = editor_card.has_ability()
 	if editor_card.has_ability():
 		update_effect_from_loaded_card()
-		update_trigger_from_loaded_card()
+
+	ability_toggle_button.button_pressed = editor_card.has_ability()
+
 
 
 func update_cost():
@@ -198,14 +202,22 @@ func _on_ability_toggle_button_toggled(toggled_on: bool) -> void:
 func _on_effect_option_button_item_selected(index: int) -> void:
 	var effect = _current_effects[index]
 	update_targets_from_effect(effect)
+	retrive_last_target()
 	_on_target_option_button_item_selected(target_dropdown.get_selected_id())
 	update_triggers_from_effect(effect)
-	update_editor_card_ability()
+	retrive_last_trigger()
+	_on_trigger_option_button_item_selected(trigger_dropdown.get_selected_id())
+
+
+func retrive_last_target():
+	var last_target_index = get_index_from_target(last_target)
+
+	if last_target_index != -1:
+		target_dropdown.select(last_target_index)
 
 
 func update_targets_from_effect(effect: Effect):
 	var valid_targets = effect.target_whitelist.keys()
-	print("valid targets: ", valid_targets)
 	target_dropdown.clear()
 	_current_targets = []
 	
@@ -221,29 +233,40 @@ func update_triggers_from_effect(effect: Effect):
 
 func update_editor_card_ability():
 	editor_card.set_effect(_current_effects[effect_dropdown.get_selected_id()])
+
 	editor_card.set_trigger(_current_triggers[trigger_dropdown.get_selected_id()])
 	update_cost()
 
 
 func _on_target_option_button_item_selected(index: int) -> void:
-	_current_effects[effect_dropdown.get_selected_id()].target = _current_targets[index]
+	last_target = _current_targets[index]
+	_current_effects[effect_dropdown.get_selected_id()].target = last_target
 	update_cost()
 
 
-func _on_trigger_option_button_item_selected(_index: int) -> void:
+func retrive_last_trigger():
+	if not last_trigger: return
+	var last_trigger_index = get_index_from_trigger(last_trigger)
+
+	if last_trigger_index != -1:
+		trigger_dropdown.select(last_trigger_index)
+
+
+func _on_trigger_option_button_item_selected(index: int) -> void:
+	last_trigger = _current_triggers[index]
 	update_editor_card_ability()
 
 
 func update_effect_from_loaded_card():
 	var effect = editor_card.get_effect()
+	last_target = effect.target
+	last_trigger = editor_card.get_trigger()
+
 	effect_dropdown.select(get_index_from_effect(effect))
+	_on_effect_option_button_item_selected(get_index_from_effect(effect))
 
-	update_targets_from_effect(effect)
 	target_dropdown.select(get_index_from_target(effect.target))
-	#_on_target_option_button_item_selected(get_index_from_target(effect.target))
-
-func update_trigger_from_loaded_card():
-	trigger_dropdown.select(get_index_from_trigger(editor_card.get_trigger()))
+	_on_target_option_button_item_selected(get_index_from_target(effect.target))
 
 
 # This is an expensive function, try to avoid calling it too often

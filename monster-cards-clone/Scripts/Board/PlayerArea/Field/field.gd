@@ -51,13 +51,19 @@ func deserialize_slot(slot_data: Dictionary, slot_index: int):
 	slots[slot_index].deserialize(slot_data)
 
 
-func place_serialized_card_into_slot(serialized_card: Dictionary, slot_index: int) -> BoardCard:
-	return slots[slot_index].place_serialized_card(serialized_card)
+func place_card_into_slot(card: BoardCard, slot_index: int) -> BoardCard:
+	return slots[slot_index].place_card(card)
 
 
 func exorcise():
+	var was_ability_activated: bool = false
+
 	for slot in slots:
-		slot.exorcise()
+		if slot.exorcise():
+			was_ability_activated = true
+
+	return was_ability_activated
+	
 
 
 func get_random_card_data() -> CardData:

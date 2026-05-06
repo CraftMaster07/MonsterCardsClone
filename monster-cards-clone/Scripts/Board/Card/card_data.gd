@@ -11,6 +11,7 @@ const STARTING_ATTACK = 1
 const STARTING_COST = 2
 
 var uuid: String
+var owner_id: int
 
 var max_health: int
 var health: int
@@ -21,10 +22,15 @@ var is_ghost: bool = false
 
 var ability: Ability
 
-signal updated_stats()
-signal died()
+const TRIGGER_ID = Trigger.TriggerID
+var triggers_to_signals: Dictionary = {
+	TRIGGER_ID.WHEN_HURT: ouch,
+}
 
-static func create_from_card_file(card_file: CardFile):
+signal updated_stats()
+signal ouch()
+
+static func create_from_card_file(card_file: CardFile, new_owner_id: int = -1) -> CardData:
 	var card_data = CardData.new()
 	card_data.card_name = card_file.card_name
 	card_data.health = card_file.health
@@ -32,10 +38,11 @@ static func create_from_card_file(card_file: CardFile):
 	card_data.attack = card_file.attack
 	card_data.cost = card_file.cost
 	card_data.ability = card_file.ability
+	card_data.owner_id = new_owner_id
 	return card_data
 
 
-func _init(serialized_data: Dictionary = {}):
+func _init(serialized_data: Dictionary = {}, new_owner_id: int = -1):
 	if serialized_data:
 		uuid = serialized_data["uuid"]
 		deserialize(serialized_data)
@@ -45,6 +52,10 @@ func _init(serialized_data: Dictionary = {}):
 		max_health = STARTING_HEALTH
 		attack = STARTING_ATTACK
 		cost = STARTING_COST
+
+	if new_owner_id != -1:
+		owner_id = new_owner_id
+
 	updated_stats.emit()
 
 
@@ -56,6 +67,7 @@ func serialize() -> Dictionary:
 		"attack": attack,
 		"cost": cost,
 		"image_id": image_id,
+		"owner_id": owner_id,
 	}
 
 	if ability:
@@ -78,6 +90,7 @@ func deserialize(serialized: Dictionary):
 	attack = data["attack"]
 	cost = data["cost"]
 	image_id = data["image_id"]
+	owner_id = data["owner_id"]
 
 	if data.has("ability"):
 		ensure_ability_exists()
@@ -97,7 +110,9 @@ func recalculate_cost():
 
 
 func take_damage(amount: int) -> void:
+	if health <= 0: return
 	health -= amount
+	card_trigger(TRIGGER_ID.WHEN_HURT)
 	check_death()
 	updated_stats.emit()
 
@@ -110,7 +125,6 @@ func check_death():
 
 func die():
 	is_ghost = true
-	died.emit()
 
 
 func query_updated_image_id():
@@ -138,6 +152,7 @@ func get_trigger() -> Trigger:
 
 
 func get_trigger_id() -> Trigger.TriggerID:
+	if not ability: return Trigger.TriggerID.INVALID
 	return ability.get_trigger().get_id()
 
 
@@ -160,7 +175,7 @@ func get_ability_signal() -> Signal:
 
 
 func has_ability() -> bool:
-	return ability != null
+	return ability != null and ability.is_valid()
 
 
 func ensure_ability_exists():
@@ -170,3 +185,16 @@ func ensure_ability_exists():
 
 func is_dead() -> bool:
 	return is_ghost
+
+
+func set_owner_id(new_owner_id: int):
+	owner_id = new_owner_id
+
+
+func get_owner_id() -> int:
+	return owner_id
+
+
+func card_trigger(trigger_id):
+	print("card ", uuid, ": triggering card trigger: ", trigger_id)
+	triggers_to_signals[trigger_id].emit()

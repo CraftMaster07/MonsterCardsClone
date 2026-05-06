@@ -7,8 +7,6 @@ extends Control
 
 var card_data: CardData
 
-signal died()
-
 
 func serialize() -> Dictionary:
 	# If we ever need to change that, mind the shadow_deserialize too.
@@ -22,7 +20,6 @@ func deserialize(data: Dictionary):
 func set_card_data(new_card_data: CardData):
 	card_data = new_card_data
 	card_data.updated_stats.connect(update_labels)
-	card_data.died.connect(die)
 	add_child(card_data)
 
 
@@ -39,5 +36,21 @@ func release_card_data():
 	card_data.updated_stats.disconnect(update_labels)
 
 
-func die():
-	died.emit()
+func set_owner_id(new_owner_id: int):
+	card_data.owner_id = new_owner_id
+
+
+func get_owner_id() -> int:
+	return card_data.owner_id
+
+
+func get_uuid() -> String:
+	return card_data.uuid
+
+
+func get_trigger_id() -> Trigger.TriggerID:
+	return card_data.get_trigger_id()
+
+
+func run_ability():
+	card_data.run_ability()

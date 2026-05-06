@@ -17,10 +17,6 @@ func _ready():
 	color_rect.color = base_color
 
 
-func take():
-	push_error("take() not implemented")
-
-
 func is_taken():
 	return card != null
 
@@ -47,8 +43,7 @@ func deserialize(serialized_slot: Dictionary):
 	if serialized_card and card:
 		card.deserialize(serialized_card)
 	elif serialized_card:
-		var new_card_data = CardData.new(serialized_card)
-		place_card(BoardCard.create(new_card_data))
+		place_serialized_card(serialized_card)
 	elif card:
 		remove_card()
 
@@ -77,12 +72,21 @@ func flash_color(flashed_color: Color = error_color):
 	).set_trans(flash_trans_type).set_ease(flash_ease_type)
 
 
-func exorcise():
+func exorcise() -> bool:
+	var was_ability_activated: bool = false
+
 	if card and card.is_ghost():
+		if card.get_trigger_id() == Trigger.TriggerID.WHEN_DESTROYED:
+			card.run_ability()
+			was_ability_activated = true
+
 		remove_card()
+
+	return was_ability_activated
 
 
 func remove_card():
+	if not card: return
 	remove_child(card)
 	card.free()
 	card = null

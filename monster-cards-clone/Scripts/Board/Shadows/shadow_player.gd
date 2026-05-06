@@ -16,7 +16,7 @@ func _init(new_player_id):
 
 
 func create_player_deck(serialized_deck_blueprint: Dictionary):
-	deck.create_deck(serialized_deck_blueprint)
+	deck.create_deck(serialized_deck_blueprint, player_id)
 
 
 func draw_card() -> bool:
@@ -34,8 +34,8 @@ func shadow_serialize() -> Dictionary:
 	}
 
 
-func remove_serialized_card_from_hand(serialized_card: Dictionary):
-	hand.remove_serialized_card_data(serialized_card)
+func remove_hand_card_by_uuid(card_uuid: String):
+	hand.remove_card_data(card_uuid, false)
 
 
 func get_deck_card_data_count() -> int:
@@ -44,3 +44,7 @@ func get_deck_card_data_count() -> int:
 
 func get_hand_card_data_count() -> int:
 	return hand.get_card_data_count()
+
+
+func get_hand_card_data_by_uuid(card_uuid: String) -> CardData:
+	return hand.get_card_data_by_uuid(card_uuid)

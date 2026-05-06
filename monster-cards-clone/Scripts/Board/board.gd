@@ -37,7 +37,7 @@ const PLAYER_AREA_SPAWNER_ADDITIONAL_RADIUS: float = -100.0
 const INITIAL_HAND_CARD_COUNT: int = 3
 const INITIAL_DECK_CARD_COUNT: int = 5 + INITIAL_HAND_CARD_COUNT
 
-signal send_placed_card(serialized_card: Dictionary, slot_id: int)
+signal send_placed_card(card_uuid: String, slot_id: int)
 signal send_end_turn()
 signal send_player_attacked(attacked_id: int)
 
@@ -104,11 +104,10 @@ func _replace_handcard_with_boardcard(card: HandCard, slot: CardSlot):
 	"""
 	card.release_card_data()
 	var new_board_card := BoardCard.create(card.card_data)
-	new_board_card.died.connect(_on_board_card_died)
 	slot.place_card(new_board_card)
 	card.queue_free() # might replace with remove_child
 	sfx_place.play()
-	send_placed_card.emit(new_board_card.serialize(), player_manager.get_slot_id(your_id, slot))
+	send_placed_card.emit(new_board_card.get_uuid(), player_manager.get_slot_id(your_id, slot))
 
 
 func select_card(card: HandCard):
@@ -308,7 +307,10 @@ func check_last_player_was_attacked(last_player_id: int) -> bool:
 
 
 func exorcise():
-	player_manager.exorcise()
+	var run_again: bool = player_manager.exorcise()
+
+	if run_again:
+		exorcise()
 
 
 func remove_player(player_id: int):
@@ -327,7 +329,7 @@ func get_deck_blueprint() -> Dictionary:
 			continue
 		
 		for i in range(deck_file.cards[file_name]):
-			var card_data = CardData.create_from_card_file(card_file)
+			var card_data = CardData.create_from_card_file(card_file, your_id)
 			serialized_card_datas.append(card_data.serialize())
 			card_data.free()
 
@@ -344,10 +346,4 @@ func _on_round_manager_round_number_changed(new_round_number: int) -> void:
 
 func set_deck_file(deck: DeckFile):
 	deck_file = deck
-
-
-func _on_board_card_died():
-	print(str(multiplayer.is_server()) + ": phase: " + str(phase))
-	if phase == Phase.COMBAT: return
-	push_error("should flag the card_data to kill himself")
 

@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Trigger" format=3 uid="uid://cbud2htufe71v"]
+
+[ext_resource type="Script" uid="uid://eksx7s2hjxdl" path="res://Scripts/Board/Card/Ability/trigger.gd" id="1_ojsit"]
+
+[resource]
+script = ExtResource("1_ojsit")
+id = 100
+display_name = "When Hurt"
+cost_multiplier = 1.2
+metadata/_custom_type_script = "uid://eksx7s2hjxdl"

@@ -52,6 +52,7 @@ static func get_all_json_from_path(folder_path: String) -> Array:
 
 
 func load_card(card_path: String) -> EditorCard:
+	print("Loading Card: ", card_path)
 	var card = editor_card_scene.instantiate()
 
 	if not card.load(card_path):
