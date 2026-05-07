@@ -1,12 +1,13 @@
 class_name StatIcon
 extends Control
 
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
+@export var stat_display: RichTextLabel
+@export var stat_texture: TextureRect
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+func update_label(text: String):
+	stat_display.text = text
+
+
+func update_texture(texture: Texture2D):
+	stat_texture.texture = texture

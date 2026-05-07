@@ -1,13 +1,8 @@
 [gd_scene format=3 uid="uid://dhglc6iuiupwr"]
 
-[ext_resource type="Texture2D" uid="uid://f38y60f1hbws" path="res://Assets/Sprites/icon_sheet.png" id="1_khfef"]
 [ext_resource type="Script" uid="uid://defqlj5ckvhbg" path="res://Scripts/Board/stat_icon.gd" id="1_n3x0d"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_s4chi"]
-atlas = ExtResource("1_khfef")
-region = Rect2(16, 0, 16, 16)
-
-[node name="StatIcon" type="Control" unique_id=1099063150]
+[node name="StatIcon" type="Control" unique_id=1099063150 node_paths=PackedStringArray("stat_display", "stat_texture")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -15,6 +10,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_n3x0d")
+stat_display = NodePath("StatTexture/StatDisplay")
+stat_texture = NodePath("StatTexture")
 
 [node name="StatTexture" type="TextureRect" parent="." unique_id=254332620]
 layout_mode = 1
@@ -29,7 +26,6 @@ offset_right = 10.0
 offset_bottom = 10.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = SubResource("AtlasTexture_s4chi")
 
 [node name="StatDisplay" type="RichTextLabel" parent="StatTexture" unique_id=1809435711]
 layout_mode = 1

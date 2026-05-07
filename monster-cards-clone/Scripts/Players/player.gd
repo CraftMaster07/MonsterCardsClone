@@ -14,7 +14,8 @@ var area: PlayerArea
 var deck: Deck
 var field: Field
 var hand: Hand
-var stats_label: Label
+var health_icon: StatIcon
+var mana_icon: StatIcon
 
 var attacking_id: int = 0
 var attacked_by_id: int = 0
@@ -25,8 +26,6 @@ var triggers_to_signals: Dictionary = {
 	TRIGGER_ID.DRAW_CARD: drawn_card,
 	TRIGGER_ID.ON_FACE_DAMAGED: on_face_damaged,
 }
-
-@onready var label: Label = $HealthLabel
 
 signal drawn_card
 signal on_face_damaged
@@ -40,28 +39,66 @@ func init(new_player_id: int, new_player_name: String):
 	mana = STARTING_MANA
 
 
-func _ready():
-	update_stats_label()
+func set_health(value: int):
+	health = value
+	update_health_icon()
+
+
+func heal(amount: int):
+	set_health(min(health + amount, max_health))
 
 
 func take_damage(amount: int) -> void:
-	decrease_health(amount)
+	set_health(health - amount)
 
 	if amount > 0:
 		player_trigger(TRIGGER_ID.ON_FACE_DAMAGED)
 
 
-func decrease_health(amount: int) -> void:
-	health -= amount
-	update_stats_label()
+func set_mana(value: int):
+	mana = value
+	update_mana_icon()
 
 
-func update_stats_label() -> void:
-	stats_label.text = str(health) + "\\" + str(STARTING_HEALTH) + ", " + str(mana)
+func add_mana(mana_amount: int):
+	set_mana(mana + mana_amount)
 
 
-func get_area() -> PlayerArea:
-	return area
+func can_spend_mana(mana_count: int) -> bool:
+	return mana - mana_count >= 0
+
+
+func spend_mana(mana_count: int):
+	if !can_spend_mana(mana_count):
+		push_error("not enough mana")
+
+	set_mana(mana - mana_count)
+
+
+func reset_mana():
+	set_mana(0)
+
+
+func set_health_icon(new_health_icon: StatIcon):
+	health_icon = new_health_icon
+	update_health_icon()
+	
+
+func set_mana_icon(new_mana_icon: StatIcon):
+	mana_icon = new_mana_icon
+	update_mana_icon()
+
+
+func update_health_icon():
+	health_icon.update_label(str(health) + "/" + str(STARTING_HEALTH))
+
+
+func update_mana_icon():
+	mana_icon.update_label(str(mana))
+
+
+func get_area_rotation() -> float:
+	return area.rotation
 
 
 func set_area(new_area: PlayerArea):
@@ -100,10 +137,9 @@ func serialize():
 func deserialize(serialized_player: Dictionary):
 	player_id = serialized_player['player_id']
 	player_name = serialized_player['player_name']
-	health = serialized_player['health']
 	max_health = serialized_player['max_health']
-	mana = serialized_player['mana']
-	update_stats_label()
+	set_health(serialized_player['health'])
+	set_mana(serialized_player['mana'])
 	field.deserialize(serialized_player['field'])
 	deck.deserialize(serialized_player['deck'])
 	hand.deserialize(serialized_player['hand'])
@@ -142,38 +178,6 @@ func update_hand(hand_card_count: int):
 	hand.update_cards(hand_card_count)
 
 
-func add_mana(mana_count: int):
-	mana += mana_count
-	update_stats_label()
-
-
-func can_spend_mana(mana_count: int) -> bool:
-	return mana - mana_count >= 0
-
-
-func spend_mana(mana_count: int):
-	if mana - mana_count < 0:
-		push_error("not enough mana")
-
-	mana -= mana_count
-	update_stats_label()
-
-
-func reset_mana():
-	mana = 0
-	update_stats_label()
-
-
-func get_area_rotation() -> float:
-	return area.rotation
-
-
-func heal(amount: int):
-	health += amount
-	health = min(health, max_health)
-	update_stats_label()
-
-
 func player_trigger(trigger_id):
 	print(player_id, ": triggering player trigger: ", trigger_id)
 	triggers_to_signals[trigger_id].emit()
@@ -181,4 +185,3 @@ func player_trigger(trigger_id):
 
 func get_random_board_card_data() -> CardData:
 	return field.get_random_card_data()
-

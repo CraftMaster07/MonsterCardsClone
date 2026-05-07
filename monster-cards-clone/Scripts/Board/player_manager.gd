@@ -100,6 +100,14 @@ func set_player_deck(deck: Deck, player_id: int):
 
 func set_player_hand(hand: Hand, player_id: int):
 	get_player(player_id).set_hand(hand)
+	
+
+func set_player_health_icon(health_icon: StatIcon, player_id: int):
+	get_player(player_id).set_health_icon(health_icon)
+	
+
+func set_player_mana_icon(mana_icon: StatIcon, player_id: int):
+	get_player(player_id).set_mana_icon(mana_icon)
 
 
 func set_your_id(id: int):

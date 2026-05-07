@@ -7,14 +7,7 @@
 custom_minimum_size = Vector2(0, 50)
 script = ExtResource("2_bnq1i")
 
-[node name="HealthLabel" parent="." index="0" unique_id=1082498548]
-offset_left = 3.0
-offset_top = 40.0
-offset_right = 81.0
-offset_bottom = 63.0
-text = "E"
-
-[node name="Button" type="Button" parent="." index="1" unique_id=2039981296]
+[node name="Button" type="Button" parent="." index="0" unique_id=2039981296]
 layout_mode = 0
 offset_left = 101.0
 offset_top = 33.0

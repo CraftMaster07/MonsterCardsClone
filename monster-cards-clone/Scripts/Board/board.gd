@@ -179,6 +179,8 @@ func set_first_player_area(player_area: PlayerArea):
 	set_player_field(player_area.get_field(), player_id)
 	set_player_deck(player_area.get_deck(), player_id)
 	set_player_hand(player_area.get_hand(), player_id)
+	set_player_health_icon(player_area.get_health_icon(), player_id)
+	set_player_mana_icon(player_area.get_mana_icon(), player_id)
 
 	unassigned_area_player_ids.remove_at(0)
 
@@ -205,6 +207,8 @@ func set_your_area(player_area: PlayerArea):
 	set_your_field(player_area.get_field())
 	set_player_deck(player_area.get_deck(), your_id)
 	set_your_hand(player_area.get_hand())
+	set_player_health_icon(player_area.get_health_icon(), your_id)
+	set_player_mana_icon(player_area.get_mana_icon(), your_id)
 
 
 func set_player_area(area: PlayerArea, player_id: int):
@@ -221,6 +225,14 @@ func set_player_deck(deck: Deck, player_id: int):
 
 func set_player_hand(hand: Hand, player_id: int):
 	player_manager.set_player_hand(hand, player_id)
+
+
+func set_player_health_icon(health_icon: StatIcon, player_id: int):
+	player_manager.set_player_health_icon(health_icon, player_id)
+	
+
+func set_player_mana_icon(mana_icon: StatIcon, player_id: int):
+	player_manager.set_player_mana_icon(mana_icon, player_id)
 
 
 func verify_card_placement(
@@ -346,4 +358,3 @@ func _on_round_manager_round_number_changed(new_round_number: int) -> void:
 
 func set_deck_file(deck: DeckFile):
 	deck_file = deck
-

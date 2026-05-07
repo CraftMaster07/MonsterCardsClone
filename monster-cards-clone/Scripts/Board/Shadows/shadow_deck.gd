@@ -19,5 +19,3 @@ func create_deck(serialized_deck_blueprint: Dictionary, owner_id: int):
 		var new_card_data = CardData.new(serialized_card_data, owner_id)
 		new_card_data.recalculate_cost()
 		add_card_data(new_card_data)
-
-

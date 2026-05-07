@@ -181,7 +181,7 @@ func integrate_client_card(player_id: int, card_data: CardData):
 		card_data.run_ability()
 
 
-func _replace_handcard_with_boardcard(card: HandCard, slot: EnemyCardSlot):
+func _replace_handcard_with_boardcard(card: HandCard, slot: CardSlot):
 	super._replace_handcard_with_boardcard(card, slot)
 	shadow_player_manager.remove_hand_card_by_uuid(your_id, card.get_card_data().uuid)
 	integrate_client_card(your_id, card.get_card_data())
