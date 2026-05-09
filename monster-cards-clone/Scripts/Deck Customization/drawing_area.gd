@@ -24,15 +24,19 @@ func _on_area_2d_input_event(_viewport: Node, event: InputEvent, _shape_idx: int
 			_pressed = event.pressed
 
 			if _pressed:
-				_current_line = Line2D.new()
-				_current_line.default_color = color
-				_current_line.width = width
-				_lines.add_child(_current_line)
+				init_line()
 				_current_line.add_point(event.position)
 
 	elif _pressed and event is InputEventMouseMotion:
 		_current_line.add_point(event.position)
 
 
-func _on_area_2d_mouse_exited() -> void:
-	_pressed = false
+func init_line():
+	_current_line = Line2D.new()
+	_current_line.default_color = color
+	_current_line.width = width
+	_lines.add_child(_current_line)
+
+
+func _on_area_2d_mouse_entered() -> void:
+	init_line()

@@ -72,6 +72,6 @@ layout_mode = 2
 text = "                "
 
 [connection signal="input_event" from="DrawingArea/Sprite2D/Area2D" to="DrawingArea" method="_on_area_2d_input_event"]
-[connection signal="mouse_exited" from="DrawingArea/Sprite2D/Area2D" to="DrawingArea" method="_on_area_2d_mouse_exited"]
+[connection signal="mouse_entered" from="DrawingArea/Sprite2D/Area2D" to="DrawingArea" method="_on_area_2d_mouse_entered"]
 [connection signal="color_changed" from="GridContainer/ColorPickerButton" to="." method="_on_color_picker_button_color_changed"]
 [connection signal="value_changed" from="GridContainer/WidthSpinBox" to="." method="_on_width_spin_box_value_changed"]
