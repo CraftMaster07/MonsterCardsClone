@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://cuhxwceyo2um7"]
 
-[ext_resource type="Script" uid="uid://6aebb54akecq" path="res://Scripts/Deck Customization/sprite_editor.gd" id="1_g7bsa"]
-[ext_resource type="Script" uid="uid://cm3r6ug1vkgal" path="res://Scripts/Deck Customization/drawing_area.gd" id="2_g8u3v"]
-[ext_resource type="Texture2D" uid="uid://cytxqaqfo4gqk" path="res://Assets/Sprites/cardslot.png" id="3_ox54a"]
+[ext_resource type="Script" uid="uid://6aebb54akecq" path="res://Scripts/SpriteEditor/sprite_editor.gd" id="1_h6sau"]
+[ext_resource type="Script" uid="uid://cm3r6ug1vkgal" path="res://Scripts/SpriteEditor/drawing_area.gd" id="2_tnh67"]
+[ext_resource type="Texture2D" uid="uid://cytxqaqfo4gqk" path="res://Assets/Sprites/cardslot.png" id="3_ap8m7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8eexi"]
 size = Vector2(64, 96)
@@ -15,7 +15,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-script = ExtResource("1_g7bsa")
+script = ExtResource("1_h6sau")
 color_picker_button = NodePath("GridContainer/ColorPickerButton")
 width_spin_box = NodePath("GridContainer/WidthSpinBox")
 drawing_area = NodePath("DrawingArea")
@@ -29,11 +29,11 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("2_g8u3v")
+script = ExtResource("2_tnh67")
 
 [node name="Sprite2D" type="Sprite2D" parent="DrawingArea" unique_id=804236532]
 scale = Vector2(4, 4)
-texture = ExtResource("3_ox54a")
+texture = ExtResource("3_ap8m7")
 
 [node name="Area2D" type="Area2D" parent="DrawingArea/Sprite2D" unique_id=1156310728]
 
@@ -71,7 +71,42 @@ value = 5.0
 layout_mode = 2
 text = "                "
 
+[node name="LinesButton" type="Button" parent="." unique_id=1777358063]
+layout_mode = 0
+offset_left = 857.1641
+offset_top = 416.7247
+offset_right = 865.1641
+offset_bottom = 424.7247
+text = "lines"
+
+[node name="GridContainer2" type="GridContainer" parent="." unique_id=260635264]
+layout_mode = 0
+offset_left = 193.0
+offset_top = 1.0
+offset_right = 233.0
+offset_bottom = 41.0
+columns = 2
+
+[node name="Button" type="Button" parent="GridContainer2" unique_id=1699044424]
+layout_mode = 2
+
+[node name="UndoButton" type="Button" parent="." unique_id=1411378479]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 20.0
+offset_top = -15.5
+offset_right = 70.0
+offset_bottom = 15.5
+grow_vertical = 2
+text = "Undo"
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]
 [connection signal="input_event" from="DrawingArea/Sprite2D/Area2D" to="DrawingArea" method="_on_area_2d_input_event"]
 [connection signal="mouse_entered" from="DrawingArea/Sprite2D/Area2D" to="DrawingArea" method="_on_area_2d_mouse_entered"]
+[connection signal="mouse_exited" from="DrawingArea/Sprite2D/Area2D" to="DrawingArea" method="_on_area_2d_mouse_exited"]
 [connection signal="color_changed" from="GridContainer/ColorPickerButton" to="." method="_on_color_picker_button_color_changed"]
 [connection signal="value_changed" from="GridContainer/WidthSpinBox" to="." method="_on_width_spin_box_value_changed"]
+[connection signal="pressed" from="LinesButton" to="DrawingArea" method="_on_lines_button_pressed"]
+[connection signal="pressed" from="UndoButton" to="." method="_on_undo_button_pressed"]
