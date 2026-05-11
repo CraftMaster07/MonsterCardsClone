@@ -11,7 +11,7 @@ var width: float = 5
 
 
 func _ready() -> void:
-	use_tool(Pen.new(_lines, color, width))
+	set_pen()
 
 
 func use_tool(tool: DrawingTool) -> void:
@@ -61,17 +61,11 @@ func _on_area_2d_mouse_entered() -> void:
 		_tool.on_press(get_global_mouse_position())
 
 
-func _on_area_2d_mouse_exited() -> void:
-	# if _tool:
-	# 	_tool.on_canvas_exit()
-	pass
-
-
-func _on_lines_button_pressed() -> void:
-	print(_lines.get_children())
-
-
 func undo() -> void:
 	if not _lines.get_child_count(): return
 
 	_lines.get_child(_lines.get_child_count() - 1).queue_free()
+
+
+func set_pen() -> void:
+	use_tool(Pen.new(_lines, color, width))

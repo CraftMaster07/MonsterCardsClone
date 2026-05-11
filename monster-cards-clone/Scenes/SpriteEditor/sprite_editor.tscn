@@ -71,14 +71,6 @@ value = 5.0
 layout_mode = 2
 text = "                "
 
-[node name="LinesButton" type="Button" parent="." unique_id=1777358063]
-layout_mode = 0
-offset_left = 857.1641
-offset_top = 416.7247
-offset_right = 865.1641
-offset_bottom = 424.7247
-text = "lines"
-
 [node name="GridContainer2" type="GridContainer" parent="." unique_id=260635264]
 layout_mode = 0
 offset_left = 193.0
@@ -87,8 +79,9 @@ offset_right = 233.0
 offset_bottom = 41.0
 columns = 2
 
-[node name="Button" type="Button" parent="GridContainer2" unique_id=1699044424]
+[node name="PenButton" type="Button" parent="GridContainer2" unique_id=1699044424]
 layout_mode = 2
+text = "Pen"
 
 [node name="UndoButton" type="Button" parent="." unique_id=1411378479]
 layout_mode = 1
@@ -105,8 +98,7 @@ text = "Undo"
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]
 [connection signal="input_event" from="DrawingArea/Sprite2D/Area2D" to="DrawingArea" method="_on_area_2d_input_event"]
 [connection signal="mouse_entered" from="DrawingArea/Sprite2D/Area2D" to="DrawingArea" method="_on_area_2d_mouse_entered"]
-[connection signal="mouse_exited" from="DrawingArea/Sprite2D/Area2D" to="DrawingArea" method="_on_area_2d_mouse_exited"]
 [connection signal="color_changed" from="GridContainer/ColorPickerButton" to="." method="_on_color_picker_button_color_changed"]
 [connection signal="value_changed" from="GridContainer/WidthSpinBox" to="." method="_on_width_spin_box_value_changed"]
-[connection signal="pressed" from="LinesButton" to="DrawingArea" method="_on_lines_button_pressed"]
+[connection signal="pressed" from="GridContainer2/PenButton" to="." method="_on_pen_button_pressed"]
 [connection signal="pressed" from="UndoButton" to="." method="_on_undo_button_pressed"]

@@ -26,3 +26,7 @@ func _on_width_spin_box_value_changed(value: float) -> void:
 
 func _on_undo_button_pressed() -> void:
 	drawing_area.undo()
+
+
+func _on_pen_button_pressed() -> void:
+	drawing_area.set_pen()
