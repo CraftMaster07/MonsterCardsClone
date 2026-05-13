@@ -6,7 +6,7 @@ var width: float
 var _line: Line2D
 
 
-func _init(new_canvas: Node2D, new_color: Color, new_width: float) -> void:
+func _init(new_canvas: Node, new_color: Color, new_width: float) -> void:
 	canvas = new_canvas
 	color = new_color
 	width = new_width

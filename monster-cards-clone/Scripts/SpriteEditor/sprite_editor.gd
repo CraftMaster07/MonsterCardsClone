@@ -14,6 +14,8 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("ui_undo"):
 		drawing_area.undo()
+	elif Input.is_action_just_pressed("ui_redo"):
+		drawing_area.redo()
 
 
 func _on_color_picker_button_color_changed(color: Color) -> void:
@@ -30,3 +32,7 @@ func _on_undo_button_pressed() -> void:
 
 func _on_pen_button_pressed() -> void:
 	drawing_area.set_pen()
+
+
+func _on_redo_button_pressed() -> void:
+	drawing_area.redo()

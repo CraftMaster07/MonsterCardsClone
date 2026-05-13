@@ -2,11 +2,11 @@ class_name DrawingTool
 extends RefCounted
 
 
-var canvas: Node2D
+var canvas: Node
 var color: Color
 
 
-func _init(new_canvas: Node2D, new_color: Color) -> void:
+func _init(new_canvas: Node, new_color: Color) -> void:
     canvas = new_canvas
     color = new_color
 

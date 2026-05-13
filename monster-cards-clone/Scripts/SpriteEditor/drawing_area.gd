@@ -1,7 +1,8 @@
 extends Control
 
 
-@onready var _lines: Node2D = $Line2D
+@export var _lines: Node
+var _undo_stack: Array
 
 var _pressed: bool = false
 var _tool: DrawingTool
@@ -63,8 +64,17 @@ func _on_area_2d_mouse_entered() -> void:
 
 func undo() -> void:
 	if not _lines.get_child_count(): return
+	var child = _lines.get_child(_lines.get_child_count() - 1)
+	child.visible = false
+	_lines.remove_child(child)
+	_undo_stack.append(child)
 
-	_lines.get_child(_lines.get_child_count() - 1).queue_free()
+
+func redo() -> void:
+	if not _undo_stack.size(): return
+	var child = _undo_stack.pop_back()
+	_lines.add_child(child)
+	child.visible = true
 
 
 func set_pen() -> void:

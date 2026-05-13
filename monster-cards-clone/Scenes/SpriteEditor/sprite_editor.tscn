@@ -20,7 +20,7 @@ color_picker_button = NodePath("GridContainer/ColorPickerButton")
 width_spin_box = NodePath("GridContainer/WidthSpinBox")
 drawing_area = NodePath("DrawingArea")
 
-[node name="DrawingArea" type="Control" parent="." unique_id=694836000]
+[node name="DrawingArea" type="Control" parent="." unique_id=694836000 node_paths=PackedStringArray("_lines")]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -30,6 +30,7 @@ anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("2_tnh67")
+_lines = NodePath("Lines")
 
 [node name="Sprite2D" type="Sprite2D" parent="DrawingArea" unique_id=804236532]
 scale = Vector2(4, 4)
@@ -40,8 +41,7 @@ texture = ExtResource("3_ap8m7")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DrawingArea/Sprite2D/Area2D" unique_id=383426475]
 shape = SubResource("RectangleShape2D_8eexi")
 
-[node name="Line2D" type="Line2D" parent="DrawingArea" unique_id=469563914]
-position = Vector2(-576, -324)
+[node name="Lines" type="Node" parent="DrawingArea" unique_id=1987638695]
 
 [node name="GridContainer" type="GridContainer" parent="." unique_id=1495519806]
 layout_mode = 0
@@ -83,17 +83,24 @@ columns = 2
 layout_mode = 2
 text = "Pen"
 
-[node name="UndoButton" type="Button" parent="." unique_id=1411378479]
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1728520509]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
 offset_left = 20.0
-offset_top = -15.5
+offset_top = -33.0
 offset_right = 70.0
-offset_bottom = 15.5
+offset_bottom = 33.0
 grow_vertical = 2
+
+[node name="UndoButton" type="Button" parent="VBoxContainer" unique_id=1411378479]
+layout_mode = 2
 text = "Undo"
+
+[node name="RedoButton" type="Button" parent="VBoxContainer" unique_id=40142081]
+layout_mode = 2
+text = "Redo"
 
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]
 [connection signal="input_event" from="DrawingArea/Sprite2D/Area2D" to="DrawingArea" method="_on_area_2d_input_event"]
@@ -101,4 +108,5 @@ text = "Undo"
 [connection signal="color_changed" from="GridContainer/ColorPickerButton" to="." method="_on_color_picker_button_color_changed"]
 [connection signal="value_changed" from="GridContainer/WidthSpinBox" to="." method="_on_width_spin_box_value_changed"]
 [connection signal="pressed" from="GridContainer2/PenButton" to="." method="_on_pen_button_pressed"]
-[connection signal="pressed" from="UndoButton" to="." method="_on_undo_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/UndoButton" to="." method="_on_undo_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/RedoButton" to="." method="_on_redo_button_pressed"]
