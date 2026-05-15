@@ -2,10 +2,10 @@
 
 [ext_resource type="Script" uid="uid://6aebb54akecq" path="res://Scripts/SpriteEditor/sprite_editor.gd" id="1_h6sau"]
 [ext_resource type="Script" uid="uid://cm3r6ug1vkgal" path="res://Scripts/SpriteEditor/drawing_area.gd" id="2_tnh67"]
-[ext_resource type="Texture2D" uid="uid://c0h7n7l8mahps" path="res://Assets/Sprites/card_background.png" id="3_h6sau"]
+[ext_resource type="PackedScene" uid="uid://dvuwnpix1o7ux" path="res://Scenes/SpriteEditor/card_image.tscn" id="3_h6sau"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_8eexi"]
-size = Vector2(58.75, 89)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h6sau"]
+size = Vector2(14.625, 22.1875)
 
 [node name="SpriteEditor" type="Control" unique_id=2103006352 node_paths=PackedStringArray("color_picker_button", "width_spin_box", "drawing_area")]
 layout_mode = 3
@@ -20,7 +20,7 @@ color_picker_button = NodePath("GridContainer/ColorPickerButton")
 width_spin_box = NodePath("GridContainer/WidthSpinBox")
 drawing_area = NodePath("DrawingArea")
 
-[node name="DrawingArea" type="Control" parent="." unique_id=694836000 node_paths=PackedStringArray("_lines")]
+[node name="DrawingArea" type="Control" parent="." unique_id=694836000 node_paths=PackedStringArray("card_image")]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -30,19 +30,16 @@ anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("2_tnh67")
-_lines = NodePath("Lines")
+card_image = NodePath("CardImage")
 
-[node name="Sprite2D" type="Sprite2D" parent="DrawingArea" unique_id=804236532]
+[node name="CardImage" parent="DrawingArea" unique_id=284033995 instance=ExtResource("3_h6sau")]
+
+[node name="Area2D" type="Area2D" parent="DrawingArea/CardImage" unique_id=138192682]
 scale = Vector2(4, 4)
-texture = ExtResource("3_h6sau")
 
-[node name="Area2D" type="Area2D" parent="DrawingArea/Sprite2D" unique_id=1156310728]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DrawingArea/Sprite2D/Area2D" unique_id=383426475]
-position = Vector2(-0.125, 0)
-shape = SubResource("RectangleShape2D_8eexi")
-
-[node name="Lines" type="Node" parent="DrawingArea" unique_id=1987638695]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DrawingArea/CardImage/Area2D" unique_id=1205961307]
+position = Vector2(0, 0.03125)
+shape = SubResource("RectangleShape2D_h6sau")
 
 [node name="GridContainer" type="GridContainer" parent="." unique_id=1495519806]
 layout_mode = 0
@@ -124,8 +121,7 @@ layout_mode = 2
 text = "Save"
 
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]
-[connection signal="input_event" from="DrawingArea/Sprite2D/Area2D" to="DrawingArea" method="_on_area_2d_input_event"]
-[connection signal="mouse_entered" from="DrawingArea/Sprite2D/Area2D" to="DrawingArea" method="_on_area_2d_mouse_entered"]
+[connection signal="input_event" from="DrawingArea/CardImage/Area2D" to="DrawingArea" method="_on_area_2d_input_event"]
 [connection signal="color_changed" from="GridContainer/ColorPickerButton" to="." method="_on_color_picker_button_color_changed"]
 [connection signal="value_changed" from="GridContainer/WidthSpinBox" to="." method="_on_width_spin_box_value_changed"]
 [connection signal="pressed" from="GridContainer2/PenButton" to="." method="_on_pen_button_pressed"]

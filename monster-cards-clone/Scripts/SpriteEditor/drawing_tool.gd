@@ -2,12 +2,12 @@ class_name DrawingTool
 extends RefCounted
 
 
-var canvas: Node
+var card_image: Node
 var color: Color
 
 
-func _init(new_canvas: Node, new_color: Color) -> void:
-    canvas = new_canvas
+func _init(new_card_image: Node, new_color: Color) -> void:
+    card_image = new_card_image
     color = new_color
 
 

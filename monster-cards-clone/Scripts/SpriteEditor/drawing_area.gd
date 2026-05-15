@@ -1,7 +1,7 @@
 extends Control
 
 
-@export var _lines: Node
+@export var card_image: CardImage
 var _undo_stack: Array
 
 var _pressed: bool = false
@@ -62,35 +62,30 @@ func _on_area_2d_mouse_entered() -> void:
 
 
 func undo() -> void:
-	if not _lines.get_child_count(): return
-	var child = _lines.get_child(_lines.get_child_count() - 1)
+	var child = card_image.pop_line()
 	child.visible = false
-	_lines.remove_child(child)
 	_undo_stack.append(child)
 
 
 func redo() -> void:
 	if not _undo_stack.size(): return
 	var child = _undo_stack.pop_back()
-	_lines.add_child(child)
+	card_image.add_line(child)
 	child.visible = true
 
 
 func set_pen() -> void:
-	use_tool(Pen.new(_lines, color, width))
+	use_tool(Pen.new(card_image, color, width))
 
 
 # func set_fill() -> void:
-# 	use_tool(Fill.new(_lines, color))
+# 	use_tool(Fill.new(card_image, color))
 
 
-# ── Save / Load ───────────────────────────────────────────────────────────────
-
-func save() -> void:
-	SaveLoad.save(_lines)
+func save():
+	card_image.save()
 
 
-func load() -> void:
-	# Loading replaces all canvas content, so the old undo stack is meaningless
+func load():
 	_undo_stack.clear()
-	SaveLoad.load_into(_lines)
+	card_image.load()

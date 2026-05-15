@@ -6,8 +6,8 @@ var width: float
 var _line: Line2D
 
 
-func _init(new_canvas: Node, new_color: Color, new_width: float) -> void:
-	canvas = new_canvas
+func _init(new_card_image: Node, new_color: Color, new_width: float) -> void:
+	card_image = new_card_image
 	color = new_color
 	width = new_width
 
@@ -25,7 +25,7 @@ func init_line():
 	_line = Line2D.new()
 	_line.default_color = color
 	_line.width = width
-	canvas.add_child(_line)
+	card_image.add_line(_line)
 
 
 func on_drag(pos: Vector2) -> void:
