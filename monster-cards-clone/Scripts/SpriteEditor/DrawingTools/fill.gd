@@ -54,8 +54,8 @@ func on_press(pos: Vector2) -> void:
 	var poly := Polygon2D.new()
 	poly.polygon = PackedVector2Array(contour)
 	poly.color = color
+	poly.z_index = -1
 	canvas.add_child(poly)
-	canvas.move_child(poly, 0)
 
 
 # ── Raster bounds ─────────────────────────────────────────────────────────────
