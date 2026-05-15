@@ -36,3 +36,11 @@ func _on_pen_button_pressed() -> void:
 
 func _on_redo_button_pressed() -> void:
 	drawing_area.redo()
+
+
+func _on_save_button_pressed() -> void:
+	drawing_area.save()
+
+
+func _on_load_button_pressed() -> void:
+	drawing_area.load()

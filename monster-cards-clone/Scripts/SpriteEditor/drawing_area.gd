@@ -38,7 +38,6 @@ func _on_area_2d_input_event(_viewport: Node, event: InputEvent, _shape_idx: int
 
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT:
-			print(event)
 			_pressed = event.pressed
 
 			if _pressed:
@@ -79,3 +78,19 @@ func redo() -> void:
 
 func set_pen() -> void:
 	use_tool(Pen.new(_lines, color, width))
+
+
+# func set_fill() -> void:
+# 	use_tool(Fill.new(_lines, color))
+
+
+# ── Save / Load ───────────────────────────────────────────────────────────────
+
+func save() -> void:
+	SaveLoad.save(_lines)
+
+
+func load() -> void:
+	# Loading replaces all canvas content, so the old undo stack is meaningless
+	_undo_stack.clear()
+	SaveLoad.load_into(_lines)
