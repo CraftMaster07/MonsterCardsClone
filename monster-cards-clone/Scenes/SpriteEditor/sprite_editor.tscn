@@ -83,6 +83,10 @@ columns = 2
 layout_mode = 2
 text = "Pen"
 
+[node name="FillButton" type="Button" parent="GridContainer2" unique_id=128596232]
+layout_mode = 2
+text = "Fill"
+
 [node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1728520509]
 layout_mode = 1
 anchors_preset = 4
@@ -108,5 +112,6 @@ text = "Redo"
 [connection signal="color_changed" from="GridContainer/ColorPickerButton" to="." method="_on_color_picker_button_color_changed"]
 [connection signal="value_changed" from="GridContainer/WidthSpinBox" to="." method="_on_width_spin_box_value_changed"]
 [connection signal="pressed" from="GridContainer2/PenButton" to="." method="_on_pen_button_pressed"]
+[connection signal="pressed" from="GridContainer2/FillButton" to="." method="_on_fill_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/UndoButton" to="." method="_on_undo_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/RedoButton" to="." method="_on_redo_button_pressed"]

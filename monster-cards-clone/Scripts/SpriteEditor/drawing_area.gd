@@ -79,3 +79,7 @@ func redo() -> void:
 
 func set_pen() -> void:
 	use_tool(Pen.new(_lines, color, width))
+
+
+func set_fill() -> void:
+	use_tool(Fill.new(_lines, color))
