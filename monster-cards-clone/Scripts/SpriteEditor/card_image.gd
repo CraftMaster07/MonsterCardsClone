@@ -1,5 +1,5 @@
 class_name CardImage
-extends Sprite2D
+extends TextureButton
 
 
 @export var _lines: Node
@@ -22,9 +22,9 @@ func pop_line() -> Node:
 
 # ── Save / Load ───────────────────────────────────────────────────────────────
 
-func save() -> void:
-	SaveLoad.save(_lines)
+func serialize() -> Dictionary:
+	return SaveLoad.serialize(_lines)
 
 
-func load() -> void:
-	SaveLoad.load_into(_lines)
+func deserialize(data: Dictionary) -> void:
+	SaveLoad.deserialize(data, _lines)

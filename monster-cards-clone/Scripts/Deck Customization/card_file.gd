@@ -6,6 +6,7 @@ var file_name: String = ""
 var health: int = 0
 var attack: int = 0
 var cost: int = 0
+var serialized_card_image: String = ""
 
 var ability: Ability
 
@@ -26,6 +27,7 @@ func serialize() -> Dictionary:
 		"health": health,
 		"attack": attack,
 		"cost": cost,
+		"serialized_card_image": serialized_card_image
 	}
 
 	if has_ability():
@@ -52,6 +54,7 @@ func deserialize(data: Dictionary):
 	health = data["health"]
 	attack = data["attack"]
 	cost = data["cost"]
+	serialized_card_image = data["card_image"]
 
 	if data.has("ability") and data["ability"] != {}:
 		ensure_ability_exists()

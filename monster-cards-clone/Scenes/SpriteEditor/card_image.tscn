@@ -3,9 +3,12 @@
 [ext_resource type="Script" uid="uid://dimbgeovrc2dj" path="res://Scripts/SpriteEditor/card_image.gd" id="1_8c1jh"]
 [ext_resource type="Texture2D" uid="uid://c0h7n7l8mahps" path="res://Assets/Sprites/card_background.png" id="1_pyv1n"]
 
-[node name="CardImage" type="Sprite2D" unique_id=284033995 node_paths=PackedStringArray("_lines")]
-scale = Vector2(4, 4)
-texture = ExtResource("1_pyv1n")
+[node name="CardImage" type="TextureButton" unique_id=2016520900 node_paths=PackedStringArray("_lines")]
+offset_right = 60.0
+offset_bottom = 90.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture_normal = ExtResource("1_pyv1n")
 script = ExtResource("1_8c1jh")
 _lines = NodePath("Lines")
 

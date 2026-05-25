@@ -7,7 +7,7 @@ const SAVE_PATH := "user://sprite.json"
 
 # ── Save ─────────────────────────────────────────────────────────────────────
 
-static func save(lines: Node) -> void:
+static func serialize(lines: Node) -> Dictionary:
 	var nodes: Array = []
 
 	for child in lines.get_children():
@@ -16,16 +16,7 @@ static func save(lines: Node) -> void:
 		elif child is Polygon2D:
 			nodes.append(_serialize_polygon(child))
 
-	var data := {"version": VERSION, "nodes": nodes}
-	var json := JSON.stringify(data, "\t")
-
-	var file := FileAccess.open(SAVE_PATH, FileAccess.WRITE)
-	if not file:
-		push_error("SaveLoad: could not open %s for writing" % SAVE_PATH)
-		return
-	file.store_string(json)
-	file.close()
-	print("Saved %d nodes to %s" % [nodes.size(), SAVE_PATH])
+	return {"nodes": JSON.stringify(nodes, "\t")}
 
 
 static func _serialize_line(line: Line2D) -> Dictionary:
@@ -59,20 +50,10 @@ static func _color_to_array(c: Color) -> Array:
 
 # ── Load ─────────────────────────────────────────────────────────────────────
 
-static func load_into(lines: Node) -> void:
-	if not FileAccess.file_exists(SAVE_PATH):
-		push_warning("SaveLoad: no save file found at %s" % SAVE_PATH)
-		return
+static func deserialize(data: Dictionary, lines: Node) -> void:
 
-	var file := FileAccess.open(SAVE_PATH, FileAccess.READ)
-	if not file:
-		push_error("SaveLoad: could not open %s for reading" % SAVE_PATH)
-		return
-	var raw := file.get_as_text()
-	file.close()
-
-	var data = JSON.parse_string(raw)
-	if not data is Dictionary:
+	var nodes = JSON.parse_string(data["nodes"])
+	if not nodes is Dictionary:
 		push_error("SaveLoad: invalid JSON in %s" % SAVE_PATH)
 		return
 
@@ -81,12 +62,10 @@ static func load_into(lines: Node) -> void:
 		lines.remove_child(child)
 		child.queue_free()
 
-	for entry in data.get("nodes", []):
+	for entry in nodes.get("nodes", []):
 		match entry.get("type", ""):
 			"line":    lines.add_child(_deserialize_line(entry))
 			"polygon": lines.add_child(_deserialize_polygon(entry))
-
-	print("Loaded %d nodes from %s" % [data["nodes"].size(), SAVE_PATH])
 
 
 static func _deserialize_line(d: Dictionary) -> Line2D:

@@ -3,6 +3,7 @@
 [ext_resource type="Theme" uid="uid://f2a4ylwdbwtx" path="res://Assets/Styles/main_theme.tres" id="1_sgpad"]
 [ext_resource type="Texture2D" uid="uid://f38y60f1hbws" path="res://Assets/Sprites/icon_sheet.png" id="2_3ak4q"]
 [ext_resource type="Script" uid="uid://dbmogwg2kqhsg" path="res://Scripts/Board/Card/card_front.gd" id="2_uemhk"]
+[ext_resource type="PackedScene" uid="uid://dvuwnpix1o7ux" path="res://Scenes/SpriteEditor/card_image.tscn" id="4_uemhk"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bnspj"]
 atlas = ExtResource("2_3ak4q")
@@ -33,17 +34,12 @@ attack_label = NodePath("attackTexture/attackDisplay")
 cost_label = NodePath("costTexture/costDisplay")
 ability_signature_label = NodePath("abilitySignature")
 
-[node name="ColorRect" type="ColorRect" parent="." unique_id=289001140]
-layout_mode = 1
-offset_right = 60.0
-offset_bottom = 90.0
-mouse_filter = 2
-color = Color(0.2784314, 0.54901963, 0.7490196, 1)
+[node name="CardImage" parent="." unique_id=2016520900 instance=ExtResource("4_uemhk")]
+layout_mode = 0
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=1672797238]
 layout_mode = 1
 anchors_preset = -1
-
 anchor_top = 0.1
 anchor_right = 1.0
 anchor_bottom = 0.3
