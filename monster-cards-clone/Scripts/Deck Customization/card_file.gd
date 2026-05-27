@@ -6,7 +6,7 @@ var file_name: String = ""
 var health: int = 0
 var attack: int = 0
 var cost: int = 0
-var serialized_card_image: String = ""
+var serialized_card_image: Dictionary
 
 var ability: Ability
 
@@ -27,7 +27,7 @@ func serialize() -> Dictionary:
 		"health": health,
 		"attack": attack,
 		"cost": cost,
-		"serialized_card_image": serialized_card_image
+		"serialized_card_image": serialized_card_image if serialized_card_image else {}
 	}
 
 	if has_ability():
@@ -54,7 +54,9 @@ func deserialize(data: Dictionary):
 	health = data["health"]
 	attack = data["attack"]
 	cost = data["cost"]
-	serialized_card_image = data["card_image"]
+
+	if data.has("serialized_card_image") and data["serialized_card_image"] != {}:
+		serialized_card_image = data["serialized_card_image"]
 
 	if data.has("ability") and data["ability"] != {}:
 		ensure_ability_exists()
@@ -123,3 +125,11 @@ func get_effect_multiplier() -> float:
 func get_target_multiplier() -> float:
 	ensure_ability_exists()
 	return ability.get_target_multiplier()
+
+
+func set_serialized_card_image(new_serialized_card_image: Dictionary):
+	serialized_card_image = new_serialized_card_image
+
+
+func get_serialized_card_image() -> Dictionary:
+	return serialized_card_image

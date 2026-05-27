@@ -82,10 +82,13 @@ func set_pen() -> void:
 # 	use_tool(Fill.new(card_image, color))
 
 
-func save():
-	card_image.save()
+func get_serialized_card_image() -> Dictionary:
+	return card_image.serialize()
 
 
-func load():
+func load_serialized_card_image(data: Dictionary) -> void:
+	card_image.deserialize(data)
+
+
+func clear_undo_stack() -> void:
 	_undo_stack.clear()
-	card_image.load()

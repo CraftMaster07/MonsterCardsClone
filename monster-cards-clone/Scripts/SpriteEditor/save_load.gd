@@ -51,18 +51,13 @@ static func _color_to_array(c: Color) -> Array:
 # ── Load ─────────────────────────────────────────────────────────────────────
 
 static func deserialize(data: Dictionary, lines: Node) -> void:
-
-	var nodes = JSON.parse_string(data["nodes"])
-	if not nodes is Dictionary:
-		push_error("SaveLoad: invalid JSON in %s" % SAVE_PATH)
-		return
-
 	# Clear existing canvas (including the undo stack in the caller if needed)
 	for child in lines.get_children():
 		lines.remove_child(child)
 		child.queue_free()
 
-	for entry in nodes.get("nodes", []):
+	var nodes = JSON.parse_string(data["nodes"])
+	for entry in nodes:
 		match entry.get("type", ""):
 			"line":    lines.add_child(_deserialize_line(entry))
 			"polygon": lines.add_child(_deserialize_polygon(entry))
