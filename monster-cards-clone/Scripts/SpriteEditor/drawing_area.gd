@@ -63,6 +63,7 @@ func _on_area_2d_mouse_entered() -> void:
 
 func undo() -> void:
 	var child = card_image.pop_line()
+	if not child: return
 	child.visible = false
 	_undo_stack.append(child)
 
