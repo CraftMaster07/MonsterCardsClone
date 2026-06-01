@@ -1,87 +1,117 @@
 class_name SaveLoad
 
 
-const VERSION := 1
-const SAVE_PATH := "user://sprite.json"
+enum DrawType {
+	TYPE_LINE = 0,
+	TYPE_POLYGON = 1,
+}
 
 
-# ── Save ─────────────────────────────────────────────────────────────────────
+# ── Serialize ────────────────────────────────────────────────────────────────
+# Returns a small Dictionary  { "size", "d" }  that fits inside the
+# card's existing JSON without any double-encoding or float-string bloat.
 
 static func serialize(lines: Node) -> Dictionary:
-	var nodes: Array = []
+	var buf := StreamPeerBuffer.new()
 
-	for child in lines.get_children():
+	var children := lines.get_children()
+	buf.put_u16(children.size())
+
+	for child in children:
 		if child is Line2D:
-			nodes.append(_serialize_line(child))
+			_write_line(buf, child)
 		elif child is Polygon2D:
-			nodes.append(_serialize_polygon(child))
+			_write_polygon(buf, child)
 
-	return {"nodes": JSON.stringify(nodes, "\t")}
-
-
-static func _serialize_line(line: Line2D) -> Dictionary:
-	var pts: Array = []
-	for p in line.points:
-		pts.append([p.x, p.y])
+	# Compress the raw bytes, then base64-encode so they sit cleanly in JSON
+	var raw: PackedByteArray = buf.data_array
+	var compressed := raw.compress(FileAccess.COMPRESSION_ZSTD)
 
 	return {
-		"type": "line",
-		"points": pts,
-		"color": _color_to_array(line.default_color),
-		"width": line.width,
+		"size": raw.size(),       # needed to decompress — ZSTD requires knowing output size
+		"d":    Marshalls.raw_to_base64(compressed),
 	}
 
 
-static func _serialize_polygon(poly: Polygon2D) -> Dictionary:
-	var pts: Array = []
-	for p in poly.polygon:
-		pts.append([p.x, p.y])
-
-	return {
-		"type": "polygon",
-		"polygon": pts,
-		"color": _color_to_array(poly.color),
-	}
+static func _write_color(buf: StreamPeerBuffer, c: Color) -> void:
+	buf.put_u8(int(c.r * 255))
+	buf.put_u8(int(c.g * 255))
+	buf.put_u8(int(c.b * 255))
+	buf.put_u8(int(c.a * 255))
 
 
-static func _color_to_array(c: Color) -> Array:
-	return [c.r, c.g, c.b, c.a]
+static func _write_points(buf: StreamPeerBuffer, pts: PackedVector2Array) -> void:
+	buf.put_u16(pts.size())
+	for p in pts:
+		buf.put_float(p.x)   # float32 — 4 bytes vs ~12 bytes as JSON text
+		buf.put_float(p.y)
 
 
-# ── Load ─────────────────────────────────────────────────────────────────────
+static func _write_line(buf: StreamPeerBuffer, line: Line2D) -> void:
+	buf.put_u8(DrawType.TYPE_LINE)
+	_write_color(buf, line.default_color)
+	buf.put_u16(int(line.width * 10))   # one decimal place, e.g. 5.5 → 55
+	_write_points(buf, line.points)
+
+
+static func _write_polygon(buf: StreamPeerBuffer, poly: Polygon2D) -> void:
+	buf.put_u8(DrawType.TYPE_POLYGON)
+	_write_color(buf, poly.color)
+	_write_points(buf, poly.polygon)
+
+
+# ── Deserialize ───────────────────────────────────────────────────────────────
 
 static func deserialize(data: Dictionary, lines: Node) -> void:
-	# Clear existing canvas (including the undo stack in the caller if needed)
 	for child in lines.get_children():
 		lines.remove_child(child)
 		child.queue_free()
 
-	var nodes = JSON.parse_string(data["nodes"])
-	for entry in nodes:
-		match entry.get("type", ""):
-			"line":    lines.add_child(_deserialize_line(entry))
-			"polygon": lines.add_child(_deserialize_polygon(entry))
+	if not data.has("d"):
+		return
+
+	var compressed  := Marshalls.base64_to_raw(data["d"])
+	var raw         := compressed.decompress(int(data["size"]), FileAccess.COMPRESSION_ZSTD)
+
+	var buf := StreamPeerBuffer.new()
+	buf.data_array = raw
+
+	var node_count := buf.get_u16()
+	for i in range(node_count):
+		var type := buf.get_u8()
+		match type:
+			DrawType.TYPE_LINE:    lines.add_child(_read_line(buf))
+			DrawType.TYPE_POLYGON: lines.add_child(_read_polygon(buf))
 
 
-static func _deserialize_line(d: Dictionary) -> Line2D:
-	var line := Line2D.new()
-	line.default_color = _array_to_color(d["color"])
-	line.width = float(d["width"])
-	for p in d["points"]:
-		line.add_point(Vector2(float(p[0]), float(p[1])))
+static func _read_color(buf: StreamPeerBuffer) -> Color:
+	return Color(
+		buf.get_u8() / 255.0,
+		buf.get_u8() / 255.0,
+		buf.get_u8() / 255.0,
+		buf.get_u8() / 255.0,
+	)
+
+
+static func _read_points(buf: StreamPeerBuffer) -> PackedVector2Array:
+	var pts: PackedVector2Array = []
+	var count := buf.get_u16()
+	for i in range(count):
+		pts.append(Vector2(buf.get_float(), buf.get_float()))
+	return pts
+
+
+static func _read_line(buf: StreamPeerBuffer) -> Line2D:
+	var line           := Line2D.new()
+	line.default_color  = _read_color(buf)
+	line.width          = buf.get_u16() / 10.0
+	line.points         = _read_points(buf)
 	return line
 
 
-static func _deserialize_polygon(d: Dictionary) -> Polygon2D:
-	var poly := Polygon2D.new()
-	poly.color = _array_to_color(d["color"])
-	poly.z_index = -1  # fills always render behind strokes
-	var pts: PackedVector2Array = []
-	for p in d["polygon"]:
-		pts.append(Vector2(float(p[0]), float(p[1])))
-	poly.polygon = pts
+static func _read_polygon(buf: StreamPeerBuffer) -> Polygon2D:
+	var poly    := Polygon2D.new()
+	poly.color   = _read_color(buf)
+	poly.z_index = -1
+	poly.polygon = _read_points(buf)
 	return poly
-
-
-static func _array_to_color(a: Array) -> Color:
-	return Color(float(a[0]), float(a[1]), float(a[2]), float(a[3]))
