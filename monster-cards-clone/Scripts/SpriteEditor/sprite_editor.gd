@@ -1,3 +1,4 @@
+class_name SpriteEditor
 extends Control
 
 
@@ -5,6 +6,8 @@ extends Control
 @export var width_spin_box: SpinBox
 @export var drawing_area: Control
 @export var current_path_label: Label
+
+signal leave
 
 var currnet_card_path: String
 
@@ -134,3 +137,7 @@ func _on_quick_save_button_pressed() -> void:
 func set_current_card_path(path: String):
 	currnet_card_path = path
 	current_path_label.text = "Current Card: " + path
+
+
+func _on_back_button_pressed() -> void:
+	leave.emit()

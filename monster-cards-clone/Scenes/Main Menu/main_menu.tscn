@@ -189,6 +189,10 @@ layout_mode = 2
 texture_normal = ExtResource("6_46knf")
 script = ExtResource("7_57ted")
 
+[node name="SpriteEditorButton" type="Button" parent="UI/DeckMenuContainer" unique_id=1718887892]
+layout_mode = 2
+text = "sprite editor"
+
 [node name="Menu Buttons" type="HBoxContainer" parent="UI" unique_id=1828789807]
 layout_mode = 1
 anchors_preset = -1
@@ -241,6 +245,7 @@ bus = &"Music"
 [connection signal="pressed" from="UI/PlayMenuContainer/SelectDeckButton" to="." method="_on_select_deck_button_pressed"]
 [connection signal="pressed" from="UI/DeckMenuContainer/CardCreatorButton" to="." method="_on_card_creator_button_pressed"]
 [connection signal="pressed" from="UI/DeckMenuContainer/DeckCreatorButton" to="." method="_on_deck_creator_button_pressed"]
+[connection signal="pressed" from="UI/DeckMenuContainer/SpriteEditorButton" to="." method="_on_sprite_editor_button_pressed"]
 [connection signal="pressed" from="UI/Menu Buttons/IdkButton" to="." method="_on_idk_button_pressed"]
 [connection signal="pressed" from="UI/Menu Buttons/DeckButton" to="." method="_on_deck_button_pressed"]
 [connection signal="pressed" from="UI/Menu Buttons/PlayButton" to="." method="_on_play_button_pressed"]

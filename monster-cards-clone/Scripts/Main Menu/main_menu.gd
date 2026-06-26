@@ -4,6 +4,7 @@ signal host_game(name: String, deck: DeckFile)
 signal join_game(name: String, ip: String, deck: DeckFile)
 signal goto_card_creator()
 signal goto_deck_creator()
+signal goto_sprite_editor()
 
 @export var play_menu_container: Control
 @export var settings_menu_container: Control
@@ -142,3 +143,7 @@ func select_deck(file_path) -> void:
 	deck = DeckFile.new()
 	deck.load(file_path)
 	select_deck_label.text = "Selected deck: " + deck.name
+
+
+func _on_sprite_editor_button_pressed() -> void:
+	goto_sprite_editor.emit()

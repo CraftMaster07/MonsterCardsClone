@@ -145,6 +145,17 @@ offset_top = -23.0
 offset_right = 40.0
 grow_vertical = 0
 
+[node name="BackButton" type="Button" parent="." unique_id=1146080745]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_right = 100.0
+offset_bottom = -20.0
+grow_vertical = 0
+text = "Back"
+
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]
 [connection signal="input_event" from="DrawingArea/CardImage/Area2D" to="DrawingArea" method="_on_area_2d_input_event"]
 [connection signal="color_changed" from="GridContainer/ColorPickerButton" to="." method="_on_color_picker_button_color_changed"]
@@ -155,3 +166,4 @@ grow_vertical = 0
 [connection signal="pressed" from="VBoxContainer/QuickSaveButton" to="." method="_on_quick_save_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/LoadButton" to="." method="_on_load_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/SaveButton" to="." method="_on_save_button_pressed"]
+[connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]
