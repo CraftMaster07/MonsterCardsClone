@@ -2,7 +2,7 @@ class_name CardImage
 extends TextureButton
 
 
-@export var _lines: Node
+@export var _lines: Node2D
 
 
 func add_line(line: Node) -> void:
@@ -18,6 +18,9 @@ func pop_line() -> Node:
 	var child = _lines.get_child(_lines.get_child_count() - 1)
 	_lines.remove_child(child)
 	return child
+
+func to_local_point(global_pos: Vector2) -> Vector2:
+	return _lines.get_global_transform().affine_inverse() * global_pos
 
 
 # ── Save / Load ───────────────────────────────────────────────────────────────

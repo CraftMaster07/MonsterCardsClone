@@ -12,4 +12,4 @@ texture_normal = ExtResource("1_pyv1n")
 script = ExtResource("1_8c1jh")
 _lines = NodePath("Lines")
 
-[node name="Lines" type="Node" parent="." unique_id=1171262314]
+[node name="Lines" type="Node2D" parent="." unique_id=1550456794]

@@ -17,6 +17,7 @@ func set_width(new_width: float) -> void:
 
 
 func on_press(pos: Vector2) -> void:
+	pos = card_image.to_local_point(pos)
 	init_line()
 	_line.add_point(pos)
 
@@ -29,6 +30,7 @@ func init_line():
 
 
 func on_drag(pos: Vector2) -> void:
+	pos = card_image.to_local_point(pos)
 	if _line:
 		_line.add_point(pos)
 
