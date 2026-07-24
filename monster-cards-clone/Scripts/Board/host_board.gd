@@ -13,8 +13,6 @@ signal call_shadow_sync(player_id: int, serialized_shadow_player_data: Dictionar
 signal request_deck_blueprints()
 signal received_all_deck_blueprints()
 signal request_target_selection(player_id: int, card_uuid: String, target: TARGET_ID)
-signal target_selected(target)
-
 var effect_to_funcs: Dictionary = {
 	EFFECT_ID.HEAL: heal,
 	EFFECT_ID.ATTACK_BUFF: buff_attack,
@@ -110,7 +108,7 @@ func draw_card_to_player(player_id: int):
 	if success:
 		player_manager.draw_card(player_id)
 	else:
-		print(str(player_id),": draw card failed")
+		print(str(player_id), ": draw card failed")
 
 
 func client_ended_turn(player_id: int):
@@ -315,8 +313,10 @@ func fetch_target_selected_card(effect: Effect, card: CardData, player: Player):
 	if card.get_ability().last_target:
 		return card.get_ability().last_target
 	request_target_selection.emit(player.get_id(), card.get_uuid(), effect.get_target())
-	selected_card = await target_selected
-	return selected_card
+	var card_uuid = await target_selected
+	# Need to fetch CardData based on uuid and return that instead of uuid
+	return card_uuid
+
 
 func apply_numbered_effect(method: String, effect: Effect, card: CardData, player: Player):
 	var target: Effect.TARGET = effect.get_target()
@@ -325,3 +325,8 @@ func apply_numbered_effect(method: String, effect: Effect, card: CardData, playe
 	var chosen_target = fetch_target(target, effect, card, player)
 	if not chosen_target: return
 	chosen_target.callv(method, [amount])
+
+
+func received_target_selection(player_id: int, target):
+	if player_id == round_manager.current_player_id:
+		target_selected.emit(target)

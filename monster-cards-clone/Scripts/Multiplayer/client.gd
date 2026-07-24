@@ -138,10 +138,15 @@ func receive_shadow_sync(serialized_shadow_player_data: Dictionary):
 	shadow_sync.emit(serialized_shadow_player_data)
 
 
-func request_target_selection(_player_id: int, _card_uuid: String, _target: Effect.TARGET):
-	# server side function
-	pass
-
 @rpc("any_peer", "call_local", "reliable", 0)
 func get_target_selection(target: Effect.TARGET, card_uuid: String):
 	select_target.emit(target, card_uuid)
+
+
+func send_target_selected(target: Effect.TARGET):
+	receive_target_selected.rpc_id(1, target)
+
+@rpc("any_peer", "call_remote", "reliable", 0)
+func receive_target_selected(_target):
+	# server side function
+	pass

@@ -25,6 +25,7 @@ signal received_deck_blueprint(player_id: int, deck_blueprint: Dictionary)
 signal get_deck_blueprint()
 
 signal select_target(target: Effect.TARGET, card_uuid: String)
+signal received_target_selection(player_id: int, target)
 
 @export var server_script: Script
 @export var client_script: Script
@@ -52,6 +53,7 @@ func host_game(player_name) -> void:
 	multiplayer_interface.client_ended_turn.connect(_on_multiplayer_interface_client_ended_turn)
 	multiplayer_interface.client_attacked.connect(_on_multiplayer_interface_client_attacked)
 	multiplayer_interface.received_deck_blueprint.connect(_on_multiplayer_interface_received_deck)
+	multiplayer_interface.received_target_selection.connect(_on_multiplayer_interface_received_target_selection)
 
 	multiplayer_interface.host_game(PORT, player_name)
 	your_id = multiplayer.get_unique_id()
@@ -195,3 +197,11 @@ func request_target_selection(player_id: int, card_uuid: String, target: Effect.
 
 func _on_multiplayer_interface_select_target(target: Effect.TARGET, card_uuid: String) -> void:
 	select_target.emit(target, card_uuid)
+
+
+func send_target_selected(target: Effect.TARGET) -> void:
+	multiplayer_interface.send_target_selected(target)
+
+
+func _on_multiplayer_interface_received_target_selection(player_id: int, target) -> void:
+	received_target_selection.emit(player_id, target)

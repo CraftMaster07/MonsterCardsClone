@@ -24,6 +24,7 @@ extends Control
 
 var selected_card: HandCard = null
 var phase: Phase = Phase.PREP
+var selection_mode: SelectionMode = SelectionMode.NONE
 
 var player_ids_without_deck_blueprint: Array
 var unassigned_area_player_ids: Array
@@ -40,6 +41,7 @@ const INITIAL_DECK_CARD_COUNT: int = 5 + INITIAL_HAND_CARD_COUNT
 signal send_placed_card(card_uuid: String, slot_id: int)
 signal send_end_turn()
 signal send_player_attacked(attacked_id: int)
+signal target_selected(target)
 
 enum ValidationResponses {
 		INVALID = -1,
@@ -58,6 +60,7 @@ enum CombatValidationResponses {
 		MUST_ATTACK_LAST_PLAYER
 }
 enum Phase {PREP, COMBAT}
+enum SelectionMode {NONE, CARD}
 
 func _ready():
 	var table_radius: float = calculate_table_radius(player_manager.get_player_count())
@@ -350,14 +353,17 @@ func set_deck_file(deck: DeckFile):
 	deck_file = deck
 
 
-func get_target_selection(target: Effect.TARGET, card_uuid: String):
-	# TODO: let the player select a card, send that card ID to server
-	pass
-
+func get_target_selection(target: Effect.TARGET, _card_uuid: String):
+	if target == Effect.TARGET.SELECTED_CARD:
+		selection_mode = SelectionMode.CARD
+	else:
+		pass
 
 func on_boardcard_placed(card: BoardCard):
 	card.pressed.connect(boardcard_pressed)
 
 
 func boardcard_pressed(card: BoardCard):
-	pass
+	if selection_mode == SelectionMode.CARD:
+		selection_mode = SelectionMode.NONE
+		target_selected.emit(card.get_uuid())

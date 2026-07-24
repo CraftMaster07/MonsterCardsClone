@@ -8,6 +8,8 @@ signal client_attacked(player_id: int, attacked_id: int)
 
 signal received_deck_blueprint(player_id: int, deck: Array)
 
+signal received_target_selection(player_id: int, target)
+
 var thread = null
 
 
@@ -128,3 +130,7 @@ func request_target_selection(player_id: int, card_uuid: String, target: Effect.
 		get_target_selection(target, card_uuid)
 	else:
 		get_target_selection.rpc_id(target, card_uuid)
+
+@rpc("any_peer", "call_remote", "reliable", 0)
+func receive_target_selected(target: Effect.TARGET):
+	received_target_selection.emit(multiplayer.get_remote_sender_id(), target)
