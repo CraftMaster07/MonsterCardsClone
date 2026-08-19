@@ -179,3 +179,7 @@ func player_trigger(trigger_id):
 
 func get_random_board_card_data() -> CardData:
 	return field.get_random_card_data()
+
+
+func get_board_card_by_uuid(uuid: String) -> BoardCard:
+	return field.get_board_card_by_uuid(uuid)

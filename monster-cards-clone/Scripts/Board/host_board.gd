@@ -145,7 +145,7 @@ func client_placed_card(player_id: int, card_uuid: String, slot_id: int):
 		print("card not in hand (Player: ", player_id, ", Card: ", card_uuid, ")")
 		send_game_state()
 		return
-	
+
 	var status := verify_card_placement(player_id, slot_id, card_data)
 
 	match status:
@@ -177,7 +177,7 @@ func place_client_card(player_id: int, card_data: CardData, slot_id: int):
 
 func integrate_client_card(player_id: int, card_data: CardData):
 	subscribe_card(card_data, player_manager.get_player(player_id))
-	
+
 	if card_data.get_trigger_id() == TRIGGER_ID.WHEN_PLAYED:
 		card_data.run_ability()
 
@@ -314,8 +314,10 @@ func fetch_target_selected_card(effect: Effect, card: CardData, player: Player):
 		return card.get_ability().last_target
 	request_target_selection.emit(player.get_id(), card.get_uuid(), effect.get_target())
 	var card_uuid = await target_selected
-	# Need to fetch CardData based on uuid and return that instead of uuid
-	return card_uuid
+	var card_target = player_manager.get_board_card_by_uuid(card_uuid)
+	if card_target:
+		return card_target.get_card_data()
+	return null
 
 
 func apply_numbered_effect(method: String, effect: Effect, card: CardData, player: Player):

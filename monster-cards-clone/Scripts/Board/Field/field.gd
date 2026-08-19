@@ -66,7 +66,7 @@ func exorcise():
 			was_ability_activated = true
 
 	return was_ability_activated
-	
+
 
 
 func get_random_card_data() -> CardData:
@@ -87,3 +87,11 @@ func is_card_valid_target(card_data: CardData) -> bool:
 		return false
 
 	return true
+
+func get_board_card_by_uuid(uuid: String) -> BoardCard:
+	for slot in slots:
+		var card = slot.get_card()
+		if card.get_card_data().uuid == uuid:
+			return card
+
+	return null

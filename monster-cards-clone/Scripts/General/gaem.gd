@@ -268,5 +268,6 @@ func _on_multiplayer_manager_select_target(target: Effect.TARGET, card_uuid: Str
 func _on_board_target_selected(target) -> void:
 	multiplayer_manager.send_target_selected(target)
 
+
 func _on_multiplayer_manager_received_target_selection(player_id: int, target: Variant) -> void:
 	board.received_target_selection(player_id, target)

@@ -203,3 +203,11 @@ func get_random_enemy_player(player_id: int) -> Player:
 	var player_ids := get_player_ids()
 	player_ids.erase(player_id)
 	return get_player(player_ids[randi() % player_ids.size()])
+
+
+func get_board_card_by_uuid(card_uuid: String) -> BoardCard:
+	for player in players.values():
+		var card: BoardCard = player.get_board_card_by_uuid(card_uuid)
+		if card:
+			return card
+	return null
