@@ -8,20 +8,10 @@ const BOARD_CARD_SCENE = preload("res://Scenes/Board/Card/board_card.tscn")
 
 func _ready():
 	card_front.set_initial_values(card_data)
-	update_image()
 
 
 func deserialize(data: Dictionary):
 	super.deserialize(data)
-	update_image()
-
-
-func update_image():
-	var new_image_id = card_data.query_updated_image_id()
-	if new_image_id:
-		# image = load("res://Assets/Sprites/BoardCards/" + str(new_image_id) + ".png")
-		# for now, i do nothing
-		pass
 
 
 func hit(target):

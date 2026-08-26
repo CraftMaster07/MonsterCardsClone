@@ -59,6 +59,17 @@ func get_remote_decks():
 
 
 func client_deck_blueprint_received(player_id: int, deck_blueprint: Dictionary):
+	var serialized_sprites: Dictionary = deck_blueprint["sprites"]
+
+	for sprite_hash in serialized_sprites:
+		if not CardSpriteManager.has_sprite(sprite_hash):
+			var calculated_hash = CardSpriteManager.add_sprite(serialized_sprites[sprite_hash])
+
+			if sprite_hash != calculated_hash:
+				push_error("(player_id: {0}) sprite hashes not matching ({1} != {2})".format(
+					[player_id, calculated_hash, sprite_hash]
+				))
+
 	# TODO: add verifications
 	shadow_player_manager.create_player_deck(deck_blueprint, player_id)
 	player_ids_without_deck_blueprint.erase(player_id)

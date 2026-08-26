@@ -2,8 +2,7 @@ class_name CardData
 extends Node
 
 @export var card_name: String
-@export var image_id: int
-var old_image_id: int
+@export var sprite_hash: String
 
 # maybe implement starting stats differently
 const STARTING_HEALTH = 2
@@ -28,6 +27,7 @@ var triggers_to_signals: Dictionary = {
 }
 
 signal updated_stats()
+signal updated_sprite(new_sprite_hash: String)
 signal ouch()
 
 static func create_from_card_file(card_file: CardFile, new_owner_id: int = -1) -> CardData:
@@ -39,6 +39,10 @@ static func create_from_card_file(card_file: CardFile, new_owner_id: int = -1) -
 	card_data.cost = card_file.cost
 	card_data.ability = card_file.ability
 	card_data.owner_id = new_owner_id
+
+	var new_sprite_hash = CardSpriteManager.add_sprite(card_file.get_serialized_card_image())
+	card_data.update_sprite_hash(new_sprite_hash)
+
 	return card_data
 
 
@@ -66,7 +70,7 @@ func serialize() -> Dictionary:
 		"max_health": max_health,
 		"attack": attack,
 		"cost": cost,
-		"image_id": image_id,
+		"sprite_hash": sprite_hash,
 		"owner_id": owner_id,
 	}
 
@@ -89,7 +93,6 @@ func deserialize(serialized: Dictionary):
 	max_health = data["max_health"]
 	attack = data["attack"]
 	cost = data["cost"]
-	image_id = data["image_id"]
 	owner_id = data["owner_id"]
 
 	if data.has("ability"):
@@ -97,6 +100,9 @@ func deserialize(serialized: Dictionary):
 		ability.deserialize(data["ability"])
 	else:
 		ability = null
+	
+	if data.has("sprite_hash"):
+		update_sprite_hash(data["sprite_hash"])
 
 	check_death()
 	updated_stats.emit()
@@ -125,13 +131,6 @@ func check_death():
 
 func die():
 	is_ghost = true
-
-
-func query_updated_image_id():
-	if image_id != old_image_id:
-		old_image_id = image_id
-		return image_id
-	return null
 
 
 func hit(target):
@@ -198,3 +197,13 @@ func get_owner_id() -> int:
 func card_trigger(trigger_id):
 	print("card ", uuid, ": triggering card trigger: ", trigger_id)
 	triggers_to_signals[trigger_id].emit()
+
+
+func update_sprite_hash(new_hash: String):
+	if sprite_hash != new_hash:
+		sprite_hash = new_hash
+		updated_sprite.emit(new_hash)
+
+
+func get_sprite_hash() -> String:
+	return sprite_hash

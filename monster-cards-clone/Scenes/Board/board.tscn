@@ -10,7 +10,7 @@
 [ext_resource type="Script" uid="uid://hvpfm3s0svah" path="res://Scripts/Board/utils/animated_rotation.gd" id="6_s2gku"]
 [ext_resource type="PackedScene" uid="uid://bmbkajbu0quju" path="res://Scenes/Board/PlayerArea/your_player_area.tscn" id="7_rt3kt"]
 [ext_resource type="Script" uid="uid://b5m01jmgufvky" path="res://Scripts/Board/utils/object_pivot.gd" id="9_a1ark"]
-[ext_resource type="Script" uid="uid://7i1gkuidppy1" path="res://Scripts/Board/PlayerArea/player_area_spawner_pivot.gd" id="10_brcfe"]
+[ext_resource type="Script" path="res://Scripts/Board/PlayerArea/player_area_spawner_pivot.gd" id="10_brcfe"]
 [ext_resource type="Texture2D" uid="uid://cp0e5bj18tv0x" path="res://Assets/Sprites/arrow.png" id="10_rt3kt"]
 [ext_resource type="AudioStream" uid="uid://rc71aygfcedk" path="res://Assets/Audio/Sounds/sfx_place.mp3" id="11_gti8d"]
 [ext_resource type="AudioStream" uid="uid://02oc0voj62j3" path="res://Assets/Audio/Sounds/sfx_select.mp3" id="12_brcfe"]

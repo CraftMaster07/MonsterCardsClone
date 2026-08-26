@@ -3,7 +3,6 @@
 [ext_resource type="Theme" uid="uid://f2a4ylwdbwtx" path="res://Assets/Styles/main_theme.tres" id="1_sgpad"]
 [ext_resource type="Texture2D" uid="uid://f38y60f1hbws" path="res://Assets/Sprites/icon_sheet.png" id="2_3ak4q"]
 [ext_resource type="Script" uid="uid://dbmogwg2kqhsg" path="res://Scripts/Board/Card/card_front.gd" id="2_uemhk"]
-[ext_resource type="PackedScene" uid="uid://dvuwnpix1o7ux" path="res://Scenes/SpriteEditor/card_image.tscn" id="4_uemhk"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bnspj"]
 atlas = ExtResource("2_3ak4q")
@@ -33,9 +32,6 @@ health_label = NodePath("healthTexture/healthDisplay")
 attack_label = NodePath("attackTexture/attackDisplay")
 cost_label = NodePath("costTexture/costDisplay")
 ability_signature_label = NodePath("abilitySignature")
-
-[node name="CardImage" parent="." unique_id=2016520900 instance=ExtResource("4_uemhk")]
-layout_mode = 0
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=1672797238]
 layout_mode = 1

@@ -20,6 +20,7 @@ func deserialize(data: Dictionary):
 func set_card_data(new_card_data: CardData):
 	card_data = new_card_data
 	card_data.updated_stats.connect(update_labels)
+	card_data.updated_sprite.connect(_on_card_data_updated_sprite)
 	add_child(card_data)
 
 
@@ -54,3 +55,7 @@ func get_trigger_id() -> Trigger.TriggerID:
 
 func run_ability():
 	card_data.run_ability()
+
+
+func _on_card_data_updated_sprite(new_sprite_hash: String):
+	card_front.update_sprite(new_sprite_hash)

@@ -344,8 +344,10 @@ func get_deck_blueprint() -> Dictionary:
 			var card_data = CardData.create_from_card_file(card_file, your_id)
 			serialized_card_datas.append(card_data.serialize())
 			card_data.free()
+		
+	var card_sprites = CardSpriteManager.get_serialized_sprites()
 
-	return {"card_datas": serialized_card_datas}
+	return {"card_datas": serialized_card_datas, "sprites": card_sprites}
 
 
 func shadow_sync(serialized_shadow_player_data: Dictionary):

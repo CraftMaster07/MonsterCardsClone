@@ -31,6 +31,7 @@ ColorConstants="*uid://b0ko58tuvatcs"
 PathConstants="*uid://dljmq1o3u8314"
 EffectFactory="*uid://du1tmjulngbem"
 TriggerFactory="*uid://drb7hhoqg1gx2"
+CardSpriteManager="*uid://dwyhbb0kxl2xs"
 
 [display]
 
