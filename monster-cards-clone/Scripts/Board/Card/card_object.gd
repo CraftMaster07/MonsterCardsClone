@@ -11,6 +11,10 @@ var card_data: CardData
 signal missing_sprite(sprite_hash: String, callback: Callable)
 
 
+func _ready() -> void:
+	card_front.set_initial_values(card_data)
+
+
 func serialize() -> Dictionary:
 	# If we ever need to change that, mind the shadow_deserialize too.
 	return card_data.serialize()

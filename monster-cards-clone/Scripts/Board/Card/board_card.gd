@@ -6,10 +6,6 @@ var image: Texture
 const BOARD_CARD_SCENE = preload("res://Scenes/Board/Card/board_card.tscn")
 
 
-func _ready():
-	card_front.set_initial_values(card_data)
-
-
 func deserialize(data: Dictionary):
 	super.deserialize(data)
 

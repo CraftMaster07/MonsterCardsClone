@@ -16,5 +16,5 @@ card_front = NodePath("CardFront")
 [node name="CardFront" parent="." unique_id=20270715 instance=ExtResource("2_b7ogw")]
 layout_mode = 0
 
-[connection signal="missing_sprite" from="." to="." method="_on_card_front_missing_sprite"]
 [connection signal="gui_input" from="CardFront" to="." method="_on_card_front_gui_input"]
+[connection signal="missing_sprite" from="CardFront" to="." method="_on_card_front_missing_sprite"]
