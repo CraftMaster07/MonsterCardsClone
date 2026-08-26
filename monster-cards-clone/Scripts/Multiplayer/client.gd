@@ -16,6 +16,7 @@ signal host_started_game()
 signal sync_game(game_state: Dictionary)
 signal shadow_sync(serialized_shadow_player_data: Dictionary)
 signal get_deck_blueprint()
+signal received_missing_sprite(serialized_sprite: Dictionary, callback_uuid: String)
 
 func _ready():
 	multiplayer.peer_connected.connect(_on_peer_connected)
@@ -134,3 +135,18 @@ func receive_deck_blueprint(_serialized_deck_blueprint: Dictionary):
 @rpc("authority", "call_local", "reliable", 0)
 func receive_shadow_sync(serialized_shadow_player_data: Dictionary):
 	shadow_sync.emit(serialized_shadow_player_data)
+
+
+func request_missing_sprite(sprite_hash: String, callback_uuid: String):
+	get_missing_sprite.rpc_id(1, sprite_hash, callback_uuid)
+
+
+@rpc("authority", "call_remote", "reliable", 0)
+func get_missing_sprite(_sprite_hash: String, _callback_uuid: String):
+	# server side function
+	pass
+
+
+@rpc("authority", "call_remote", "reliable", 0)
+func receive_missing_sprite(serialized_sprite: Dictionary, callback_uuid: String):
+	received_missing_sprite.emit(serialized_sprite, callback_uuid)

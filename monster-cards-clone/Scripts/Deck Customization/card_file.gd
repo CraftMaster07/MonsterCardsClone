@@ -14,7 +14,7 @@ var ability: Ability
 func save():
 	ensure_folder_exists()
 
-	var file := FileAccess.open(PathConstants.CARD_SAVE_PATH + file_name + ".json", FileAccess.WRITE)
+	var file := FileAccess.open(PathConstants.CARD_SAVE_PATH.path_join(file_name + ".json"), FileAccess.WRITE)
 	var data := serialize()
 	var stringified_data := JSON.stringify(data)
 	file.store_string(stringified_data)
@@ -72,7 +72,10 @@ func set_name(name: String) -> void:
 
 static func ensure_folder_exists():
 	if not DirAccess.dir_exists_absolute(PathConstants.CARD_SAVE_PATH):
-		DirAccess.make_dir_absolute(PathConstants.CARD_SAVE_PATH)
+		var err = DirAccess.make_dir_absolute(PathConstants.CARD_SAVE_PATH)
+
+		if err != OK:
+			push_error("Failed to create baked sprites directory. Error code: ", err)
 
 
 func set_trigger(trigger: Trigger):

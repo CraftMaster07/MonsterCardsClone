@@ -19,6 +19,7 @@ extends Control
 
 @export var round_manager: Node
 @export var player_manager: PlayerManager
+@export var callback_manager: CallbackManager
 
 @onready var your_id = player_manager.your_id
 
@@ -40,6 +41,7 @@ const INITIAL_DECK_CARD_COUNT: int = 5 + INITIAL_HAND_CARD_COUNT
 signal send_placed_card(card_uuid: String, slot_id: int)
 signal send_end_turn()
 signal send_player_attacked(attacked_id: int)
+signal missing_sprite(sprite_hash: String, callback_uuid: String)
 
 enum ValidationResponses {
 		INVALID = -1,
@@ -104,6 +106,7 @@ func _replace_handcard_with_boardcard(card: HandCard, slot: CardSlot):
 	"""
 	card.release_card_data()
 	var new_board_card := BoardCard.create(card.card_data)
+	new_board_card.missing_sprite.connect(_on_card_missing_sprite)
 	slot.place_card(new_board_card)
 	card.queue_free() # might replace with remove_child
 	sfx_place.play()
@@ -334,7 +337,7 @@ func get_deck_blueprint() -> Dictionary:
 	var serialized_card_datas = []
 
 	for file_name in deck_file.cards:
-		var path = PathConstants.CARD_SAVE_PATH + file_name + ".json"
+		var path = PathConstants.CARD_SAVE_PATH.path_join(file_name + ".json")
 		var card_file = CardFile.new()
 
 		if not card_file.load(path):
@@ -360,3 +363,12 @@ func _on_round_manager_round_number_changed(new_round_number: int) -> void:
 
 func set_deck_file(deck: DeckFile):
 	deck_file = deck
+
+
+func _on_card_missing_sprite(sprite_hash: String, callback: Callable):
+	var callback_uuid = callback_manager.add_callback(callback)
+	missing_sprite.emit(sprite_hash, callback_uuid)
+
+
+func _on_missing_sprite_received(sprite_hash: String, callback_uuid: String):
+	callback_manager.pop_callback(callback_uuid).call(sprite_hash)

@@ -7,6 +7,7 @@ signal client_ended_turn(player_id: int)
 signal client_attacked(player_id: int, attacked_id: int)
 
 signal received_deck_blueprint(player_id: int, deck: Array)
+signal get_missing_card_sprite(player_id: int, sprite_hash: String, callback_uuid: String)
 
 var thread = null
 
@@ -121,3 +122,12 @@ func receive_deck_blueprint(serialized_deck_blueprint: Dictionary):
 
 func send_shadow_sync(player_id: int, serialized_shadow_player_data: Dictionary):
 	receive_shadow_sync.rpc_id(player_id, serialized_shadow_player_data)
+
+
+@rpc("any_peer", "call_remote", "reliable", 0)
+func get_missing_sprite(sprite_hash: String, callback_uuid: String):
+	get_missing_card_sprite.emit(multiplayer.get_remote_sender_id(), sprite_hash, callback_uuid)
+
+
+func send_missing_sprite(player_id: int, serialized_sprite: Dictionary, callback_uuid: String):
+	receive_missing_sprite.rpc_id(player_id, serialized_sprite, callback_uuid)

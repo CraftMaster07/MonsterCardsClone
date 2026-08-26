@@ -12,6 +12,7 @@ signal call_sync_game(game_state: Dictionary)
 signal call_shadow_sync(player_id: int, serialized_shadow_player_data: Dictionary)
 signal request_deck_blueprints()
 signal received_all_deck_blueprints()
+signal send_missing_sprite(player_id: int, serialized_sprite: Dictionary, callback_uuid: String)
 
 var effect_to_funcs: Dictionary = {
 	EFFECT_ID.HEAL: heal,
@@ -326,3 +327,12 @@ func apply_numbered_effect(method: String, effect: Effect, card: CardData, playe
 	var chosen_target = fetch_target(target, effect, card, player)
 	if not chosen_target: return
 	chosen_target.callv(method, [amount])
+
+
+func get_missing_sprite(player_id: int, sprite_hash: String, callback_uuid: String):
+	var serialized_sprite = CardSpriteManager.get_serialized_sprite(sprite_hash)
+
+	if serialized_sprite:
+		send_missing_sprite.emit(player_id, serialized_sprite, callback_uuid)
+	else:
+		push_warning("missing sprite: ", sprite_hash)

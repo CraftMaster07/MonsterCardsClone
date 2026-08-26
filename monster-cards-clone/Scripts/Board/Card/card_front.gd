@@ -14,6 +14,8 @@ var initial_cost: int = -1
 
 var saved_sprite_hash: String = ""
 
+signal missing_sprite(sprite_hash: String, callback: Callable)
+
 
 func set_initial_values(card_data: CardData) -> void:
 	set_card_name(card_data.card_name)
@@ -23,9 +25,7 @@ func set_initial_values(card_data: CardData) -> void:
 	update_labels(card_data)
 
 	var card_data_sprite_hash = card_data.get_sprite_hash()
-	if saved_sprite_hash != card_data_sprite_hash:
-		saved_sprite_hash = card_data_sprite_hash
-		update_sprite(saved_sprite_hash)
+	update_sprite(card_data_sprite_hash)
 
 
 func set_card_name(card_name: String) -> void:
@@ -85,13 +85,20 @@ func show_ability_signature(has_ability: bool) -> void:
 
 
 func update_sprite(sprite_hash: String) -> void:
-	print("updating sprite: ", sprite_hash)
+	if sprite_hash == saved_sprite_hash:
+		return
+	
+	force_update_sprite(sprite_hash)
+
+
+func force_update_sprite(sprite_hash: String = saved_sprite_hash):
+	saved_sprite_hash = sprite_hash
+
 	var new_sprite = await CardSpriteManager.get_sprite(sprite_hash)
 
 	if not new_sprite:
-		# query server for sprite
-		push_error("(", multiplayer.is_server(),"): " + "no sprite for hash: ", sprite_hash)
-		
+		missing_sprite.emit(sprite_hash, force_update_sprite)
+		print("(", multiplayer.is_server(),"): " + "no sprite for hash: ", sprite_hash)
 		return
 	
 	texture_normal = new_sprite

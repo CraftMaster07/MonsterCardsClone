@@ -120,6 +120,7 @@ func start_board():
 		board.call_sync_game.connect(call_sync_game)
 		board.request_deck_blueprints.connect(_on_board_request_deck_blueprints)
 		board.call_shadow_sync.connect(_on_board_call_shadow_sync)
+		board.send_missing_sprite.connect(_on_board_send_missing_sprite)
 	else:
 		board = board_scene.instantiate()
 
@@ -129,6 +130,7 @@ func start_board():
 	board.send_placed_card.connect(_on_board_send_placed_card)
 	board.send_end_turn.connect(_on_end_turn_pressed)
 	board.send_player_attacked.connect(_on_board_player_attacked)
+	board.missing_sprite.connect(_on_board_missing_sprite)
 	add_child(board)
 
 
@@ -280,3 +282,19 @@ func _on_main_menu_goto_card_creator() -> void:
 
 func _on_main_menu_goto_sprite_editor() -> void:
 	transition_main_menu_to_sprite_editor()
+
+
+func _on_board_missing_sprite(sprite_hash: String, callback_uuid: String) -> void:
+	multiplayer_manager.request_missing_sprite(sprite_hash, callback_uuid)
+
+
+func _on_multiplayer_manager_get_missing_sprite(player_id: int, sprite_hash: String, callback_uuid: String) -> void:
+	board.get_missing_sprite(player_id, sprite_hash, callback_uuid)
+
+
+func _on_board_send_missing_sprite(player_id: int, serialized_sprite: Dictionary, callback_uuid: String) -> void:
+	multiplayer_manager.send_missing_sprite(player_id, serialized_sprite, callback_uuid)
+
+
+func _on_multiplayer_manager_received_missing_sprite(serialized_sprite: Dictionary, callback_uuid: String) -> void:
+	board.received_missing_sprite(serialized_sprite, callback_uuid)

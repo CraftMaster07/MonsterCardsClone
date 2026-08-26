@@ -20,6 +20,7 @@
 [ext_resource type="Script" uid="uid://djbt1h7cvlwoj" path="res://Scripts/Board/player_manager.gd" id="17_a1ark"]
 [ext_resource type="AudioStream" uid="uid://k5uo00wwllcs" path="res://Assets/Audio/Sounds/sfx_wrong.mp3" id="17_dqnt6"]
 [ext_resource type="Script" uid="uid://n6sr1aw5vff" path="res://Scripts/Board/round_manager.gd" id="18_63xfs"]
+[ext_resource type="Script" uid="uid://2rmkenx56paw" path="res://Scripts/Board/callback_manager.gd" id="21_v248q"]
 
 [sub_resource type="Resource" id="Resource_xqaal"]
 script = ExtResource("6_s2gku")
@@ -223,6 +224,9 @@ script = ExtResource("17_a1ark")
 your_player_scene = ExtResource("3_me64r")
 enemy_player_scene = ExtResource("4_gti8d")
 player_container = NodePath("../UI/PlayerContainer")
+
+[node name="CallbackManager" type="Node" parent="." unique_id=846392524]
+script = ExtResource("21_v248q")
 
 [connection signal="new_area_spawned" from="Table/PlayerAreaSpawnerPivot" to="." method="_on_player_area_spawner_pivot_new_area_spawned"]
 [connection signal="spawning_finished" from="Table/PlayerAreaSpawnerPivot" to="." method="_on_player_area_spawner_pivot_spawning_finished"]
