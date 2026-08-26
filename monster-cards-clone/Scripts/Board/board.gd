@@ -107,6 +107,8 @@ func _replace_handcard_with_boardcard(card: HandCard, slot: CardSlot):
 	card.release_card_data()
 	var new_board_card := BoardCard.create(card.card_data)
 	new_board_card.missing_sprite.connect(_on_card_missing_sprite)
+	new_board_card.update_sprite_from_card_data()
+
 	slot.place_card(new_board_card)
 	card.queue_free() # might replace with remove_child
 	sfx_place.play()

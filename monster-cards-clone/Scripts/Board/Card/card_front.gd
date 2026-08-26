@@ -92,7 +92,6 @@ func update_sprite(sprite_hash: String) -> void:
 
 
 func force_update_sprite(sprite_hash: String = saved_sprite_hash):
-	saved_sprite_hash = sprite_hash
 
 	var new_sprite = await CardSpriteManager.get_sprite(sprite_hash)
 
@@ -100,5 +99,7 @@ func force_update_sprite(sprite_hash: String = saved_sprite_hash):
 		missing_sprite.emit(sprite_hash, force_update_sprite)
 		print("(", multiplayer.is_server(),"): " + "no sprite for hash: ", sprite_hash)
 		return
+	
+	saved_sprite_hash = sprite_hash
 	
 	texture_normal = new_sprite
