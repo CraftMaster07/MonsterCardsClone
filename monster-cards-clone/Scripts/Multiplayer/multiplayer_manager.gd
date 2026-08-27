@@ -205,10 +205,10 @@ func _on_multiplayer_interface_get_missing_sprite(
 
 
 func send_missing_sprite(player_id: int, serialized_sprite: Dictionary, callback_uuid: String) -> void:
-	multiplayer_interface.send_serialized_sprite(player_id, serialized_sprite, callback_uuid)
+	multiplayer_interface.send_missing_sprite(player_id, serialized_sprite, callback_uuid)
 
 
 func _on_multiplayer_interface_received_missing_sprite(
-	player_id: int, serialized_sprite: Dictionary, callback_uuid: String
+	serialized_sprite: Dictionary, callback_uuid: String
 ) -> void:
-	received_missing_sprite.emit(player_id, serialized_sprite, callback_uuid)
+	received_missing_sprite.emit(serialized_sprite, callback_uuid)

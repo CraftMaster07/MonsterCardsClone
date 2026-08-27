@@ -165,6 +165,8 @@ func spawn_player_areas(players_count: int):
 
 func _on_player_area_spawner_pivot_new_area_spawned(new_player_area: PlayerArea) -> void:
 	table.add_child(new_player_area)
+	for slot in new_player_area.get_field().get_slots():
+		slot.deserialized_new_card.connect(_on_slot_deserialized_new_card)
 
 	if is_instance_of(new_player_area, YourPlayerArea):
 		print("your area spawned, id: ", your_id)
@@ -372,5 +374,11 @@ func _on_card_missing_sprite(sprite_hash: String, callback: Callable):
 	missing_sprite.emit(sprite_hash, callback_uuid)
 
 
-func _on_missing_sprite_received(sprite_hash: String, callback_uuid: String):
+func received_missing_sprite(serialized_sprite: Dictionary, callback_uuid: String):
+	var sprite_hash = CardSpriteManager.add_sprite(serialized_sprite)
 	callback_manager.pop_callback(callback_uuid).call(sprite_hash)
+
+
+func _on_slot_deserialized_new_card(card: BoardCard):
+	card.missing_sprite.connect(_on_card_missing_sprite)
+	card.update_sprite_from_card_data()

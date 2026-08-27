@@ -12,6 +12,8 @@ extends Control
 var card: BoardCard
 var tween: Tween
 
+signal deserialized_new_card(card: BoardCard)
+
 
 func _ready():
 	color_rect.color = base_color
@@ -44,6 +46,7 @@ func deserialize(serialized_slot: Dictionary):
 		card.deserialize(serialized_card)
 	elif serialized_card:
 		place_serialized_card(serialized_card)
+		deserialized_new_card.emit(card)
 	elif card:
 		remove_card()
 

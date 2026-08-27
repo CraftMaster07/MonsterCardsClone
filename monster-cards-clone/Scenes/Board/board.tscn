@@ -44,7 +44,7 @@ metadata/_custom_type_script = "uid://hvpfm3s0svah"
 font = ExtResource("12_xqaal")
 font_color = Color(0.29998645, 0.71706825, 1.5263317, 1)
 
-[node name="Board" type="Control" unique_id=65642768 node_paths=PackedStringArray("table", "player_area_spawner_pivot", "turn_pointer", "next_player_button", "prev_player_button", "current_player_label", "round_number_label", "round_manager", "player_manager")]
+[node name="Board" type="Control" unique_id=65642768 node_paths=PackedStringArray("table", "player_area_spawner_pivot", "turn_pointer", "next_player_button", "prev_player_button", "current_player_label", "round_number_label", "round_manager", "player_manager", "callback_manager")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -62,6 +62,7 @@ current_player_label = NodePath("UI/CurrentPlayerLabel")
 round_number_label = NodePath("UI/RoundNumberLabel")
 round_manager = NodePath("RoundManager")
 player_manager = NodePath("PlayerManager")
+callback_manager = NodePath("CallbackManager")
 
 [node name="Table" type="Control" parent="." unique_id=915297040]
 layout_mode = 1
