@@ -25,6 +25,7 @@ layout_mode = 1
 
 [node name="Area2D" type="Area2D" parent="CardFront" unique_id=886463518]
 position = Vector2(32.5, 45.5)
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CardFront/Area2D" unique_id=274136000]
 shape = SubResource("RectangleShape2D_vvs6b")
