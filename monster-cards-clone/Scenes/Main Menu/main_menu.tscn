@@ -236,12 +236,12 @@ grow_vertical = 2
 theme_override_constants/separation = 100
 alignment = 1
 
-[node name="CardCreatorButton" type="TextureButton" parent="UI/DeckMenuContainer" unique_id=1098671441]
+[node name="CardEditorButton" type="TextureButton" parent="UI/DeckMenuContainer" unique_id=1098671441]
 layout_mode = 2
 texture_normal = ExtResource("5_rghun")
 script = ExtResource("7_57ted")
 
-[node name="DeckCreatorButton" type="TextureButton" parent="UI/DeckMenuContainer" unique_id=1625949951]
+[node name="DeckEditorButton" type="TextureButton" parent="UI/DeckMenuContainer" unique_id=1625949951]
 layout_mode = 2
 texture_normal = ExtResource("6_46knf")
 script = ExtResource("7_57ted")
@@ -301,8 +301,8 @@ bus = &"Music"
 [connection signal="pressed" from="UI/PlayMenuContainer/VBoxContainer/HBoxContainer/HostJoinContainer/JoinMenu/JoinStartButton" to="." method="_on_join_start_button_pressed"]
 [connection signal="pressed" from="UI/PlayMenuContainer/SelectDeckButton" to="." method="_on_select_deck_button_pressed"]
 [connection signal="pressed" from="UI/SettingsMenuContainer/MoreOptions/DeleteSpriteCacheButton" to="UI/SettingsMenuContainer/MoreOptions/DeleteSpriteCacheButton" method="_on_pressed"]
-[connection signal="pressed" from="UI/DeckMenuContainer/CardCreatorButton" to="." method="_on_card_creator_button_pressed"]
-[connection signal="pressed" from="UI/DeckMenuContainer/DeckCreatorButton" to="." method="_on_deck_creator_button_pressed"]
+[connection signal="pressed" from="UI/DeckMenuContainer/CardEditorButton" to="." method="_on_card_editor_button_pressed"]
+[connection signal="pressed" from="UI/DeckMenuContainer/DeckEditorButton" to="." method="_on_deck_editor_button_pressed"]
 [connection signal="pressed" from="UI/DeckMenuContainer/SpriteEditorButton" to="." method="_on_sprite_editor_button_pressed"]
 [connection signal="pressed" from="UI/Menu Buttons/IdkButton" to="." method="_on_idk_button_pressed"]
 [connection signal="pressed" from="UI/Menu Buttons/DeckButton" to="." method="_on_deck_button_pressed"]

@@ -110,9 +110,9 @@ func deserialize(serialized: Dictionary):
 
 func recalculate_cost():
 	if not has_ability():
-		cost = CardCreator.calculate_cost(health, attack)
+		cost = CardEditor.calculate_cost(health, attack)
 	else:
-		cost = CardCreator.calculate_cost(health, attack, ability.get_trigger_multiplier(), ability.get_effect_multiplier(), ability.get_target_multiplier())
+		cost = CardEditor.calculate_cost(health, attack, ability.get_trigger_multiplier(), ability.get_effect_multiplier(), ability.get_target_multiplier())
 
 
 func take_damage(amount: int) -> void:

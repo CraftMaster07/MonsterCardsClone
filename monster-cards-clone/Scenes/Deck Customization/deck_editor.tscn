@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cvexiydhupg0p"]
 
-[ext_resource type="Script" uid="uid://bwh364nt7ba1y" path="res://Scripts/Deck Customization/deck_creator.gd" id="1_elmlv"]
+[ext_resource type="Script" uid="uid://bwh364nt7ba1y" path="res://Scripts/Deck Customization/deck_editor.gd" id="1_elmlv"]
 [ext_resource type="PackedScene" uid="uid://ca5l6o5hh7sgi" path="res://Scenes/Deck Customization/editor_card.tscn" id="2_64y0t"]
 [ext_resource type="Script" uid="uid://b5h3sju2l8lcm" path="res://Scripts/Deck Customization/collection_container.gd" id="2_seenq"]
 [ext_resource type="PackedScene" uid="uid://bmc0b8c5180lj" path="res://Scenes/Deck Customization/editor_card_container.tscn" id="3_pb3bh"]
@@ -9,7 +9,7 @@
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w4u1l"]
 bg_color = Color(0.23851621, 0.22978191, 0.27170652, 1)
 
-[node name="DeckCreator" type="Control" unique_id=273491332 node_paths=PackedStringArray("collection_container", "deck_container", "deck_name_line_edit")]
+[node name="DeckEditor" type="Control" unique_id=273491332 node_paths=PackedStringArray("collection_container", "deck_container", "deck_name_line_edit")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

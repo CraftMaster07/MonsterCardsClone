@@ -5,14 +5,14 @@ extends Node
 @export var waiting_room_scene: PackedScene
 @export var board_scene: PackedScene
 @export var host_board_scene: PackedScene
-@export var card_creator_scene: PackedScene
-@export var deck_creator_scene: PackedScene
+@export var card_editor_scene: PackedScene
+@export var deck_editor_scene: PackedScene
 @export var sprite_editor_scene: PackedScene
 
 var waiting_room: WaitingRoom = null
 var board: Board = null
-var card_creator: CardCreator = null
-var deck_creator: DeckCreator = null
+var card_editor: CardEditor = null
+var deck_editor: DeckEditor = null
 var sprite_editor: SpriteEditor = null
 
 var deck: DeckFile = DeckFile.new()
@@ -38,9 +38,9 @@ func transition_waiting_room_to_main_menu():
 	start_main_menu()
 
 
-func transition_main_menu_to_card_creator():
+func transition_main_menu_to_card_editor():
 	stop_main_menu()
-	start_card_creator()
+	start_card_editor()
 
 
 func transition_main_menu_to_sprite_editor():
@@ -48,8 +48,8 @@ func transition_main_menu_to_sprite_editor():
 	start_sprite_editor()
 
 
-func transition_card_creator_to_main_menu():
-	stop_card_creator()
+func transition_card_editor_to_main_menu():
+	stop_card_editor()
 	start_main_menu()
 
 
@@ -58,31 +58,31 @@ func transition_sprite_editor_to_main_menu():
 	start_main_menu()
 
 
-func transition_main_menu_to_deck_creator():
+func transition_main_menu_to_deck_editor():
 	stop_main_menu()
-	start_deck_creator()
+	start_deck_editor()
 
 
-func transition_deck_creator_to_main_menu():
-	stop_deck_creator()
+func transition_deck_editor_to_main_menu():
+	stop_deck_editor()
 	start_main_menu()
 
 
-func start_deck_creator():
-	deck_creator = deck_creator_scene.instantiate()
-	deck_creator.leave.connect(transition_deck_creator_to_main_menu)
-	add_child(deck_creator)
+func start_deck_editor():
+	deck_editor = deck_editor_scene.instantiate()
+	deck_editor.leave.connect(transition_deck_editor_to_main_menu)
+	add_child(deck_editor)
 
 
-func stop_deck_creator():
-	remove_child(deck_creator)
-	deck_creator.queue_free()
+func stop_deck_editor():
+	remove_child(deck_editor)
+	deck_editor.queue_free()
 
 
-func start_card_creator():
-	card_creator = card_creator_scene.instantiate()
-	card_creator.leave.connect(transition_card_creator_to_main_menu)
-	add_child(card_creator)
+func start_card_editor():
+	card_editor = card_editor_scene.instantiate()
+	card_editor.leave.connect(transition_card_editor_to_main_menu)
+	add_child(card_editor)
 
 
 func start_sprite_editor():
@@ -91,9 +91,9 @@ func start_sprite_editor():
 	add_child(sprite_editor)
 
 
-func stop_card_creator():
-	remove_child(card_creator)
-	card_creator.queue_free()
+func stop_card_editor():
+	remove_child(card_editor)
+	card_editor.queue_free()
 
 
 func stop_sprite_editor():
@@ -276,8 +276,8 @@ func _on_multiplayer_manager_shadow_sync(serialized_shadow_player_data: Dictiona
 	board.shadow_sync(serialized_shadow_player_data)
 
 
-func _on_main_menu_goto_card_creator() -> void:
-	transition_main_menu_to_card_creator()
+func _on_main_menu_goto_card_editor() -> void:
+	transition_main_menu_to_card_editor()
 
 
 func _on_main_menu_goto_sprite_editor() -> void:

@@ -1,4 +1,4 @@
-class_name DeckCreator
+class_name DeckEditor
 extends Control
 
 @export var collection_container: CollectionContainer
