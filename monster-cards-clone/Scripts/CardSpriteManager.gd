@@ -83,7 +83,7 @@ static func save_baked_sprite(sprite_hash: String, image: Image):
 static func _bake(data: Dictionary, size: Vector2i) -> Image:
     """
     Usage:
-    var texture = await CardSpriteManager.bake(card_file.card_image, Vector2i(300, 420))
+    var texture = await CardSpriteManager.bake(card_file.sprite, Vector2i(300, 420))
     $Sprite2D.texture = texture
     """
     # 1. SubViewport to render into
