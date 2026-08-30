@@ -1,0 +1,65 @@
+[gd_scene format=3 uid="uid://50dcf6wk76wn"]
+
+[ext_resource type="PackedScene" uid="uid://b1rfo4m4p3w8h" path="res://Scenes/Board/Card/card_front.tscn" id="1_0xh5v"]
+[ext_resource type="Script" uid="uid://blxiftvkebhn5" path="res://Scripts/Board/Card/card_details.gd" id="1_xyeya"]
+
+[node name="CardDetails" type="Control" unique_id=621324339 node_paths=PackedStringArray("card_front")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_xyeya")
+card_front = NodePath("HBoxContainer/Control/CardFront")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1481184697]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0.27058825)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1002076313]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -60.0
+offset_top = -90.0
+offset_right = 214.0
+offset_bottom = 90.0
+grow_vertical = 2
+size_flags_vertical = 4
+alignment = 1
+
+[node name="Control" type="Control" parent="HBoxContainer" unique_id=1579978554]
+custom_minimum_size = Vector2(120, 180)
+layout_mode = 2
+
+[node name="CardFront" parent="HBoxContainer/Control" unique_id=20270715 instance=ExtResource("1_0xh5v")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -30.0
+offset_top = -45.0
+offset_right = 30.0
+offset_bottom = 45.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(2, 2)
+
+[node name="RichTextLabel" type="RichTextLabel" parent="HBoxContainer" unique_id=1493735927]
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 2
+text = "Card card:
+aaaaa: afafaf"

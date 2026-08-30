@@ -5,6 +5,8 @@ extends Control
 
 @export var card_front: CardFront
 
+signal card_right_click(card_data: CardData)
+
 var card_data: CardData
 
 
@@ -70,3 +72,9 @@ func _on_card_data_updated_sprite(new_sprite_hash: String):
 
 func _on_card_front_missing_sprite(sprite_hash: String, callback: Callable):
 	missing_sprite.emit(sprite_hash, callback)
+
+
+func _on_card_front_gui_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
+			card_right_click.emit(card_data)

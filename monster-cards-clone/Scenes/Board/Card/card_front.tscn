@@ -2,6 +2,7 @@
 
 [ext_resource type="Theme" uid="uid://f2a4ylwdbwtx" path="res://Assets/Styles/main_theme.tres" id="1_sgpad"]
 [ext_resource type="Texture2D" uid="uid://f38y60f1hbws" path="res://Assets/Sprites/icon_sheet.png" id="2_3ak4q"]
+[ext_resource type="Texture2D" uid="uid://c0h7n7l8mahps" path="res://Assets/Sprites/card_background.png" id="2_7pb2a"]
 [ext_resource type="Script" uid="uid://dbmogwg2kqhsg" path="res://Scripts/Board/Card/card_front.gd" id="2_uemhk"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bnspj"]
@@ -26,6 +27,7 @@ size_flags_vertical = 4
 mouse_filter = 1
 mouse_default_cursor_shape = 2
 theme = ExtResource("1_sgpad")
+texture_normal = ExtResource("2_7pb2a")
 script = ExtResource("2_uemhk")
 name_label = NodePath("MarginContainer/nameDisplay")
 health_label = NodePath("healthTexture/healthDisplay")

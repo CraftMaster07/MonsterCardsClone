@@ -16,6 +16,7 @@ extends Control
 
 @export var current_player_label: Label
 @export var round_number_label: Label
+@export var card_details: CardDetails
 
 @export var round_manager: Node
 @export var player_manager: PlayerManager
@@ -67,10 +68,12 @@ func _ready():
 	spawn_player_areas(player_manager.get_player_count())
 
 
-func connect_card(card: HandCard):
+func connect_hand_card(card: HandCard):
 	card.card_placed.connect(_place_card_into_slot)
 	card.card_selected.connect(select_card)
 	card.card_deselected.connect(deselect_card)
+
+	connect_card(card)
 
 
 func slot_clicked(slot: CardSlot):
@@ -105,9 +108,7 @@ func _replace_handcard_with_boardcard(card: HandCard, slot: CardSlot):
 	This should be done after the card is moved into a slot
 	"""
 	card.release_card_data()
-	var new_board_card := BoardCard.create(card.card_data)
-	new_board_card.missing_sprite.connect(_on_card_missing_sprite)
-	new_board_card.update_sprite_from_card_data()
+	var new_board_card = create_board_card(card.get_card_data())
 
 	slot.place_card(new_board_card)
 	card.queue_free() # might replace with remove_child
@@ -206,7 +207,7 @@ func set_your_field(your_field: YourField):
 
 func set_your_hand(your_hand: YourHand):
 	set_player_hand(your_hand, your_id)
-	your_hand.new_card_added.connect(connect_card)
+	your_hand.new_card_added.connect(connect_hand_card)
 
 
 func set_your_area(player_area: PlayerArea):
@@ -380,5 +381,36 @@ func received_missing_sprite(serialized_sprite: Dictionary, callback_uuid: Strin
 
 
 func _on_slot_deserialized_new_card(card: BoardCard):
-	card.missing_sprite.connect(_on_card_missing_sprite)
+	connect_card(card)
 	card.update_sprite_from_card_data()
+
+
+func show_card_details(card_data: CardData):
+	card_details.set_card_data(card_data)
+	card_details.visible = true
+
+
+func hide_card_details():
+	card_details.visible = false
+
+
+func _on_card_right_click(card_data: CardData):
+	show_card_details(card_data)
+
+	while Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
+		await get_tree().process_frame
+	
+	hide_card_details()
+
+
+func connect_card(new_board_card: CardObject):
+	new_board_card.missing_sprite.connect(_on_card_missing_sprite)
+	new_board_card.card_right_click.connect(_on_card_right_click)
+
+
+func create_board_card(card_data: CardData) -> BoardCard:
+	var new_board_card := BoardCard.create(card_data)
+	connect_card(new_board_card)
+	new_board_card.update_sprite_from_card_data()
+
+	return new_board_card
