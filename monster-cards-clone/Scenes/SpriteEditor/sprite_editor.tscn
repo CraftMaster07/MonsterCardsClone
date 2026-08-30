@@ -21,7 +21,7 @@ width_spin_box = NodePath("GridContainer/WidthSpinBox")
 drawing_area = NodePath("DrawingArea")
 current_path_label = NodePath("CurrentPathLabel")
 
-[node name="DrawingArea" type="CenterContainer" parent="." unique_id=230739243 node_paths=PackedStringArray("card_image")]
+[node name="DrawingArea" type="CenterContainer" parent="." unique_id=230739243 node_paths=PackedStringArray("sprite")]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -37,7 +37,7 @@ grow_vertical = 2
 scale = Vector2(4, 4)
 mouse_filter = 2
 script = ExtResource("2_tnh67")
-card_image = NodePath("CardImage")
+sprite = NodePath("CardImage")
 
 [node name="CardImage" parent="DrawingArea" unique_id=2016520900 instance=ExtResource("3_h6sau")]
 custom_minimum_size = Vector2(240, 360)
