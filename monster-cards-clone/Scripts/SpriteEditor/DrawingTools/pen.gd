@@ -25,7 +25,7 @@ func on_press(pos: Vector2) -> void:
 func init_line():
 	_line = Line2D.new()
 	_line.default_color = color
-	_line.width = width
+	_line.width = width / 4
 	card_image.add_line(_line)
 
 
