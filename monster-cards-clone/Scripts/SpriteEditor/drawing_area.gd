@@ -1,7 +1,7 @@
 extends Control
 
 
-@export var card_image: CardImage
+@export var sprite: CardImage
 var _undo_stack: Array
 
 var _pressed: bool = false
@@ -62,7 +62,7 @@ func _on_area_2d_mouse_entered() -> void:
 
 
 func undo() -> void:
-	var child = card_image.pop_line()
+	var child = sprite.pop_line()
 	if not child: return
 	child.visible = false
 	_undo_stack.append(child)
@@ -71,24 +71,24 @@ func undo() -> void:
 func redo() -> void:
 	if not _undo_stack.size(): return
 	var child = _undo_stack.pop_back()
-	card_image.add_line(child)
+	sprite.add_line(child)
 	child.visible = true
 
 
 func set_pen() -> void:
-	use_tool(Pen.new(card_image, color, width))
+	use_tool(Pen.new(sprite, color, width))
 
 
 # func set_fill() -> void:
-# 	use_tool(Fill.new(card_image, color))
+# 	use_tool(Fill.new(sprite, color))
 
 
-func get_serialized_card_image() -> Dictionary:
-	return card_image.serialize()
+func get_serialized_sprite() -> Dictionary:
+	return sprite.serialize()
 
 
-func load_serialized_card_image(data: Dictionary) -> void:
-	card_image.deserialize(data)
+func load_serialized_sprite(data: Dictionary) -> void:
+	sprite.deserialize(data)
 
 
 func clear_undo_stack() -> void:

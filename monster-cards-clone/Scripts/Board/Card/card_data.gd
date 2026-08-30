@@ -40,7 +40,7 @@ static func create_from_card_file(card_file: CardFile, new_owner_id: int = -1) -
 	card_data.ability = card_file.ability
 	card_data.owner_id = new_owner_id
 
-	var new_sprite_hash = CardSpriteManager.add_sprite(card_file.get_serialized_card_image())
+	var new_sprite_hash = CardSpriteManager.add_sprite(card_file.get_serialized_sprite())
 	card_data.update_sprite_hash(new_sprite_hash)
 
 	return card_data
