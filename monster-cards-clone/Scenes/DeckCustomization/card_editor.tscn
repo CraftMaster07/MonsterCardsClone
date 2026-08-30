@@ -1,7 +1,8 @@
 [gd_scene format=3 uid="uid://be2k7pt5hya2e"]
 
-[ext_resource type="Script" uid="uid://dvlfw6d4f8dyf" path="res://Scripts/Deck Customization/card_editor.gd" id="1_guviw"]
-[ext_resource type="PackedScene" uid="uid://ca5l6o5hh7sgi" path="res://Scenes/Deck Customization/editor_card.tscn" id="3_qpjfk"]
+[ext_resource type="Script" uid="uid://dvlfw6d4f8dyf" path="res://Scripts/DeckCustomization/card_editor.gd" id="1_guviw"]
+[ext_resource type="PackedScene" uid="uid://ca5l6o5hh7sgi" path="res://Scenes/DeckCustomization/editor_card.tscn" id="3_qpjfk"]
+
 
 [node name="CardEditor" type="Control" unique_id=947132057 node_paths=PackedStringArray("name_line_edit", "editor_card", "health_spin_box", "attack_spin_box", "cost_label", "ability_toggle_button", "effect_label", "target_label", "trigger_label", "effect_dropdown", "target_dropdown", "trigger_dropdown")]
 layout_mode = 3

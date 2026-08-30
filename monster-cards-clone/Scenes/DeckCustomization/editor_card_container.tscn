@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://bmc0b8c5180lj"]
 
-[ext_resource type="Script" uid="uid://bv4in04s4c1lv" path="res://Scripts/Deck Customization/editor_card_container.gd" id="1_ubd8p"]
+[ext_resource type="Script" uid="uid://bv4in04s4c1lv" path="res://Scripts/DeckCustomization/editor_card_container.gd" id="1_ubd8p"]
+
 
 [node name="EditorCardContainer" type="VBoxContainer" unique_id=906104109 node_paths=PackedStringArray("label")]
 offset_right = 1.0
