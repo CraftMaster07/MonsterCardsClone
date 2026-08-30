@@ -2,8 +2,8 @@ extends Control
 
 signal host_game(name: String, deck: DeckFile)
 signal join_game(name: String, ip: String, deck: DeckFile)
-signal goto_card_creator()
-signal goto_deck_creator()
+signal goto_card_editor()
+signal goto_deck_editor()
 signal goto_sprite_editor()
 
 @export var play_menu_container: Control
@@ -105,12 +105,12 @@ func check_gaster(player_name: String) -> void:
 		get_tree().quit()
 
 
-func _on_card_creator_button_pressed() -> void:
-	goto_card_creator.emit()
+func _on_card_editor_button_pressed() -> void:
+	goto_card_editor.emit()
 
 
-func _on_deck_creator_button_pressed() -> void:
-	goto_deck_creator.emit()
+func _on_deck_editor_button_pressed() -> void:
+	goto_deck_editor.emit()
 
 
 func _on_select_deck_button_pressed() -> void:

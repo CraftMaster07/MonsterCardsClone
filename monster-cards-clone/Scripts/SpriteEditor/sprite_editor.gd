@@ -80,7 +80,7 @@ func save_image(path: String):
 	# if it's a card file it's much better.'
 	var temp_card_file = CardFile.new()
 	temp_card_file.load(path)
-	temp_card_file.set_serialized_card_image(drawing_area.get_serialized_card_image())
+	temp_card_file.set_serialized_sprite(drawing_area.get_serialized_sprite())
 	temp_card_file.save()
 
 	set_current_card_path(path)
@@ -122,7 +122,7 @@ func load_image(path: String):
 	# if it's a card file it's much better.'
 	var temp_card_file = CardFile.new()
 	temp_card_file.load(path)
-	drawing_area.load_serialized_card_image(temp_card_file.get_serialized_card_image())
+	drawing_area.load_serialized_sprite(temp_card_file.get_serialized_sprite())
 
 	set_current_card_path(path)
 

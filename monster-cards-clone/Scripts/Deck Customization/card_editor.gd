@@ -1,4 +1,4 @@
-class_name CardCreator
+class_name CardEditor
 extends Control
 
 signal leave()

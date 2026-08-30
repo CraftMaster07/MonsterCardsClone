@@ -92,7 +92,6 @@ func update_sprite(sprite_hash: String) -> void:
 
 
 func force_update_sprite(sprite_hash: String = saved_sprite_hash):
-
 	var new_sprite = await CardSpriteManager.get_sprite(sprite_hash)
 
 	if not new_sprite:

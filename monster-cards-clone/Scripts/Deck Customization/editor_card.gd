@@ -72,6 +72,7 @@ func update_display():
 	set_display_cost(card_file.cost)
 
 	set_display_ability_signature()
+	set_display_sprite(card_file.get_serialized_sprite())
 
 
 func set_display_name(card_name: String) -> void:
@@ -92,6 +93,12 @@ func set_display_cost(cost: int) -> void:
 
 func set_display_ability_signature() -> void:
 	card_front.show_ability_signature(has_ability())
+
+
+func set_display_sprite(serialized_sprite: Dictionary) -> void:
+	var sprite_hash: String = CardSpriteManager.add_sprite(serialized_sprite)
+	card_front.update_sprite(sprite_hash)
+	print("set display sprite: ", sprite_hash)
 
 
 func _on_card_front_pressed() -> void:
