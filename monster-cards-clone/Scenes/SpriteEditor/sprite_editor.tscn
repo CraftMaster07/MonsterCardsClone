@@ -1,0 +1,170 @@
+[gd_scene format=3 uid="uid://cuhxwceyo2um7"]
+
+[ext_resource type="Script" uid="uid://6aebb54akecq" path="res://Scripts/SpriteEditor/sprite_editor.gd" id="1_h6sau"]
+[ext_resource type="Script" uid="uid://cm3r6ug1vkgal" path="res://Scripts/SpriteEditor/drawing_area.gd" id="2_tnh67"]
+[ext_resource type="PackedScene" uid="uid://dvuwnpix1o7ux" path="res://Scenes/SpriteEditor/card_image.tscn" id="3_h6sau"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h6sau"]
+size = Vector2(14.625, 22.1875)
+
+[node name="SpriteEditor" type="Control" unique_id=2103006352 node_paths=PackedStringArray("color_picker_button", "width_spin_box", "drawing_area", "current_path_label")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_h6sau")
+color_picker_button = NodePath("GridContainer/ColorPickerButton")
+width_spin_box = NodePath("GridContainer/WidthSpinBox")
+drawing_area = NodePath("DrawingArea")
+current_path_label = NodePath("CurrentPathLabel")
+
+[node name="DrawingArea" type="CenterContainer" parent="." unique_id=230739243 node_paths=PackedStringArray("card_image")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -120.0
+offset_top = -180.0
+offset_right = 120.0
+offset_bottom = 180.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(4, 4)
+mouse_filter = 2
+script = ExtResource("2_tnh67")
+card_image = NodePath("CardImage")
+
+[node name="CardImage" parent="DrawingArea" unique_id=2016520900 instance=ExtResource("3_h6sau")]
+custom_minimum_size = Vector2(240, 360)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Area2D" type="Area2D" parent="DrawingArea/CardImage" unique_id=138192682]
+position = Vector2(30, 45)
+scale = Vector2(4, 4)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DrawingArea/CardImage/Area2D" unique_id=1205961307]
+shape = SubResource("RectangleShape2D_h6sau")
+
+[node name="GridContainer" type="GridContainer" parent="." unique_id=1495519806]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+columns = 2
+
+[node name="Label" type="Label" parent="GridContainer" unique_id=159280591]
+layout_mode = 2
+text = "Color:"
+
+[node name="ColorPickerButton" type="ColorPickerButton" parent="GridContainer" unique_id=1095679324]
+layout_mode = 2
+text = "COLOR"
+
+[node name="Label4" type="Label" parent="GridContainer" unique_id=162153972]
+layout_mode = 2
+text = "Width:"
+
+[node name="WidthSpinBox" type="SpinBox" parent="GridContainer" unique_id=1253969173]
+layout_mode = 2
+min_value = 1.0
+max_value = 20.0
+value = 5.0
+
+[node name="Label3" type="Label" parent="GridContainer" unique_id=1429769542]
+layout_mode = 2
+text = "                "
+
+[node name="GridContainer2" type="GridContainer" parent="." unique_id=260635264]
+layout_mode = 0
+offset_left = 193.0
+offset_top = 1.0
+offset_right = 233.0
+offset_bottom = 41.0
+columns = 2
+
+[node name="PenButton" type="Button" parent="GridContainer2" unique_id=1699044424]
+layout_mode = 2
+text = "Pen"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1728520509]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 20.0
+offset_top = -33.0
+offset_right = 70.0
+offset_bottom = 33.0
+grow_vertical = 2
+
+[node name="UndoButton" type="Button" parent="VBoxContainer" unique_id=1411378479]
+layout_mode = 2
+text = "Undo"
+
+[node name="RedoButton" type="Button" parent="VBoxContainer" unique_id=40142081]
+layout_mode = 2
+text = "Redo"
+
+[node name="QuickSaveButton" type="Button" parent="VBoxContainer" unique_id=1896113182]
+layout_mode = 2
+text = "Q.Save"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=922333167]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.85
+anchor_right = 0.5
+anchor_bottom = 0.9
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 40
+alignment = 1
+
+[node name="LoadButton" type="Button" parent="HBoxContainer" unique_id=31161509]
+layout_mode = 2
+text = "Load"
+
+[node name="SaveButton" type="Button" parent="HBoxContainer" unique_id=775429980]
+layout_mode = 2
+text = "Save"
+
+[node name="CurrentPathLabel" type="Label" parent="." unique_id=184121304]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.05
+anchor_top = 0.95
+anchor_right = 0.05
+anchor_bottom = 0.95
+offset_top = -23.0
+offset_right = 40.0
+grow_vertical = 0
+
+[node name="BackButton" type="Button" parent="." unique_id=1146080745]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_right = 100.0
+offset_bottom = -20.0
+grow_vertical = 0
+text = "Back"
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]
+[connection signal="input_event" from="DrawingArea/CardImage/Area2D" to="DrawingArea" method="_on_area_2d_input_event"]
+[connection signal="mouse_entered" from="DrawingArea/CardImage/Area2D" to="DrawingArea" method="_on_area_2d_mouse_entered"]
+[connection signal="color_changed" from="GridContainer/ColorPickerButton" to="." method="_on_color_picker_button_color_changed"]
+[connection signal="value_changed" from="GridContainer/WidthSpinBox" to="." method="_on_width_spin_box_value_changed"]
+[connection signal="pressed" from="GridContainer2/PenButton" to="." method="_on_pen_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/UndoButton" to="." method="_on_undo_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/RedoButton" to="." method="_on_redo_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/QuickSaveButton" to="." method="_on_quick_save_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/LoadButton" to="." method="_on_load_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/SaveButton" to="." method="_on_save_button_pressed"]
+[connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]

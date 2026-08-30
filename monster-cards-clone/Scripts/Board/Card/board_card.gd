@@ -6,22 +6,8 @@ var image: Texture
 const BOARD_CARD_SCENE = preload("res://Scenes/Board/Card/board_card.tscn")
 
 
-func _ready():
-	card_front.set_initial_values(card_data)
-	update_image()
-
-
 func deserialize(data: Dictionary):
 	super.deserialize(data)
-	update_image()
-
-
-func update_image():
-	var new_image_id = card_data.query_updated_image_id()
-	if new_image_id:
-		# image = load("res://Assets/Sprites/BoardCards/" + str(new_image_id) + ".png")
-		# for now, i do nothing
-		pass
 
 
 func hit(target):
@@ -50,3 +36,7 @@ func _on_card_front_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
 			print(card_data.serialize())
+
+
+func update_sprite_from_card_data():
+	card_front.update_sprite(card_data.get_sprite_hash())

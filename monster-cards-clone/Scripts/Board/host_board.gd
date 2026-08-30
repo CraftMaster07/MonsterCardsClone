@@ -12,6 +12,7 @@ signal call_sync_game(game_state: Dictionary)
 signal call_shadow_sync(player_id: int, serialized_shadow_player_data: Dictionary)
 signal request_deck_blueprints()
 signal received_all_deck_blueprints()
+signal send_missing_sprite(player_id: int, serialized_sprite: Dictionary, callback_uuid: String)
 
 var effect_to_funcs: Dictionary = {
 	EFFECT_ID.HEAL: heal,
@@ -59,6 +60,17 @@ func get_remote_decks():
 
 
 func client_deck_blueprint_received(player_id: int, deck_blueprint: Dictionary):
+	var serialized_sprites: Dictionary = deck_blueprint["sprites"]
+
+	for sprite_hash in serialized_sprites:
+		if not CardSpriteManager.has_sprite(sprite_hash):
+			var calculated_hash = CardSpriteManager.add_sprite(serialized_sprites[sprite_hash])
+
+			if sprite_hash != calculated_hash:
+				push_error("(player_id: {0}) sprite hashes not matching ({1} != {2})".format(
+					[player_id, calculated_hash, sprite_hash]
+				))
+
 	# TODO: add verifications
 	shadow_player_manager.create_player_deck(deck_blueprint, player_id)
 	player_ids_without_deck_blueprint.erase(player_id)
@@ -181,7 +193,7 @@ func integrate_client_card(player_id: int, card_data: CardData):
 		card_data.run_ability()
 
 
-func _replace_handcard_with_boardcard(card: HandCard, slot: EnemyCardSlot):
+func _replace_handcard_with_boardcard(card: HandCard, slot: CardSlot):
 	super._replace_handcard_with_boardcard(card, slot)
 	shadow_player_manager.remove_hand_card_by_uuid(your_id, card.get_card_data().uuid)
 	integrate_client_card(your_id, card.get_card_data())
@@ -315,3 +327,12 @@ func apply_numbered_effect(method: String, effect: Effect, card: CardData, playe
 	var chosen_target = fetch_target(target, effect, card, player)
 	if not chosen_target: return
 	chosen_target.callv(method, [amount])
+
+
+func get_missing_sprite(player_id: int, sprite_hash: String, callback_uuid: String):
+	var serialized_sprite = CardSpriteManager.get_serialized_sprite(sprite_hash)
+
+	if serialized_sprite:
+		send_missing_sprite.emit(player_id, serialized_sprite, callback_uuid)
+	else:
+		push_warning("missing sprite: ", sprite_hash)

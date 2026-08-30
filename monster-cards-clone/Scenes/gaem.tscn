@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://bx5pjgqin4rp5" path="res://Scenes/Board/host_board.tscn" id="4_opxgs"]
 [ext_resource type="PackedScene" uid="uid://be2k7pt5hya2e" path="res://Scenes/Deck Customization/card_creator.tscn" id="5_qpdsw"]
 [ext_resource type="PackedScene" uid="uid://cvexiydhupg0p" path="res://Scenes/Deck Customization/deck_creator.tscn" id="6_7og27"]
+[ext_resource type="PackedScene" uid="uid://cuhxwceyo2um7" path="res://Scenes/SpriteEditor/sprite_editor.tscn" id="7_1llso"]
 [ext_resource type="PackedScene" uid="uid://dh65loc4m8hmo" path="res://Scenes/Main Menu/ui_sounds.tscn" id="7_bbmdl"]
 
 [node name="GAEM" type="Node" unique_id=577313856]
@@ -17,6 +18,7 @@ board_scene = ExtResource("2_opxgs")
 host_board_scene = ExtResource("4_opxgs")
 card_creator_scene = ExtResource("5_qpdsw")
 deck_creator_scene = ExtResource("6_7og27")
+sprite_editor_scene = ExtResource("7_1llso")
 
 [node name="MainMenu" parent="." unique_id=842849383 instance=ExtResource("2_4uhnj")]
 
@@ -27,6 +29,7 @@ root_path = NodePath("../MainMenu")
 
 [connection signal="goto_card_creator" from="MainMenu" to="." method="_on_main_menu_goto_card_creator"]
 [connection signal="goto_deck_creator" from="MainMenu" to="." method="transition_main_menu_to_deck_creator"]
+[connection signal="goto_sprite_editor" from="MainMenu" to="." method="_on_main_menu_goto_sprite_editor"]
 [connection signal="host_game" from="MainMenu" to="." method="_on_main_menu_host_game"]
 [connection signal="join_game" from="MainMenu" to="." method="_on_main_menu_join_game"]
 [connection signal="client_attacked" from="MultiplayerManager" to="." method="_on_multiplayer_manager_client_attacked"]
@@ -35,9 +38,11 @@ root_path = NodePath("../MainMenu")
 [connection signal="connection_failure" from="MultiplayerManager" to="." method="_on_multiplayer_manager_connection_failure"]
 [connection signal="connection_success" from="MultiplayerManager" to="." method="_on_multiplayer_manager_connection_success"]
 [connection signal="get_deck_blueprint" from="MultiplayerManager" to="." method="_on_multiplayer_manager_get_deck_blueprint"]
+[connection signal="get_missing_sprite" from="MultiplayerManager" to="." method="_on_multiplayer_manager_get_missing_sprite"]
 [connection signal="new_player" from="MultiplayerManager" to="." method="_on_multiplayer_manager_new_player"]
 [connection signal="player_left" from="MultiplayerManager" to="." method="_on_multiplayer_manager_player_left"]
 [connection signal="received_deck_blueprint" from="MultiplayerManager" to="." method="_on_multiplayer_manager_received_deck_blueprint"]
+[connection signal="received_missing_sprite" from="MultiplayerManager" to="." method="_on_multiplayer_manager_received_missing_sprite"]
 [connection signal="server_disconnected" from="MultiplayerManager" to="." method="_on_multiplayer_manager_server_disconnected"]
 [connection signal="shadow_sync" from="MultiplayerManager" to="." method="_on_multiplayer_manager_shadow_sync"]
 [connection signal="start_game" from="MultiplayerManager" to="." method="_on_multiplayer_manager_start_game"]

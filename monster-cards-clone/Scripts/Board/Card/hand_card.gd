@@ -32,10 +32,6 @@ var overlapping_slot_areas: Array[SlotArea]
 var tween: Tween
 
 
-func _ready() -> void:
-	card_front.set_initial_values(card_data)
-
-
 func _process(_delta: float) -> void:
 	if drag_state == DragState.DRAGGING:
 		card_front.global_position = get_global_mouse_position() - drag_offset

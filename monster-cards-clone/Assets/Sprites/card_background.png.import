@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ddk3pwxscj744"
-path="res://.godot/imported/strength.png-f07536a60720eda2b6240dc8a077160a.ctex"
+uid="uid://c0h7n7l8mahps"
+path="res://.godot/imported/card_background.png-5ffc9b39e72e341edb7e7cc8a9c7904a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/sprites/strength.png"
-dest_files=["res://.godot/imported/strength.png-f07536a60720eda2b6240dc8a077160a.ctex"]
+source_file="res://Assets/Sprites/card_background.png"
+dest_files=["res://.godot/imported/card_background.png-5ffc9b39e72e341edb7e7cc8a9c7904a.ctex"]
 
 [params]
 

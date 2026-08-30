@@ -28,6 +28,7 @@ var last_trigger: Trigger = null
 
 
 func _ready() -> void:
+	editor_card.set_card_name(name_line_edit.text)
 	editor_card.set_health(int(health_spin_box.value))
 	editor_card.set_attack(int(attack_spin_box.value))
 	editor_card.set_cost(int(cost_label.text))

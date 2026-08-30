@@ -23,6 +23,8 @@ signal client_attacked(player_id: int, attacked_id: int)
 
 signal received_deck_blueprint(player_id: int, deck_blueprint: Dictionary)
 signal get_deck_blueprint()
+signal get_missing_sprite(player_id: int, sprite_hash: String, callback_uuid: String)
+signal received_missing_sprite(serialized_sprite: Dictionary, callback_uuid: String)
 
 @export var server_script: Script
 @export var client_script: Script
@@ -54,6 +56,7 @@ func host_game(player_name) -> void:
 	multiplayer_interface.client_ended_turn.connect(_on_multiplayer_interface_client_ended_turn)
 	multiplayer_interface.client_attacked.connect(_on_multiplayer_interface_client_attacked)
 	multiplayer_interface.received_deck_blueprint.connect(_on_multiplayer_interface_received_deck)
+	multiplayer_interface.get_missing_card_sprite.connect(_on_multiplayer_interface_get_missing_sprite)
 
 	multiplayer_interface.host_game(PORT, player_name)
 	your_id = multiplayer.get_unique_id()
@@ -189,3 +192,23 @@ func send_shadow_sync(player_id: int, serialized_shadow_player_data: Dictionary)
 
 func _on_multiplayer_interface_shadow_sync(serialized_shadow_player_data: Dictionary) -> void:
 	shadow_sync.emit(serialized_shadow_player_data)
+
+
+func request_missing_sprite(sprite_hash, callback_uuid) -> void:
+	multiplayer_interface.request_missing_sprite(sprite_hash, callback_uuid)
+
+
+func _on_multiplayer_interface_get_missing_sprite(
+	player_id: int, sprite_hash: String, callback_uuid: String
+) -> void:
+	get_missing_sprite.emit(player_id, sprite_hash, callback_uuid)
+
+
+func send_missing_sprite(player_id: int, serialized_sprite: Dictionary, callback_uuid: String) -> void:
+	multiplayer_interface.send_missing_sprite(player_id, serialized_sprite, callback_uuid)
+
+
+func _on_multiplayer_interface_received_missing_sprite(
+	serialized_sprite: Dictionary, callback_uuid: String
+) -> void:
+	received_missing_sprite.emit(serialized_sprite, callback_uuid)

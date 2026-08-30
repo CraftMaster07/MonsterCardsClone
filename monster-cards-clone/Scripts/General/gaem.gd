@@ -7,11 +7,13 @@ extends Node
 @export var host_board_scene: PackedScene
 @export var card_creator_scene: PackedScene
 @export var deck_creator_scene: PackedScene
+@export var sprite_editor_scene: PackedScene
 
 var waiting_room: WaitingRoom = null
 var board: Board = null
 var card_creator: CardCreator = null
 var deck_creator: DeckCreator = null
+var sprite_editor: SpriteEditor = null
 
 var deck: DeckFile = DeckFile.new()
 
@@ -41,8 +43,18 @@ func transition_main_menu_to_card_creator():
 	start_card_creator()
 
 
+func transition_main_menu_to_sprite_editor():
+	stop_main_menu()
+	start_sprite_editor()
+
+
 func transition_card_creator_to_main_menu():
 	stop_card_creator()
+	start_main_menu()
+
+
+func transition_sprite_editor_to_main_menu():
+	stop_sprite_editor()
 	start_main_menu()
 
 
@@ -73,9 +85,20 @@ func start_card_creator():
 	add_child(card_creator)
 
 
+func start_sprite_editor():
+	sprite_editor = sprite_editor_scene.instantiate()
+	sprite_editor.leave.connect(transition_sprite_editor_to_main_menu)
+	add_child(sprite_editor)
+
+
 func stop_card_creator():
 	remove_child(card_creator)
 	card_creator.queue_free()
+
+
+func stop_sprite_editor():
+	remove_child(sprite_editor)
+	sprite_editor.queue_free()
 
 
 func start_waiting_room():
@@ -97,6 +120,7 @@ func start_board():
 		board.call_sync_game.connect(call_sync_game)
 		board.request_deck_blueprints.connect(_on_board_request_deck_blueprints)
 		board.call_shadow_sync.connect(_on_board_call_shadow_sync)
+		board.send_missing_sprite.connect(_on_board_send_missing_sprite)
 	else:
 		board = board_scene.instantiate()
 
@@ -106,6 +130,7 @@ func start_board():
 	board.send_placed_card.connect(_on_board_send_placed_card)
 	board.send_end_turn.connect(_on_end_turn_pressed)
 	board.send_player_attacked.connect(_on_board_player_attacked)
+	board.missing_sprite.connect(_on_board_missing_sprite)
 	add_child(board)
 
 
@@ -253,3 +278,23 @@ func _on_multiplayer_manager_shadow_sync(serialized_shadow_player_data: Dictiona
 
 func _on_main_menu_goto_card_creator() -> void:
 	transition_main_menu_to_card_creator()
+
+
+func _on_main_menu_goto_sprite_editor() -> void:
+	transition_main_menu_to_sprite_editor()
+
+
+func _on_board_missing_sprite(sprite_hash: String, callback_uuid: String) -> void:
+	multiplayer_manager.request_missing_sprite(sprite_hash, callback_uuid)
+
+
+func _on_multiplayer_manager_get_missing_sprite(player_id: int, sprite_hash: String, callback_uuid: String) -> void:
+	board.get_missing_sprite(player_id, sprite_hash, callback_uuid)
+
+
+func _on_board_send_missing_sprite(player_id: int, serialized_sprite: Dictionary, callback_uuid: String) -> void:
+	multiplayer_manager.send_missing_sprite(player_id, serialized_sprite, callback_uuid)
+
+
+func _on_multiplayer_manager_received_missing_sprite(serialized_sprite: Dictionary, callback_uuid: String) -> void:
+	board.received_missing_sprite(serialized_sprite, callback_uuid)

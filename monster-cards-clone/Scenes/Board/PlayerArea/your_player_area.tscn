@@ -1,35 +1,56 @@
 [gd_scene format=3 uid="uid://bmbkajbu0quju"]
 
-[ext_resource type="PackedScene" uid="uid://7ukrl57uilte" path="res://Scenes/Board/Field/your_field.tscn" id="1_0sjld"]
+[ext_resource type="PackedScene" uid="uid://7ukrl57uilte" path="res://Scenes/Board/PlayerArea/Field/your_field.tscn" id="1_0sjld"]
 [ext_resource type="Script" uid="uid://blqwrjfjawlsc" path="res://Scripts/Board/PlayerArea/your_player_area.gd" id="1_cth6i"]
 [ext_resource type="PackedScene" uid="uid://dxt0343x16g61" path="res://Scenes/Board/deck.tscn" id="2_6lo4n"]
-[ext_resource type="PackedScene" uid="uid://d15k25ah1su5c" path="res://Scenes/Board/Hand/your_hand.tscn" id="4_ejj2a"]
+[ext_resource type="PackedScene" uid="uid://d15k25ah1su5c" path="res://Scenes/Board/PlayerArea/Hand/your_hand.tscn" id="4_ejj2a"]
+[ext_resource type="PackedScene" uid="uid://dhglc6iuiupwr" path="res://Scenes/Board/stat_icon.tscn" id="5_07jcd"]
 
 [node name="YourPlayerArea" type="Control" unique_id=1640011511]
 layout_mode = 3
 anchors_preset = 0
-offset_top = 1.0
-offset_bottom = 1.0
 script = ExtResource("1_cth6i")
 
 [node name="Field" parent="." unique_id=497800204 instance=ExtResource("1_0sjld")]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = 0.0
-offset_bottom = 0.0
-grow_horizontal = 2
-grow_vertical = 2
 
 [node name="Deck" parent="." unique_id=1804813508 instance=ExtResource("2_6lo4n")]
-layout_mode = 0
-offset_left = 176.0
-offset_top = -100.0
-offset_right = 236.0
-offset_bottom = -10.0
+layout_mode = 1
+offset_left = 135.0
+offset_right = 195.0
 
 [node name="Hand" parent="." unique_id=2133211725 instance=ExtResource("4_ejj2a")]
 layout_mode = 1
-offset_top = 250.0
-offset_bottom = 250.0
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_top = 160.0
+offset_bottom = 160.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HealthIcon" parent="." unique_id=1099063150 instance=ExtResource("5_07jcd")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 180.0
+offset_top = 60.0
+offset_right = 180.0
+offset_bottom = 60.0
+
+[node name="ManaIcon" parent="." unique_id=588395079 instance=ExtResource("5_07jcd")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 150.0
+offset_top = 60.0
+offset_right = 150.0
+offset_bottom = 60.0

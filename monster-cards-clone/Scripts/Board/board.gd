@@ -19,6 +19,7 @@ extends Control
 
 @export var round_manager: Node
 @export var player_manager: PlayerManager
+@export var callback_manager: CallbackManager
 
 @onready var your_id = player_manager.your_id
 
@@ -30,7 +31,7 @@ var unassigned_area_player_ids: Array
 
 var deck_file: DeckFile
 
-const MIN_TABLE_RADIUS: float = 400.0
+const MIN_TABLE_RADIUS: float = 250.0
 const CAMERA_ADDITIONAL_RADIUS: float = -100.0
 const PLAYER_AREA_SPAWNER_ADDITIONAL_RADIUS: float = -100.0
 
@@ -40,6 +41,7 @@ const INITIAL_DECK_CARD_COUNT: int = 5 + INITIAL_HAND_CARD_COUNT
 signal send_placed_card(card_uuid: String, slot_id: int)
 signal send_end_turn()
 signal send_player_attacked(attacked_id: int)
+signal missing_sprite(sprite_hash: String, callback_uuid: String)
 
 enum ValidationResponses {
 		INVALID = -1,
@@ -71,13 +73,13 @@ func connect_card(card: HandCard):
 	card.card_deselected.connect(deselect_card)
 
 
-func slot_clicked(slot: EnemyCardSlot):
+func slot_clicked(slot: CardSlot):
 	if selected_card != null:
 		print("placing card")
 		_place_card_into_slot(selected_card, slot)
 
 
-func _place_card_into_slot(card: HandCard, slot: EnemyCardSlot):
+func _place_card_into_slot(card: HandCard, slot: CardSlot):
 	"""
 	Marks the slot as taken, and starts the animation to move the card into the slot
 	"""
@@ -97,13 +99,16 @@ func _place_card_into_slot(card: HandCard, slot: EnemyCardSlot):
 	print("card placed")
 
 
-func _replace_handcard_with_boardcard(card: HandCard, slot: EnemyCardSlot):
+func _replace_handcard_with_boardcard(card: HandCard, slot: CardSlot):
 	"""
 	Replaces the HandCard with a BoardCard object
 	This should be done after the card is moved into a slot
 	"""
 	card.release_card_data()
 	var new_board_card := BoardCard.create(card.card_data)
+	new_board_card.missing_sprite.connect(_on_card_missing_sprite)
+	new_board_card.update_sprite_from_card_data()
+
 	slot.place_card(new_board_card)
 	card.queue_free() # might replace with remove_child
 	sfx_place.play()
@@ -160,6 +165,8 @@ func spawn_player_areas(players_count: int):
 
 func _on_player_area_spawner_pivot_new_area_spawned(new_player_area: PlayerArea) -> void:
 	table.add_child(new_player_area)
+	for slot in new_player_area.get_field().get_slots():
+		slot.deserialized_new_card.connect(_on_slot_deserialized_new_card)
 
 	if is_instance_of(new_player_area, YourPlayerArea):
 		print("your area spawned, id: ", your_id)
@@ -179,6 +186,8 @@ func set_first_player_area(player_area: PlayerArea):
 	set_player_field(player_area.get_field(), player_id)
 	set_player_deck(player_area.get_deck(), player_id)
 	set_player_hand(player_area.get_hand(), player_id)
+	set_player_health_icon(player_area.get_health_icon(), player_id)
+	set_player_mana_icon(player_area.get_mana_icon(), player_id)
 
 	unassigned_area_player_ids.remove_at(0)
 
@@ -205,6 +214,8 @@ func set_your_area(player_area: PlayerArea):
 	set_your_field(player_area.get_field())
 	set_player_deck(player_area.get_deck(), your_id)
 	set_your_hand(player_area.get_hand())
+	set_player_health_icon(player_area.get_health_icon(), your_id)
+	set_player_mana_icon(player_area.get_mana_icon(), your_id)
 
 
 func set_player_area(area: PlayerArea, player_id: int):
@@ -221,6 +232,14 @@ func set_player_deck(deck: Deck, player_id: int):
 
 func set_player_hand(hand: Hand, player_id: int):
 	player_manager.set_player_hand(hand, player_id)
+
+
+func set_player_health_icon(health_icon: StatIcon, player_id: int):
+	player_manager.set_player_health_icon(health_icon, player_id)
+	
+
+func set_player_mana_icon(mana_icon: StatIcon, player_id: int):
+	player_manager.set_player_mana_icon(mana_icon, player_id)
 
 
 func verify_card_placement(
@@ -322,7 +341,7 @@ func get_deck_blueprint() -> Dictionary:
 	var serialized_card_datas = []
 
 	for file_name in deck_file.cards:
-		var path = PathConstants.CARD_SAVE_PATH + file_name + ".json"
+		var path = PathConstants.CARD_SAVE_PATH.path_join(file_name + ".json")
 		var card_file = CardFile.new()
 
 		if not card_file.load(path):
@@ -332,8 +351,10 @@ func get_deck_blueprint() -> Dictionary:
 			var card_data = CardData.create_from_card_file(card_file, your_id)
 			serialized_card_datas.append(card_data.serialize())
 			card_data.free()
+		
+	var card_sprites = CardSpriteManager.get_serialized_sprites()
 
-	return {"card_datas": serialized_card_datas}
+	return {"card_datas": serialized_card_datas, "sprites": card_sprites}
 
 
 func shadow_sync(serialized_shadow_player_data: Dictionary):
@@ -346,3 +367,18 @@ func _on_round_manager_round_number_changed(new_round_number: int) -> void:
 
 func set_deck_file(deck: DeckFile):
 	deck_file = deck
+
+
+func _on_card_missing_sprite(sprite_hash: String, callback: Callable):
+	var callback_uuid = callback_manager.add_callback(callback)
+	missing_sprite.emit(sprite_hash, callback_uuid)
+
+
+func received_missing_sprite(serialized_sprite: Dictionary, callback_uuid: String):
+	var sprite_hash = CardSpriteManager.add_sprite(serialized_sprite)
+	callback_manager.pop_callback(callback_uuid).call(sprite_hash)
+
+
+func _on_slot_deserialized_new_card(card: BoardCard):
+	card.missing_sprite.connect(_on_card_missing_sprite)
+	card.update_sprite_from_card_data()
