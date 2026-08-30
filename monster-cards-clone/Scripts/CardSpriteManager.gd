@@ -117,3 +117,27 @@ static func _bake(data: Dictionary, size: Vector2i) -> Image:
     viewport.queue_free()
     
     return image
+
+
+func clear_cache():
+    var err: int
+    var undeleted_files: Array[String]
+    var dir = DirAccess.open(PathConstants.BAKED_SPRITES_PATH)
+    dir.list_dir_begin()
+    var file_name = dir.get_next()
+
+    while file_name != "":
+        if file_name.ends_with(".png"):
+            err = dir.remove(file_name)
+
+            if err != OK:
+                undeleted_files.append(file_name)
+
+        file_name = dir.get_next()
+    
+    dir.list_dir_end()
+
+    if undeleted_files.size() > 0:
+        push_error("Failed to delete these files: ", undeleted_files)
+
+    return undeleted_files.size() == 0

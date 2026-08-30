@@ -4,12 +4,13 @@
 [ext_resource type="Script" uid="uid://bxc7py0b1ykhx" path="res://Scripts/Main Menu/main_menu.gd" id="1_48xlc"]
 [ext_resource type="AudioStream" uid="uid://dit1tvyol83cj" path="res://Assets/Audio/Music/mus_testing.mp3" id="4_y0aff"]
 [ext_resource type="Theme" uid="uid://f2a4ylwdbwtx" path="res://Assets/Styles/main_theme.tres" id="5_46knf"]
+[ext_resource type="Script" uid="uid://cymjd08n87esp" path="res://Scripts/Main Menu/delete_sprite_cache_button.gd" id="5_57ted"]
 [ext_resource type="PackedScene" uid="uid://ci6tydy38xeqp" path="res://Scenes/Main Menu/volume_slider.tscn" id="5_r7gth"]
 [ext_resource type="Texture2D" uid="uid://bdyi27t2a70bu" path="res://Assets/Sprites/card_editor_button.png" id="5_rghun"]
 [ext_resource type="Texture2D" uid="uid://dcx5502o88s74" path="res://Assets/Sprites/deck_editor_button.png" id="6_46knf"]
 [ext_resource type="Script" uid="uid://clievdbpydyi3" path="res://Scripts/Main Menu/hovered_button.gd" id="7_57ted"]
 
-[node name="MainMenu" type="Control" unique_id=574280643 node_paths=PackedStringArray("play_menu_container", "settings_menu_container", "deck_menu_container", "host_menu", "join_menu", "name_line_edit", "ip_line_edit", "join_status_label", "select_deck_label")]
+[node name="MainMenu" type="Control" unique_id=574280643 node_paths=PackedStringArray("play_menu_container", "settings_menu_container", "deck_menu_container", "host_menu", "join_menu", "name_line_edit", "ip_line_edit", "join_status_label", "select_deck_label", "more_options_label")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -27,6 +28,7 @@ name_line_edit = NodePath("UI/PlayMenuContainer/VBoxContainer/HBoxContainer/Host
 ip_line_edit = NodePath("UI/PlayMenuContainer/VBoxContainer/HBoxContainer/HostJoinContainer/JoinMenu/IPLineEdit")
 join_status_label = NodePath("UI/PlayMenuContainer/JoinStatusLabel")
 select_deck_label = NodePath("UI/PlayMenuContainer/SelectedDeckLabel")
+more_options_label = NodePath("UI/SettingsMenuContainer/MoreOptions/MoreOptionsLabel")
 
 [node name="UI" type="Control" parent="." unique_id=7129608]
 layout_mode = 1
@@ -178,8 +180,7 @@ anchors_preset = -1
 anchor_left = 0.3
 anchor_top = 0.4
 anchor_right = 0.7
-anchor_bottom = 0.6
-grow_vertical = 2
+anchor_bottom = 0.75
 
 [node name="VolumeSettingsContainer" type="VBoxContainer" parent="UI/SettingsMenuContainer" unique_id=1456166459]
 layout_mode = 2
@@ -195,6 +196,28 @@ bus_name = "Sound"
 [node name="MusicSlider" parent="UI/SettingsMenuContainer/VolumeSettingsContainer" unique_id=750565473 instance=ExtResource("5_r7gth")]
 layout_mode = 2
 bus_name = "Music"
+
+[node name="HSeparator" type="HSeparator" parent="UI/SettingsMenuContainer/VolumeSettingsContainer" unique_id=873630780]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="MoreOptions" type="VBoxContainer" parent="UI/SettingsMenuContainer" unique_id=1432328771]
+layout_mode = 2
+mouse_filter = 2
+alignment = 2
+
+[node name="DeleteSpriteCacheButton" type="Button" parent="UI/SettingsMenuContainer/MoreOptions" unique_id=2073580879 node_paths=PackedStringArray("more_options_label")]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+text = "Delete Sprite Cache"
+script = ExtResource("5_57ted")
+more_options_label = NodePath("../MoreOptionsLabel")
+
+[node name="MoreOptionsLabel" type="Label" parent="UI/SettingsMenuContainer/MoreOptions" unique_id=1852263153]
+layout_mode = 2
+horizontal_alignment = 1
 
 [node name="DeckMenuContainer" type="HBoxContainer" parent="UI" unique_id=1112407547]
 visible = false
@@ -277,6 +300,7 @@ bus = &"Music"
 [connection signal="pressed" from="UI/PlayMenuContainer/VBoxContainer/HBoxContainer/HostJoinContainer/HostMenu/HostStartButton" to="." method="_on_host_start_button_pressed"]
 [connection signal="pressed" from="UI/PlayMenuContainer/VBoxContainer/HBoxContainer/HostJoinContainer/JoinMenu/JoinStartButton" to="." method="_on_join_start_button_pressed"]
 [connection signal="pressed" from="UI/PlayMenuContainer/SelectDeckButton" to="." method="_on_select_deck_button_pressed"]
+[connection signal="pressed" from="UI/SettingsMenuContainer/MoreOptions/DeleteSpriteCacheButton" to="UI/SettingsMenuContainer/MoreOptions/DeleteSpriteCacheButton" method="_on_pressed"]
 [connection signal="pressed" from="UI/DeckMenuContainer/CardCreatorButton" to="." method="_on_card_creator_button_pressed"]
 [connection signal="pressed" from="UI/DeckMenuContainer/DeckCreatorButton" to="." method="_on_deck_creator_button_pressed"]
 [connection signal="pressed" from="UI/DeckMenuContainer/SpriteEditorButton" to="." method="_on_sprite_editor_button_pressed"]

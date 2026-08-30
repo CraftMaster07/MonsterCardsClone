@@ -15,6 +15,7 @@ signal goto_sprite_editor()
 @export var ip_line_edit: LineEdit
 @export var join_status_label: Label
 @export var select_deck_label: Label
+@export var more_options_label: Label
 
 var menu_containers: Array[Control] = []
 var deck: DeckFile
@@ -56,6 +57,7 @@ func _on_play_button_pressed() -> void:
 
 
 func _on_settings_button_pressed() -> void:
+	more_options_label.text = ""
 	toggle_menu(settings_menu_container)
 
 
