@@ -24,6 +24,7 @@ var effect_to_funcs: Dictionary = {
 var target_to_funcs: Dictionary = {
 	TARGET_ID.SELF: fetch_target_self,
 	TARGET_ID.FACE: fetch_target_face,
+	TARGET_ID.RANDOM_FRIENDLY_CARD: fetch_target_random_friendly_card,
 	TARGET_ID.RANDOM_ENEMY_CARD: fetch_target_random_enemy_card,
 	TARGET_ID.RANDOM_ENEMY_FACE: fetch_target_random_enemy_face
 }
@@ -310,6 +311,10 @@ func fetch_target_self(_effect: Effect, card: CardData, _player: Player):
 
 func fetch_target_face(_effect: Effect, _card: CardData, player: Player):
 	return player
+
+
+func fetch_target_random_friendly_card(_effect: Effect, _card: CardData, player: Player):
+	return player.get_random_board_card_data()
 
 
 func fetch_target_random_enemy_face(_effect: Effect, _card: CardData, player: Player):
