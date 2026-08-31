@@ -192,7 +192,7 @@ func _on_multiplayer_interface_shadow_sync(serialized_shadow_player_data: Dictio
 
 
 func request_target_selection(player_id: int, card_uuid: String, target: Effect.TARGET) -> void:
-	multiplayer_interface.request_card_selection(player_id, card_uuid, target)
+	multiplayer_interface.request_target_selection(player_id, card_uuid, target)
 
 
 func _on_multiplayer_interface_select_target(target: Effect.TARGET, card_uuid: String) -> void:

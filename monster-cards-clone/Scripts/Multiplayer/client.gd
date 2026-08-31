@@ -146,6 +146,7 @@ func get_target_selection(target: Effect.TARGET, card_uuid: String):
 func send_target_selected(target: Effect.TARGET):
 	receive_target_selected.rpc_id(1, target)
 
+
 @rpc("any_peer", "call_remote", "reliable", 0)
 func receive_target_selected(_target):
 	# server side function

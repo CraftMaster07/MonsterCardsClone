@@ -310,9 +310,6 @@ func fetch_target_random_enemy_card(effect: Effect, card: CardData, player: Play
 
 
 func fetch_target_selected_card(effect: Effect, card: CardData, player: Player):
-	if card.get_ability().last_target:
-		return card.get_ability().last_target
-
 	request_target_selection.emit(player.get_id(), card.get_uuid(), effect.get_target())
 	var card_uuid = await target_selected
 	var card_target = player_manager.get_board_card_by_uuid(card_uuid)
