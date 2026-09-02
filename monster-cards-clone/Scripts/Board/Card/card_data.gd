@@ -155,6 +155,10 @@ func get_trigger_id() -> Trigger.TriggerID:
 	return ability.get_trigger().get_id()
 
 
+func get_effect() -> Effect:
+	return ability.get_effect()
+
+
 func run_ability():
 	ability.run()
 
@@ -207,3 +211,7 @@ func update_sprite_hash(new_hash: String):
 
 func get_sprite_hash() -> String:
 	return sprite_hash
+
+
+func get_card_name() -> String:
+	return card_name

@@ -386,7 +386,7 @@ func _on_slot_deserialized_new_card(card: BoardCard):
 
 
 func show_card_details(card_data: CardData):
-	card_details.set_card_data(card_data)
+	card_details.display_card_details(card_data)
 	card_details.visible = true
 
 
