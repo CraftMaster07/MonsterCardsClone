@@ -1,6 +1,8 @@
 class_name Effect
 extends Resource
 
+# ==== TARGETS ==== #
+
 # add new targets ONLY IN THE END!
 enum TARGET {
 	INVALID = -1,
@@ -10,6 +12,24 @@ enum TARGET {
 	RANDOM_ENEMY_CARD,
 	RANDOM_ENEMY_FACE,
 }
+
+const TARGET_MULTIPLIERS = {
+	TARGET.SELF: 1,
+	TARGET.FACE: 1,
+	TARGET.RANDOM_FRIENDLY_CARD: 1,
+	TARGET.RANDOM_ENEMY_CARD: 0.6,
+	TARGET.RANDOM_ENEMY_FACE: 0.6,
+}
+
+const TARGET_DISPLAY_NAMES = {
+	TARGET.SELF: "Self",
+	TARGET.FACE: "Your Face",
+	TARGET.RANDOM_FRIENDLY_CARD: "A Random Friendly Card",
+	TARGET.RANDOM_ENEMY_CARD: "A Random Enemy Card",
+	TARGET.RANDOM_ENEMY_FACE: "A Random Enemy Face",
+}
+
+# ==== /TARGETS ==== #
 
 # add new effects ONLY IN THE END!
 enum EffectID {
@@ -34,14 +54,6 @@ enum Null{
 @export var extra_properties: Dictionary[String, Variant] = {}
 
 var target: TARGET
-
-const TARGET_MULTIPLIERS = {
-	TARGET.SELF: 1,
-	TARGET.FACE: 1,
-	TARGET.RANDOM_FRIENDLY_CARD: 1,
-	TARGET.RANDOM_ENEMY_CARD: 0.6,
-	TARGET.RANDOM_ENEMY_FACE: 0.6,
-}
 
 
 func get_id():
@@ -94,3 +106,7 @@ func get_multiplier(_trigger_id: Trigger.TriggerID):
 func get_target_multiplier():
 	# can add some overrides here using 'self' as the effect.
 	return TARGET_MULTIPLIERS[target]
+
+
+func get_target_display_name():
+	return TARGET_DISPLAY_NAMES[target]

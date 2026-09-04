@@ -13,7 +13,7 @@ const CARD_DESCRIPTION_FORMAT = """[center][font_size=24][b]{card_name}[/b][/fon
 
 [center][font_size=16][color=#666666][i]"{creator_note}"[/i][/color][/font_size][/center]"""
 
-const ABILITY_DESCRIPTION_FORMAT = """[color=#ffcc00][b]{trigger}: {effect}[/b][/color]"""
+const ABILITY_DESCRIPTION_FORMAT = """[color=#ffcc00][b]{trigger}: {effect} {target}[/b][/color]"""
 
 
 func display_card_details(card_data: CardData):
@@ -25,8 +25,9 @@ func display_card_details(card_data: CardData):
 	if card_data.has_ability():
 		var trigger = card_data.get_trigger().get_display_name()
 		var effect = card_data.get_effect().get_display_name()
+		var target = card_data.get_effect().get_target_display_name()
 
-		var ability_description = ABILITY_DESCRIPTION_FORMAT.format({"trigger": trigger, "effect": effect})
+		var ability_description = ABILITY_DESCRIPTION_FORMAT.format({"trigger": trigger, "effect": effect, "target": target})
 		card_description = CARD_DESCRIPTION_FORMAT.format({
 			"card_name": card_name,
 			"creator_name": card_data.get_creator_name(),
