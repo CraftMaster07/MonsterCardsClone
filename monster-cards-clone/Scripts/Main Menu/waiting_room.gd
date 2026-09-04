@@ -6,6 +6,7 @@ signal start_game()
 signal leave()
 
 var rngesus := RandomNumberGenerator.new()
+var is_host := false
 
 @onready var player_name_input: LineEdit = $LineEdit
 @onready var player_container: VBoxContainer = $VBoxContainer/PlayersContainer
@@ -19,11 +20,18 @@ func add_player(id: int, player_name: String, color = null) -> void:
 		color = hash_to_color(player_name)
 
 	player_nodes[id] = player_container.add_player(player_name, color)
+	check_start_game()
 
 
 func remove_player(id: int) -> void:
 	player_container.remove_child(player_nodes[id])
 	player_nodes.erase(id)
+	check_start_game()
+
+
+func check_start_game() -> void:
+	if is_host:
+		start_button.disabled = player_nodes.size() < 2
 
 
 func generate_random_color() -> Color:
@@ -75,5 +83,5 @@ func _on_leave_button_pressed() -> void:
 
 
 func allow_starting_game() -> void:
-	start_button.disabled = false
 	start_button.visible = true
+	is_host = true

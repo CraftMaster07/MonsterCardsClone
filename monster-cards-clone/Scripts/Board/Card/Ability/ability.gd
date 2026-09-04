@@ -32,6 +32,10 @@ func get_trigger() -> Trigger:
 	return trigger
 
 
+func get_effect() -> Effect:
+	return effect
+
+
 func serialize() -> Dictionary:
 	var data = {}
 

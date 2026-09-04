@@ -1,0 +1,80 @@
+[gd_scene format=3 uid="uid://50dcf6wk76wn"]
+
+[ext_resource type="PackedScene" uid="uid://b1rfo4m4p3w8h" path="res://Scenes/Board/Card/card_front.tscn" id="1_0xh5v"]
+[ext_resource type="Script" uid="uid://blxiftvkebhn5" path="res://Scripts/Board/Card/card_details.gd" id="1_xyeya"]
+[ext_resource type="Theme" uid="uid://f2a4ylwdbwtx" path="res://Assets/Styles/main_theme.tres" id="3_jo0ih"]
+[ext_resource type="FontFile" uid="uid://b13kiadbfhetg" path="res://Assets/Fonts/VCR_OSD_MONO_1.001.ttf" id="4_ntc3j"]
+
+[sub_resource type="FontVariation" id="FontVariation_dmli3"]
+base_font = ExtResource("4_ntc3j")
+variation_embolden = 0.5
+
+[node name="CardDetails" type="Control" unique_id=621324339 node_paths=PackedStringArray("card_front", "card_description_label")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_xyeya")
+card_front = NodePath("HBoxContainer/Control/CardFront")
+card_description_label = NodePath("HBoxContainer/CardDescriptionLabel")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1481184697]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0.4)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1002076313]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -60.0
+offset_top = -90.0
+offset_right = 214.0
+offset_bottom = 90.0
+grow_vertical = 2
+size_flags_vertical = 4
+alignment = 1
+
+[node name="Control" type="Control" parent="HBoxContainer" unique_id=1579978554]
+custom_minimum_size = Vector2(120, 180)
+layout_mode = 2
+
+[node name="CardFront" parent="HBoxContainer/Control" unique_id=20270715 instance=ExtResource("1_0xh5v")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -30.0
+offset_top = -45.0
+offset_right = 30.0
+offset_bottom = 45.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(2, 2)
+
+[node name="Separator" type="RichTextLabel" parent="HBoxContainer" unique_id=1082045985]
+custom_minimum_size = Vector2(20, 150)
+layout_mode = 2
+theme = ExtResource("3_jo0ih")
+
+[node name="CardDescriptionLabel" type="RichTextLabel" parent="HBoxContainer" unique_id=1493735927]
+custom_minimum_size = Vector2(300, 150)
+layout_mode = 2
+theme = ExtResource("3_jo0ih")
+theme_override_fonts/bold_font = SubResource("FontVariation_dmli3")
+bbcode_enabled = true
+text = "[b]John Card[/b]
+aaaaa: afafafffffffffffffffff"

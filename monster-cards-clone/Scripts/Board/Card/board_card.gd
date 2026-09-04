@@ -32,11 +32,5 @@ func run_ability():
 	card_data.run_ability()
 
 
-func _on_card_front_gui_input(event: InputEvent) -> void:
-	if event is InputEventMouseButton:
-		if event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
-			print(card_data.serialize())
-
-
 func update_sprite_from_card_data():
 	card_front.update_sprite(card_data.get_sprite_hash())

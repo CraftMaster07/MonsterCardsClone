@@ -36,6 +36,12 @@ func serialize() -> Dictionary:
 	return data
 
 
+func lightweight_serialize() -> Dictionary:
+	var data: Dictionary = serialize()
+	data.erase("serialized_sprite")
+	return data
+
+
 func load(file_path: String) -> bool:
 	var file := FileAccess.open(file_path, FileAccess.READ)
 	var data = JSON.parse_string(file.get_as_text())

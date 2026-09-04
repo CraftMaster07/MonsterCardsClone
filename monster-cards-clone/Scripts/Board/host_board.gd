@@ -181,7 +181,7 @@ func client_placed_card(player_id: int, card_uuid: String, slot_id: int):
 
 func place_client_card(player_id: int, card_data: CardData, slot_id: int):
 	shadow_player_manager.remove_hand_card_by_uuid(player_id, card_data.uuid)
-	var card := BoardCard.create(card_data)
+	var card := create_board_card(card_data)
 	player_manager.place_card_into_slot(player_id, card, slot_id)
 	player_manager.spend_mana(player_id, card_data.cost)
 	integrate_client_card(player_id, card_data)
