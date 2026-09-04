@@ -4,11 +4,16 @@ extends Control
 @export var card_front: CardFront
 @export var card_description_label: RichTextLabel
 
-const CARD_DESCRIPTION_FORMAT = """[b]{}[/b]
+const CARD_DESCRIPTION_FORMAT = """[center][font_size=24][b]{card_name}[/b][/font_size][/center]
+[center][color=#888888]Forged by: {creator_name}[/color][/center]
 
-Ability: """
+[center][color=#e0e0e0]{abilities}[/color][/center]
 
-const ABILITY_DESCRIPTION_FORMAT = """{}: {}"""
+
+
+[center][font_size=16][color=#666666][i]"{creator_note}"[/i][/color][/font_size][/center]"""
+
+const ABILITY_DESCRIPTION_FORMAT = """[color=#ffcc00][b]{trigger}: {effect}[/b][/color]"""
 
 
 func display_card_details(card_data: CardData):
@@ -21,10 +26,19 @@ func display_card_details(card_data: CardData):
 		var trigger = card_data.get_trigger().get_display_name()
 		var effect = card_data.get_effect().get_display_name()
 
-		card_description = CARD_DESCRIPTION_FORMAT.format([card_name], "{}")
-		card_description += ABILITY_DESCRIPTION_FORMAT.format([trigger, effect], "{}")
+		var ability_description = ABILITY_DESCRIPTION_FORMAT.format({"trigger": trigger, "effect": effect})
+		card_description = CARD_DESCRIPTION_FORMAT.format({
+			"card_name": card_name,
+			"creator_name": card_data.get_creator_name(),
+			"abilities": ability_description,
+			"creator_note": card_data.get_creator_note()
+		})
 	else:
-		card_description = CARD_DESCRIPTION_FORMAT.format([card_name], "{}")
-		card_description += "None"
+		card_description = CARD_DESCRIPTION_FORMAT.format({
+			"card_name": card_name,
+			"creator_name": card_data.get_creator_name(),
+			"abilities": "",
+			"creator_note": card_data.get_creator_note()
+		})
 
 	card_description_label.text = card_description

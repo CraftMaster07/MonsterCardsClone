@@ -215,3 +215,13 @@ func get_sprite_hash() -> String:
 
 func get_card_name() -> String:
 	return card_name
+
+
+func get_creator_name() -> String:
+	# TODO
+	return "<Unknown>"
+
+
+func get_creator_note() -> String:
+	# TODO
+	return "<Creator Note>"

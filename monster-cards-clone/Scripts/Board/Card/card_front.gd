@@ -8,6 +8,8 @@ extends TextureButton
 
 @export var ability_signature_label: RichTextLabel
 
+@export var sprite_rect: TextureRect
+
 var initial_health: int = -1
 var initial_attack: int = -1
 var initial_cost: int = -1
@@ -101,4 +103,4 @@ func force_update_sprite(sprite_hash: String = saved_sprite_hash):
 	
 	saved_sprite_hash = sprite_hash
 	
-	texture_normal = new_sprite
+	sprite_rect.texture = new_sprite
