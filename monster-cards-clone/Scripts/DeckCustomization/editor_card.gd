@@ -158,4 +158,5 @@ func get_target_multiplier() -> float:
 func _on_card_front_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
-			print(card_file.serialize())
+			print(card_file.lightweight_serialize())
+			

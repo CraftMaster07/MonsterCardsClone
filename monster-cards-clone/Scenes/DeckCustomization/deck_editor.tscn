@@ -6,7 +6,6 @@
 [ext_resource type="PackedScene" uid="uid://bmc0b8c5180lj" path="res://Scenes/DeckCustomization/editor_card_container.tscn" id="3_pb3bh"]
 [ext_resource type="Script" uid="uid://bc3eoaptsgsub" path="res://Scripts/DeckCustomization/deck_container.gd" id="4_64y0t"]
 
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w4u1l"]
 bg_color = Color(0.23851621, 0.22978191, 0.27170652, 1)
 
