@@ -90,7 +90,7 @@ func set_mana_icon(new_mana_icon: StatIcon):
 
 
 func update_health_icon():
-	health_icon.update_label(str(health) + "/" + str(STARTING_HEALTH))
+	health_icon.update_label(str(health))
 
 
 func update_mana_icon():

@@ -25,4 +25,4 @@ func get_health_icon() -> StatIcon:
 
 
 func get_mana_icon() -> StatIcon:
-	return health_icon
+	return mana_icon

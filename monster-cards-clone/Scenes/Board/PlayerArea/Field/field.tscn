@@ -3,10 +3,19 @@
 [ext_resource type="Script" uid="uid://brdia574yytmk" path="res://Scripts/Board/PlayerArea/Field/field.gd" id="1_b3ykb"]
 [ext_resource type="PackedScene" uid="uid://ct317gmjddic1" path="res://Scenes/Board/PlayerArea/Field/CardSlot/card_slot.tscn" id="2_jygpy"]
 
-
 [node name="Field" type="MarginContainer" unique_id=43736776]
-offset_right = 210.0
-offset_bottom = 90.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -105.0
+offset_top = -45.0
+offset_right = 105.0
+offset_bottom = 45.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(105, 45)
 script = ExtResource("1_b3ykb")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=508165927]

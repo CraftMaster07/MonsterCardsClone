@@ -4,6 +4,18 @@
 [ext_resource type="Script" uid="uid://blxiftvkebhn5" path="res://Scripts/Board/Card/card_details.gd" id="1_xyeya"]
 [ext_resource type="Theme" uid="uid://f2a4ylwdbwtx" path="res://Assets/Styles/main_theme.tres" id="3_jo0ih"]
 [ext_resource type="FontFile" uid="uid://b13kiadbfhetg" path="res://Assets/Fonts/VCR_OSD_MONO_1.001.ttf" id="4_ntc3j"]
+[ext_resource type="Texture2D" uid="uid://c0h7n7l8mahps" path="res://Assets/Sprites/card_background.png" id="5_dmli3"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_18hjt"]
+content_margin_left = 5.0
+content_margin_top = 5.0
+content_margin_right = 5.0
+content_margin_bottom = 5.0
+texture = ExtResource("5_dmli3")
+texture_margin_left = 5.0
+texture_margin_top = 5.0
+texture_margin_right = 5.0
+texture_margin_bottom = 5.0
 
 [sub_resource type="FontVariation" id="FontVariation_dmli3"]
 base_font = ExtResource("4_ntc3j")
@@ -19,7 +31,7 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_xyeya")
 card_front = NodePath("HBoxContainer/Control/CardFront")
-card_description_label = NodePath("HBoxContainer/CardDescriptionLabel")
+card_description_label = NodePath("HBoxContainer/PanelContainer/CardDescriptionLabel")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=1481184697]
 layout_mode = 1
@@ -70,7 +82,11 @@ custom_minimum_size = Vector2(20, 150)
 layout_mode = 2
 theme = ExtResource("3_jo0ih")
 
-[node name="CardDescriptionLabel" type="RichTextLabel" parent="HBoxContainer" unique_id=1493735927]
+[node name="PanelContainer" type="PanelContainer" parent="HBoxContainer" unique_id=1190765786]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_18hjt")
+
+[node name="CardDescriptionLabel" type="RichTextLabel" parent="HBoxContainer/PanelContainer" unique_id=1493735927]
 custom_minimum_size = Vector2(300, 150)
 layout_mode = 2
 theme = ExtResource("3_jo0ih")
@@ -78,3 +94,5 @@ theme_override_fonts/bold_font = SubResource("FontVariation_dmli3")
 bbcode_enabled = true
 text = "[b]John Card[/b]
 aaaaa: afafafffffffffffffffff"
+fit_content = true
+scroll_active = false

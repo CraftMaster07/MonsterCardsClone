@@ -33,8 +33,9 @@ var unassigned_area_player_ids: Array
 var deck_file: DeckFile
 
 const MIN_TABLE_RADIUS: float = 250.0
-const CAMERA_ADDITIONAL_RADIUS: float = -100.0
-const PLAYER_AREA_SPAWNER_ADDITIONAL_RADIUS: float = -100.0
+const ADDITIONAL_RADIUS_PER_PLAYER: float = 90
+const CAMERA_ADDITIONAL_RADIUS: float = -65
+const PLAYER_AREA_SPAWNER_ADDITIONAL_RADIUS: float = -90.0
 
 const INITIAL_HAND_CARD_COUNT: int = 3
 const INITIAL_DECK_CARD_COUNT: int = 5 + INITIAL_HAND_CARD_COUNT
@@ -143,7 +144,7 @@ func _on_prev_player_button_pressed() -> void:
 
 
 func calculate_table_radius(players_count: int) -> float:
-	return max(MIN_TABLE_RADIUS, players_count * 70.0)
+	return max(MIN_TABLE_RADIUS, players_count * ADDITIONAL_RADIUS_PER_PLAYER)
 
 
 func set_radii(radius: float):
