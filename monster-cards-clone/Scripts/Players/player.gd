@@ -14,6 +14,7 @@ var area: PlayerArea
 var deck: Deck
 var field: Field
 var hand: Hand
+var attack_button: Button
 var health_icon: StatIcon
 var mana_icon: StatIcon
 

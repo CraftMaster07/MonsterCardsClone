@@ -226,16 +226,31 @@ func draw_card_for_each_player():
 
 
 func _on_round_manager_round_ended() -> void:
-	super._on_round_manager_round_ended()
-
-	if phase == Phase.PREP:
-		reset_players_mana()
-		add_round_mana_for_each_player()
-		draw_card_for_each_player()
-		round_manager.move_first_player_to_last()
-		trigger_round_start_abilities()
+	if phase == Phase.COMBAT:
+		end_combat_phase()
+		update_phase(Phase.PREP)
+	else:
+		update_phase(Phase.COMBAT)
 
 	send_game_state()
+
+
+func end_combat_phase():
+	# cleaning combat
+	player_manager.reset_attack_history()
+	exorcise()
+
+	# advancing round
+	round_manager.advance_round_number()
+	round_manager.move_first_player_to_last()
+	
+	# player setups
+	reset_players_mana()
+	add_round_mana_for_each_player()
+	draw_card_for_each_player()
+
+	# triggers
+	trigger_round_start_abilities()
 
 
 func remove_player(player_id: int):
@@ -301,23 +316,23 @@ func damage(effect: Effect, card: CardData, player: Player):
 		exorcise()
 
 
-func fetch_target(target: Effect.TARGET, effect: Effect, card: CardData, player: Player):
+func fetch_target(target: Effect.TARGET, effect: Effect, card: CardData, player: Player) -> Object:
 	return target_to_funcs[target].call(effect, card, player)
 
 
-func fetch_target_self(_effect: Effect, card: CardData, _player: Player):
+func fetch_target_self(_effect: Effect, card: CardData, _player: Player) -> CardData:
 	return card
 
 
-func fetch_target_face(_effect: Effect, _card: CardData, player: Player):
+func fetch_target_face(_effect: Effect, _card: CardData, player: Player) -> Player:
 	return player
 
 
-func fetch_target_random_friendly_card(_effect: Effect, _card: CardData, player: Player):
+func fetch_target_random_friendly_card(_effect: Effect, _card: CardData, player: Player) -> CardData:
 	return player.get_random_board_card_data()
 
 
-func fetch_target_random_enemy_face(_effect: Effect, _card: CardData, player: Player):
+func fetch_target_random_enemy_face(_effect: Effect, _card: CardData, player: Player) -> Player:
 	return player_manager.get_random_enemy_player(player.get_id())
 
 

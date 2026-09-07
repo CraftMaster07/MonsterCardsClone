@@ -190,6 +190,7 @@ func set_first_player_area(player_area: PlayerArea):
 	set_player_hand(player_area.get_hand(), player_id)
 	set_player_health_icon(player_area.get_health_icon(), player_id)
 	set_player_mana_icon(player_area.get_mana_icon(), player_id)
+	set_player_attack_button(player_area.get_attack_button(), player_id)
 
 	unassigned_area_player_ids.remove_at(0)
 
@@ -244,6 +245,10 @@ func set_player_mana_icon(mana_icon: StatIcon, player_id: int):
 	player_manager.set_player_mana_icon(mana_icon, player_id)
 
 
+func set_player_attack_button(attack_button: Button, player_id: int):
+	player_manager.set_player_attack_button(attack_button, player_id)
+
+
 func verify_card_placement(
 		player_id: int,
 		slot_id: int,
@@ -268,7 +273,7 @@ func set_game_state(game_state: Dictionary):
 	# TODO: finish TS
 	player_manager.deserialize(game_state['players'])
 	round_manager.deserialize(game_state['round_manager'])
-	phase = game_state['phase']
+	update_phase(game_state['phase'])
 
 
 func _on_round_manager_started_turn(player_id: int) -> void:
@@ -281,14 +286,13 @@ func init_players(multiplayer_players: Array):
 	round_manager.init_turn_order(player_manager.get_player_ids())
 
 
-func _on_round_manager_round_ended() -> void:
-	if phase == Phase.COMBAT:
-		player_manager.reset_attack_history()
-		exorcise()
-		phase = Phase.PREP
-		round_manager.advance_round_number()
-	else:
-		phase = Phase.COMBAT
+func update_phase(new_phase: Phase):
+	if phase != new_phase:
+		if new_phase == Phase.COMBAT:
+			player_manager.show_attack_buttons()
+		else:
+			player_manager.hide_attack_buttons()
+		phase = new_phase
 
 
 func _on_player_manager_player_attacked(player_id: int) -> void:

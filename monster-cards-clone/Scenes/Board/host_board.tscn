@@ -11,4 +11,5 @@ ability_manager = NodePath("AbilityManager")
 [node name="AbilityManager" type="Node" parent="." index="10" unique_id=1742089551]
 script = ExtResource("3_6adc2")
 
+[connection signal="round_ended" from="RoundManager" to="." method="_on_round_manager_round_ended"]
 [connection signal="activate" from="AbilityManager" to="." method="_on_ability_manager_activate"]

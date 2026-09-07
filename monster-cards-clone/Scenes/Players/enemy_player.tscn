@@ -4,15 +4,4 @@
 [ext_resource type="Script" uid="uid://u4wc1jxgs8su" path="res://Scripts/Players/enemy_player.gd" id="2_bnq1i"]
 
 [node name="EnemyPlayer" unique_id=1327553364 instance=ExtResource("1_26tvg")]
-custom_minimum_size = Vector2(0, 50)
 script = ExtResource("2_bnq1i")
-
-[node name="Button" type="Button" parent="." index="0" unique_id=2039981296]
-layout_mode = 0
-offset_left = 101.0
-offset_top = 33.0
-offset_right = 202.0
-offset_bottom = 62.0
-text = "attack"
-
-[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

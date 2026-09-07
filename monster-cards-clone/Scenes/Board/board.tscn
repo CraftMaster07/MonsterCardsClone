@@ -241,7 +241,6 @@ layout_mode = 1
 [connection signal="pressed" from="UI/EndTurn" to="." method="_on_end_turn_pressed"]
 [connection signal="pressed" from="UI/MovePlayerButtons/PrevPlayerButton" to="." method="_on_prev_player_button_pressed"]
 [connection signal="pressed" from="UI/MovePlayerButtons/NextPlayerButton" to="." method="_on_next_player_button_pressed"]
-[connection signal="round_ended" from="RoundManager" to="." method="_on_round_manager_round_ended"]
 [connection signal="round_number_changed" from="RoundManager" to="." method="_on_round_manager_round_number_changed"]
 [connection signal="started_turn" from="RoundManager" to="." method="_on_round_manager_started_turn"]
 [connection signal="player_attacked" from="PlayerManager" to="." method="_on_player_manager_player_attacked"]

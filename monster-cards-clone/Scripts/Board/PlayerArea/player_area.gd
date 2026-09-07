@@ -26,3 +26,8 @@ func get_health_icon() -> StatIcon:
 
 func get_mana_icon() -> StatIcon:
 	return mana_icon
+
+
+func get_attack_button() -> Button:
+	# should split to enemy_player_area
+	return $AttackButton

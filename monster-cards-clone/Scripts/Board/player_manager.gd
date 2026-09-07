@@ -43,8 +43,6 @@ func init_enemy_player(player_data: Dictionary):
 	player_container.add_child(new_player)
 	players[player_data['id']] = new_player
 
-	new_player.attacked.connect(on_enemy_player_attacked)
-
 
 func init_your_player(player_data: Dictionary):
 	var new_player: Player = your_player_scene.instantiate()
@@ -100,6 +98,13 @@ func set_player_deck(deck: Deck, player_id: int):
 
 func set_player_hand(hand: Hand, player_id: int):
 	get_player(player_id).set_hand(hand)
+
+
+func set_player_attack_button(attack_button: Button, player_id: int):
+	print("player_id: ", player_id)
+	var player = get_player(player_id)
+	player.set_attack_button(attack_button)
+	player.attacked.connect(on_enemy_player_attacked)
 	
 
 func set_player_health_icon(health_icon: StatIcon, player_id: int):
@@ -212,3 +217,19 @@ func get_random_enemy_player(player_id: int) -> Player:
 	var player_ids := get_player_ids()
 	player_ids.erase(player_id)
 	return get_player(player_ids[randi() % player_ids.size()])
+
+
+func show_attack_buttons():
+	for player in players.values():
+		if is_instance_of(player, YourPlayer):
+			continue
+
+		player.show_attack_button()
+
+
+func hide_attack_buttons():
+	for player in players.values():
+		if is_instance_of(player, YourPlayer):
+			continue
+
+		player.hide_attack_button()
