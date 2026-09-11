@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://bdyi27t2a70bu" path="res://Assets/Sprites/card_editor_button.png" id="5_rghun"]
 [ext_resource type="Texture2D" uid="uid://dcx5502o88s74" path="res://Assets/Sprites/deck_editor_button.png" id="6_46knf"]
 [ext_resource type="Script" uid="uid://clievdbpydyi3" path="res://Scripts/Main Menu/hovered_button.gd" id="7_57ted"]
+[ext_resource type="Texture2D" uid="uid://bs0qyxtnduynd" path="res://Assets/Sprites/sprite_editor_button.png" id="9_hg5pd"]
 
 [node name="MainMenu" type="Control" unique_id=574280643 node_paths=PackedStringArray("play_menu_container", "settings_menu_container", "deck_menu_container", "host_menu", "join_menu", "name_line_edit", "ip_line_edit", "join_status_label", "select_deck_label", "more_options_label")]
 layout_mode = 3
@@ -42,15 +43,16 @@ grow_vertical = 2
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
+anchor_top = 0.05
 anchor_right = 0.5
+anchor_bottom = 0.05
 offset_left = -283.5
-offset_top = 30.0
 offset_right = 283.5
-offset_bottom = 75.0
+offset_bottom = 45.0
 grow_horizontal = 2
 theme_override_fonts/font = ExtResource("1_28flt")
 theme_override_font_sizes/font_size = 51
-text = "monster cards clone"
+text = "Monster Cards Clone"
 
 [node name="PlayMenuContainer" type="Control" parent="UI" unique_id=1586319274]
 layout_mode = 1
@@ -227,9 +229,9 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -238.5
+offset_left = -441.0
 offset_top = -92.5
-offset_right = 238.5
+offset_right = 441.0
 offset_bottom = 92.5
 grow_horizontal = 2
 grow_vertical = 2
@@ -246,9 +248,10 @@ layout_mode = 2
 texture_normal = ExtResource("6_46knf")
 script = ExtResource("7_57ted")
 
-[node name="SpriteEditorButton" type="Button" parent="UI/DeckMenuContainer" unique_id=1718887892]
+[node name="SpriteEditorButton" type="TextureButton" parent="UI/DeckMenuContainer" unique_id=1403686986]
 layout_mode = 2
-text = "sprite editor"
+texture_normal = ExtResource("9_hg5pd")
+script = ExtResource("7_57ted")
 
 [node name="Menu Buttons" type="HBoxContainer" parent="UI" unique_id=1828789807]
 layout_mode = 1

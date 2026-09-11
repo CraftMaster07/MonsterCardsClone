@@ -25,7 +25,7 @@ func _ready() -> void:
 #Add new ones for other nodes you want sound for
 func install_sounds(node: Node) -> void:
 	for i in node.get_children():
-		if i is Button:
+		if i is BaseButton:
 			i.button_down.connect(ui_sfx_play.bind(&"sfx_click"))
 			i.pressed.connect(ui_sfx_play.bind(&"sfx_unclick"))
 		install_sounds(i)
