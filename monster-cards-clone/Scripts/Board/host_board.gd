@@ -8,7 +8,7 @@ var shadow_player_manager: ShadowPlayerManager
 
 @export var ability_manager: AbilityManager
 
-signal call_sync_game(game_state: Dictionary)
+signal call_sync_game(game_state: Dictionary, player_id: int)
 signal call_shadow_sync(player_id: int, serialized_shadow_player_data: Dictionary)
 signal request_deck_blueprints()
 signal received_all_deck_blueprints()
@@ -110,8 +110,42 @@ func client_attacked(player_id: int, attacked_id: int):
 
 	combat(player_id, attacked_id)
 
-	round_manager.client_ended_turn(player_id)
+	client_ended_turn(player_id)
+
+	#handle_attack_button_hiding(attacked_id)
+
 	send_game_state()
+
+
+# func handle_attack_button_hiding(attacked_id: int):
+# 	player_manager.hide_attack_button(attacked_id)
+# 	var last_player_id: int = round_manager.get_last_player_id()
+
+# 	if check_must_attack_last_player(last_player_id):
+# 		for player_id in player_manager.get_not_attacked_player_ids():
+			
+# 			if player_id != last_player_id:
+# 				var second_to_last_player_id = player_id
+
+# 				# all players see that only last player can be attacked
+# 				player_manager.hide_attack_buttons()
+# 				player_manager.show_attack_button(last_player_id)
+# 				send_game_state()
+
+# 				# last player sees only the other one who wasn't attacked can be attacked
+# 				player_manager.show_attack_button(second_to_last_player_id)
+# 				send_game_state(last_player_id)
+
+# 				# idk wth is this
+# 				player_manager.hide_attack_button(second_to_last_player_id)
+# 				player_manager.set_attack_button_visibility_no_update(second_to_last_player_id, true)
+				
+# 				break
+# 	else:
+# 		send_game_state()
+		
+	
+		
 
 
 func draw_card_to_player(player_id: int):
@@ -128,9 +162,9 @@ func client_ended_turn(player_id: int):
 	send_game_state()
 
 
-func send_game_state():
+func send_game_state(player_id: int = -1):
 	send_shadow_player(your_id)
-	call_sync_game.emit(get_game_state())
+	call_sync_game.emit(get_game_state(), player_id)
 	send_shadow_players()
 
 
@@ -228,9 +262,9 @@ func draw_card_for_each_player():
 func _on_round_manager_round_ended() -> void:
 	if phase == Phase.COMBAT:
 		end_combat_phase()
-		update_phase(Phase.PREP)
+		await update_phase(Phase.PREP)
 	else:
-		update_phase(Phase.COMBAT)
+		await update_phase(Phase.COMBAT)
 
 	send_game_state()
 
@@ -239,6 +273,9 @@ func end_combat_phase():
 	# cleaning combat
 	player_manager.reset_attack_history()
 	exorcise()
+
+	# board reset
+	player_manager.hide_attack_buttons()
 
 	# advancing round
 	round_manager.advance_round_number()
@@ -356,3 +393,11 @@ func get_missing_sprite(player_id: int, sprite_hash: String, callback_uuid: Stri
 		send_missing_sprite.emit(player_id, serialized_sprite, callback_uuid)
 	else:
 		push_warning("missing sprite: ", sprite_hash)
+
+
+func update_phase(new_phase: Phase):
+	if phase != new_phase:
+		if new_phase == Phase.COMBAT:
+			player_manager.show_attack_buttons()
+	
+	super.update_phase(new_phase)

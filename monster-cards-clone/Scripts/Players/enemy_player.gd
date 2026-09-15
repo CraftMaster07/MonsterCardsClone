@@ -15,12 +15,9 @@ func set_attack_button(new_attack_button: Button):
 	attack_button.pressed.connect(_on_attack_button_pressed)
 
 
-func show_attack_button():
-	attack_button.show()
-
-
-func hide_attack_button():
-	attack_button.hide()
+func update_attack_button_visibility(visiblity: bool):
+	super.update_attack_button_visibility(visiblity)
+	attack_button.visible = visiblity
 
 
 func _on_attack_button_pressed() -> void:

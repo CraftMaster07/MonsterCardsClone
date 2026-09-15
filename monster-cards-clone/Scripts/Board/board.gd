@@ -288,10 +288,6 @@ func init_players(multiplayer_players: Array):
 
 func update_phase(new_phase: Phase):
 	if phase != new_phase:
-		if new_phase == Phase.COMBAT:
-			player_manager.show_attack_buttons()
-		else:
-			player_manager.hide_attack_buttons()
 		phase = new_phase
 
 
@@ -309,7 +305,6 @@ func verify_attack(attacker_id: int, attacked_id: int) -> CombatValidationRespon
 		return CombatValidationResponses.NOT_YOUR_TURN
 
 	var last_player_id: int = round_manager.get_last_player_id()
-
 	if check_must_attack_last_player(last_player_id) and attacked_id != last_player_id:
 		return CombatValidationResponses.MUST_ATTACK_LAST_PLAYER
 

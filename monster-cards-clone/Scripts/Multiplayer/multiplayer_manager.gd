@@ -134,10 +134,10 @@ func set_your_id(id: int) -> void:
 	your_id = id
 
 
-func call_sync_game(game_state: Dictionary) -> void:
+func call_sync_game(game_state: Dictionary, player_id: int) -> void:
 	if not multiplayer.is_server(): return
 
-	multiplayer_interface.send_sync_game(game_state)
+	multiplayer_interface.send_sync_game(game_state, player_id)
 
 
 func _on_multiplayer_interface_sync_game(game_state: Dictionary) -> void:

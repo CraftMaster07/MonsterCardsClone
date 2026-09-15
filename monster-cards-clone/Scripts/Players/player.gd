@@ -15,6 +15,7 @@ var deck: Deck
 var field: Field
 var hand: Hand
 var attack_button: Button
+var is_attack_button_visible: bool = false
 var health_icon: StatIcon
 var mana_icon: StatIcon
 
@@ -132,6 +133,7 @@ func serialize():
 		"field": field.serialize(),
 		"deck": deck.serialize(),
 		"hand": hand.serialize(),
+		"is_attack_button_visible": is_attack_button_visible,
 	}
 
 
@@ -144,6 +146,7 @@ func deserialize(serialized_player: Dictionary):
 	field.deserialize(serialized_player['field'])
 	deck.deserialize(serialized_player['deck'])
 	hand.deserialize(serialized_player['hand'])
+	update_attack_button_visibility(serialized_player['is_attack_button_visible'])
 
 
 func place_card_into_slot(card: BoardCard, slot_id: int) -> BoardCard:
@@ -186,3 +189,20 @@ func player_trigger(trigger_id):
 
 func get_random_board_card_data() -> CardData:
 	return field.get_random_card_data()
+
+
+func update_attack_button_visibility(visibility: bool):
+	set_attack_button_visibility_no_update(visibility)
+	# set attack button visibility in child classes
+
+
+func set_attack_button_visibility_no_update(visibility: bool):
+	is_attack_button_visible = visibility
+
+
+func show_attack_button():
+	update_attack_button_visibility(true)
+
+
+func hide_attack_button():
+	update_attack_button_visibility(false)

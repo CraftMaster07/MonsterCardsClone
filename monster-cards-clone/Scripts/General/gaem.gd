@@ -225,8 +225,8 @@ func _on_multiplayer_manager_sync_game(game_state: Dictionary) -> void:
 	board.set_game_state(game_state)
 
 
-func call_sync_game(game_state: Dictionary) -> void:
-	multiplayer_manager.call_sync_game(game_state)
+func call_sync_game(game_state: Dictionary, player_id: int) -> void:
+	multiplayer_manager.call_sync_game(game_state, player_id)
 
 
 func _on_board_send_placed_card(card_uuid: String, slot_id: int) -> void:

@@ -9,6 +9,7 @@ signal player_attacked(player_id: int)
 
 var players: Dictionary[int, Player] = {}
 var your_id: int
+# var not_attacked_player_ids: Array[int] = []
 
 var original_player_count: int
 
@@ -35,6 +36,8 @@ func init_players(multiplayer_players: Array):
 		else:
 			init_enemy_player(player_data)
 	original_player_count = get_player_count()
+
+	# not_attacked_player_ids = get_player_ids()
 
 
 func init_enemy_player(player_data: Dictionary):
@@ -139,6 +142,7 @@ func check_attacked(player_id: int) -> bool:
 
 func set_attacked(attacker_id: int, attacked_id: int):
 	get_player(attacker_id).attacking_id = attacked_id
+	# not_attacked_player_ids.erase(attacked_id)
 
 
 func check_was_attacked(player_id: int) -> bool:
@@ -153,6 +157,8 @@ func reset_attack_history():
 	for player in players.values():
 		player.attacking_id = 0
 		player.attacked_by_id = 0
+	
+	# not_attacked_player_ids = get_player_ids()
 
 
 func exorcise() -> bool:
@@ -221,15 +227,25 @@ func get_random_enemy_player(player_id: int) -> Player:
 
 func show_attack_buttons():
 	for player in players.values():
-		if is_instance_of(player, YourPlayer):
-			continue
-
 		player.show_attack_button()
 
 
 func hide_attack_buttons():
 	for player in players.values():
-		if is_instance_of(player, YourPlayer):
-			continue
-
 		player.hide_attack_button()
+		
+
+func hide_attack_button(player_id: int):
+	get_player(player_id).hide_attack_button()
+
+
+func show_attack_button(player_id: int):
+	get_player(player_id).show_attack_button()
+
+
+# func set_attack_button_visibility_no_update(player_id: int, visibility: bool):
+# 	get_player(player_id).set_attack_button_visibility_no_update(visibility)
+
+
+# func get_not_attacked_player_ids() -> Array:
+# 	return not_attacked_player_ids

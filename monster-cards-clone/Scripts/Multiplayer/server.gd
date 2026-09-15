@@ -71,8 +71,11 @@ func start_game():
 	send_host_started_game.rpc()
 
 
-func send_sync_game(game_state: Dictionary):
-	receive_sync_game.rpc(game_state)
+func send_sync_game(game_state: Dictionary, player_id: int = -1):
+	if player_id != -1:
+		receive_sync_game.rpc_id(player_id, game_state)
+	else:
+		receive_sync_game.rpc(game_state)
 
 
 @rpc("any_peer", "call_remote", "reliable", 0)
