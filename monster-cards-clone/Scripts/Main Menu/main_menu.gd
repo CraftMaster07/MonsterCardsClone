@@ -24,6 +24,10 @@ var deck: DeckFile
 func _ready() -> void:
 	menu_containers = [play_menu_container, settings_menu_container, deck_menu_container]
 
+	var selected_deck_path = SaveGameManager.get_selected_deck_path()
+	if selected_deck_path:
+		select_deck(selected_deck_path)
+
 
 func reinitialize() -> void:
 	join_status_label.text = ""
@@ -136,9 +140,13 @@ func _on_deck_file_selected(status: bool, selected_paths: PackedStringArray, _se
 		# status is true if they clicked 'Open', false if they clicked 'Cancel'
 		var chosen_path = selected_paths[0]
 		print("Load Deck selected: ", chosen_path)
+		SaveGameManager.set_selected_deck_path(chosen_path)
 		select_deck(chosen_path)
 	else:
 		print("User cancelled the selection.")
+
+		if deck:
+			select_deck_label.text = "Selected deck: " + deck.name
 
 
 func select_deck(file_path) -> void:

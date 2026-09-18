@@ -26,12 +26,13 @@ buses/default_bus_layout="res://Assets/default_bus_layout.tres"
 
 [autoload]
 
-AudioManager="*res://Scripts/General/audio_manager.gd"
+AudioManager="*res://Scripts/Autoloads/audio_manager.gd"
 ColorConstants="*uid://b0ko58tuvatcs"
 PathConstants="*uid://dljmq1o3u8314"
 EffectFactory="*uid://du1tmjulngbem"
 TriggerFactory="*uid://drb7hhoqg1gx2"
 CardSpriteManager="*uid://cd3352m2eqlam"
+SaveGameManager="*uid://bfi3qaqqwe617"
 
 [display]
 

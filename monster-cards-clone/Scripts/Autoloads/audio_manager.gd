@@ -6,11 +6,9 @@ func _ready() -> void:
 
 
 func load_audio_settings() -> void:
-	var save = SaveGame.load_or_create()
-	
-	set_volume("Master", save.master_volume)
-	set_volume("Sound", save.sfx_volume)
-	set_volume("Music", save.music_volume)
+	set_volume("Master", SaveGameManager.get_master_volume())
+	set_volume("Sound", SaveGameManager.get_sfx_volume())
+	set_volume("Music", SaveGameManager.get_music_volume())
 
 
 func set_volume(bus_name: String, volume: int) -> void:
@@ -29,10 +27,4 @@ func get_volume(bus_name: String) -> int:
 
 
 func save_volume() -> void:
-	var save = SaveGame.load_or_create()
-	
-	save.master_volume = get_volume("Master")
-	save.sfx_volume = get_volume("Sound")
-	save.music_volume = get_volume("Music")
-	
-	save.write_savegame()
+	SaveGameManager.set_volumes(get_volume("Master"), get_volume("Sound"), get_volume("Music"))
