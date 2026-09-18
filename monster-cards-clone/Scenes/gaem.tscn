@@ -11,7 +11,6 @@
 [ext_resource type="PackedScene" uid="uid://cuhxwceyo2um7" path="res://Scenes/SpriteEditor/sprite_editor.tscn" id="7_1llso"]
 [ext_resource type="PackedScene" uid="uid://dh65loc4m8hmo" path="res://Scenes/Main Menu/ui_sounds.tscn" id="7_bbmdl"]
 
-
 [node name="GAEM" type="Node" unique_id=577313856]
 script = ExtResource("1_11bf4")
 waiting_room_scene = ExtResource("2_bbmdl")
@@ -40,11 +39,13 @@ root_path = NodePath("../MainMenu")
 [connection signal="connection_success" from="MultiplayerManager" to="." method="_on_multiplayer_manager_connection_success"]
 [connection signal="get_deck_blueprint" from="MultiplayerManager" to="." method="_on_multiplayer_manager_get_deck_blueprint"]
 [connection signal="get_missing_sprite" from="MultiplayerManager" to="." method="_on_multiplayer_manager_get_missing_sprite"]
+[connection signal="hide_attack_buttons" from="MultiplayerManager" to="." method="_on_multiplayer_manager_hide_attack_buttons"]
 [connection signal="new_player" from="MultiplayerManager" to="." method="_on_multiplayer_manager_new_player"]
 [connection signal="player_left" from="MultiplayerManager" to="." method="_on_multiplayer_manager_player_left"]
 [connection signal="received_deck_blueprint" from="MultiplayerManager" to="." method="_on_multiplayer_manager_received_deck_blueprint"]
 [connection signal="received_missing_sprite" from="MultiplayerManager" to="." method="_on_multiplayer_manager_received_missing_sprite"]
 [connection signal="server_disconnected" from="MultiplayerManager" to="." method="_on_multiplayer_manager_server_disconnected"]
 [connection signal="shadow_sync" from="MultiplayerManager" to="." method="_on_multiplayer_manager_shadow_sync"]
+[connection signal="show_attack_buttons" from="MultiplayerManager" to="." method="_on_multiplayer_manager_show_attack_buttons"]
 [connection signal="start_game" from="MultiplayerManager" to="." method="_on_multiplayer_manager_start_game"]
 [connection signal="sync_game" from="MultiplayerManager" to="." method="_on_multiplayer_manager_sync_game"]

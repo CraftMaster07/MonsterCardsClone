@@ -17,6 +17,8 @@ signal sync_game(game_state: Dictionary)
 signal shadow_sync(serialized_shadow_player_data: Dictionary)
 signal get_deck_blueprint()
 signal received_missing_sprite(serialized_sprite: Dictionary, callback_uuid: String)
+signal show_attack_buttons(attackable_players: Array)
+signal hide_attack_buttons()
 
 func _ready():
 	multiplayer.peer_connected.connect(_on_peer_connected)
@@ -150,3 +152,13 @@ func get_missing_sprite(_sprite_hash: String, _callback_uuid: String):
 @rpc("authority", "call_remote", "reliable", 0)
 func receive_missing_sprite(serialized_sprite: Dictionary, callback_uuid: String):
 	received_missing_sprite.emit(serialized_sprite, callback_uuid)
+
+
+@rpc("authority", "call_local", "reliable", 0)
+func receive_show_attack_buttons(attackable_players: Array):
+	show_attack_buttons.emit(attackable_players)
+
+
+@rpc("authority", "call_local", "reliable", 0)
+func receive_hide_attack_buttons():
+	hide_attack_buttons.emit()

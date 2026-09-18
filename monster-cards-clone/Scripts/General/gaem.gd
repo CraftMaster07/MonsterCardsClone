@@ -121,6 +121,8 @@ func start_board():
 		board.request_deck_blueprints.connect(_on_board_request_deck_blueprints)
 		board.call_shadow_sync.connect(_on_board_call_shadow_sync)
 		board.send_missing_sprite.connect(_on_board_send_missing_sprite)
+		board.send_hide_attack_buttons.connect(_on_board_send_hide_attack_buttons)
+		board.send_show_attack_buttons.connect(_on_board_send_show_attack_buttons)
 	else:
 		board = board_scene.instantiate()
 
@@ -298,3 +300,18 @@ func _on_board_send_missing_sprite(player_id: int, serialized_sprite: Dictionary
 
 func _on_multiplayer_manager_received_missing_sprite(serialized_sprite: Dictionary, callback_uuid: String) -> void:
 	board.received_missing_sprite(serialized_sprite, callback_uuid)
+
+
+func _on_board_send_show_attack_buttons(player_id: int, attackable_players: Array) -> void:
+	multiplayer_manager.send_show_attack_buttons(player_id, attackable_players)
+
+
+func _on_board_send_hide_attack_buttons(player_id: int) -> void:
+	multiplayer_manager.send_hide_attack_buttons(player_id)
+
+
+func _on_multiplayer_manager_hide_attack_buttons() -> void:
+	board.hide_attack_buttons()
+
+func _on_multiplayer_manager_show_attack_buttons(attackable_players: Array) -> void:
+	board.show_attack_buttons(attackable_players)

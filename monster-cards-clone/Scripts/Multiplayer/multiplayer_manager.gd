@@ -25,6 +25,8 @@ signal received_deck_blueprint(player_id: int, deck_blueprint: Dictionary)
 signal get_deck_blueprint()
 signal get_missing_sprite(player_id: int, sprite_hash: String, callback_uuid: String)
 signal received_missing_sprite(serialized_sprite: Dictionary, callback_uuid: String)
+signal show_attack_buttons(attackable_players: Array)
+signal hide_attack_buttons()
 
 @export var server_script: Script
 @export var client_script: Script
@@ -212,3 +214,21 @@ func _on_multiplayer_interface_received_missing_sprite(
 	serialized_sprite: Dictionary, callback_uuid: String
 ) -> void:
 	received_missing_sprite.emit(serialized_sprite, callback_uuid)
+
+
+func send_show_attack_buttons(player_id, attackable_players) -> void:
+	multiplayer_interface.send_show_attack_buttons(player_id, attackable_players)
+
+
+func send_hide_attack_buttons(player_id) -> void:
+	multiplayer_interface.send_hide_attack_buttons(player_id)
+
+
+func _on_multiplayer_interface_show_attack_buttons(attackable_players: Array) -> void:
+	show_attack_buttons.emit(attackable_players)
+
+
+func _on_multiplayer_interface_hide_attack_buttons() -> void:
+	hide_attack_buttons.emit()
+
+

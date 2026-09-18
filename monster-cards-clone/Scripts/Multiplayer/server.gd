@@ -134,3 +134,12 @@ func get_missing_sprite(sprite_hash: String, callback_uuid: String):
 
 func send_missing_sprite(player_id: int, serialized_sprite: Dictionary, callback_uuid: String):
 	receive_missing_sprite.rpc_id(player_id, serialized_sprite, callback_uuid)
+
+
+func send_show_attack_buttons(player_id, attackable_players):
+	receive_show_attack_buttons.rpc_id(player_id, attackable_players)
+
+
+func send_hide_attack_buttons(player_id):
+	receive_hide_attack_buttons.rpc_id(player_id)
+

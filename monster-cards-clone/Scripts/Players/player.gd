@@ -133,7 +133,6 @@ func serialize():
 		"field": field.serialize(),
 		"deck": deck.serialize(),
 		"hand": hand.serialize(),
-		"is_attack_button_visible": is_attack_button_visible,
 	}
 
 
@@ -146,7 +145,6 @@ func deserialize(serialized_player: Dictionary):
 	field.deserialize(serialized_player['field'])
 	deck.deserialize(serialized_player['deck'])
 	hand.deserialize(serialized_player['hand'])
-	update_attack_button_visibility(serialized_player['is_attack_button_visible'])
 
 
 func place_card_into_slot(card: BoardCard, slot_id: int) -> BoardCard:

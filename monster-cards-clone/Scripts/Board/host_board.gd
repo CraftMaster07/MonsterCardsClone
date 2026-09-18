@@ -13,6 +13,8 @@ signal call_shadow_sync(player_id: int, serialized_shadow_player_data: Dictionar
 signal request_deck_blueprints()
 signal received_all_deck_blueprints()
 signal send_missing_sprite(player_id: int, serialized_sprite: Dictionary, callback_uuid: String)
+signal send_hide_attack_buttons(player_id: int)
+signal send_show_attack_buttons(player_id: int, attackable_players: Array)
 
 var effect_to_funcs: Dictionary = {
 	EFFECT_ID.HEAL: heal,
@@ -100,53 +102,31 @@ func combat(attacker_id: int, attacked_id: int):
 			attacker_card.hit(attacked_card)
 
 
-func client_attacked(player_id: int, attacked_id: int):
-	# TODO: add verifications
-	var status: CombatValidationResponses = verify_attack(player_id, attacked_id)
+func record_attack(attacker_id: int, attacked_id: int):
+	player_manager.record_player_attack(attacker_id, attacked_id)
 
+
+func client_attacked(player_id: int, attacked_id: int) -> void:
+	var status := verify_attack(player_id, attacked_id)
 	if status != CombatValidationResponses.OK:
-		print("invalid attack, status: ", status)
+		print("Invalid attack, verification status: ", status)
 		return
-
-	combat(player_id, attacked_id)
-
-	client_ended_turn(player_id)
-
-	#handle_attack_button_hiding(attacked_id)
-
-	send_game_state()
-
-
-# func handle_attack_button_hiding(attacked_id: int):
-# 	player_manager.hide_attack_button(attacked_id)
-# 	var last_player_id: int = round_manager.get_last_player_id()
-
-# 	if check_must_attack_last_player(last_player_id):
-# 		for player_id in player_manager.get_not_attacked_player_ids():
-			
-# 			if player_id != last_player_id:
-# 				var second_to_last_player_id = player_id
-
-# 				# all players see that only last player can be attacked
-# 				player_manager.hide_attack_buttons()
-# 				player_manager.show_attack_button(last_player_id)
-# 				send_game_state()
-
-# 				# last player sees only the other one who wasn't attacked can be attacked
-# 				player_manager.show_attack_button(second_to_last_player_id)
-# 				send_game_state(last_player_id)
-
-# 				# idk wth is this
-# 				player_manager.hide_attack_button(second_to_last_player_id)
-# 				player_manager.set_attack_button_visibility_no_update(second_to_last_player_id, true)
-				
-# 				break
-# 	else:
-# 		send_game_state()
-		
 	
-		
+	record_attack(player_id, attacked_id)
+	combat(player_id, attacked_id)
+	client_ended_turn(player_id)
+	send_game_state()
+	send_hide_attack_buttons.emit(player_id)
 
+
+func send_attack_button_visibility(attacker_id: int):
+	var attackable_players = []
+	for player_id in player_manager.get_player_ids():
+		if verify_attack(attacker_id, player_id) == CombatValidationResponses.OK:
+			attackable_players.append(player_id)
+
+	send_show_attack_buttons.emit(attacker_id, attackable_players)
+	
 
 func draw_card_to_player(player_id: int):
 	var success: bool = shadow_player_manager.draw_card(player_id)
@@ -395,9 +375,9 @@ func get_missing_sprite(player_id: int, sprite_hash: String, callback_uuid: Stri
 		push_warning("missing sprite: ", sprite_hash)
 
 
-func update_phase(new_phase: Phase):
-	if phase != new_phase:
-		if new_phase == Phase.COMBAT:
-			player_manager.show_attack_buttons()
+func _on_round_manager_started_turn(player_id: int) -> void:
+	super._on_round_manager_started_turn(player_id)
 	
-	super.update_phase(new_phase)
+	if phase == Phase.COMBAT:
+		print("turn started: ", player_id)
+		send_attack_button_visibility(player_id)

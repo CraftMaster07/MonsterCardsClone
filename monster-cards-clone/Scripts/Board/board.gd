@@ -59,7 +59,8 @@ enum CombatValidationResponses {
 		NOT_YOUR_TURN,
 		NOT_IN_COMBAT,
 		ATTACK_FAILED,
-		MUST_ATTACK_LAST_PLAYER
+		MUST_ATTACK_LAST_PLAYER,
+		DO_NOT_HURT_YOURSELF
 }
 enum Phase {PREP, COMBAT}
 
@@ -303,14 +304,16 @@ func verify_attack(attacker_id: int, attacked_id: int) -> CombatValidationRespon
 
 	if attacker_id != round_manager.current_player_id:
 		return CombatValidationResponses.NOT_YOUR_TURN
+	
+	if player_manager.check_attacked(attacker_id) or player_manager.check_was_attacked(attacked_id):
+		return CombatValidationResponses.ATTACK_FAILED
+	
+	if attacker_id == attacked_id:
+		return CombatValidationResponses.DO_NOT_HURT_YOURSELF
 
 	var last_player_id: int = round_manager.get_last_player_id()
 	if check_must_attack_last_player(last_player_id) and attacked_id != last_player_id:
 		return CombatValidationResponses.MUST_ATTACK_LAST_PLAYER
-
-	var err: Error = player_manager.record_player_attack(attacker_id, attacked_id)
-	if err != Error.OK:
-		return CombatValidationResponses.ATTACK_FAILED
 
 	return CombatValidationResponses.OK
 
@@ -414,3 +417,11 @@ func create_board_card(card_data: CardData) -> BoardCard:
 	new_board_card.update_sprite_from_card_data()
 
 	return new_board_card
+
+
+func show_attack_buttons(attacable_players: Array):
+	player_manager.show_attack_buttons(attacable_players)
+
+
+func hide_attack_buttons():
+	player_manager.hide_attack_buttons()
