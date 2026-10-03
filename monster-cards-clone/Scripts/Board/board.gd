@@ -51,8 +51,10 @@ enum ValidationResponses {
 		NOT_YOUR_TURN,
 		SLOT_TAKEN,
 		NOT_IN_PREP,
-		NOT_ENOUGH_MANA
+		NOT_ENOUGH_MANA,
+		GHOSTS_CANT_PLAY
 	}
+
 enum CombatValidationResponses {
 		INVALID = -1,
 		OK = 0,
@@ -60,9 +62,11 @@ enum CombatValidationResponses {
 		NOT_IN_COMBAT,
 		ATTACK_FAILED,
 		MUST_ATTACK_LAST_PLAYER,
-		DO_NOT_HURT_YOURSELF
+		DO_NOT_HURT_YOURSELF,
+		GHOSTS_CANT_ATTACK
 }
 enum Phase {PREP, COMBAT}
+
 
 func _ready():
 	var table_radius: float = calculate_table_radius(player_manager.get_player_count())
@@ -255,6 +259,9 @@ func verify_card_placement(
 		slot_id: int,
 		card_data: CardData
 	) -> ValidationResponses:
+	if check_death(player_id):
+		return ValidationResponses.GHOSTS_CANT_PLAY
+	
 	if not round_manager.is_player_turn(player_id):
 		return ValidationResponses.NOT_YOUR_TURN
 
@@ -299,6 +306,9 @@ func _on_player_manager_player_attacked(player_id: int) -> void:
 
 
 func verify_attack(attacker_id: int, attacked_id: int) -> CombatValidationResponses:
+	if check_death(attacker_id) or check_death(attacked_id):
+		return CombatValidationResponses.GHOSTS_CANT_ATTACK
+
 	if phase != Phase.COMBAT:
 		return CombatValidationResponses.NOT_IN_COMBAT
 
@@ -425,3 +435,18 @@ func show_attack_buttons(attacable_players: Array):
 
 func hide_attack_buttons():
 	player_manager.hide_attack_buttons()
+
+
+func _on_player_manager_player_fataly_damaged(player_id: int) -> void:
+	player_manager.disable_player_area(player_id)
+	round_manager.remove_player(player_id)
+
+	if round_manager.is_one_player_left():
+		pass
+		#end_game.emit(round_manager.get_player_ids()[0])
+		# make this functional and the player area
+		# disable player (remove from rounds) and delete only on exorcise
+
+
+func check_death(player_id: int) -> bool:
+	return player_manager.check_death(player_id)

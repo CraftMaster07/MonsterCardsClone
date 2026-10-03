@@ -3,7 +3,7 @@ extends MarginContainer
 
 @onready var slot_container = $HBoxContainer
 @onready var slots: Array[CardSlot]
-
+@export var death_texture_rect: TextureRect
 
 func _ready():
 	var node_slots = slot_container.get_children()
@@ -84,3 +84,8 @@ func is_card_valid_target(card_data: CardData) -> bool:
 		return false
 
 	return true
+
+
+func disable_functionality():
+	death_texture_rect.visible = true
+	self.process_mode = Node.PROCESS_MODE_DISABLED

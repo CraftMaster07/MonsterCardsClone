@@ -21,6 +21,7 @@ var mana_icon: StatIcon
 
 var attacking_id: int = 0
 var attacked_by_id: int = 0
+var is_dead: bool = false
 
 
 const TRIGGER_ID = Trigger.TriggerID
@@ -31,6 +32,7 @@ var triggers_to_signals: Dictionary = {
 
 signal drawn_card
 signal on_face_damaged
+signal fataly_damaged(player_id: int)
 
 
 func init(new_player_id: int, new_player_name: String):
@@ -44,6 +46,10 @@ func init(new_player_id: int, new_player_name: String):
 func set_health(value: int):
 	health = value
 	update_health_icon()
+
+	if health <= 0 and not is_dead:
+		fataly_damaged.emit(player_id)
+		die()
 
 
 func heal(amount: int):
@@ -181,7 +187,6 @@ func update_hand(hand_card_count: int):
 
 
 func player_trigger(trigger_id):
-	print(player_id, ": triggering player trigger: ", trigger_id)
 	triggers_to_signals[trigger_id].emit()
 
 
@@ -204,3 +209,11 @@ func show_attack_button():
 
 func hide_attack_button():
 	update_attack_button_visibility(false)
+
+
+func die():
+	is_dead = true
+
+
+func disable_area():
+	area.disable_area()

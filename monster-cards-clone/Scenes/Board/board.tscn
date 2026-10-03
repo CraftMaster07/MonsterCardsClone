@@ -6,7 +6,7 @@
 [ext_resource type="Script" uid="uid://4wekwqlpwfc0" path="res://Scripts/Board/table.gd" id="3_qlllu"]
 [ext_resource type="Texture2D" uid="uid://cjn63si50nhet" path="res://Assets/icon.svg" id="4_cp8jt"]
 [ext_resource type="PackedScene" uid="uid://c1qkabu180wpv" path="res://Scenes/Players/enemy_player.tscn" id="4_gti8d"]
-[ext_resource type="PackedScene" uid="uid://if4366cpnfs0" path="res://Scenes/Board/PlayerArea/player_area.tscn" id="6_a1ark"]
+[ext_resource type="PackedScene" uid="uid://if4366cpnfs0" path="res://Scenes/Board/PlayerArea/enemy_player_area.tscn" id="6_a1ark"]
 [ext_resource type="Script" uid="uid://hvpfm3s0svah" path="res://Scripts/Board/Utils/animated_rotation.gd" id="6_s2gku"]
 [ext_resource type="PackedScene" uid="uid://bmbkajbu0quju" path="res://Scenes/Board/PlayerArea/your_player_area.tscn" id="7_rt3kt"]
 [ext_resource type="Script" uid="uid://b5m01jmgufvky" path="res://Scripts/Board/Utils/object_pivot.gd" id="9_a1ark"]
@@ -244,3 +244,4 @@ layout_mode = 1
 [connection signal="round_number_changed" from="RoundManager" to="." method="_on_round_manager_round_number_changed"]
 [connection signal="started_turn" from="RoundManager" to="." method="_on_round_manager_started_turn"]
 [connection signal="player_attacked" from="PlayerManager" to="." method="_on_player_manager_player_attacked"]
+[connection signal="player_fataly_damaged" from="PlayerManager" to="." method="_on_player_manager_player_fataly_damaged"]

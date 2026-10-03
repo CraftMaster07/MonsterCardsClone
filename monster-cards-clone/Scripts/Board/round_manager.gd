@@ -66,6 +66,9 @@ func deserialize(data: Dictionary):
 
 
 func remove_player(player_id: int):
+	if has_played_this_round(player_id):
+		current_player_index -= 1
+	
 	turn_order.erase(player_id)
 
 	if current_player_id == player_id:
@@ -103,3 +106,11 @@ func is_last_2_players() -> bool:
 
 func get_last_player_id() -> int:
 	return turn_order[-1]
+
+
+func is_one_player_left() -> bool:
+	return len(turn_order) == 1
+
+
+func has_played_this_round(player_id: int) -> bool:
+	return turn_order.find(player_id) < current_player_index

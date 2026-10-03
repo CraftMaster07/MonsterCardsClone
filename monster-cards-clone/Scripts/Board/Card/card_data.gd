@@ -199,7 +199,6 @@ func get_owner_id() -> int:
 
 
 func card_trigger(trigger_id):
-	print("card ", uuid, ": triggering card trigger: ", trigger_id)
 	triggers_to_signals[trigger_id].emit()
 
 

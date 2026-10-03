@@ -10,3 +10,7 @@ func serialize():
 
 func get_cards_count():
 	push_error("get_cards_count not implemented")
+
+
+func disable_functionality():
+	self.process_mode = Node.PROCESS_MODE_DISABLED
