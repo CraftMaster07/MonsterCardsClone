@@ -65,3 +65,8 @@ func serialize():
 func remove_card(card: HandCard):
 	cards_container.remove_child(card)
 	card.queue_free()
+
+
+func discard_all_cards():
+	for card in get_cards():
+		remove_card(card)

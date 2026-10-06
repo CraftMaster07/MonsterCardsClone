@@ -116,7 +116,7 @@ func recalculate_cost():
 
 
 func take_damage(amount: int) -> void:
-	if health <= 0: return
+	if health <= 0 or amount <= 0: return
 	health -= amount
 	card_trigger(TRIGGER_ID.WHEN_HURT)
 	check_death()

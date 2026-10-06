@@ -13,10 +13,12 @@ extends Control
 
 @export var next_player_button: Button
 @export var prev_player_button: Button
+@export var end_turn_button: Button
 
 @export var current_player_label: Label
 @export var round_number_label: Label
 @export var card_details: CardDetails
+@export var win_screen: WinScreen
 
 @export var round_manager: Node
 @export var player_manager: PlayerManager
@@ -26,6 +28,7 @@ extends Control
 
 var selected_card: HandCard = null
 var phase: Phase = Phase.PREP
+var is_game_over: bool = false
 
 var player_ids_without_deck_blueprint: Array
 var unassigned_area_player_ids: Array
@@ -44,6 +47,7 @@ signal send_placed_card(card_uuid: String, slot_id: int)
 signal send_end_turn()
 signal send_player_attacked(attacked_id: int)
 signal missing_sprite(sprite_hash: String, callback_uuid: String)
+signal leave_game()
 
 enum ValidationResponses {
 		INVALID = -1,
@@ -285,7 +289,9 @@ func set_game_state(game_state: Dictionary):
 
 
 func _on_round_manager_started_turn(player_id: int) -> void:
-	current_player_label.text = player_manager.get_player(player_id).player_name + "'s turn"
+	if is_game_over: return
+
+	current_player_label.text = player_manager.get_player_name(player_id) + "'s turn"
 	turn_pointer.animate_rotation_to(player_manager.get_area_rotation(player_id))
 
 
@@ -295,13 +301,15 @@ func init_players(multiplayer_players: Array):
 
 
 func update_phase(new_phase: Phase):
+	if is_game_over: return
+
 	if phase != new_phase:
 		phase = new_phase
 
 
 func _on_player_manager_player_attacked(player_id: int) -> void:
-	if phase != Phase.COMBAT:
-		return
+	if is_game_over: return
+	if phase != Phase.COMBAT: return
 	send_player_attacked.emit(player_id)
 
 
@@ -349,6 +357,7 @@ func exorcise():
 func remove_player(player_id: int):
 	player_manager.remove_player(player_id)
 	round_manager.remove_player(player_id)
+	check_and_win()
 
 
 func get_deck_blueprint() -> Dictionary:
@@ -376,6 +385,8 @@ func shadow_sync(serialized_shadow_player_data: Dictionary):
 
 
 func _on_round_manager_round_number_changed(new_round_number: int) -> void:
+	if is_game_over: return
+
 	round_number_label.text = "Round " + str(new_round_number)
 
 
@@ -441,12 +452,36 @@ func _on_player_manager_player_fataly_damaged(player_id: int) -> void:
 	player_manager.disable_player_area(player_id)
 	round_manager.remove_player(player_id)
 
+	check_and_win()
+	
+	if player_id == your_id:
+		disable_board()
+
+
+func check_and_win():
 	if round_manager.is_one_player_left():
-		pass
-		#end_game.emit(round_manager.get_player_ids()[0])
-		# make this functional and the player area
-		# disable player (remove from rounds) and delete only on exorcise
+		var player_name = player_manager.get_player_name(round_manager.get_last_player_id())
+		win_screen.set_winner(player_name)
+		win_screen.visible = true
+		is_game_over = true
+		stop_game()
 
 
 func check_death(player_id: int) -> bool:
 	return player_manager.check_death(player_id)
+
+
+func stop_game():
+	disable_board()
+	round_manager.disable()
+	#player_manager.disable()
+
+
+func disable_board():
+	end_turn_button.disabled = true
+	hide_attack_buttons()
+	# TODO: disable hand
+
+
+func _on_win_screen_leave_game() -> void:
+	leave_game.emit()

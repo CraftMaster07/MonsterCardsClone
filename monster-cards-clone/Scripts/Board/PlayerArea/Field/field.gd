@@ -5,6 +5,8 @@ extends MarginContainer
 @onready var slots: Array[CardSlot]
 @export var death_texture_rect: TextureRect
 
+var is_disabled: bool
+
 func _ready():
 	var node_slots = slot_container.get_children()
 	slots = []
@@ -52,6 +54,7 @@ func deserialize_slot(slot_data: Dictionary, slot_index: int):
 
 
 func place_card_into_slot(card: BoardCard, slot_index: int) -> BoardCard:
+	if is_disabled: return null
 	return slots[slot_index].place_card(card)
 
 
@@ -63,7 +66,6 @@ func exorcise():
 			was_ability_activated = true
 
 	return was_ability_activated
-	
 
 
 func get_random_card_data() -> CardData:
@@ -88,4 +90,10 @@ func is_card_valid_target(card_data: CardData) -> bool:
 
 func disable_functionality():
 	death_texture_rect.visible = true
+	is_disabled = true
+
+	# TODO: make cards still interactable but not functional
+	# for slot in slots:
+	# 	slot.disable_functionality()
+
 	self.process_mode = Node.PROCESS_MODE_DISABLED

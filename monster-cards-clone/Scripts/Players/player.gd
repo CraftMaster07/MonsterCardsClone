@@ -161,6 +161,10 @@ func get_id():
 	return player_id
 
 
+func get_player_name():
+	return player_name
+
+
 func exorcise() -> bool:
 	return field.exorcise()
 

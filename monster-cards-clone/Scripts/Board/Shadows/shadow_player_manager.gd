@@ -44,3 +44,9 @@ func get_hand_card_data_count(player_id: int) -> int:
 
 func get_hand_card_data_by_uuid(player_id: int, card_uuid: String) -> CardData:
 	return get_player(player_id).get_hand_card_data_by_uuid(card_uuid)
+
+
+func remove_player(player_id: int):
+	remove_child(players[player_id])
+	players[player_id].queue_free()
+	players.erase(player_id)

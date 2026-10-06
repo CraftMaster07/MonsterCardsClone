@@ -42,3 +42,7 @@ func remove_card():
 	var card = cards_container.get_child(0)
 	cards_container.remove_child(card)
 	card.queue_free()
+
+
+func discard_all_cards():
+	remove_cards(get_cards_count())

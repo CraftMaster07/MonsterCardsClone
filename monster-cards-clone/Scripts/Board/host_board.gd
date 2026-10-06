@@ -272,6 +272,7 @@ func end_combat_phase():
 
 func remove_player(player_id: int):
 	super.remove_player(player_id)
+	shadow_player_manager.remove_player(player_id)
 	send_game_state()
 
 
