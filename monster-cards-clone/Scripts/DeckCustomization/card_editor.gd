@@ -85,14 +85,14 @@ func _on_attack_spin_box_value_changed(value: int) -> void:
 
 func _on_save_button_pressed() -> void:
 	if len(name_line_edit.text.strip_edges()) < 1:
-		error_label.visible = true
+		error_label.activate("Enter a name")
 	else:
 		editor_card.save()
 
 
 func _on_name_line_edit_text_changed(new_text: String) -> void:
 	editor_card.set_card_name(new_text)
-	error_label.visible = false
+	error_label.deactivate
 
 
 func _on_open_folder_button_pressed() -> void:
@@ -144,7 +144,7 @@ func update_values_from_loaded_card():
 		update_effect_from_loaded_card()
 
 	ability_toggle_button.button_pressed = editor_card.has_ability()
-	error_label.visible = false
+	error_label.deactivate
 
 
 func update_cost():

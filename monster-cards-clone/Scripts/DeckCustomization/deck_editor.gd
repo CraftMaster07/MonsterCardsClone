@@ -5,6 +5,7 @@ extends Control
 @export var deck_container: DeckContainer
 @export var deck_name_line_edit: LineEdit
 @export var error_label: Label
+@onready var sfx_wrong: AudioStreamPlayer = $SfxWrong
 
 @export var editor_card_scene: PackedScene
 
@@ -97,17 +98,17 @@ func _on_save_button_pressed() -> void:
 
 func _on_deck_line_edit_text_changed(new_text: String) -> void:
 	deck_file.name = new_text
-	error_label.visible = false
+	error_label.deactivate
 
 
 func update_deck_line_edit() -> void:
 	deck_name_line_edit.text = deck_file.name
-	error_label.visible = false
+	error_label.deactivate
 
 
 func save_deck() -> void:
 	if len(deck_name_line_edit.text.strip_edges()) < 1:
-		error_label.visible = true
+		error_label.activate("Enter a name")
 	else:
 		deck_file.save()
 

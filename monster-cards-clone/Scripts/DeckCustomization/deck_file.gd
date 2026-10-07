@@ -29,6 +29,8 @@ func save():
 
 func load(file_path: String):
 	var file := FileAccess.open(file_path, FileAccess.READ)
+	if file == null:
+		return
 	var data: Dictionary = JSON.parse_string(file.get_as_text())
 	file.close()
 	deserialize(data)
