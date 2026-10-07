@@ -355,9 +355,8 @@ func exorcise():
 
 
 func remove_player(player_id: int):
+	_on_player_manager_player_fataly_damaged(player_id)
 	player_manager.remove_player(player_id)
-	round_manager.remove_player(player_id)
-	check_and_win()
 
 
 func get_deck_blueprint() -> Dictionary:
