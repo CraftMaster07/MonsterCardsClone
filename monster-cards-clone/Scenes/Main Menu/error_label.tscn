@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://bff2unulh83ot"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_xnqjp"]
+font_color = Color(1, 0, 0.2784314, 1)
+
+[node name="ErrorLabel" type="Label" unique_id=29456805]
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 0.5
+grow_horizontal = 2
+text = "AUGUST 12 2036 THE HEAT DEATH OF THE UNIVERSE"
+label_settings = SubResource("LabelSettings_xnqjp")
+horizontal_alignment = 1

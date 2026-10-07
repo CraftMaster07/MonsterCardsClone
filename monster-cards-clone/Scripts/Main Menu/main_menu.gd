@@ -49,7 +49,7 @@ func toggle_menu(menu: Control) -> void:
 
 
 func _on_idk_button_pressed() -> void:
-	print("why would you press this?")
+	print("i'm sorry.")
 
 
 func _on_deck_button_pressed() -> void:

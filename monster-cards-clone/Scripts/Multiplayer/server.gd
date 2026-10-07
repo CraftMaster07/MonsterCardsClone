@@ -142,4 +142,3 @@ func send_show_attack_buttons(player_id, attackable_players):
 
 func send_hide_attack_buttons(player_id):
 	receive_hide_attack_buttons.rpc_id(player_id)
-

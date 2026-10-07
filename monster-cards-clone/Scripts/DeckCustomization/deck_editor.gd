@@ -4,6 +4,7 @@ extends Control
 @export var collection_container: CollectionContainer
 @export var deck_container: DeckContainer
 @export var deck_name_line_edit: LineEdit
+@export var error_label: Label
 
 @export var editor_card_scene: PackedScene
 
@@ -96,14 +97,19 @@ func _on_save_button_pressed() -> void:
 
 func _on_deck_line_edit_text_changed(new_text: String) -> void:
 	deck_file.name = new_text
+	error_label.visible = false
 
 
 func update_deck_line_edit() -> void:
 	deck_name_line_edit.text = deck_file.name
+	error_label.visible = false
 
 
 func save_deck() -> void:
-	deck_file.save()
+	if len(deck_name_line_edit.text.strip_edges()) < 1:
+		error_label.visible = true
+	else:
+		deck_file.save()
 
 
 func load_deck(file_path: String) -> void:

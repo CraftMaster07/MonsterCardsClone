@@ -1,9 +1,10 @@
 [gd_scene format=3 uid="uid://be2k7pt5hya2e"]
 
 [ext_resource type="Script" uid="uid://dvlfw6d4f8dyf" path="res://Scripts/DeckCustomization/card_editor.gd" id="1_guviw"]
+[ext_resource type="PackedScene" uid="uid://bff2unulh83ot" path="res://Scenes/Main Menu/error_label.tscn" id="3_jtewc"]
 [ext_resource type="PackedScene" uid="uid://ca5l6o5hh7sgi" path="res://Scenes/DeckCustomization/editor_card.tscn" id="3_qpjfk"]
 
-[node name="CardEditor" type="Control" unique_id=947132057 node_paths=PackedStringArray("name_line_edit", "editor_card", "health_spin_box", "attack_spin_box", "cost_label", "ability_toggle_button", "effect_label", "target_label", "trigger_label", "effect_dropdown", "target_dropdown", "trigger_dropdown")]
+[node name="CardEditor" type="Control" unique_id=947132057 node_paths=PackedStringArray("name_line_edit", "error_label", "editor_card", "health_spin_box", "attack_spin_box", "cost_label", "ability_toggle_button", "effect_label", "target_label", "trigger_label", "effect_dropdown", "target_dropdown", "trigger_dropdown")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -12,6 +13,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_guviw")
 name_line_edit = NodePath("NameLineEdit")
+error_label = NodePath("ErrorLabel")
 editor_card = NodePath("EditorCard")
 health_spin_box = NodePath("GridContainer/HealthSpinBox")
 attack_spin_box = NodePath("GridContainer/AttackSpinBox")
@@ -37,6 +39,8 @@ offset_right = 30.0
 offset_bottom = 45.0
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(2.365, 2.365)
+pivot_offset_ratio = Vector2(0.5, 0.5)
 
 [node name="GridContainer" type="GridContainer" parent="." unique_id=477398327]
 layout_mode = 1
@@ -132,9 +136,9 @@ text = "Back"
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.45
-anchor_top = 0.3
+anchor_top = 0.205
 anchor_right = 0.55
-anchor_bottom = 0.3
+anchor_bottom = 0.205
 grow_horizontal = 2
 grow_vertical = 2
 placeholder_text = "Card Name"
@@ -160,9 +164,9 @@ text = "Open Folder"
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
-anchor_top = 0.65
+anchor_top = 0.752
 anchor_right = 0.5
-anchor_bottom = 0.65
+anchor_bottom = 0.752
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 31
@@ -176,6 +180,13 @@ text = "Load
 [node name="SaveButton" type="Button" parent="HBoxContainer" unique_id=2022016961]
 layout_mode = 2
 text = "Save"
+
+[node name="ErrorLabel" parent="." unique_id=29456805 instance=ExtResource("3_jtewc")]
+visible = false
+layout_mode = 1
+anchor_top = 0.241
+anchor_bottom = 0.241
+text = "Enter a name"
 
 [node name="SerializeButton" type="Button" parent="." unique_id=1838081016]
 layout_mode = 1
