@@ -11,6 +11,7 @@ signal start_game()
 signal new_player(id: int, name: String)
 signal player_left(id: int)
 
+signal invalid_ip_address()
 signal connection_success()
 signal connection_failure()
 signal server_disconnected()
@@ -70,6 +71,7 @@ func join_game(player_name, ip) -> void:
 	"""
 	if not is_valid_ipv4(ip):
 		print("Invalid IP address.")
+		invalid_ip_address.emit()
 		return
 	multiplayer_interface.join_game(ip, PORT, player_name)
 	your_id = multiplayer.get_unique_id()

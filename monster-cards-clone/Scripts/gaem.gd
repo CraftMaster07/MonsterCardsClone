@@ -169,12 +169,19 @@ func _on_multiplayer_manager_new_player(id: int, player_name: String) -> void:
 		waiting_room.add_player(id, player_name)
 
 
+func _on_multiplayer_manager_invalid_ip_address() -> void:
+	if main_menu:
+		main_menu.show_invalid_ip_address()
+
+
 func _on_multiplayer_manager_connection_success() -> void:
 	transition_main_menu_to_waiting_room()
 
 
 func _on_multiplayer_manager_connection_failure() -> void:
 	print("Cannot connect to server.")
+	if main_menu:
+		main_menu.show_connection_failure()
 
 
 func _on_multiplayer_manager_player_left(id: int) -> void:

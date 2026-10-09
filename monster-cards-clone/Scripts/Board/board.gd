@@ -472,13 +472,11 @@ func check_death(player_id: int) -> bool:
 func stop_game():
 	disable_board()
 	round_manager.disable()
-	#player_manager.disable()
 
 
 func disable_board():
 	end_turn_button.disabled = true
 	hide_attack_buttons()
-	# TODO: disable hand
 
 
 func _on_win_screen_leave_game() -> void:

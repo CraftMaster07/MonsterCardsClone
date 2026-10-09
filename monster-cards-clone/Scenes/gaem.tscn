@@ -40,6 +40,7 @@ root_path = NodePath("../MainMenu")
 [connection signal="get_deck_blueprint" from="MultiplayerManager" to="." method="_on_multiplayer_manager_get_deck_blueprint"]
 [connection signal="get_missing_sprite" from="MultiplayerManager" to="." method="_on_multiplayer_manager_get_missing_sprite"]
 [connection signal="hide_attack_buttons" from="MultiplayerManager" to="." method="_on_multiplayer_manager_hide_attack_buttons"]
+[connection signal="invalid_ip_address" from="MultiplayerManager" to="." method="_on_multiplayer_manager_invalid_ip_address"]
 [connection signal="new_player" from="MultiplayerManager" to="." method="_on_multiplayer_manager_new_player"]
 [connection signal="player_left" from="MultiplayerManager" to="." method="_on_multiplayer_manager_player_left"]
 [connection signal="received_deck_blueprint" from="MultiplayerManager" to="." method="_on_multiplayer_manager_received_deck_blueprint"]

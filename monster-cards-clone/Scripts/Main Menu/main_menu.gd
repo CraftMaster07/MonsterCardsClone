@@ -90,9 +90,16 @@ func _on_host_start_button_pressed() -> void:
 func _on_join_start_button_pressed() -> void:
 	if not check_deck_selected(): return
 	print("Joining game")
-	join_game.emit(name_line_edit.text, ip_line_edit.text, deck)
-	join_status_label.visible = true
 	join_status_label.text = "Connecting..."
+	join_game.emit(name_line_edit.text, ip_line_edit.text, deck)
+
+
+func show_connection_failure() -> void:
+	join_status_label.text = "Connection timed out"
+
+
+func show_invalid_ip_address() -> void:
+	join_status_label.text = "Invalid IP address"
 
 
 func check_deck_selected() -> bool:
