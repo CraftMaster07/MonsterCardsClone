@@ -18,4 +18,3 @@ func discard_all_cards():
 
 func disable_functionality():
 	discard_all_cards()
-	self.process_mode = Node.PROCESS_MODE_DISABLED

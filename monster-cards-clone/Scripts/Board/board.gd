@@ -282,7 +282,6 @@ func verify_card_placement(
 
 
 func set_game_state(game_state: Dictionary):
-	# TODO: finish TS
 	player_manager.deserialize(game_state['players'])
 	round_manager.deserialize(game_state['round_manager'])
 	update_phase(game_state['phase'])

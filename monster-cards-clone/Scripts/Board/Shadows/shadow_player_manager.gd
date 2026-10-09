@@ -50,3 +50,7 @@ func remove_player(player_id: int):
 	remove_child(players[player_id])
 	players[player_id].queue_free()
 	players.erase(player_id)
+
+
+func disable_player_area(player_id: int):
+	get_player(player_id).disable_player_area()

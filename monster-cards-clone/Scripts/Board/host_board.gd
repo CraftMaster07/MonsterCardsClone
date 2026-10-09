@@ -382,3 +382,8 @@ func _on_round_manager_started_turn(player_id: int) -> void:
 	if phase == Phase.COMBAT:
 		print("turn started: ", player_id)
 		send_attack_button_visibility(player_id)
+
+
+func _on_player_manager_player_fataly_damaged(player_id: int) -> void:
+	super._on_player_manager_player_fataly_damaged(player_id)
+	shadow_player_manager.disable_player_area(player_id)
