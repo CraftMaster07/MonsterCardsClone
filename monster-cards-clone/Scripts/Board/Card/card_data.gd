@@ -18,6 +18,7 @@ var attack: int
 var cost: int
 
 var is_ghost: bool = false
+var is_disabled: bool = false
 
 var ability: Ability
 
@@ -160,6 +161,7 @@ func get_effect() -> Effect:
 
 
 func run_ability():
+	if is_disabled: return
 	ability.run()
 
 
@@ -199,6 +201,7 @@ func get_owner_id() -> int:
 
 
 func card_trigger(trigger_id):
+	if is_disabled: return
 	triggers_to_signals[trigger_id].emit()
 
 
@@ -224,3 +227,7 @@ func get_creator_name() -> String:
 func get_creator_note() -> String:
 	# TODO
 	return "<Creator Note>"
+
+
+func disable_functionality():
+	is_disabled = true

@@ -39,4 +39,5 @@ layout_mode = 2
 [node name="DeathTextureRect" type="TextureRect" parent="." unique_id=402610194]
 visible = false
 layout_mode = 2
+mouse_filter = 2
 texture = ExtResource("3_3ohld")

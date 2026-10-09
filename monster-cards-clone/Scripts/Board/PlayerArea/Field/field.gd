@@ -92,8 +92,5 @@ func disable_functionality():
 	death_texture_rect.visible = true
 	is_disabled = true
 
-	# TODO: make cards still interactable but not functional
-	# for slot in slots:
-	# 	slot.disable_functionality()
-
-	self.process_mode = Node.PROCESS_MODE_DISABLED
+	for slot in slots:
+		slot.disable_functionality()
