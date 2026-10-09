@@ -92,7 +92,7 @@ func _on_save_button_pressed() -> void:
 
 func _on_name_line_edit_text_changed(new_text: String) -> void:
 	editor_card.set_card_name(new_text)
-	error_label.deactivate
+	error_label.deactivate()
 
 
 func _on_open_folder_button_pressed() -> void:
@@ -144,7 +144,7 @@ func update_values_from_loaded_card():
 		update_effect_from_loaded_card()
 
 	ability_toggle_button.button_pressed = editor_card.has_ability()
-	error_label.deactivate
+	error_label.deactivate()
 
 
 func update_cost():

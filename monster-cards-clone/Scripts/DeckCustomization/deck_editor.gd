@@ -98,12 +98,12 @@ func _on_save_button_pressed() -> void:
 
 func _on_deck_line_edit_text_changed(new_text: String) -> void:
 	deck_file.name = new_text
-	error_label.deactivate
+	error_label.deactivate()
 
 
 func update_deck_line_edit() -> void:
 	deck_name_line_edit.text = deck_file.name
-	error_label.deactivate
+	error_label.deactivate()
 
 
 func save_deck() -> void:
