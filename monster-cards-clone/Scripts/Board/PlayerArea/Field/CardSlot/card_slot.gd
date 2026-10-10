@@ -93,3 +93,8 @@ func remove_card():
 	remove_child(card)
 	card.free()
 	card = null
+
+
+func disable_functionality():
+	if card:
+		card.disable_functionality()

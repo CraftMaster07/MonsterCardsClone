@@ -48,3 +48,8 @@ func get_hand_card_data_count() -> int:
 
 func get_hand_card_data_by_uuid(card_uuid: String) -> CardData:
 	return hand.get_card_data_by_uuid(card_uuid)
+
+
+func disable_player_area():
+	hand.disable_functionality()
+	deck.disable_functionality()

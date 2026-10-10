@@ -2,10 +2,10 @@ class_name PlayerManager
 extends Node
 
 signal player_attacked(player_id: int)
+signal player_fataly_damaged(player_id: int)
 
 @export var your_player_scene: PackedScene
 @export var enemy_player_scene: PackedScene
-@export var player_container: VBoxContainer
 
 var players: Dictionary[int, Player] = {}
 var your_id: int
@@ -39,16 +39,19 @@ func init_players(multiplayer_players: Array):
 
 func init_enemy_player(player_data: Dictionary):
 	var new_player: Player = enemy_player_scene.instantiate()
-	new_player.init(player_data['id'], player_data['name'])
-	player_container.add_child(new_player)
-	players[player_data['id']] = new_player
+	_init_player(new_player, player_data)
 
 
 func init_your_player(player_data: Dictionary):
 	var new_player: Player = your_player_scene.instantiate()
+	_init_player(new_player, player_data)
+
+
+func _init_player(new_player: Player, player_data: Dictionary):
 	new_player.init(player_data['id'], player_data['name'])
-	player_container.add_child(new_player)
+	add_child(new_player)
 	players[player_data['id']] = new_player
+	new_player.fataly_damaged.connect(_on_player_fataly_damaged)
 
 
 func remove_player(id: int):
@@ -211,6 +214,7 @@ func get_area_rotation(player_id: int) -> float:
 func get_random_enemy_player(player_id: int) -> Player:
 	var player_ids := get_player_ids()
 	player_ids.erase(player_id)
+	remove_dead_player_ids(player_ids)
 	return get_player(player_ids[randi() % player_ids.size()])
 
 
@@ -233,3 +237,25 @@ func hide_attack_button(player_id: int):
 
 func show_attack_button(player_id: int):
 	get_player(player_id).show_attack_button()
+
+
+func _on_player_fataly_damaged(player_id: int):
+	player_fataly_damaged.emit(player_id)
+
+
+func check_death(player_id: int) -> bool:
+	return get_player(player_id).is_dead
+
+
+func disable_player_area(player_id: int):
+	get_player(player_id).disable_area()
+
+
+func remove_dead_player_ids(player_ids: Array):
+	for player_id in player_ids:
+		if check_death(player_id):
+			player_ids.erase(player_id)
+
+
+func get_player_name(player_id: int) -> String:
+	return get_player(player_id).get_player_name()

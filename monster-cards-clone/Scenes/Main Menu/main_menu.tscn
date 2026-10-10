@@ -115,7 +115,7 @@ theme_override_constants/separation = 14
 layout_mode = 2
 size_flags_vertical = 0
 placeholder_text = "Name"
-max_length = 100
+max_length = 40
 
 [node name="HostMenu" type="VBoxContainer" parent="UI/PlayMenuContainer/VBoxContainer/HBoxContainer/HostJoinContainer" unique_id=1658650857]
 layout_mode = 2

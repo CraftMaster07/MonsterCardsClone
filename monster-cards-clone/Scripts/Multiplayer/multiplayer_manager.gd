@@ -232,5 +232,3 @@ func _on_multiplayer_interface_show_attack_buttons(attackable_players: Array) ->
 
 func _on_multiplayer_interface_hide_attack_buttons() -> void:
 	hide_attack_buttons.emit()
-
-

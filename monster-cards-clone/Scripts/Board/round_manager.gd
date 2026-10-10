@@ -6,22 +6,30 @@ var turn_order: Array[int]
 
 var round_number: int = 0
 
+var is_disabled: bool = false
+
 signal started_turn(player_id: int)
 signal round_ended()
 signal round_number_changed(new_round_number: int)
 
 
 func start_turn(player_id: int):
+	if is_disabled: return
+
 	current_player_id = player_id
 	started_turn.emit(current_player_id)
 
 
 func next_turn():
+	if is_disabled: return
+
 	current_player_index = calculate_next_player_index()
 	start_turn(turn_order[current_player_index])
 
 
 func client_ended_turn(player_id: int):
+	if is_disabled: return
+
 	if player_id != current_player_id:
 		return
 
@@ -66,6 +74,9 @@ func deserialize(data: Dictionary):
 
 
 func remove_player(player_id: int):
+	if has_played_this_round(player_id):
+		current_player_index -= 1
+	
 	turn_order.erase(player_id)
 
 	if current_player_id == player_id:
@@ -92,6 +103,8 @@ func get_round_number():
 
 
 func move_first_player_to_last():
+	if is_disabled: return
+
 	var first_player_id = turn_order[0]
 	turn_order.remove_at(0)
 	turn_order.append(first_player_id)
@@ -103,3 +116,15 @@ func is_last_2_players() -> bool:
 
 func get_last_player_id() -> int:
 	return turn_order[-1]
+
+
+func is_one_player_left() -> bool:
+	return len(turn_order) == 1
+
+
+func has_played_this_round(player_id: int) -> bool:
+	return turn_order.find(player_id) < current_player_index
+
+
+func disable():
+	is_disabled = true

@@ -1,0 +1,86 @@
+[gd_scene format=3 uid="uid://ssfdbli8qi50"]
+
+[ext_resource type="Script" uid="uid://lhs5xjmqg67h" path="res://Scripts/Board/win_screen.gd" id="1_ke7j4"]
+[ext_resource type="Theme" uid="uid://f2a4ylwdbwtx" path="res://Assets/Styles/main_theme.tres" id="3_gefws"]
+
+[node name="WinScreen" type="Control" unique_id=621324339 node_paths=PackedStringArray("win_message", "screen_filter", "leave_game_button", "play_again_button", "view_board_button")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_ke7j4")
+win_message = NodePath("CenterContainer/WonPlayerLabel")
+screen_filter = NodePath("ColorRect")
+leave_game_button = NodePath("HBoxContainer/LeaveGameButton")
+play_again_button = NodePath("HBoxContainer/PlayAgainButton")
+view_board_button = NodePath("HBoxContainer/ViewBoardButton")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1481184697]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.4)
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=1630124673]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.85
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="WonPlayerLabel" type="RichTextLabel" parent="CenterContainer" unique_id=864137257]
+custom_minimum_size = Vector2(700, 100)
+layout_mode = 2
+mouse_filter = 2
+theme = ExtResource("3_gefws")
+theme_override_colors/default_color = Color(1, 1, 0.18431373, 1)
+theme_override_font_sizes/normal_font_size = 50
+bbcode_enabled = true
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1204343534]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.04
+anchor_top = 0.94
+anchor_right = 0.96
+anchor_bottom = 0.941
+offset_top = -31.0
+grow_horizontal = 2
+grow_vertical = 0
+alignment = 1
+
+[node name="LeaveGameButton" type="Button" parent="HBoxContainer" unique_id=1007613352]
+layout_mode = 2
+text = "Leave Game"
+
+[node name="Space1" type="Control" parent="HBoxContainer" unique_id=676381040]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PlayAgainButton" type="Button" parent="HBoxContainer" unique_id=42369878]
+layout_mode = 2
+text = "Play again"
+
+[node name="Space2" type="Control" parent="HBoxContainer" unique_id=1871489765]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ViewBoardButton" type="Button" parent="HBoxContainer" unique_id=1445433520]
+layout_mode = 2
+text = "View Board"
+
+[connection signal="pressed" from="HBoxContainer/LeaveGameButton" to="." method="_on_leave_game_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/PlayAgainButton" to="." method="_on_play_again_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/ViewBoardButton" to="." method="_on_view_board_button_pressed"]

@@ -25,8 +25,10 @@ func _ready() -> void:
 	menu_containers = [play_menu_container, settings_menu_container, deck_menu_container]
 
 	var selected_deck_path = SaveGameManager.get_selected_deck_path()
-	if selected_deck_path:
+	
+	if selected_deck_path and ResourceLoader.exists(selected_deck_path):
 		select_deck(selected_deck_path)
+	
 
 
 func reinitialize() -> void:
@@ -49,7 +51,7 @@ func toggle_menu(menu: Control) -> void:
 
 
 func _on_idk_button_pressed() -> void:
-	print("why would you press this?")
+	print("i'm sorry.")
 
 
 func _on_deck_button_pressed() -> void:

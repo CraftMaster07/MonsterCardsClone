@@ -129,6 +129,7 @@ func start_board():
 	board.set_your_id(multiplayer_manager.your_id)
 	board.init_players(multiplayer_players_to_dicts(multiplayer_manager.players))
 	board.set_deck_file(deck)
+	board.leave_game.connect(_on_board_leave_game)
 	board.send_placed_card.connect(_on_board_send_placed_card)
 	board.send_end_turn.connect(_on_end_turn_pressed)
 	board.send_player_attacked.connect(_on_board_player_attacked)
@@ -139,6 +140,7 @@ func start_board():
 func stop_board():
 	remove_child(board)
 	board.queue_free()
+	multiplayer_manager.leave_game()
 
 
 func start_main_menu():
@@ -190,7 +192,10 @@ func _on_multiplayer_manager_player_left(id: int) -> void:
 
 
 func _on_multiplayer_manager_server_disconnected() -> void:
-	transition_waiting_room_to_main_menu()
+	if board and not board.is_game_over:
+		transition_board_to_main_menu()
+	elif waiting_room:
+		transition_waiting_room_to_main_menu()
 	print("Host disconnected.")
 
 
@@ -320,6 +325,10 @@ func _on_board_send_hide_attack_buttons(player_id: int) -> void:
 func _on_multiplayer_manager_hide_attack_buttons() -> void:
 	board.hide_attack_buttons()
 
+
 func _on_multiplayer_manager_show_attack_buttons(attackable_players: Array) -> void:
 	board.show_attack_buttons(attackable_players)
 
+
+func _on_board_leave_game() -> void:
+	transition_board_to_main_menu()

@@ -28,7 +28,6 @@ func subscribe_card(card: CardData, player: Player):
 
 
 func board_trigger(trigger_id):
-	print("triggering board trigger: ", trigger_id)
 	triggers_to_signals[trigger_id].emit()
 
 

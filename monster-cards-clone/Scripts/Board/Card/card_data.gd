@@ -18,6 +18,7 @@ var attack: int
 var cost: int
 
 var is_ghost: bool = false
+var is_disabled: bool = false
 
 var ability: Ability
 
@@ -116,7 +117,7 @@ func recalculate_cost():
 
 
 func take_damage(amount: int) -> void:
-	if health <= 0: return
+	if health <= 0 or amount <= 0: return
 	health -= amount
 	card_trigger(TRIGGER_ID.WHEN_HURT)
 	check_death()
@@ -160,6 +161,7 @@ func get_effect() -> Effect:
 
 
 func run_ability():
+	if is_disabled: return
 	ability.run()
 
 
@@ -199,7 +201,7 @@ func get_owner_id() -> int:
 
 
 func card_trigger(trigger_id):
-	print("card ", uuid, ": triggering card trigger: ", trigger_id)
+	if is_disabled: return
 	triggers_to_signals[trigger_id].emit()
 
 
@@ -225,3 +227,7 @@ func get_creator_name() -> String:
 func get_creator_note() -> String:
 	# TODO
 	return "<Creator Note>"
+
+
+func disable_functionality():
+	is_disabled = true

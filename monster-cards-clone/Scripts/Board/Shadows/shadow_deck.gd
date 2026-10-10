@@ -3,7 +3,7 @@ extends CardDatasManager
 
 
 func draw_card_data() -> CardData:
-	if card_datas.is_empty():
+	if card_datas.is_empty() or is_disabled:
 		return null
 
 	var card_data_values = card_datas.values()

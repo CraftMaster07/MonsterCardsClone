@@ -69,3 +69,7 @@ func get_card_count():
 
 func update_cards_count_label():
 	card_count_label.text = str(get_card_count())
+
+
+func disable_functionality():
+	self.process_mode = Node.PROCESS_MODE_DISABLED
