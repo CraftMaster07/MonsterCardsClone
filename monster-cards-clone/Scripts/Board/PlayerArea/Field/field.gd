@@ -31,6 +31,15 @@ func get_card(slot_index: int) -> BoardCard:
 	return slots[slot_index].get_card()
 
 
+func get_all_cards() -> Array[BoardCard]:
+	var cards: Array[BoardCard] = []
+
+	for slot in slots:
+		cards.append(slot.get_card())
+
+	return cards.filter(func(card): return card != null)
+
+
 func get_slot_id(slot: CardSlot) -> int:
 	return slots.find(slot)
 

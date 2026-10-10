@@ -354,8 +354,9 @@ func fetch_target_random_enemy_face(_effect: Effect, _card: CardData, player: Pl
 	return player_manager.get_random_enemy_player(player.get_id())
 
 
-func fetch_target_random_enemy_card(effect: Effect, card: CardData, player: Player):
-	return fetch_target_random_enemy_face(effect, card, player).get_random_board_card_data()
+func fetch_target_random_enemy_card(_effect: Effect, _card: CardData, player: Player) -> CardData:
+	var all_enemy_cards: Array[BoardCard] = player_manager.get_all_enemy_cards(player.get_id())
+	return all_enemy_cards[randi() % all_enemy_cards.size()].get_card_data()
 
 
 func apply_numbered_effect(method: String, effect: Effect, card: CardData, player: Player):
@@ -368,7 +369,7 @@ func apply_numbered_effect(method: String, effect: Effect, card: CardData, playe
 
 
 func get_missing_sprite(player_id: int, sprite_hash: String, callback_uuid: String):
-	var serialized_sprite = CardSpriteManager.get_serialized_sprite(sprite_hash)
+	var serialized_sprite: Dictionary = CardSpriteManager.get_serialized_sprite(sprite_hash)
 
 	if serialized_sprite:
 		send_missing_sprite.emit(player_id, serialized_sprite, callback_uuid)

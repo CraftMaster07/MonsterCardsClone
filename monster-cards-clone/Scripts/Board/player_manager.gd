@@ -259,3 +259,17 @@ func remove_dead_player_ids(player_ids: Array):
 
 func get_player_name(player_id: int) -> String:
 	return get_player(player_id).get_player_name()
+
+
+func get_player_cards(player_id: int) -> Array[BoardCard]:
+	return get_player(player_id).get_all_cards()
+
+
+func get_all_enemy_cards(excluded_player_id: int) -> Array[BoardCard]:
+	var all_enemy_cards: Array[BoardCard] = []
+
+	for player_id in get_player_ids():
+		if player_id != excluded_player_id:
+			all_enemy_cards.append_array(get_player(player_id).get_all_cards())
+
+	return all_enemy_cards

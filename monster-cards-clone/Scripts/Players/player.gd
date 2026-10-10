@@ -221,3 +221,7 @@ func die():
 
 func disable_area():
 	area.disable_area()
+
+
+func get_all_cards() -> Array[BoardCard]:
+	return field.get_all_cards()
