@@ -28,6 +28,7 @@ extends Control
 
 var selected_card: HandCard = null
 var phase: Phase = Phase.PREP
+var selection_mode: SelectionMode = SelectionMode.NONE
 var is_game_over: bool = false
 
 var player_ids_without_deck_blueprint: Array
@@ -48,6 +49,7 @@ signal send_end_turn()
 signal send_player_attacked(attacked_id: int)
 signal missing_sprite(sprite_hash: String, callback_uuid: String)
 signal leave_game()
+signal target_selected(target)
 
 enum ValidationResponses {
 		INVALID = -1,
@@ -69,7 +71,9 @@ enum CombatValidationResponses {
 		DO_NOT_HURT_YOURSELF,
 		GHOSTS_CANT_ATTACK
 }
+
 enum Phase {PREP, COMBAT}
+enum SelectionMode {NONE, CARD}
 
 
 func _ready():
@@ -169,6 +173,7 @@ func _on_end_turn_pressed() -> void:
 	if round_manager.is_player_turn(your_id):
 		send_end_turn.emit()
 
+
 func spawn_player_areas(players_count: int):
 	unassigned_area_player_ids = player_manager.get_unassigned_area_player_ids()
 	player_area_spawner_pivot.spawn_player_areas(players_count)
@@ -184,6 +189,8 @@ func _on_player_area_spawner_pivot_new_area_spawned(new_player_area: PlayerArea)
 		set_your_area(new_player_area)
 	else:
 		set_first_player_area(new_player_area)
+	
+	new_player_area.get_field().card_placed.connect(on_boardcard_placed)
 
 
 func _on_player_area_spawner_pivot_spawning_finished() -> void:
@@ -481,3 +488,21 @@ func disable_board():
 
 func _on_win_screen_leave_game() -> void:
 	leave_game.emit()
+
+#TODO: move on board placed to connect card
+
+func get_target_selection(target: Effect.TARGET, _card_uuid: String):
+	if target == Effect.TARGET.SELECTED_CARD:
+		selection_mode = SelectionMode.CARD
+	else:
+		pass
+
+func on_boardcard_placed(card: BoardCard):
+	card.pressed.connect(boardcard_pressed)
+
+
+func boardcard_pressed(card: BoardCard):
+	if selection_mode == SelectionMode.CARD:
+		selection_mode = SelectionMode.NONE
+		target_selected.emit(card.get_uuid())
+

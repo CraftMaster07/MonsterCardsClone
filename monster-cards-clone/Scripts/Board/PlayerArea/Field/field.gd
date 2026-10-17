@@ -103,3 +103,12 @@ func disable_functionality():
 
 	for slot in slots:
 		slot.disable_functionality()
+	
+
+func get_board_card_by_uuid(uuid: String) -> BoardCard:
+	for slot in slots:
+		var card = slot.get_card()
+		if card.get_card_data().uuid == uuid:
+			return card
+
+	return null

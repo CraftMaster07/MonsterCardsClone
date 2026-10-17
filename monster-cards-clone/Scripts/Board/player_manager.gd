@@ -273,3 +273,13 @@ func get_all_enemy_cards(excluded_player_id: int) -> Array[BoardCard]:
 			all_enemy_cards.append_array(get_player(player_id).get_all_cards())
 
 	return all_enemy_cards
+
+
+func get_board_card_by_uuid(card_uuid: String) -> BoardCard:
+	for player in players.values():
+		var card: BoardCard = player.get_board_card_by_uuid(card_uuid)
+
+		if card:
+			return card
+
+	return null

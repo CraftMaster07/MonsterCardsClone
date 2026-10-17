@@ -225,3 +225,7 @@ func disable_area():
 
 func get_all_cards() -> Array[BoardCard]:
 	return field.get_all_cards()
+
+
+func get_board_card_by_uuid(uuid: String) -> BoardCard:
+	return field.get_board_card_by_uuid(uuid)

@@ -8,6 +8,7 @@ signal client_attacked(player_id: int, attacked_id: int)
 
 signal received_deck_blueprint(player_id: int, deck: Array)
 signal get_missing_card_sprite(player_id: int, sprite_hash: String, callback_uuid: String)
+signal received_target_selection(player_id: int, target)
 
 var thread = null
 
@@ -142,3 +143,15 @@ func send_show_attack_buttons(player_id, attackable_players):
 
 func send_hide_attack_buttons(player_id):
 	receive_hide_attack_buttons.rpc_id(player_id)
+
+
+func request_target_selection(player_id: int, card_uuid: String, target: Effect.TARGET):
+	if player_id == 1:
+		get_target_selection(target, card_uuid)
+	else:
+		get_target_selection.rpc_id(target, card_uuid)
+
+
+@rpc("any_peer", "call_remote", "reliable", 0)
+func receive_target_selected(target: Effect.TARGET):
+	received_target_selection.emit(multiplayer.get_remote_sender_id(), target)

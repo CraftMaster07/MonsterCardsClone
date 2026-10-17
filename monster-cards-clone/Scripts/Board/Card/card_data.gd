@@ -231,3 +231,7 @@ func get_creator_note() -> String:
 
 func disable_functionality():
 	is_disabled = true
+
+
+func get_uuid() -> String:
+	return uuid

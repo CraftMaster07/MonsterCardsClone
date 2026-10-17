@@ -123,8 +123,10 @@ func start_board():
 		board.send_missing_sprite.connect(_on_board_send_missing_sprite)
 		board.send_hide_attack_buttons.connect(_on_board_send_hide_attack_buttons)
 		board.send_show_attack_buttons.connect(_on_board_send_show_attack_buttons)
+		board.request_target_selection.connect(_on_board_request_target_selection)
 	else:
 		board = board_scene.instantiate()
+		board.target_selected.connect(_on_board_target_selected)
 
 	board.set_your_id(multiplayer_manager.your_id)
 	board.init_players(multiplayer_players_to_dicts(multiplayer_manager.players))
@@ -332,3 +334,19 @@ func _on_multiplayer_manager_show_attack_buttons(attackable_players: Array) -> v
 
 func _on_board_leave_game() -> void:
 	transition_board_to_main_menu()
+
+
+func _on_board_request_target_selection(player_id: int, card_uuid: String, target: Effect.TARGET) -> void:
+	multiplayer_manager.request_target_selection(player_id, card_uuid, target)
+
+
+func _on_multiplayer_manager_select_target(target: Effect.TARGET, card_uuid: String) -> void:
+	board.get_target_selection(target, card_uuid)
+
+
+func _on_board_target_selected(target) -> void:
+	multiplayer_manager.send_target_selected(target)
+
+
+func _on_multiplayer_manager_received_target_selection(player_id: int, target: Variant) -> void:
+	board.received_target_selection(player_id, target)

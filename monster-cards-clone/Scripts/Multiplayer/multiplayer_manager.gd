@@ -21,6 +21,8 @@ signal shadow_sync(serialized_shadow_player_data: Dictionary)
 signal client_placed_card(player_id: int, card_uuid: String, slot_id: int)
 signal client_ended_turn(player_id: int)
 signal client_attacked(player_id: int, attacked_id: int)
+signal select_target(target: Effect.TARGET, card_uuid: String)
+signal received_target_selection(player_id: int, target)
 
 signal received_deck_blueprint(player_id: int, deck_blueprint: Dictionary)
 signal get_deck_blueprint()
@@ -60,6 +62,7 @@ func host_game(player_name) -> void:
 	multiplayer_interface.client_attacked.connect(_on_multiplayer_interface_client_attacked)
 	multiplayer_interface.received_deck_blueprint.connect(_on_multiplayer_interface_received_deck)
 	multiplayer_interface.get_missing_card_sprite.connect(_on_multiplayer_interface_get_missing_sprite)
+	multiplayer_interface.received_target_selection.connect(_on_multiplayer_interface_received_target_selection)
 
 	multiplayer_interface.host_game(PORT, player_name)
 	your_id = multiplayer.get_unique_id()
@@ -232,3 +235,19 @@ func _on_multiplayer_interface_show_attack_buttons(attackable_players: Array) ->
 
 func _on_multiplayer_interface_hide_attack_buttons() -> void:
 	hide_attack_buttons.emit()
+
+
+func request_target_selection(player_id: int, card_uuid: String, target: Effect.TARGET) -> void:
+	multiplayer_interface.request_target_selection(player_id, card_uuid, target)
+
+
+func _on_multiplayer_interface_select_target(target: Effect.TARGET, card_uuid: String) -> void:
+	select_target.emit(target, card_uuid)
+
+
+func send_target_selected(target: Effect.TARGET) -> void:
+	multiplayer_interface.send_target_selected(target)
+
+
+func _on_multiplayer_interface_received_target_selection(player_id: int, target) -> void:
+	received_target_selection.emit(player_id, target)

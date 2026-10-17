@@ -19,6 +19,7 @@ signal get_deck_blueprint()
 signal received_missing_sprite(serialized_sprite: Dictionary, callback_uuid: String)
 signal show_attack_buttons(attackable_players: Array)
 signal hide_attack_buttons()
+signal select_target(target: Effect.TARGET, card_uuid: String)
 
 func _ready():
 	multiplayer.peer_connected.connect(_on_peer_connected)
@@ -162,3 +163,18 @@ func receive_show_attack_buttons(attackable_players: Array):
 @rpc("authority", "call_local", "reliable", 0)
 func receive_hide_attack_buttons():
 	hide_attack_buttons.emit()
+
+
+@rpc("any_peer", "call_local", "reliable", 0)
+func get_target_selection(target: Effect.TARGET, card_uuid: String):
+	select_target.emit(target, card_uuid)
+
+
+func send_target_selected(target: Effect.TARGET):
+	receive_target_selected.rpc_id(1, target)
+
+
+@rpc("any_peer", "call_remote", "reliable", 0)
+func receive_target_selected(_target):
+	# server side function
+	pass

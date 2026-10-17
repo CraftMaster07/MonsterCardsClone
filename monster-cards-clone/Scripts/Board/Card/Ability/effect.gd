@@ -19,6 +19,7 @@ const TARGET_MULTIPLIERS = {
 	TARGET.RANDOM_FRIENDLY_CARD: 1,
 	TARGET.RANDOM_ENEMY_CARD: 0.6,
 	TARGET.RANDOM_ENEMY_FACE: 0.6,
+	TARGET.SELECTED_CARD: 1,
 }
 
 const TARGET_DISPLAY_NAMES = {
@@ -40,7 +41,7 @@ enum EffectID {
 	DAMAGE,
 }
 
-enum Null{
+enum Null {
 	NULL,
 }
 
@@ -54,6 +55,7 @@ enum Null{
 @export var extra_properties: Dictionary[String, Variant] = {}
 
 var target: TARGET
+var last_target #TODO: ??
 
 
 func get_id():

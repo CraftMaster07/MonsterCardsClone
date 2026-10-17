@@ -5,6 +5,7 @@ var image: Texture
 
 const BOARD_CARD_SCENE = preload("res://Scenes/Board/Card/board_card.tscn")
 
+signal pressed(card: BoardCard)
 
 func deserialize(data: Dictionary):
 	super.deserialize(data)
@@ -34,3 +35,7 @@ func run_ability():
 
 func update_sprite_from_card_data():
 	card_front.update_sprite(card_data.get_sprite_hash())
+
+
+func _on_card_front_pressed() -> void:
+	pressed.emit(self)

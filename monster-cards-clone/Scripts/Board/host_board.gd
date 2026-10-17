@@ -1,7 +1,7 @@
 extends Board
 
 const TRIGGER_ID = Trigger.TriggerID
-const EFFECT_ID =  Effect.EffectID
+const EFFECT_ID = Effect.EffectID
 const TARGET_ID = Effect.TARGET
 
 var shadow_player_manager: ShadowPlayerManager
@@ -15,6 +15,7 @@ signal received_all_deck_blueprints()
 signal send_missing_sprite(player_id: int, serialized_sprite: Dictionary, callback_uuid: String)
 signal send_hide_attack_buttons(player_id: int)
 signal send_show_attack_buttons(player_id: int, attackable_players: Array)
+signal request_target_selection(player_id: int, card_uuid: String, target: TARGET_ID)
 
 var effect_to_funcs: Dictionary = {
 	EFFECT_ID.HEAL: heal,
@@ -28,7 +29,8 @@ var target_to_funcs: Dictionary = {
 	TARGET_ID.FACE: fetch_target_face,
 	TARGET_ID.RANDOM_FRIENDLY_CARD: fetch_target_random_friendly_card,
 	TARGET_ID.RANDOM_ENEMY_CARD: fetch_target_random_enemy_card,
-	TARGET_ID.RANDOM_ENEMY_FACE: fetch_target_random_enemy_face
+	TARGET_ID.RANDOM_ENEMY_FACE: fetch_target_random_enemy_face,
+	TARGET_ID.SELECTED_CARD: fetch_target_selected_card,
 }
 
 
@@ -134,7 +136,7 @@ func draw_card_to_player(player_id: int):
 	if success:
 		player_manager.draw_card(player_id)
 	else:
-		print(str(player_id),": draw card failed")
+		print(str(player_id), ": draw card failed")
 
 
 func client_ended_turn(player_id: int):
@@ -359,6 +361,17 @@ func fetch_target_random_enemy_card(_effect: Effect, _card: CardData, player: Pl
 	return all_enemy_cards[randi() % all_enemy_cards.size()].get_card_data()
 
 
+func fetch_target_selected_card(effect: Effect, card: CardData, player: Player):
+	request_target_selection.emit(player.get_id(), card.get_uuid(), effect.get_target())
+	var card_uuid = await target_selected
+	var card_target = player_manager.get_board_card_by_uuid(card_uuid)
+
+	if card_target:
+		return card_target.get_card_data()
+
+	return null
+
+
 func apply_numbered_effect(method: String, effect: Effect, card: CardData, player: Player):
 	var target: Effect.TARGET = effect.get_target()
 	var amount: int = effect.get_property("amount")
@@ -388,3 +401,8 @@ func _on_round_manager_started_turn(player_id: int) -> void:
 func _on_player_manager_player_fataly_damaged(player_id: int) -> void:
 	super._on_player_manager_player_fataly_damaged(player_id)
 	shadow_player_manager.disable_player_area(player_id)
+
+
+func received_target_selection(player_id: int, target):
+	if player_id == round_manager.current_player_id:
+		target_selected.emit(target)

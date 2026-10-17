@@ -18,3 +18,5 @@ layout_mode = 0
 
 [connection signal="gui_input" from="CardFront" to="." method="_on_card_front_gui_input"]
 [connection signal="missing_sprite" from="CardFront" to="." method="_on_card_front_missing_sprite"]
+[connection signal="pressed" from="CardFront" to="." method="_on_card_front_pressed"]
+
