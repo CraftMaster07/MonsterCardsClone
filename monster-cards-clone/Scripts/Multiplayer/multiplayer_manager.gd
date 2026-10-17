@@ -31,6 +31,9 @@ signal received_missing_sprite(serialized_sprite: Dictionary, callback_uuid: Str
 signal show_attack_buttons(attackable_players: Array)
 signal hide_attack_buttons()
 
+signal select_target(target: Effect.TARGET, card_uuid: String)
+signal received_target_selection(player_id: int, target)
+
 @export var server_script: Script
 @export var client_script: Script
 
@@ -46,10 +49,6 @@ so I'm not making a new one yet.
 """
 var players: Dictionary = {}
 var your_id: int
-
-
-func _ready() -> void:
-	multiplayer_interface.host_started_game.connect(signal_start_game)
 
 
 func host_game(player_name) -> void:

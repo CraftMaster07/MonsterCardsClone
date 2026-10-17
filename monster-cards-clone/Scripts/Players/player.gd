@@ -34,7 +34,6 @@ signal drawn_card
 signal on_face_damaged
 signal fataly_damaged(player_id: int)
 
-
 func init(new_player_id: int, new_player_name: String):
 	player_id = new_player_id
 	player_name = new_player_name

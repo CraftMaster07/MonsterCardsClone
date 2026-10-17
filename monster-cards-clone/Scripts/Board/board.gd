@@ -192,6 +192,8 @@ func _on_player_area_spawner_pivot_new_area_spawned(new_player_area: PlayerArea)
 	
 	new_player_area.get_field().card_placed.connect(on_boardcard_placed)
 
+	new_player_area.get_field().card_placed.connect(on_boardcard_placed)
+
 
 func _on_player_area_spawner_pivot_spawning_finished() -> void:
 	player_area_spawner_pivot.queue_free()
@@ -374,7 +376,7 @@ func get_deck_blueprint() -> Dictionary:
 
 		if not card_file.load(path):
 			continue
-		
+
 		for i in range(deck_file.cards[file_name]):
 			var card_data = CardData.create_from_card_file(card_file, your_id)
 			serialized_card_datas.append(card_data.serialize())

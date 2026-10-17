@@ -10,6 +10,8 @@ signal received_deck_blueprint(player_id: int, deck: Array)
 signal get_missing_card_sprite(player_id: int, sprite_hash: String, callback_uuid: String)
 signal received_target_selection(player_id: int, target)
 
+signal received_target_selection(player_id: int, target)
+
 var thread = null
 
 
