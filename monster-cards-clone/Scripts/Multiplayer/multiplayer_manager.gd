@@ -31,8 +31,6 @@ signal received_missing_sprite(serialized_sprite: Dictionary, callback_uuid: Str
 signal show_attack_buttons(attackable_players: Array)
 signal hide_attack_buttons()
 
-signal select_target(target: Effect.TARGET, card_uuid: String)
-signal received_target_selection(player_id: int, target)
 
 @export var server_script: Script
 @export var client_script: Script

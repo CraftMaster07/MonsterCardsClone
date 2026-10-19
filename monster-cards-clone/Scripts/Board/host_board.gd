@@ -372,17 +372,6 @@ func fetch_target_selected_card(effect: Effect, card: CardData, player: Player):
 	return null
 
 
-func fetch_target_selected_card(effect: Effect, card: CardData, player: Player):
-	request_target_selection.emit(player.get_id(), card.get_uuid(), effect.get_target())
-	var card_uuid = await target_selected
-	var card_target = player_manager.get_board_card_by_uuid(card_uuid)
-
-	if card_target:
-		return card_target.get_card_data()
-
-	return null
-
-
 func apply_numbered_effect(method: String, effect: Effect, card: CardData, player: Player):
 	var target: Effect.TARGET = effect.get_target()
 	var amount: int = effect.get_property("amount")

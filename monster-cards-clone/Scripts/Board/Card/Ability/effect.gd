@@ -29,6 +29,7 @@ const TARGET_DISPLAY_NAMES = {
 	TARGET.RANDOM_FRIENDLY_CARD: "A Random Friendly Card",
 	TARGET.RANDOM_ENEMY_CARD: "A Random Enemy Card",
 	TARGET.RANDOM_ENEMY_FACE: "A Random Enemy Face",
+	TARGET.SELECTED_CARD: "A Selected Card",
 }
 
 # ==== /TARGETS ==== #

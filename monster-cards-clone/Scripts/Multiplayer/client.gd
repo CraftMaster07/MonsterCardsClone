@@ -21,7 +21,6 @@ signal show_attack_buttons(attackable_players: Array)
 signal hide_attack_buttons()
 signal select_target(target: Effect.TARGET, card_uuid: String)
 
-signal select_target(target: Effect.TARGET, card_uuid: String)
 
 func _ready():
 	multiplayer.peer_connected.connect(_on_peer_connected)
