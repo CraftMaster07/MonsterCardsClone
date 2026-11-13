@@ -7,15 +7,18 @@
 [ext_resource type="PackedScene" uid="uid://bmc0b8c5180lj" path="res://Scenes/DeckCustomization/editor_card_container.tscn" id="3_pb3bh"]
 [ext_resource type="Script" uid="uid://bc3eoaptsgsub" path="res://Scripts/DeckCustomization/deck_container.gd" id="4_64y0t"]
 [ext_resource type="AudioStream" uid="uid://k5uo00wwllcs" path="res://Assets/Audio/Sounds/sfx_wrong.mp3" id="7_2t4cq"]
+[ext_resource type="Theme" uid="uid://f2a4ylwdbwtx" path="res://Assets/Styles/main_theme.tres" id="8_fjh7w"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w4u1l"]
 bg_color = Color(0.23851621, 0.22978191, 0.27170652, 1)
 
-[node name="DeckEditor" type="Control" unique_id=273491332 node_paths=PackedStringArray("collection_container", "deck_container", "deck_name_line_edit", "error_label")]
+[node name="DeckEditor" type="Control" unique_id=273491332 node_paths=PackedStringArray("collection_container", "deck_container", "deck_name_line_edit", "error_label", "deck_size_label")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 1.0
+offset_right = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_elmlv")
@@ -23,6 +26,7 @@ collection_container = NodePath("PanelContainer/ScrollContainer/MarginContainer/
 deck_container = NodePath("VBoxContainer/PanelContainer/ScrollContainer/MarginContainer/DeckContainer")
 deck_name_line_edit = NodePath("DeckLineEdit")
 error_label = NodePath("ErrorLabel")
+deck_size_label = NodePath("DeckSizeLabel")
 editor_card_scene = ExtResource("2_64y0t")
 
 [node name="DeckLineEdit" type="LineEdit" parent="." unique_id=224592477]
@@ -84,6 +88,22 @@ theme_override_constants/separation = 9
 alignment = 1
 script = ExtResource("4_64y0t")
 card_container_scene = ExtResource("3_pb3bh")
+
+[node name="DeckSizeLabel" type="RichTextLabel" parent="." unique_id=1899539588]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.828
+anchor_top = 0.304
+anchor_right = 0.973
+anchor_bottom = 0.304
+offset_top = -9.0
+offset_bottom = 9.0
+grow_horizontal = 0
+grow_vertical = 2
+mouse_filter = 2
+theme = ExtResource("8_fjh7w")
+text = "Deck Size: 0"
+fit_content = true
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=1910147678]
 layout_mode = 1
@@ -177,6 +197,7 @@ stream = ExtResource("7_2t4cq")
 
 [connection signal="text_changed" from="DeckLineEdit" to="." method="_on_deck_line_edit_text_changed"]
 [connection signal="card_decremented" from="VBoxContainer/PanelContainer/ScrollContainer/MarginContainer/DeckContainer" to="." method="_on_deck_container_card_decremented"]
+[connection signal="updated_size" from="VBoxContainer/PanelContainer/ScrollContainer/MarginContainer/DeckContainer" to="." method="_on_deck_container_updated_size"]
 [connection signal="card_selected" from="PanelContainer/ScrollContainer/MarginContainer/CollectionContainer" to="." method="_on_collection_container_card_selected"]
 [connection signal="pressed" from="HBoxContainer/LoadButton" to="." method="_on_load_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/SaveButton" to="." method="_on_save_button_pressed"]

@@ -5,6 +5,7 @@ extends Control
 @export var deck_container: DeckContainer
 @export var deck_name_line_edit: LineEdit
 @export var error_label: Label
+@export var deck_size_label: RichTextLabel
 @onready var sfx_wrong: AudioStreamPlayer = $SfxWrong
 
 @export var editor_card_scene: PackedScene
@@ -165,3 +166,7 @@ func _on_open_folder_button_pressed() -> void:
 	
 	# 2. Tell the OS to open that path in the default file explorer
 	OS.shell_open(absolute_path)
+
+
+func _on_deck_container_updated_size(card_count: int) -> void:
+	deck_size_label.text = "Deck Size: " + str(card_count)
