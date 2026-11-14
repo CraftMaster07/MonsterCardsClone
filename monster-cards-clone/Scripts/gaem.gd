@@ -18,6 +18,11 @@ var sprite_editor: SpriteEditor = null
 var deck: DeckFile = DeckFile.new()
 
 
+func _ready():
+	if SaveGameManager.get_should_create_example_pack():
+		CardGenerator.generate_example_pack()
+
+
 func transition_board_to_main_menu():
 	stop_board()
 	start_main_menu()

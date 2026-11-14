@@ -4,6 +4,8 @@ extends Resource
 
 const SAVE_GAME_PATH := "user://save.tres"
 
+@export var should_create_example_pack: bool = true
+
 @export var master_volume: int = 100
 @export var sfx_volume: int = 100
 @export var music_volume: int = 100

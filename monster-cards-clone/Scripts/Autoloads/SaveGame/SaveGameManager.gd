@@ -56,3 +56,7 @@ func set_volumes(master_volume, sfx_volume, music_volume):
 	set_master_volume(master_volume, false)
 	set_sfx_volume(sfx_volume, false)
 	set_music_volume(music_volume)
+
+
+func get_should_create_example_pack():
+	return save_game.should_create_example_pack
